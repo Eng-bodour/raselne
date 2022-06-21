@@ -4,7 +4,7 @@ import 'package:raselne/logic/controller/auth_controller.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view/widget/home/build_card.dart';
 import 'package:raselne/view/widget/home/customDrawer.dart';
-import 'package:raselne/view/widget/setting/logout_widget.dart';
+
 import 'package:raselne/view/widget/text_utilis.dart';
 
 class HomeScreen extends StatelessWidget {
