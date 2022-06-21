@@ -1,0 +1,8 @@
+<resources>
+    
+    <string name="facebook_app_id">439127171547692</string>
+    <string name="app_name">raselne</string>
+    <string name="fb_login_protocol_scheme">fb439127171547692</string>
+    <string name="facebook_client_token">56789</string>
+
+</resources>

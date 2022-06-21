@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "192334408426",
+    "project_id": "raselne-301d1",
+    "storage_bucket": "raselne-301d1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192334408426:android:883e0f098345b716608593",
+        "android_client_info": {
+          "package_name": "com.example.raselne"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192334408426-n6f9t8ossv3r2k85uva50uoe0h37dqlc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.raselne",
+            "certificate_hash": "dbcb40127119000b459ba6729f57293053990618"
+          }
+        },
+        {
+          "client_id": "192334408426-g40r27o07nm21rh52tu91rgmd04s484f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq8f4RU1a0qR-l2ybz8qkv29YjZqw04QA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192334408426-g40r27o07nm21rh52tu91rgmd04s484f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
