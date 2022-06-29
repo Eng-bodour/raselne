@@ -171,6 +171,8 @@ class SignUpScreen extends StatelessWidget {
                         GetBuilder<AuthController>(
                           builder: (_) {
                             return AuthButton(
+                              // width: size.width * 0.15,
+                              // height: size.height * 0.19,
                               onPressed: () {
                                 if (controller.isCheckBox == false) {
                                   Get.snackbar(

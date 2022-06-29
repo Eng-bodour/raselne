@@ -14,6 +14,7 @@ class ForgotPasswordScreen extends StatelessWidget {
   final controller = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         //backgroundColor: context.theme.backgroundColor,
@@ -121,6 +122,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                         }
                       },
                       text: "SEND",
+                      // width: size.width * 0.15,
+                      // height: size.height * 0.19,
                     );
                   }),
                 ],

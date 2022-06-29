@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 const Color mainColor = Colors.amberAccent;
 const Color darkGreyClr = Color(0xFF121212);
 const Color logOutSettings = Colors.amberAccent;
+const Color greyColor = Colors.grey;
 // const Color pinkClr = Color(0xFFff4667);
 // const Color kCOlor1 = Color(0xff685959);
 // const Color kCOlor2 = Color(0xffADA79B);
@@ -22,6 +23,9 @@ const double f22 = 22.0;
 const double f20 = 20.0;
 const double f18 = 18.0;
 const double f16 = 16.0;
+const double f14 = 14.0;
+const double f12 = 12.0;
+const double f10 = 10.0;
 
 // class ThemesApp {
 //   static final light = ThemeData(

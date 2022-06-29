@@ -4,6 +4,7 @@ import 'package:raselne/logic/controller/auth_controller.dart';
 import 'package:raselne/routes/routes.dart';
 import 'package:raselne/utilis/my_string.dart';
 import 'package:raselne/utilis/theme.dart';
+
 import 'package:raselne/view/widget/auth/auth_button.dart';
 import 'package:raselne/view/widget/auth/auth_text_from_field.dart';
 import 'package:raselne/view/widget/auth/container_under.dart';
@@ -164,10 +165,14 @@ class LoginScreen extends StatelessWidget {
                                 String password = passwordController.text;
 
                                 controller.logInUsingFirebase(
-                                    email: email, password: password);
+                                  email: email,
+                                  password: password,
+                                );
                               }
                             },
                             text: "LOG IN",
+                            // width: size.width * 0.15,
+                            // height: size.height * 0.19,
                           );
                         }),
                         SizedBox(

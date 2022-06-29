@@ -18,16 +18,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Raselne',
-      //home: WelcomeScreen(),
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Raselne',
+        //home: WelcomeScreen(),
 
-      initialRoute: FirebaseAuth.instance.currentUser != null ||
-              GetStorage().read<bool>('auth') == true
-          ? AppRoutes.homeScreen
-          : AppRoutes.welcome,
-      getPages: AppRoutes.routes,
+        initialRoute: FirebaseAuth.instance.currentUser != null ||
+                GetStorage().read<bool>('auth') == true
+            ? AppRoutes.homeScreen
+            : AppRoutes.welcome,
+        getPages: AppRoutes.routes,
+      ),
     );
   }
 }

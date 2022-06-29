@@ -5,6 +5,8 @@ import 'package:raselne/view/screen/Auth/login_screen.dart';
 import 'package:raselne/view/screen/Auth/phone_screen.dart';
 import 'package:raselne/view/screen/Auth/signup_screen.dart';
 import 'package:raselne/view/screen/home_screen.dart';
+import 'package:raselne/view/screen/image_slider_screen.dart';
+import 'package:raselne/view/screen/store_details_screen.dart';
 import 'package:raselne/view/screen/welcome_screen.dart';
 
 class AppRoutes {
@@ -45,6 +47,8 @@ class AppRoutes {
       page: () => const PhoneScreen(),
       binding: AuthBinding(),
     ),
+    // GetPage(
+    //     name: Routes.imageSliderScreen, page: () => const ImageSliderScreen())
   ];
 }
 

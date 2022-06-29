@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:raselne/constatnt.dart';
-import 'package:raselne/view/screen/product_details_screen.dart';
+import 'package:raselne/model/store_model.dart';
+import 'package:raselne/view/screen/store_details_screen.dart';
 
 class BuildCard extends StatelessWidget {
   const BuildCard({Key? key}) : super(key: key);
@@ -9,33 +10,32 @@ class BuildCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Padding(
-        padding:
-            EdgeInsets.only(left: size.width * 0.02, right: size.width * 0.02),
-        child: GridView.builder(
-          shrinkWrap: true,
-          itemCount: itemCategory.length,
-          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            childAspectRatio: 0.9, //MediaQuery.of(context).size.width * 0.9
-            mainAxisExtent: 140,
-            crossAxisSpacing: 3.0,
-            mainAxisSpacing: 5.0,
-            maxCrossAxisExtent: 280,
-          ),
-          itemBuilder: (context, index) {
-            return buildCardCategory(
-                image: imageList[index],
-                item: itemCategory[index],
-                ontap: () {
-                  Get.to(() => ProductDetailsScreen(
-                        nameGategory: itemCategory[index],
-                      ));
-                }
-                // ontap: () => Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => listwidget[index])),
-                );
-          },
-        ));
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: titleStore.length,
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+        childAspectRatio: 0.9, //MediaQuery.of(context).size.width * 0.9
+        mainAxisExtent: 140,
+        crossAxisSpacing: 3.0,
+        mainAxisSpacing: 5.0,
+        maxCrossAxisExtent: 280,
+      ),
+      itemBuilder: (context, index) {
+        return buildCardCategory(
+            image: imageList[index],
+            item: titleStore[index],
+            ontap: () {
+              Get.to(() => StoreDetailsScreen(
+                    titleStore: titleStore[index],
+                    subTitleStore: subTitleStore[index],
+                  ));
+            }
+            // ontap: () => Navigator.push(context,
+            //     MaterialPageRoute(builder: (context) => listwidget[index])),
+            );
+      },
+    );
   }
 
   Widget buildCardCategory({
@@ -58,14 +58,6 @@ class BuildCard extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(10),
             color: Colors.white,
-
-            // boxShadow: [
-            //   BoxShadow(
-            //     color: Colors.grey.withOpacity(0.2),
-            //     spreadRadius: 3,
-            //     blurRadius: 5,
-            //   ),
-            // ],
           ),
           child: Stack(
             children: [
