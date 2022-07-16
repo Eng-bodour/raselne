@@ -4,7 +4,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:raselne/model/facebook_model.dart';
+import 'package:raselne/data_layer/model/facebook_model.dart';
 import 'package:raselne/routes/routes.dart';
 
 class AuthController extends GetxController {

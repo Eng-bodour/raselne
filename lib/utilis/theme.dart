@@ -4,6 +4,10 @@ const Color mainColor = Colors.amberAccent;
 const Color darkGreyClr = Color(0xFF121212);
 const Color logOutSettings = Colors.amberAccent;
 const Color greyColor = Colors.grey;
+const Color greyArrow = Colors.black45;
+
+const double arrow = 0.04;
+const double title = 0.034;
 // const Color pinkClr = Color(0xFFff4667);
 // const Color kCOlor1 = Color(0xff685959);
 // const Color kCOlor2 = Color(0xffADA79B);

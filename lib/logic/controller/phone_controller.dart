@@ -15,7 +15,7 @@ class PhoneController extends GetxController {
     ],
   );
   void storeTokenAndData(UserCredential userCredential) async {
-    print("storing token and data");
+    // print("storing token and data");
     await storage.write(
         key: "token", value: userCredential.credential!.token.toString());
     await storage.write(
