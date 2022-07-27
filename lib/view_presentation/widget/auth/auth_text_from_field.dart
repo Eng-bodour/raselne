@@ -9,6 +9,8 @@ class AuthTextFromField extends StatelessWidget {
   final Widget suffixIcon;
   final String hintText;
   final dynamic keyboardType;
+  final bool read;
+  // TextDirection? textdirehint;
 
   const AuthTextFromField({
     required this.controller,
@@ -18,6 +20,9 @@ class AuthTextFromField extends StatelessWidget {
     required this.suffixIcon,
     required this.hintText,
     required this.keyboardType,
+    required this.read,
+    // this.textdirehint,
+    // this.label,
     Key? key,
   }) : super(key: key);
 
@@ -32,8 +37,14 @@ class AuthTextFromField extends StatelessWidget {
       style: const TextStyle(
         color: Colors.black,
       ),
+      readOnly: read,
       decoration: InputDecoration(
+        // hintTextDirection: textdirehint,
+        alignLabelWithHint: true,
+        //  labelText: label,
+        //  labelStyle: const TextStyle(color: mainColor, fontSize: f20),
         fillColor: Colors.grey.shade200,
+
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         hintText: hintText,

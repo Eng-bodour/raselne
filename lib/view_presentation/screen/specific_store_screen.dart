@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:raselne/constatnt.dart';
 import 'package:raselne/utilis/theme.dart';
-import 'package:raselne/view_presentation/widget/specific%20store/expansion_grid_widget.dart';
+import 'package:raselne/view_presentation/widget/specific%20store/Inside_namesOf_theItems_widget.dart';
 import 'package:raselne/view_presentation/widget/specific%20store/first_container_widget.dart';
 import 'package:raselne/view_presentation/widget/specific%20store/typs_choise_widget.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
@@ -141,10 +141,11 @@ class SpecificStoreScreen extends StatelessWidget {
 
                           ListView.builder(
                             shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
+
+                            scrollDirection: Axis.vertical,
                             itemCount: typesTitle.length,
                             itemBuilder: (context, index) {
-                              return ExpansionGridWidget(
+                              return InsideNamesOfTheItems(
                                 typesTitle: typesTitle[index],
                               );
                             },
@@ -237,6 +238,7 @@ class SpecificStoreScreen extends StatelessWidget {
   }
 }
 
+// for bottom sheet
 Widget containerInkwell({
   required Size size,
   required String text,
@@ -264,29 +266,3 @@ Widget containerInkwell({
     ),
   );
 }
-// Widget TextFiledWidget(
-//     {required Size size, required String text, required bool isborder}) {
-//   return SizedBox(
-//     height: size.height * 0.05,
-//     child: TextField(
-//       minLines: 1,
-//       style: const TextStyle(
-//         color: Colors.white,
-//       ),
-//       decoration: InputDecoration(
-//         fillColor: isborder ? mainColor : Colors.white,
-//         filled: true,
-//         hintText: text,
-//         hintStyle: TextStyle(
-//           color: isborder ? Colors.white : mainColor,
-//           fontSize: size.width * 0.04,
-//           fontWeight: FontWeight.w500,
-//         ),
-//         enabledBorder: OutlineInputBorder(
-//           borderSide: const BorderSide(color: mainColor),
-//           borderRadius: BorderRadius.circular(20),
-//         ),
-//       ),
-//     ),
-//   );
-// }

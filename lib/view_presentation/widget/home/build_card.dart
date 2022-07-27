@@ -32,8 +32,8 @@ class BuildCard extends StatelessWidget {
           itemBuilder: (context, index) {
             return buildCardCategory(
                 image: imageList[index],
-                item: getController.docTyps[index].name,
-                // item: titleStore[index],
+                //  item: getController.docTyps[index].name,
+                item: titleStore[index],
                 ontap: () {
                   Get.to(() => StoreDetailsScreen(
                         titleStore: titleStore[index],

@@ -77,3 +77,8 @@ List<String> imageList = [
   'assets/services/healthy.png',
   'assets/services/organic.png',
 ];
+
+final List<String> additionMeal = [
+  'إختار وشكلها ',
+  'أضف المزيد من المقبلات ',
+];

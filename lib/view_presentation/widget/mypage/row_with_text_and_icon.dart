@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:raselne/utilis/theme.dart';
-import 'package:raselne/view_presentation/widget/text_utilis.dart';
+
 
 Widget buildRowTextIcon(
     {required Size size,

@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
               color: Colors.white,
               underLine: TextDecoration.none,
             )),
-        drawer: const CustomDrawer(),
+        drawer: CustomDrawer(),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

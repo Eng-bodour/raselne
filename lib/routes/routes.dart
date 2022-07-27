@@ -10,6 +10,7 @@ import 'package:raselne/view_presentation/screen/Auth/phone_screen.dart';
 import 'package:raselne/view_presentation/screen/Auth/signup_screen.dart';
 import 'package:raselne/view_presentation/screen/home_screen.dart';
 import 'package:raselne/view_presentation/screen/main_screen.dart';
+import 'package:raselne/view_presentation/screen/new_order_screen.dart';
 
 import 'package:raselne/view_presentation/screen/welcome_screen.dart';
 
@@ -17,7 +18,7 @@ class AppRoutes {
   //initialRoute
 
   static const welcome = Routes.welcomeScreen;
-  // static const homeScreen = Routes.homeScreen;
+  //static const homeScreen = Routes.homeScreen;
   static const mainScreen = Routes.mainScreen;
 
   //getPages
@@ -54,10 +55,14 @@ class AppRoutes {
     ),
     GetPage(
       name: Routes.mainScreen,
-      page: () => MainScreen(),
+      page: () => const MainScreen(),
       bindings: [
         MainBininding(),
       ],
+    ),
+    GetPage(
+      name: Routes.newOrderScreen,
+      page: () => const NewOrderScreen(),
     ),
 
     // GetPage(
@@ -73,4 +78,5 @@ class Routes {
   static const homeScreen = '/homeScreen';
   static const phoneScreen = '/phoneScreen';
   static const mainScreen = '/mainScreen';
+  static const newOrderScreen = '/newOrderScreen';
 }

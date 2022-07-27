@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:raselne/data_layer/webServices/firebase.dart';
 import 'package:raselne/logic/controller/auth_controller.dart';
 import 'package:raselne/routes/routes.dart';
 import 'package:raselne/utilis/my_string.dart';
@@ -70,6 +71,7 @@ class SignUpScreen extends StatelessWidget {
                           height: 50,
                         ),
                         AuthTextFromField(
+                          read: false,
                           keyboardType: TextInputType.text,
                           controller: nameController,
                           obscureText: false,
@@ -100,6 +102,7 @@ class SignUpScreen extends StatelessWidget {
                           height: size.height * 0.02,
                         ),
                         AuthTextFromField(
+                          read: false,
                           keyboardType: TextInputType.text,
                           controller: emailController,
                           obscureText: false,
@@ -129,6 +132,7 @@ class SignUpScreen extends StatelessWidget {
                         GetBuilder<AuthController>(
                           builder: (_) {
                             return AuthTextFromField(
+                              read: false,
                               keyboardType: TextInputType.text,
                               controller: passwordController,
                               obscureText:

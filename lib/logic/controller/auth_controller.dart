@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:raselne/data_layer/model/facebook_model.dart';
+import 'package:raselne/data_layer/webServices/firebase.dart';
+
 import 'package:raselne/routes/routes.dart';
 
 class AuthController extends GetxController {
@@ -33,6 +35,11 @@ class AuthController extends GetxController {
     super.onInit();
   }
 
+//create user obj based on firebase
+  // UserPrivate? _userFirebaseUser(User user) {
+  //   return user != null ? UserPrivate(uid: user.uid) : null;
+  // }
+
   void visibility() {
     isVisibilty = !isVisibilty;
 
@@ -57,10 +64,11 @@ class AuthController extends GetxController {
         displayUserName.value = name;
         auth.currentUser!.updateDisplayName(name);
       });
+      //to add applecation user and uid
 
       update();
-
-      Get.offNamed(Routes.homeScreen);
+      Firebase.userSetUp(name);
+      Get.offNamed(Routes.mainScreen);
     } on FirebaseAuthException catch (error) {
       String title = error.code.replaceAll(RegExp('-'), ' ').capitalize!;
       String message = '';
@@ -105,7 +113,7 @@ class AuthController extends GetxController {
       authBox!.write("auth", isSignedIn);
 
       update();
-      Get.offNamed(Routes.homeScreen);
+      Get.offNamed(Routes.mainScreen);
     } on FirebaseAuthException catch (error) {
       String title = error.code.replaceAll(RegExp('-'), ' ').capitalize!;
       String message = '';
@@ -156,7 +164,7 @@ class AuthController extends GetxController {
       authBox!.write("auth", isSignedIn);
       update();
 
-      Get.offNamed(Routes.homeScreen);
+      Get.offNamed(Routes.mainScreen);
     } catch (error) {
       Get.snackbar(
         'Error!',
@@ -184,7 +192,7 @@ class AuthController extends GetxController {
       isSignedIn = true;
       authBox!.write("auth", isSignedIn);
       update();
-      Get.offNamed(Routes.homeScreen);
+      Get.offNamed(Routes.mainScreen);
     }
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:raselne/data_layer/webServices/firebase.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/widget/mypage/logout_widget.dart';
 import 'package:raselne/view_presentation/widget/mypage/notification_widget.dart';
@@ -30,7 +31,7 @@ Widget InfoUser({required Size size}) {
               TextUtils(
                   fontSize: size.width * 0.05,
                   fontWeight: FontWeight.bold,
-                  text: 'بدور',
+                  text: 'Name User', //'${Firebase.name}',
                   color: Colors.black,
                   underLine: TextDecoration.none),
               RatingBarIndicator(

@@ -1,33 +1,33 @@
-class StoreMoel {
+class StoreModel {
   String nameStore;
   String typeStore;
   List<String> mobileStore;
   String location;
-  Rating rating;
+  //Rating rating;
 
-  StoreMoel({
+  StoreModel({
     required this.nameStore,
     required this.typeStore,
     required this.mobileStore,
     required this.location,
-    required this.rating,
+    // required this.rating,
   });
 
-  factory StoreMoel.fromJson(Map<String, dynamic> json) => StoreMoel(
-        nameStore: json["nameStore"],
-        typeStore: json["typeStore"],
-        mobileStore: json["mobileStore"],
-        location: json["location"],
-        rating: Rating.fromJson(json["rating"]),
-      );
+  // factory StoreModel.fromJson(Map<String, dynamic> json) => StoreModel(
+  //       nameStore: json["nameStore"],
+  //       typeStore: json["typeStore"],
+  //       mobileStore: json["mobileStore"],
+  //       location: json["location"],
+  //       //  rating: Rating.fromJson(json["rating"]),
+  //     );
 
-  Map<String, dynamic> toJson() => {
-        "nameStore": nameStore,
-        "typeStore": typeStore,
-        "mobileStore": mobileStore,
-        "location": location,
-        "rating": rating.toJson(),
-      };
+  // Map<String, dynamic> toJson() => {
+  //       "nameStore": nameStore,
+  //       "typeStore": typeStore,
+  //       "mobileStore": mobileStore,
+  //       "location": location,
+  //       // "rating": rating.toJson(),
+  //     };
 }
 
 class Rating {

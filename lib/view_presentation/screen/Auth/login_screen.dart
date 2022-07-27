@@ -70,6 +70,7 @@ class LoginScreen extends StatelessWidget {
                           height: size.height * 0.05,
                         ),
                         AuthTextFromField(
+                          read: false,
                           keyboardType: TextInputType.text,
                           controller: emailController,
                           obscureText: false,
@@ -99,6 +100,7 @@ class LoginScreen extends StatelessWidget {
                         GetBuilder<AuthController>(
                           builder: (_) {
                             return AuthTextFromField(
+                              read: false,
                               keyboardType: TextInputType.text,
                               controller: passwordController,
                               obscureText:

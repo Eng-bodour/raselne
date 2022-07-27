@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:raselne/data_layer/webServices/firebase.dart';
 import 'package:raselne/logic/controller/main_controller.dart';
 import 'package:raselne/utilis/theme.dart';
 
-class MainScreen extends StatelessWidget {
-  MainScreen({Key? key}) : super(key: key);
+class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
 
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
   final controller = Get.find<MainController>();
+  @override
+  void initState() {
+    // TODO: implement initState
+    Firebase.name;
+    Firebase.getNameuser();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

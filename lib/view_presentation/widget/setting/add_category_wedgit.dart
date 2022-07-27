@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:raselne/logic/controller/auth_controller.dart';
 import 'package:raselne/utilis/theme.dart';
+import 'package:raselne/view_presentation/screen/store%20drawer/add_category_store.dart';
 import 'package:raselne/view_presentation/screen/store%20drawer/add_store.dart';
 
 import '../text_utilis.dart';
 
-class AddStoreWidget extends StatelessWidget {
-  AddStoreWidget({Key? key}) : super(key: key);
+class AddCategoryWidget extends StatelessWidget {
+  AddCategoryWidget({Key? key}) : super(key: key);
 
   final controller = Get.put(AuthController());
 
@@ -18,7 +19,7 @@ class AddStoreWidget extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          Get.to(() => const AddStore());
+          Get.to(() => const AddCategory());
         },
         splashColor: Get.isDarkMode ? Colors.pink : Colors.green[100],
         borderRadius: BorderRadius.circular(12),
@@ -46,7 +47,7 @@ class AddStoreWidget extends StatelessWidget {
                 TextUtils(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  text: "Add Store".tr,
+                  text: "Add Category".tr,
                   color: Get.isDarkMode ? Colors.white : Colors.black,
                   underLine: TextDecoration.none,
                 ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:raselne/data_layer/model/store_model.dart';
-import 'package:raselne/utilis/theme.dart';
+
 import 'package:raselne/view_presentation/widget/store/store_list_build.dart';
 import 'package:raselne/view_presentation/widget/store/store_title.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
