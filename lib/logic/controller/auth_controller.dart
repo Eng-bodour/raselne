@@ -162,6 +162,7 @@ class AuthController extends GetxController {
 
       isSignedIn = true;
       authBox!.write("auth", isSignedIn);
+      Firebase.userSetUp(displayUserName.value);
       update();
 
       Get.offNamed(Routes.mainScreen);
@@ -191,6 +192,7 @@ class AuthController extends GetxController {
       // displayUserName.value = faceBookModel!.name!;
       isSignedIn = true;
       authBox!.write("auth", isSignedIn);
+      Firebase.userSetUp(faceBookModel!.name.toString());
       update();
       Get.offNamed(Routes.mainScreen);
     }

@@ -11,22 +11,25 @@ class AddStoreController extends GetxController {
 
   addStore({
     required String nameCollecton,
-    required String typename,
-    required String nameStore,
-    required String mobile,
-    required String location,
-    //  required int storeId
+    required Map<String, dynamic> storeModel,
+    // required String typename,
+    // required String nameStore,
+    // required String mobile,
+    // required String location,
   }) async {
     CollectionReference firestore =
         FirebaseFirestore.instance.collection(nameCollecton);
-    firestore.add({
-      // 'user_id': Random(),
-      'location': location,
-      'mobile': mobile,
-      'nameStore': nameStore,
-      'typeStore': typename,
-      //  'storeID': storeId
-    });
+    firestore.add(storeModel);
+
+    // 'location': storeModel.location,
+    // 'mobile': storeModel.mobileStore,
+    // 'nameStore': storeModel.nameStore,
+    // 'typeStore': storeModel.typeStore,
+    // 'location': location,
+    // 'mobile': mobile,
+    // 'nameStore': nameStore,
+    // 'typeStore': typename,
+    // });
   }
 
   getNameStore({required String nameCollecton, required String name}) async {

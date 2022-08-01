@@ -15,8 +15,8 @@ class StoreListBuild extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
       controller: controller,
-      itemCount: 10,
       scrollDirection: Axis.vertical,
+      itemCount: 10,
       itemBuilder: (BuildContext context, int index) {
         return Padding(
             padding: const EdgeInsets.all(8),

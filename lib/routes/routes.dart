@@ -11,6 +11,8 @@ import 'package:raselne/view_presentation/screen/Auth/signup_screen.dart';
 import 'package:raselne/view_presentation/screen/home_screen.dart';
 import 'package:raselne/view_presentation/screen/main_screen.dart';
 import 'package:raselne/view_presentation/screen/new_order_screen.dart';
+import 'package:raselne/view_presentation/screen/store%20drawer/add_category_store.dart';
+import 'package:raselne/view_presentation/screen/store%20drawer/add_store.dart';
 
 import 'package:raselne/view_presentation/screen/welcome_screen.dart';
 
@@ -62,7 +64,15 @@ class AppRoutes {
     ),
     GetPage(
       name: Routes.newOrderScreen,
-      page: () => const NewOrderScreen(),
+      page: () => NewOrderScreen(),
+    ),
+    GetPage(
+      name: Routes.addStore,
+      page: () => const AddStore(),
+    ),
+    GetPage(
+      name: Routes.addCategory,
+      page: () => const AddCategory(),
     ),
 
     // GetPage(
@@ -79,4 +89,6 @@ class Routes {
   static const phoneScreen = '/phoneScreen';
   static const mainScreen = '/mainScreen';
   static const newOrderScreen = '/newOrderScreen';
+  static const addStore = '/addStore';
+  static const addCategory = '/addCategory';
 }

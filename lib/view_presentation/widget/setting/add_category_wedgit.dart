@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:raselne/logic/controller/auth_controller.dart';
+import 'package:raselne/routes/routes.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/screen/store%20drawer/add_category_store.dart';
 import 'package:raselne/view_presentation/screen/store%20drawer/add_store.dart';
@@ -19,7 +20,7 @@ class AddCategoryWidget extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          Get.to(() => const AddCategory());
+          Get.toNamed(Routes.addCategory);
         },
         splashColor: Get.isDarkMode ? Colors.pink : Colors.green[100],
         borderRadius: BorderRadius.circular(12),

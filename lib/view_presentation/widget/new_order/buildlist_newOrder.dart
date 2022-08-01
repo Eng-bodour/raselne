@@ -3,132 +3,117 @@ import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
 class BuildListNewOrder extends StatelessWidget {
-  const BuildListNewOrder({Key? key}) : super(key: key);
+  BuildListNewOrder({Key? key}) : super(key: key);
+  var controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Padding(
-      padding:
-          EdgeInsets.only(left: size.width * 0.02, right: size.width * 0.02),
-      child: ListView.builder(
-        itemCount: 10,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-              padding: const EdgeInsets.all(8),
-              child: InkWell(
-                //  onTap: ontap,
-                child: Container(
-                  width: size.width * 0.4,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(size.height * 0.01),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+    List<String> name = [
+      '1n',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
+      '10',
+      '11',
+      '12',
+      '13',
+      '14',
+      '15',
+      '16',
+      '17',
+      '18',
+      '19',
+      '20'
+    ];
+
+    return ListView.separated(
+      shrinkWrap: true,
+      controller: controller,
+      scrollDirection: Axis.vertical,
+      // physics: const NeverScrollableScrollPhysics(),
+
+      itemCount: 2,
+
+      itemBuilder: (BuildContext context, int index) {
+        return Padding(
+            padding: const EdgeInsets.all(8),
+            child: InkWell(
+              //  onTap: ontap,
+              child: Padding(
+                padding: EdgeInsets.all(size.height * 0.01),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        TextUtils(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          text: name[index], //'اسم الوجبة ',
+                          color: greyColor,
+                          underLine: TextDecoration.none,
+                        ),
                         Row(
                           children: [
-                            const CircleAvatar(
-                              backgroundColor: greyColor,
-                              backgroundImage:
-                                  AssetImage('assets/images/user.png'),
-                            ),
-                            SizedBox(
-                              width: size.width * 0.05,
-                            ),
+                            IconButton(
+                                onPressed: () {},
+                                icon: Container(
+                                  child: const Icon(
+                                    Icons.add,
+                                    color: Colors.black45,
+                                  ),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black),
+                                      borderRadius: BorderRadius.circular(20)),
+                                )),
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                TextUtils(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  text: 'باسكن روبيز',
-                                  color: greyColor,
-                                  underLine: TextDecoration.none,
-                                ),
-                                TextUtils(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.normal,
-                                  text: 'حلويات ',
-                                  color: greyColor,
-                                  underLine: TextDecoration.none,
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: size.height * 0.02,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: const [
-                                Icon(
-                                  Icons.star,
-                                  color: mainColor,
-                                  size: f18,
-                                ),
-                                TextUtils(
-                                  fontSize: f12,
-                                  fontWeight: FontWeight.normal,
-                                  text: '4.6',
-                                  color: greyColor,
-                                  underLine: TextDecoration.none,
-                                ),
-                              ],
-                            ),
-                            Row(
                               children: [
                                 TextUtils(
-                                    fontSize: f12,
-                                    fontWeight: FontWeight.normal,
-                                    text: '0.68',
-                                    color: Colors.blue.shade300,
+                                    fontSize: size.width * 0.06,
+                                    fontWeight: FontWeight.bold,
+                                    text: '1',
+                                    color: Colors.orange,
                                     underLine: TextDecoration.none),
+                                SizedBox(
+                                  height: size.height * 0.02,
+                                ),
                                 TextUtils(
-                                    fontSize: f12,
-                                    fontWeight: FontWeight.normal,
-                                    text: 'كم',
-                                    color: greyColor.withOpacity(0.8),
+                                    fontSize: size.width * 0.03,
+                                    fontWeight: FontWeight.bold,
+                                    text: '22.00 SAR',
+                                    color: Colors.black45,
                                     underLine: TextDecoration.none),
                               ],
                             ),
+                            IconButton(
+                                onPressed: () {},
+                                icon: Container(
+                                  // margin: const EdgeInsets.only(bottom: 2),
+                                  child: const Icon(Icons.remove,
+                                      color: Colors.red),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.black),
+                                    shape: BoxShape.circle,
+                                  ),
+                                )),
                           ],
-                        ),
-
-                        // Positioned(
-                        //   right: 20,
-                        //   bottom: 2,
-                        //   child: Container(
-                        //     height: 30,
-                        //     width: 120,
-                        //     decoration: BoxDecoration(
-                        //       color: Colors.grey.withOpacity(0.3),
-                        //       borderRadius: BorderRadius.circular(5),
-                        //     ),
-                        //     child: const Center(
-                        //       child: Text(
-                        //         'item',
-                        //         style: TextStyle(
-                        //             fontSize: 15,
-                        //             color: Colors.white,
-                        //             fontWeight: FontWeight.bold),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
+                        )
                       ],
                     ),
-                  ),
+                  ],
                 ),
-              ));
-        },
+              ),
+            ));
+      },
+      separatorBuilder: (context, index) => const Divider(
+        thickness: 1,
       ),
     );
   }

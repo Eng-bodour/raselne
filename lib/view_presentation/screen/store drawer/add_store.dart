@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:raselne/data_layer/model/store_model.dart';
 import 'package:raselne/data_layer/webServices/types_services.dart';
 
 import 'package:raselne/logic/controller/store/store_controller.dart';
@@ -252,14 +253,14 @@ class _AddStoreState extends State<AddStore> {
 
                               // getController.getStore('types');
                               if (fromKey.currentState!.validate()) {
+                                StoreModel store = StoreModel(
+                                    nameStore: nameStoreController.text,
+                                    typeStore: selectedTypes.toString(),
+                                    mobileStore: mobileController.text,
+                                    location: locationController.text);
                                 controllerStore.addStore(
-                                  nameCollecton: 'store',
-                                  typename: selectedTypes.toString(),
-                                  nameStore: nameStoreController.text,
-                                  mobile: mobileController.text,
-                                  location: locationController.text,
-                                  // storeId: Random().nextInt(100000000),
-                                );
+                                    nameCollecton: 'store',
+                                    storeModel: store.toSnapchot());
 
                                 Get.back();
                               }

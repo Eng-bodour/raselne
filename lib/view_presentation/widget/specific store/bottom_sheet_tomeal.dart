@@ -57,9 +57,20 @@ Widget bottomSheetToMeal(BuildContext context) {
                   horizontal: size.width * 0.24, vertical: size.height * 0.04),
               child: Row(
                 children: [
+                  // IconButton(
+                  //     onPressed: () {},
+                  //     icon: const Icon(Icons.add, color: Colors.black45)),
                   IconButton(
                       onPressed: () {},
-                      icon: const Icon(Icons.add, color: Colors.black45)),
+                      icon: Container(
+                        child: const Icon(
+                          Icons.add,
+                          color: Colors.black45,
+                        ),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            borderRadius: BorderRadius.circular(20)),
+                      )),
                   SizedBox(
                     width: size.width * 0.05,
                   ),
@@ -85,9 +96,19 @@ Widget bottomSheetToMeal(BuildContext context) {
                   SizedBox(
                     width: size.width * 0.05,
                   ),
+                  // IconButton(
+                  //     onPressed: () {},
+                  //     icon: const Icon(Icons.minimize, color: Colors.black45)),
                   IconButton(
                       onPressed: () {},
-                      icon: const Icon(Icons.minimize, color: Colors.black45)),
+                      icon: Container(
+                        // margin: const EdgeInsets.only(bottom: 2),
+                        child: const Icon(Icons.remove, color: Colors.red),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                          shape: BoxShape.circle,
+                        ),
+                      )),
                 ],
               ),
             ),
