@@ -15,6 +15,7 @@ import 'package:raselne/view_presentation/widget/setting/add_category_wedgit.dar
 import 'package:raselne/view_presentation/widget/setting/add_store_widget.dart';
 import 'package:raselne/view_presentation/widget/mypage/logout_widget.dart';
 import 'package:raselne/view_presentation/widget/setting/chat_widget.dart';
+import 'package:raselne/view_presentation/widget/setting/driver.dart';
 
 class CustomDrawer extends StatelessWidget {
   CustomDrawer({Key? key}) : super(key: key);
@@ -126,6 +127,11 @@ class CustomDrawer extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
               chatWidget(),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.03,
+              ),
+              Driver()
+
               // TextButton(
               //     onPressed: () {
               //       Firebase().getuser();

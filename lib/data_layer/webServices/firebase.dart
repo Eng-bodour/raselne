@@ -7,6 +7,7 @@ class Firebase {
   static FirebaseAuth auth = FirebaseAuth.instance;
   static String uid = auth.currentUser!.uid.toString();
   static String? name;
+
   static Future<void> userSetUp(String dispalyName) async {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
 

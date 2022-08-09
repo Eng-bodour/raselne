@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:raselne/view_presentation/screen/my_page/support/any_question_screen_.dart';
 import 'package:raselne/view_presentation/widget/mypage/row_with_text_and_icon.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
+
+import 'any_question_screen_.dart';
 
 class AboutRaselne extends StatelessWidget {
   AboutRaselne({Key? key}) : super(key: key);

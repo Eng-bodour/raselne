@@ -2,20 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:raselne/utilis/theme.dart';
-import 'package:raselne/view_presentation/screen/my_page/support/customer%20support.dart';
 import 'package:raselne/view_presentation/screen/my_page/services_review_screen.dart';
 import 'package:raselne/view_presentation/screen/my_page/setting_screen.dart';
+import 'package:raselne/view_presentation/screen/my_page/support/customer%20support.dart';
 import 'package:raselne/view_presentation/screen/my_page/user_feedback_screen.dart';
 
 import 'package:raselne/view_presentation/widget/mypage/coupon/bottom_sheet.dart';
 import 'package:raselne/view_presentation/widget/mypage/info_account.dart';
 import 'package:raselne/view_presentation/widget/mypage/info_user.dart';
 import 'package:raselne/view_presentation/widget/mypage/num_order.dart';
+import 'package:raselne/view_presentation/widget/mypage_driver/account_balance.dart';
+import 'package:raselne/view_presentation/widget/mypage_driver/calculate_drive.dart';
+import 'package:raselne/view_presentation/widget/mypage_driver/mode_user.dart';
+import 'package:raselne/view_presentation/widget/mypage_driver/show_info_drive.dart';
 
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
-class MyPageScreen extends StatelessWidget {
-  MyPageScreen({Key? key}) : super(key: key);
+class MyPageDriverScreen extends StatelessWidget {
+  MyPageDriverScreen({Key? key}) : super(key: key);
   final TextEditingController couponController = TextEditingController();
 
   @override
@@ -39,10 +43,22 @@ class MyPageScreen extends StatelessWidget {
           textDirection: TextDirection.rtl,
           child: Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: size.width * 0.05, vertical: size.width * 0.02),
+                horizontal: size.width * 0.05, vertical: size.width * 0.04),
             child: Column(
               children: [
-                infoAccount(
+                showInfoDriver(size: size),
+                Divider(
+                  thickness: 1,
+                  color: greyColor.withOpacity(0.2),
+                  height: size.height * 0.04,
+                ),
+                CalculateDriver(size: size),
+                Divider(
+                  thickness: 1,
+                  color: greyColor.withOpacity(0.2),
+                  height: size.height * 0.04,
+                ),
+                AccountBalance(
                     context: context,
                     size: size,
                     title: 'رصيد الحساب',
@@ -50,19 +66,48 @@ class MyPageScreen extends StatelessWidget {
                 Divider(
                   thickness: 1,
                   color: greyColor.withOpacity(0.2),
-                  height: size.height * 0.04,
                 ),
-                numOrder(
-                    size: size, title: 'عدد الطلبات ', subTitle: ' 6 طلبات '),
-                Divider(
-                    thickness: 1,
-                    color: greyColor.withOpacity(0.2),
-                    height: size.height * 0.02),
                 info(
                     ontap: () {
-                      Get.to(const ServicesReview(
-                        title: 'تقييمات الخدمات',
-                      ));
+                      // Get.to(CustomerSupport(
+                      //   title: 'أرباحي',
+                      // ));
+                    },
+                    context: context,
+                    bool: false,
+                    size: size,
+                    title: ' أرباحي',
+                    subtitle: '',
+                    icon: const Icon(Icons.stars_outlined,
+                        color: Colors.black26)),
+                Divider(
+                  thickness: 1,
+                  color: greyColor.withOpacity(0.2),
+                  height: size.height * 0.04,
+                ),
+                modeUser(
+                    context: context,
+                    size: size,
+                    ontap: () {},
+                    title: 'وضع المستخدم',
+                    subtitle: TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'وضع المندوب',
+                        style: TextStyle(
+                            color: mainColor, fontSize: size.width * 0.05),
+                      ),
+                    ),
+                    icon: const Icon(Icons.person, color: Colors.black26)),
+                Divider(
+                  thickness: 1,
+                  color: greyColor.withOpacity(0.2),
+                ),
+                info(
+                    ontap: () {
+                      // Get.to(const ServicesReview(
+                      //   title: 'تقييمات الخدمات',
+                      // ));
                     },
                     context: context,
                     bool: false,
@@ -74,9 +119,9 @@ class MyPageScreen extends StatelessWidget {
                 Divider(thickness: 1, color: greyColor.withOpacity(0.2)),
                 info(
                     ontap: () {
-                      Get.to(UserFeedBackScreen(
-                        title: 'ملاحظات المستخدمين ',
-                      ));
+                      // Get.to(UserFeedBackScreen(
+                      //   title: 'ملاحظات المستخدمين ',
+                      // ));
                     },
                     context: context,
                     bool: false,
@@ -98,28 +143,37 @@ class MyPageScreen extends StatelessWidget {
                 Divider(thickness: 1, color: greyColor.withOpacity(0.2)),
                 info(
                     ontap: () {
-                      Get.to(CustomerSupport(
-                        title: 'الدعم للعملاء',
-                      ));
+                      // Get.to(CustomerSupport(
+                      //   title: 'الدعم للعملاء',
+                      // ));
                     },
                     context: context,
                     bool: false,
                     size: size,
-                    title: 'الدعم للعملاء ',
+                    title: 'الدعم للمناديب ',
                     subtitle: '',
                     icon:
                         const Icon(Icons.help_rounded, color: Colors.black26)),
                 Divider(thickness: 1, color: greyColor.withOpacity(0.2)),
                 info(
                     ontap: () {
-                      Get.to(SettingScreen(
-                        title: 'إعدادات',
-                      ));
+                      // Get.to(SettingScreen(
+                      //   title: 'إعدادات',
+                      // ));
                     },
                     context: context,
                     bool: false,
                     size: size,
                     title: 'الإعدادات  ',
+                    subtitle: '',
+                    icon: const Icon(Icons.settings, color: Colors.black26)),
+                Divider(thickness: 1, color: greyColor.withOpacity(0.2)),
+                info(
+                    ontap: () {},
+                    context: context,
+                    bool: false,
+                    size: size,
+                    title: 'طريقة السداد',
                     subtitle: '',
                     icon: const Icon(Icons.settings, color: Colors.black26)),
                 Divider(thickness: 1, color: greyColor.withOpacity(0.2)),
@@ -143,7 +197,7 @@ class MyPageScreen extends StatelessWidget {
       highlightColor: Colors.white,
       onTap: ontap,
       child: SizedBox(
-        height: size.height * 0.07,
+        height: size.height * 0.05,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
