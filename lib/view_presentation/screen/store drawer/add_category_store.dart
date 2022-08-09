@@ -1,19 +1,14 @@
-import 'dart:math';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:get/get.dart';
-import 'package:raselne/data_layer/webServices/types_services.dart';
+import 'package:provider/provider.dart';
+
 import 'package:raselne/logic/controller/store/category_store_controller.dart';
 
-import 'package:raselne/logic/controller/store/store_controller.dart';
-import 'package:raselne/logic/controller/types_Controller.dart';
-import 'package:raselne/utilis/my_string.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/widget/auth/auth_button.dart';
 import 'package:raselne/view_presentation/widget/auth/auth_text_from_field.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
+
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
 class AddCategory extends StatefulWidget {
@@ -35,13 +30,13 @@ class _AddCategoryState extends State<AddCategory> {
 
   final TextEditingController imageController = TextEditingController();
 
-  final controllerCategory = Get.put(CategoryStoreController());
-  // final typesController = Get.put(TypesController());
+  // final controllerCategory = Get.put(CategoryStoreController());
 
   ScrollController controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
+    var categoryStoreProvider = Provider.of<CategoryStoreProvider>(context);
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -191,38 +186,68 @@ class _AddCategoryState extends State<AddCategory> {
                     //   child: const Text('get'),
                     // ),
                     Center(
-                      child: GetBuilder<CategoryStoreController>(builder: (_) {
-                        return AuthButton(
-                            onPressed: () {
-                              // getController.docTyps.length;
-                              // print(getController.docTyps.length);
-                              // GetServices.GetTypes('types');
-                              // getController.getTyps();
-                              // print(GetServices.GetTypes('types'));
+                      child: AuthButton(
+                          onPressed: () {
+                            // getController.docTyps.length;
+                            // print(getController.docTyps.length);
+                            // GetServices.GetTypes('types');
+                            // getController.getTyps();
+                            // print(GetServices.GetTypes('types'));
 
-                              // getController.getStore('types');
+                            // getController.getStore('types');
 
-                              if (fromKey.currentState!.validate()) {
-                                controllerCategory.addCategory(
-                                  nameCollection: 'number1',
-                                  nameCategory: nameCategoryController.text,
-                                  description: descriptionController.text,
-                                  price: priceController.text,
-                                  image: imageController.text,
+                            if (fromKey.currentState!.validate()) {
+                              categoryStoreProvider.addCategory(
+                                nameCollection: 'number1',
+                                nameCategory: nameCategoryController.text,
+                                description: descriptionController.text,
+                                price: priceController.text,
+                                image: imageController.text,
 
-                                  // nameCollecton: 'store',
-                                  // typename: selectedTypes.toString(),
-                                  // nameStore: nameStoreController.text,
-                                  // mobile: mobileController.text,
-                                  // location: locationController.text,
-                                  // storeId: Random().nextInt(100000000),
-                                );
+                                // nameCollecton: 'store',
+                                // typename: selectedTypes.toString(),
+                                // nameStore: nameStoreController.text,
+                                // mobile: mobileController.text,
+                                // location: locationController.text,
+                                // storeId: Random().nextInt(100000000),
+                              );
 
-                                Get.back();
-                              }
-                            },
-                            text: 'Add Store');
-                      }),
+                              Get.back();
+                            }
+                          },
+                          text: 'Add Store'),
+                      // GetBuilder<CategoryStoreController>(builder: (_) {
+                      //   return AuthButton(
+                      //       onPressed: () {
+                      //         // getController.docTyps.length;
+                      //         // print(getController.docTyps.length);
+                      //         // GetServices.GetTypes('types');
+                      //         // getController.getTyps();
+                      //         // print(GetServices.GetTypes('types'));
+
+                      //         // getController.getStore('types');
+
+                      //         if (fromKey.currentState!.validate()) {
+                      //           controllerCategory.addCategory(
+                      //             nameCollection: 'number1',
+                      //             nameCategory: nameCategoryController.text,
+                      //             description: descriptionController.text,
+                      //             price: priceController.text,
+                      //             image: imageController.text,
+
+                      //             // nameCollecton: 'store',
+                      //             // typename: selectedTypes.toString(),
+                      //             // nameStore: nameStoreController.text,
+                      //             // mobile: mobileController.text,
+                      //             // location: locationController.text,
+                      //             // storeId: Random().nextInt(100000000),
+                      //           );
+
+                      //           Get.back();
+                      //         }
+                      //       },
+                      //       text: 'Add Store');
+                      // }),
                     ),
                   ],
                 ),

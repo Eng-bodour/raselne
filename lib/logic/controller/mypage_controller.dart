@@ -1,5 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-class MyPageController extends GetxController {
+class MyPageProvider extends ChangeNotifier {
   var swithchValue = false.obs;
 }

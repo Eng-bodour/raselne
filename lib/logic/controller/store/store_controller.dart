@@ -1,12 +1,7 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:http/http.dart';
-import 'package:raselne/data_layer/model/store_model.dart';
 
-class AddStoreController extends GetxController {
+class AddStoreProvider extends ChangeNotifier {
   bool isUsedName = false;
 
   addStore({

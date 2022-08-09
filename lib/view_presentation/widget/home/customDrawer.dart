@@ -1,19 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:raselne/data_layer/model/user_model.dart';
-import 'package:raselne/data_layer/webServices/firebase.dart';
+
 import 'package:raselne/logic/controller/firebase_provider.dart';
 
-import 'dart:io';
-
 import 'package:raselne/utilis/theme.dart';
-import 'package:raselne/view_presentation/screen/chat/chat_screen.dart';
-import 'package:raselne/view_presentation/screen/store%20drawer/add_category_store.dart';
+
 import 'package:raselne/view_presentation/widget/setting/add_category_wedgit.dart';
 import 'package:raselne/view_presentation/widget/setting/add_store_widget.dart';
-import 'package:raselne/view_presentation/widget/mypage/logout_widget.dart';
+
 import 'package:raselne/view_presentation/widget/setting/chat_widget.dart';
 import 'package:raselne/view_presentation/widget/setting/driver.dart';
 
@@ -118,19 +113,19 @@ class CustomDrawer extends StatelessWidget {
               //   child: const Text('Add category'),
               // ),
 
-              AddStoreWidget(),
+              const AddStoreWidget(),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
-              AddCategoryWidget(),
+              const AddCategoryWidget(),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
-              chatWidget(),
+              const chatWidget(),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
-              Driver()
+              const Driver()
 
               // TextButton(
               //     onPressed: () {

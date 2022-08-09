@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'package:raselne/utilis/theme.dart';
-import 'package:raselne/view_presentation/screen/my_page/services_review_screen.dart';
-import 'package:raselne/view_presentation/screen/my_page/setting_screen.dart';
-import 'package:raselne/view_presentation/screen/my_page/support/customer%20support.dart';
-import 'package:raselne/view_presentation/screen/my_page/user_feedback_screen.dart';
 
 import 'package:raselne/view_presentation/widget/mypage/coupon/bottom_sheet.dart';
-import 'package:raselne/view_presentation/widget/mypage/info_account.dart';
+
 import 'package:raselne/view_presentation/widget/mypage/info_user.dart';
-import 'package:raselne/view_presentation/widget/mypage/num_order.dart';
 import 'package:raselne/view_presentation/widget/mypage_driver/account_balance.dart';
+
 import 'package:raselne/view_presentation/widget/mypage_driver/calculate_drive.dart';
 import 'package:raselne/view_presentation/widget/mypage_driver/mode_user.dart';
 import 'package:raselne/view_presentation/widget/mypage_driver/show_info_drive.dart';
@@ -58,7 +53,7 @@ class MyPageDriverScreen extends StatelessWidget {
                   color: greyColor.withOpacity(0.2),
                   height: size.height * 0.04,
                 ),
-                AccountBalance(
+                accountBalance(
                     context: context,
                     size: size,
                     title: 'رصيد الحساب',

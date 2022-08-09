@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:raselne/utilis/theme.dart';
-import 'package:raselne/view_presentation/widget/text_utilis.dart';
+
 import 'package:group_button/group_button.dart';
 
 class TypesChoiseWidget extends StatefulWidget {
@@ -47,7 +47,7 @@ class _TypesChoiseWidgetState extends State<TypesChoiseWidget> {
                   //setState(() {
                   isSelected = isSelected;
                   int index = indexSelected;
-                  print('$index : $isSelected');
+                  // print('$index : $isSelected');
                 },
                 options: GroupButtonOptions(
                     borderRadius: BorderRadius.circular(20),

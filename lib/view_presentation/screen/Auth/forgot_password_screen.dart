@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:raselne/logic/controller/auth_controller.dart';
 import 'package:raselne/utilis/my_string.dart';
 import 'package:raselne/utilis/theme.dart';
@@ -11,9 +12,10 @@ class ForgotPasswordScreen extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
 
-  final controller = Get.find<AuthController>();
+  // final controller = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
+    var authProvider = Provider.of<AuthProvider>(context);
     var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -115,19 +117,30 @@ class ForgotPasswordScreen extends StatelessWidget {
                   const SizedBox(
                     height: 50,
                   ),
-                  GetBuilder<AuthController>(builder: (_) {
-                    return AuthButton(
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          String email = emailController.text.trim();
-                          controller.resetPassword(email);
-                        }
-                      },
-                      text: "SEND",
-                      // width: size.width * 0.15,
-                      // height: size.height * 0.19,
-                    );
-                  }),
+                  // GetBuilder<AuthController>(builder: (_) {
+                  //   return AuthButton(
+                  //     onPressed: () {
+                  //       if (formKey.currentState!.validate()) {
+                  //         String email = emailController.text.trim();
+                  //         controller.resetPassword(email);
+                  //       }
+                  //     },
+                  //     text: "SEND",
+                  //     // width: size.width * 0.15,
+                  //     // height: size.height * 0.19,
+                  //   );
+                  // }),
+                  AuthButton(
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        String email = emailController.text.trim();
+                        authProvider.resetPassword(email);
+                      }
+                    },
+                    text: "SEND",
+                    // width: size.width * 0.15,
+                    // height: size.height * 0.19,
+                  ),
                 ],
               ),
             ),

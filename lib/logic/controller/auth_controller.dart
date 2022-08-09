@@ -9,7 +9,7 @@ import 'package:raselne/data_layer/webServices/firebase.dart';
 
 import 'package:raselne/routes/routes.dart';
 
-class AuthController extends GetxController {
+class AuthProvider extends ChangeNotifier {
   bool isVisibilty = false;
   bool isCheckBox = false;
   var displayUserName = ''.obs;
@@ -31,8 +31,6 @@ class AuthController extends GetxController {
     // displayUserPhoto.value =
     //     (userProfiloe != null ? userProfiloe!.photoURL : "")!;
     displayUserEmail.value = (userProfiloe != null ? userProfiloe!.email : "")!;
-
-    super.onInit();
   }
 
 //create user obj based on firebase
@@ -43,13 +41,13 @@ class AuthController extends GetxController {
   void visibility() {
     isVisibilty = !isVisibilty;
 
-    update();
+    notifyListeners();
   }
 
   void checkBox() {
     isCheckBox = !isCheckBox;
 
-    update();
+    notifyListeners();
   }
 
   void signUpUsingFirebase({
@@ -66,7 +64,7 @@ class AuthController extends GetxController {
       });
       //to add applecation user and uid
 
-      update();
+      notifyListeners();
       Firebase.userSetUp(name);
       Get.offNamed(Routes.mainScreen);
     } on FirebaseAuthException catch (error) {
@@ -112,7 +110,7 @@ class AuthController extends GetxController {
       isSignedIn = true;
       authBox!.write("auth", isSignedIn);
 
-      update();
+      notifyListeners();
       Get.offNamed(Routes.mainScreen);
     } on FirebaseAuthException catch (error) {
       String title = error.code.replaceAll(RegExp('-'), ' ').capitalize!;
@@ -163,7 +161,7 @@ class AuthController extends GetxController {
       isSignedIn = true;
       authBox!.write("auth", isSignedIn);
       Firebase.userSetUp(displayUserName.value);
-      update();
+      notifyListeners();
 
       Get.offNamed(Routes.mainScreen);
     } catch (error) {
@@ -178,7 +176,7 @@ class AuthController extends GetxController {
   }
 
   void faceBookSignUpApp() async {
-    print('facebok');
+    // print('facebok');
     final LoginResult loginResult = await FacebookAuth.instance.login();
     // final accesToken = loginResult.accessToken!.token;
     // final credential = FacebookAuthProvider.credential(accesToken);
@@ -193,7 +191,7 @@ class AuthController extends GetxController {
       isSignedIn = true;
       authBox!.write("auth", isSignedIn);
       Firebase.userSetUp(faceBookModel!.name.toString());
-      update();
+      notifyListeners();
       Get.offNamed(Routes.mainScreen);
     }
   }
@@ -202,7 +200,7 @@ class AuthController extends GetxController {
     try {
       await auth.sendPasswordResetEmail(email: email);
 
-      update();
+      notifyListeners();
       Get.back();
     } on FirebaseAuthException catch (error) {
       String title = error.code.replaceAll(RegExp('-'), ' ').capitalize!;
@@ -242,7 +240,7 @@ class AuthController extends GetxController {
       displayUserEmail.value = '';
       isSignedIn = false;
       authBox!.remove("auth");
-      update();
+      notifyListeners();
 
       Get.offNamed(Routes.welcomeScreen);
     } catch (error) {

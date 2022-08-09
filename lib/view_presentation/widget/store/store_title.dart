@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:raselne/utilis/theme.dart';
 
-import '../../../constatnt.dart';
 import '../text_utilis.dart';
 
 class StoreTitle extends StatelessWidget {

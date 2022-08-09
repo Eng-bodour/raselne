@@ -3,7 +3,7 @@ import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/screen/specific_store_screen.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
-Widget AccountBalance(
+Widget accountBalance(
     {required BuildContext context,
     required Size size,
     required String title,

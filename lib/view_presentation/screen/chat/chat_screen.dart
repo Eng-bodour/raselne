@@ -7,6 +7,7 @@ import 'package:raselne/utilis/theme.dart';
 class ChatScreen extends StatefulWidget {
   final UserModel user;
 
+  // ignore: use_key_in_widget_constructors
   const ChatScreen({required this.user});
 
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:raselne/data_layer/webServices/firebase.dart';
+import 'package:provider/provider.dart';
+
 import 'package:raselne/logic/controller/auth_controller.dart';
 import 'package:raselne/routes/routes.dart';
 import 'package:raselne/utilis/my_string.dart';
@@ -19,10 +20,11 @@ class SignUpScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  final controller = Get.find<AuthController>();
+  // final controller = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
+    var authProvider = Provider.of<AuthProvider>(context);
     var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -129,82 +131,117 @@ class SignUpScreen extends StatelessWidget {
                         SizedBox(
                           height: size.height * 0.02,
                         ),
-                        GetBuilder<AuthController>(
-                          builder: (_) {
-                            return AuthTextFromField(
-                              read: false,
-                              keyboardType: TextInputType.text,
-                              controller: passwordController,
-                              obscureText:
-                                  controller.isVisibilty ? false : true,
-                              validator: (value) {
-                                if (value.toString().length < 6) {
-                                  return 'Password should be longer or equal to 6 characters';
-                                } else {
-                                  return null;
-                                }
-                              },
-                              prefixIcon:
-                                  //  Get.isDarkMode
-                                  //     ? const Icon(
-                                  //         Icons.lock,
-                                  //         color: pinkClr,
-                                  //         size: 30,
-                                  //       )
-                                  //     :
-                                  Image.asset('assets/images/lock.png',
-                                      color: Colors.amber),
-                              hintText: 'Password',
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  controller.visibility();
-                                },
-                                icon: controller.isVisibilty
-                                    ? const Icon(
-                                        Icons.visibility_off,
-                                        color: Colors.black,
-                                      )
-                                    : const Icon(
-                                        Icons.visibility,
-                                        color: Colors.black,
-                                      ),
-                              ),
-                            );
+                        AuthTextFromField(
+                          read: false,
+                          keyboardType: TextInputType.text,
+                          controller: passwordController,
+                          obscureText: authProvider.isVisibilty ? false : true,
+                          validator: (value) {
+                            if (value.toString().length < 6) {
+                              return 'Password should be longer or equal to 6 characters';
+                            } else {
+                              return null;
+                            }
                           },
+                          prefixIcon:
+                              //  Get.isDarkMode
+                              //     ? const Icon(
+                              //         Icons.lock,
+                              //         color: pinkClr,
+                              //         size: 30,
+                              //       )
+                              //     :
+                              Image.asset('assets/images/lock.png',
+                                  color: Colors.amber),
+                          hintText: 'Password',
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              authProvider.visibility();
+                            },
+                            icon: authProvider.isVisibilty
+                                ? const Icon(
+                                    Icons.visibility_off,
+                                    color: Colors.black,
+                                  )
+                                : const Icon(
+                                    Icons.visibility,
+                                    color: Colors.black,
+                                  ),
+                          ),
                         ),
+                        // GetBuilder<AuthController>(
+                        //   builder: (_) {
+                        //     return AuthTextFromField(
+                        //       read: false,
+                        //       keyboardType: TextInputType.text,
+                        //       controller: passwordController,
+                        //       obscureText:
+                        //           controller.isVisibilty ? false : true,
+                        //       validator: (value) {
+                        //         if (value.toString().length < 6) {
+                        //           return 'Password should be longer or equal to 6 characters';
+                        //         } else {
+                        //           return null;
+                        //         }
+                        //       },
+                        //       prefixIcon:
+                        //           //  Get.isDarkMode
+                        //           //     ? const Icon(
+                        //           //         Icons.lock,
+                        //           //         color: pinkClr,
+                        //           //         size: 30,
+                        //           //       )
+                        //           //     :
+                        //           Image.asset('assets/images/lock.png',
+                        //               color: Colors.amber),
+                        //       hintText: 'Password',
+                        //       suffixIcon: IconButton(
+                        //         onPressed: () {
+                        //           controller.visibility();
+                        //         },
+                        //         icon: controller.isVisibilty
+                        //             ? const Icon(
+                        //                 Icons.visibility_off,
+                        //                 color: Colors.black,
+                        //               )
+                        //             : const Icon(
+                        //                 Icons.visibility,
+                        //                 color: Colors.black,
+                        //               ),
+                        //       ),
+                        //     );
+                        //   },
+                        // ),
                         SizedBox(height: size.height * 0.04),
-                        CheckWidget(),
+                        const CheckWidget(),
                         SizedBox(height: size.height * 0.04),
-                        GetBuilder<AuthController>(
-                          builder: (_) {
-                            return AuthButton(
-                              // width: size.width * 0.15,
-                              // height: size.height * 0.19,
-                              onPressed: () {
-                                if (controller.isCheckBox == false) {
-                                  Get.snackbar(
-                                    "Check Box",
-                                    "Please, Accept terms & conditions",
-                                    snackPosition: SnackPosition.BOTTOM,
-                                    backgroundColor: Colors.amberAccent,
-                                    colorText: Colors.white,
-                                  );
-                                } else if (fromKey.currentState!.validate()) {
-                                  String name = nameController.text.trim();
-                                  String email = emailController.text.trim();
-                                  String password = passwordController.text;
-                                  controller.signUpUsingFirebase(
-                                    name: name,
-                                    email: email,
-                                    password: password,
-                                  );
 
-                                  controller.isCheckBox = true;
-                                }
-                              },
-                              text: "SIGN UP",
-                            );
+                        AuthButton(
+                          // width: size.width * 0.15,
+                          // height: size.height * 0.19,
+                          onPressed: () {
+                            if (authProvider.isCheckBox == false) {
+                              Get.snackbar(
+                                "Check Box",
+                                "Please, Accept terms & conditions",
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Colors.amberAccent,
+                                colorText: Colors.white,
+                              );
+                            } else if (fromKey.currentState!.validate()) {
+                              String name = nameController.text.trim();
+                              String email = emailController.text.trim();
+                              String password = passwordController.text;
+                              authProvider.signUpUsingFirebase(
+                                name: name,
+                                email: email,
+                                password: password,
+                              );
+
+                              authProvider.isCheckBox = true;
+                            }
                           },
+                          text: "SIGN UP",
                         )
                       ],
                     ),

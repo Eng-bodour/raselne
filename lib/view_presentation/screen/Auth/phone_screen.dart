@@ -18,7 +18,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
   bool wait = false;
   String buttonName = "Send";
   TextEditingController phoneController = TextEditingController();
-  PhoneController authClass = PhoneController();
+  PhoneProvider authClass = PhoneProvider();
   String verificationIdFinal = "";
   String smsCode = "";
   @override

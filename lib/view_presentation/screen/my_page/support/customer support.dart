@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:raselne/utilis/theme.dart';
+
 import 'package:raselne/view_presentation/widget/mypage/row_with_text_and_icon.dart';
 import 'package:raselne/view_presentation/widget/mypage/support/buildlist_horizen.dart';
 

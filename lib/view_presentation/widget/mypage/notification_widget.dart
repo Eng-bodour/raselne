@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:raselne/logic/binding/main_binding.dart';
+
+import 'package:provider/provider.dart';
+
 import 'package:raselne/logic/controller/mypage_controller.dart';
 import 'package:raselne/utilis/theme.dart';
 
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
 class NotificationWidget extends StatelessWidget {
-  NotificationWidget({Key? key}) : super(key: key);
-  final controller = Get.find<MyPageController>();
+  const NotificationWidget({Key? key}) : super(key: key);
+  // final controller = Get.find<MyPageController>();
   @override
   Widget build(BuildContext context) {
+    var myPageProvider = Provider.of<MyPageProvider>(context);
     var size = MediaQuery.of(context).size;
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -65,19 +67,30 @@ class NotificationWidget extends StatelessWidget {
                 )
                 // ,IconButton(onPressed: (){}, icon: icon)
                 ,
-                Obx(
-                  () => Switch(
-                    activeTrackColor:
-                        mainColor, //Get.isDarkMode ? pinkClr : mainColor,
-                    activeColor:
-                        mainColor, //Get.isDarkMode ? pinkClr : mainColor,
-                    value: controller.swithchValue.value,
-                    onChanged: (value) {
-                      // ThemeController().changesTheme();
-                      controller.swithchValue.value = value;
-                    },
-                  ),
-                )
+                Switch(
+                  activeTrackColor:
+                      mainColor, //Get.isDarkMode ? pinkClr : mainColor,
+                  activeColor:
+                      mainColor, //Get.isDarkMode ? pinkClr : mainColor,
+                  value: myPageProvider.swithchValue.value,
+                  onChanged: (value) {
+                    // ThemeController().changesTheme();
+                    myPageProvider.swithchValue.value = value;
+                  },
+                ),
+                // Obx(
+                //   () => Switch(
+                //     activeTrackColor:
+                //         mainColor, //Get.isDarkMode ? pinkClr : mainColor,
+                //     activeColor:
+                //         mainColor, //Get.isDarkMode ? pinkClr : mainColor,
+                //     value: controller.swithchValue.value,
+                //     onChanged: (value) {
+                //       // ThemeController().changesTheme();
+                //       controller.swithchValue.value = value;
+                //     },
+                //   ),
+                // )
               ],
             ),
           ),

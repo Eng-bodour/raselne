@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:raselne/logic/controller/auth_controller.dart';
+
 import 'package:raselne/routes/routes.dart';
 import 'package:raselne/utilis/theme.dart';
-import 'package:raselne/view_presentation/screen/store%20drawer/add_category_store.dart';
-import 'package:raselne/view_presentation/screen/store%20drawer/add_store.dart';
 
 import '../text_utilis.dart';
 
 class AddCategoryWidget extends StatelessWidget {
-  AddCategoryWidget({Key? key}) : super(key: key);
+  const AddCategoryWidget({Key? key}) : super(key: key);
 
-  final controller = Get.put(AuthController());
+  // final controller = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {

@@ -5,7 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:raselne/routes/routes.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class PhoneController extends GetxController {
+class PhoneProvider extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final storage = const FlutterSecureStorage();
   final GoogleSignIn _googleSignIn = GoogleSignIn(

@@ -9,9 +9,7 @@ import 'package:raselne/view_presentation/screen/store%20drawer/add_store.dart';
 import '../text_utilis.dart';
 
 class Driver extends StatelessWidget {
-  Driver({Key? key}) : super(key: key);
-
-  final controller = Get.put(AuthController());
+  const Driver({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

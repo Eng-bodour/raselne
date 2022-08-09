@@ -1,15 +1,12 @@
-import 'dart:math';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:raselne/data_layer/model/store_model.dart';
-import 'package:raselne/data_layer/webServices/types_services.dart';
 
 import 'package:raselne/logic/controller/store/store_controller.dart';
 import 'package:raselne/logic/controller/types_Controller.dart';
-import 'package:raselne/utilis/my_string.dart';
+
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/widget/auth/auth_button.dart';
 import 'package:raselne/view_presentation/widget/auth/auth_text_from_field.dart';
@@ -39,13 +36,15 @@ class _AddStoreState extends State<AddStore> {
 
   final TextEditingController locationController = TextEditingController();
 
-  final controllerStore = Get.put(AddStoreController());
-  final typesController = Get.put(TypesController());
+  // final controllerStore = Get.put(AddStoreController());
 
   ScrollController controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
+    var addStoreProvider = Provider.of<AddStoreProvider>(context);
+    var typesProvider = Provider.of<TypesProvider>(context);
+
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -108,70 +107,132 @@ class _AddStoreState extends State<AddStore> {
                         text: 'نوع المحل',
                         color: greyColor,
                         underLine: TextDecoration.none),
-                    Obx(
-                      () => AuthTextFromField(
-                        read: true,
-                        keyboardType: TextInputType.text,
-                        controller: typeStoreController,
-                        obscureText: false,
-                        validator: (value) {
-                          // if (value.toString().length <= 2 ||
-                          // /    !RegExp(validationName).hasMatch(value)) {
-                          //   return 'Enter valid name';
-                          // } else {
-                          //   return null;
-                          // }
-                        },
-                        prefixIcon: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: size.height * 0.06),
-                          margin: EdgeInsets.only(top: size.height * 0.01),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton2(
-                              hint: Text(typesController.docTyps[0].name,
-                                  style: const TextStyle(
-                                    color: Colors.black45,
-                                    fontSize: f16,
-                                    fontWeight: FontWeight.w500,
-                                  )),
-                              items: typesController.docTyps
-                                  .map((item) => DropdownMenuItem<String>(
-                                        value: item.name,
-                                        child: Column(
-                                          children: [
-                                            Text(item.name,
-                                                style: const TextStyle(
-                                                  color: Colors.black45,
-                                                  fontSize: f16,
-                                                  fontWeight: FontWeight.bold,
-                                                )),
-                                            const Divider(
-                                              thickness: 0.7,
-                                              color: mainColor,
-                                            ),
-                                          ],
-                                        ),
-                                      ))
-                                  .toList(),
-                              value: selectedTypes,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedTypes = value as String;
-                                  // typeStoreController.text =
-                                  //     selectedTypes.toString();
-                                  print('$selectedTypes');
-                                });
-                              },
-                              buttonHeight: size.height * 0.06,
-                              buttonWidth: size.width * 0.4,
-                              itemHeight: size.height * 0.06,
-                            ),
+                    AuthTextFromField(
+                      read: true,
+                      keyboardType: TextInputType.text,
+                      controller: typeStoreController,
+                      obscureText: false,
+                      validator: (value) {
+                        // if (value.toString().length <= 2 ||
+                        // /    !RegExp(validationName).hasMatch(value)) {
+                        //   return 'Enter valid name';
+                        // } else {
+                        //   return null;
+                        // }
+                      },
+                      prefixIcon: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: size.height * 0.06),
+                        margin: EdgeInsets.only(top: size.height * 0.01),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton2(
+                            hint: Text(typesProvider.docTyps[0].name,
+                                style: const TextStyle(
+                                  color: Colors.black45,
+                                  fontSize: f16,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                            items: typesProvider.docTyps
+                                .map((item) => DropdownMenuItem<String>(
+                                      value: item.name,
+                                      child: Column(
+                                        children: [
+                                          Text(item.name,
+                                              style: const TextStyle(
+                                                color: Colors.black45,
+                                                fontSize: f16,
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                          const Divider(
+                                            thickness: 0.7,
+                                            color: mainColor,
+                                          ),
+                                        ],
+                                      ),
+                                    ))
+                                .toList(),
+                            value: selectedTypes,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedTypes = value as String;
+                                // typeStoreController.text =
+                                //     selectedTypes.toString();
+                                print('$selectedTypes');
+                              });
+                            },
+                            buttonHeight: size.height * 0.06,
+                            buttonWidth: size.width * 0.4,
+                            itemHeight: size.height * 0.06,
                           ),
                         ),
-                        suffixIcon: const Text(""),
-                        hintText: '',
                       ),
+                      suffixIcon: const Text(""),
+                      hintText: '',
                     ),
+                    // Obx(
+                    //   () => AuthTextFromField(
+                    //     read: true,
+                    //     keyboardType: TextInputType.text,
+                    //     controller: typeStoreController,
+                    //     obscureText: false,
+                    //     validator: (value) {
+                    //       // if (value.toString().length <= 2 ||
+                    //       // /    !RegExp(validationName).hasMatch(value)) {
+                    //       //   return 'Enter valid name';
+                    //       // } else {
+                    //       //   return null;
+                    //       // }
+                    //     },
+                    //     prefixIcon: Container(
+                    //       padding: EdgeInsets.symmetric(
+                    //           horizontal: size.height * 0.06),
+                    //       margin: EdgeInsets.only(top: size.height * 0.01),
+                    //       child: DropdownButtonHideUnderline(
+                    //         child: DropdownButton2(
+                    //           hint: Text(typesController.docTyps[0].name,
+                    //               style: const TextStyle(
+                    //                 color: Colors.black45,
+                    //                 fontSize: f16,
+                    //                 fontWeight: FontWeight.w500,
+                    //               )),
+                    //           items: typesController.docTyps
+                    //               .map((item) => DropdownMenuItem<String>(
+                    //                     value: item.name,
+                    //                     child: Column(
+                    //                       children: [
+                    //                         Text(item.name,
+                    //                             style: const TextStyle(
+                    //                               color: Colors.black45,
+                    //                               fontSize: f16,
+                    //                               fontWeight: FontWeight.bold,
+                    //                             )),
+                    //                         const Divider(
+                    //                           thickness: 0.7,
+                    //                           color: mainColor,
+                    //                         ),
+                    //                       ],
+                    //                     ),
+                    //                   ))
+                    //               .toList(),
+                    //           value: selectedTypes,
+                    //           onChanged: (value) {
+                    //             setState(() {
+                    //               selectedTypes = value as String;
+                    //               // typeStoreController.text =
+                    //               //     selectedTypes.toString();
+                    //               print('$selectedTypes');
+                    //             });
+                    //           },
+                    //           buttonHeight: size.height * 0.06,
+                    //           buttonWidth: size.width * 0.4,
+                    //           itemHeight: size.height * 0.06,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     suffixIcon: const Text(""),
+                    //     hintText: '',
+                    //   ),
+                    // ),
                     SizedBox(
                       height: size.height * 0.02,
                     ),
@@ -242,31 +303,54 @@ class _AddStoreState extends State<AddStore> {
                     //   child: const Text('get'),
                     // ),
                     Center(
-                      child: GetBuilder<AddStoreController>(builder: (_) {
-                        return AuthButton(
-                            onPressed: () {
-                              // getController.docTyps.length;
-                              // print(getController.docTyps.length);
-                              // GetServices.GetTypes('types');
-                              // getController.getTyps();
-                              // print(GetServices.GetTypes('types'));
+                      child: AuthButton(
+                          onPressed: () {
+                            // getController.docTyps.length;
+                            // print(getController.docTyps.length);
+                            // GetServices.GetTypes('types');
+                            // getController.getTyps();
+                            // print(GetServices.GetTypes('types'));
 
-                              // getController.getStore('types');
-                              if (fromKey.currentState!.validate()) {
-                                StoreModel store = StoreModel(
-                                    nameStore: nameStoreController.text,
-                                    typeStore: selectedTypes.toString(),
-                                    mobileStore: mobileController.text,
-                                    location: locationController.text);
-                                controllerStore.addStore(
-                                    nameCollecton: 'store',
-                                    storeModel: store.toSnapchot());
+                            // getController.getStore('types');
+                            if (fromKey.currentState!.validate()) {
+                              StoreModel store = StoreModel(
+                                  nameStore: nameStoreController.text,
+                                  typeStore: selectedTypes.toString(),
+                                  mobileStore: mobileController.text,
+                                  location: locationController.text);
+                              addStoreProvider.addStore(
+                                  nameCollecton: 'store',
+                                  storeModel: store.toSnapchot());
 
-                                Get.back();
-                              }
-                            },
-                            text: 'Add Store');
-                      }),
+                              Get.back();
+                            }
+                          },
+                          text: 'Add Store'),
+                      // GetBuilder<AddStoreController>(builder: (_) {
+                      //   return AuthButton(
+                      //       onPressed: () {
+                      //         // getController.docTyps.length;
+                      //         // print(getController.docTyps.length);
+                      //         // GetServices.GetTypes('types');
+                      //         // getController.getTyps();
+                      //         // print(GetServices.GetTypes('types'));
+
+                      //         // getController.getStore('types');
+                      //         if (fromKey.currentState!.validate()) {
+                      //           StoreModel store = StoreModel(
+                      //               nameStore: nameStoreController.text,
+                      //               typeStore: selectedTypes.toString(),
+                      //               mobileStore: mobileController.text,
+                      //               location: locationController.text);
+                      //           controllerStore.addStore(
+                      //               nameCollecton: 'store',
+                      //               storeModel: store.toSnapchot());
+
+                      //           Get.back();
+                      //         }
+                      //       },
+                      //       text: 'Add Store');
+                      // }),
                     ),
                   ],
                 ),

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:raselne/constatnt.dart';
-import 'package:raselne/logic/controller/auth_controller.dart';
+
 import 'package:raselne/utilis/theme.dart';
 
 import 'package:raselne/view_presentation/widget/home/build_card.dart';
@@ -87,7 +85,7 @@ class HomeScreen extends StatelessWidget {
                   left: size.width * 0.02,
                   right: size.width * 0.02,
                 ),
-                child: BuildCard(),
+                child: const BuildCard(),
               ),
             ],
           ),

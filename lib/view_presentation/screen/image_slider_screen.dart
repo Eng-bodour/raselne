@@ -11,9 +11,7 @@ class ImageSliderScreen extends StatelessWidget {
         title: Text('$index'),
         centerTitle: true,
       ),
-      body: Container(
-        child: Text('$index'),
-      ),
+      body: Text('$index'),
     );
   }
 }
