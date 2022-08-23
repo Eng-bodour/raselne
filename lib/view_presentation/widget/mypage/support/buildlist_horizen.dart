@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BuildListHorizen extends StatelessWidget {
-  const BuildListHorizen({Key? key}) : super(key: key);
+  final List<dynamic> listTitle;
+
+  const BuildListHorizen({required this.listTitle, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +13,7 @@ class BuildListHorizen extends StatelessWidget {
           EdgeInsets.only(left: size.width * 0.02, right: size.width * 0.02),
       child: ListView.builder(
         //  shrinkWrap: true,
-        itemCount: 10,
+        itemCount: listTitle.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
@@ -29,16 +31,18 @@ class BuildListHorizen extends StatelessWidget {
                     child: Center(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          CircleAvatar(
+                        children: [
+                          const CircleAvatar(
                             backgroundColor: Colors.white,
                             radius: 20,
                             child: Icon(Icons.disc_full_outlined),
                           ),
-                          Text('طلبي',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold)),
+                          Expanded(
+                            child: Text(listTitle[index].toString(),
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold)),
+                          ),
                           // Row(
                           //   children: [
                           //     const CircleAvatar(

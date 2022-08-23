@@ -7,24 +7,17 @@ import 'package:raselne/view_presentation/widget/mypage/support/buildlist_horize
 
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
-import 'about_raselne.dart';
-
-class CustomerSupport extends StatelessWidget {
+class CustomerSupportDriver extends StatelessWidget {
   final String title;
-  CustomerSupport({required this.title, Key? key}) : super(key: key);
-  List name = ['مشاكل في الطلب', 'المدفوعات والمبالغ المستردة'];
+  CustomerSupportDriver({required this.title, Key? key}) : super(key: key);
+  List popularArticles = ['التعويض', 'المشاكل التقنية'];
+  List tickets = ['الشكاوي'];
   List nameHelp = ['  عن رسلني'];
   List allTopics = [
-    'طلبي',
-    'المرسِل',
-    'الكوبونات',
-    'عرض التوصيل',
-    'البحث عن الخدمات والمتاجر',
-    'المدفوعات والمبالغ المستردة',
-    'تقديم الطلب',
-    ' التقييمات والمراجعات',
-    'إدارة الحساب',
-    'إعدادات التطبيق',
+    'الطلب',
+    'إدارة الحساب والملف الشخصي',
+    'المدفوات والمبالغ المستحقة',
+    'التقييم',
   ];
   // List iconList = [
   //   const Icon(Icons.ac_unit),
@@ -66,32 +59,32 @@ class CustomerSupport extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      Get.to(ClickOnShowAll(
-                        title: 'Supports',
-                        titleList: allTopics,
-                      ));
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: size.width * 0.03,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        child: TextUtils(
+                            fontSize: size.width * 0.05,
+                            fontWeight: FontWeight.bold,
+                            text: 'جميع المواضيع',
+                            color: Colors.black,
+                            underLine: TextDecoration.none),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: size.width * 0.03,
+                        ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: TextUtils(
-                                fontSize: size.width * 0.05,
-                                fontWeight: FontWeight.bold,
-                                text: 'جميع المواضيع',
-                                color: Colors.black,
-                                underLine: TextDecoration.none),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: size.width * 0.03,
-                            ),
+                      InkWell(
+                        onTap: () {
+                          Get.to(ClickOnShowAll(
+                            title: 'Supports',
+                            titleList: allTopics,
+                          ));
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: size.width * 0.03,
                           ),
-                          Row(
+                          child: Row(
                             children: [
                               TextUtils(
                                   fontSize: size.width * 0.03,
@@ -102,19 +95,18 @@ class CustomerSupport extends StatelessWidget {
                               Icon(
                                 Icons.arrow_forward_ios,
                                 size: size.width * 0.03,
-                                color: Colors.black26,
                               )
                             ],
-                          )
-                        ],
-                      ),
-                    ),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                   SizedBox(
                     height: size.height * 0.18,
                     child: BuildListHorizen(
                       listTitle: allTopics,
-                      // iconList: iconList,
+                      //  iconList: iconList,
                     ),
                   ),
                   SizedBox(
@@ -135,6 +127,46 @@ class CustomerSupport extends StatelessWidget {
                     height: size.width * 0.02,
                   ),
                   Container(
+                    height: size.height * 0.08,
+                    decoration: const BoxDecoration(color: Colors.white),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: size.width * 0.03,
+                        vertical: size.height * 0.02),
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      controller: controller,
+                      itemCount: tickets.length,
+                      itemBuilder: (context, index) {
+                        return buildRowTextIcon(
+                            context: context,
+                            size: size,
+                            title: tickets[index]);
+                      },
+                      separatorBuilder: (context, index) {
+                        return SizedBox(
+                          height: size.height * 0.02,
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.width * 0.09,
+                  ),
+                  Container(
+                    child: TextUtils(
+                        fontSize: size.width * 0.05,
+                        fontWeight: FontWeight.bold,
+                        text: 'المقالات الشائعة',
+                        color: Colors.black,
+                        underLine: TextDecoration.none),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: size.width * 0.03,
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.width * 0.02,
+                  ),
+                  Container(
                     height: size.height * 0.15,
                     decoration: const BoxDecoration(color: Colors.white),
                     padding: EdgeInsets.symmetric(
@@ -143,10 +175,12 @@ class CustomerSupport extends StatelessWidget {
                     child: ListView.separated(
                       shrinkWrap: true,
                       controller: controller,
-                      itemCount: name.length,
+                      itemCount: popularArticles.length,
                       itemBuilder: (context, index) {
                         return buildRowTextIcon(
-                            context: context, size: size, title: name[index]);
+                            context: context,
+                            size: size,
+                            title: popularArticles[index]);
                       },
                       separatorBuilder: (context, index) {
                         return SizedBox(
@@ -174,7 +208,7 @@ class CustomerSupport extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      Get.to(AboutRaselne());
+                      //  Get.to(AboutRaselne());
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(

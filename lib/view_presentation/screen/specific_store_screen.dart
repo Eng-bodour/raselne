@@ -138,8 +138,7 @@ class SpecificStoreScreen extends StatelessWidget {
                           // ),
 
                           ListView.builder(
-                            shrinkWrap: true,
-
+                            shrinkWrap: true, controller: ScrollController(),
                             scrollDirection: Axis.vertical,
                             itemCount: typesTitle.length,
                             itemBuilder: (context, index) {

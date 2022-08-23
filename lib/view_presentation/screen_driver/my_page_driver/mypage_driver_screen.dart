@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:raselne/utilis/theme.dart';
+import 'package:raselne/view_presentation/screen/my_page/services_review_screen.dart';
+import 'package:raselne/view_presentation/screen/my_page/user_feedback_screen.dart';
+
+import 'package:raselne/view_presentation/screen_driver/my_page_driver/customer_support_driver.dart';
 
 import 'package:raselne/view_presentation/widget/mypage/coupon/bottom_sheet.dart';
 
 import 'package:raselne/view_presentation/widget/mypage/info_user.dart';
-import 'package:raselne/view_presentation/widget/mypage_driver/account_balance.dart';
-
-import 'package:raselne/view_presentation/widget/mypage_driver/calculate_drive.dart';
-import 'package:raselne/view_presentation/widget/mypage_driver/mode_user.dart';
-import 'package:raselne/view_presentation/widget/mypage_driver/show_info_drive.dart';
 
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
+import 'package:raselne/view_presentation/widget_driver/mypage_driver/account_balance.dart';
+import 'package:raselne/view_presentation/widget_driver/mypage_driver/calculate_drive.dart';
+import 'package:raselne/view_presentation/widget_driver/mypage_driver/mode_user.dart';
+import 'package:raselne/view_presentation/widget_driver/mypage_driver/show_info_drive.dart';
 
 class MyPageDriverScreen extends StatelessWidget {
   MyPageDriverScreen({Key? key}) : super(key: key);
@@ -100,9 +104,9 @@ class MyPageDriverScreen extends StatelessWidget {
                 ),
                 info(
                     ontap: () {
-                      // Get.to(const ServicesReview(
-                      //   title: 'تقييمات الخدمات',
-                      // ));
+                      Get.to(const ServicesReview(
+                        title: 'تقييمات الخدمات',
+                      ));
                     },
                     context: context,
                     bool: false,
@@ -114,9 +118,9 @@ class MyPageDriverScreen extends StatelessWidget {
                 Divider(thickness: 1, color: greyColor.withOpacity(0.2)),
                 info(
                     ontap: () {
-                      // Get.to(UserFeedBackScreen(
-                      //   title: 'ملاحظات المستخدمين ',
-                      // ));
+                      Get.to(UserFeedBackScreen(
+                        title: 'ملاحظات المستخدمين ',
+                      ));
                     },
                     context: context,
                     bool: false,
@@ -138,9 +142,9 @@ class MyPageDriverScreen extends StatelessWidget {
                 Divider(thickness: 1, color: greyColor.withOpacity(0.2)),
                 info(
                     ontap: () {
-                      // Get.to(CustomerSupport(
-                      //   title: 'الدعم للعملاء',
-                      // ));
+                      Get.to(CustomerSupportDriver(
+                        title: 'الدعم للعملاء',
+                      ));
                     },
                     context: context,
                     bool: false,

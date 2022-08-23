@@ -52,7 +52,7 @@ class LogOutWidget extends StatelessWidget {
         customBorder: const StadiumBorder(),
         child: const Icon(
           Icons.logout,
-          color: greyColor,
+          color: mainColor,
         ),
         // child: Directionality(
         //   textDirection: TextDirection.ltr,
