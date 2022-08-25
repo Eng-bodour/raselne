@@ -1,75 +1,116 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:raselne/logic/controller/store/store_controller.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/screen/specific_store_screen.dart';
 
 import '../text_utilis.dart';
 
-class StoreListBuild extends StatelessWidget {
+class StoreListBuild extends StatefulWidget {
   StoreListBuild({Key? key}) : super(key: key);
+
+  @override
+  State<StoreListBuild> createState() => _StoreListBuildState();
+}
+
+class _StoreListBuildState extends State<StoreListBuild> {
   var controller = ScrollController();
+
+  @override void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      Provider.of<StoreProvider_vm>(context, listen: false).getstores();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+
     var size = MediaQuery.of(context).size;
-    return ListView.builder(
-      shrinkWrap: true,
-      controller: controller,
-      scrollDirection: Axis.vertical,
-      itemCount: 10,
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(
-            padding: const EdgeInsets.all(8),
-            child: InkWell(
-              onTap: () {
-                Get.to(() => SpecificStoreScreen(index: index));
-              },
-              child: Container(
-                width: size.width * 0.4,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                ),
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: size.height * 0.02,
-                    right: size.height * 0.02,
-                    top: size.height * 0.01,
-                    bottom: size.height * 0.01,
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          buildCardPhoto(
-                              image: 'assets/services/card-digit.png',
-                              size: size),
-                          SizedBox(
-                            width: size.width * 0.04,
-                          ),
-                          buildText(
-                              title: 'برجر كنج',
-                              content: 'مطاعم, عروض توصيل',
-                              deliveryPrice: '15',
-                              size: size),
-                        ],
+    return Consumer<StoreProvider_vm>(
+        builder: (context, value, child) {
+      return value.isloading==true ?
+      Center(
+          child: CircularProgressIndicator()
+      ):value.liststore.length == 0?
+      Center(
+          child: Text('')
+      ):
+      Column(
+        children: [
+          ListView.builder(
+            shrinkWrap: true,
+            controller: controller,
+            scrollDirection: Axis.vertical,
+            itemCount:  value.liststore.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: InkWell(
+
+                    onTap: () {
+                      Get.to(() =>
+                          SpecificStoreScreen(
+                             titestore: value.liststore[index].nameStore,
+                             // itemstore: value.liststore[index].itemstore,
+                             index: index));
+                    },
+
+                    child: Container(
+                      width: size.width * 0.4,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
                       ),
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: size.height * 0.02),
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: size.height * 0.02,
+                          right: size.height * 0.02,
+                          top: size.height * 0.01,
+                          bottom: size.height * 0.01,
+                        ),
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            buildSpace(size: size),
+                            Row(
+                              children: [
+                                buildCardPhoto(
+                                    image: 'assets/services/card-digit.png',
+                                    size: size),
+                                SizedBox(
+                                  width: size.width * 0.04,
+                                ),
+                                buildText(
+                                    title: value.liststore[index].nameStore,//'برجر كنج',
+                                    content: value.liststore[index].descStore,  //'مطاعم, عروض توصيل',
+                                    deliveryPrice: value.liststore[index].offer_value,
+                                    size: size),
+                              ],
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsets.symmetric(vertical: size.height * 0.02),
+                              child: Row(
+                                children: [
+                                  buildSpace(size: size,
+                                      rate: value.liststore[index].rating.toString(),
+                                      distance:""),
+                                      //value.liststore[index].location.toString()),
+                                ],
+                              ),
+                            )
                           ],
                         ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ));
+                      ),
+                    ),
+                  ));
+            },
+          ),
+
+        ],
+      );
       },
     );
   }
@@ -128,7 +169,7 @@ Widget buildText(
                 color: Colors.blue,
                 size: f18,
               ),
-              const TextUtils(
+               TextUtils(
                 fontSize: f12,
                 fontWeight: FontWeight.bold,
                 text: 'توصيل',
@@ -150,8 +191,9 @@ Widget buildText(
   );
 }
 
-Widget buildSpace({required Size size}) {
-  return Column(
+Widget buildSpace({required Size size,required String distance,required String rate}) {
+  return
+    Column(
     crossAxisAlignment: CrossAxisAlignment.end,
     children: [
       Container(
@@ -172,10 +214,10 @@ Widget buildSpace({required Size size}) {
               SizedBox(
                 width: size.width * 0.02,
               ),
-              const TextUtils(
+               TextUtils(
                   fontSize: f12,
                   fontWeight: FontWeight.normal,
-                  text: '0.58 كم',
+                  text:distance.toString(), //'0.58 كم',
                   color: greyColor,
                   underLine: TextDecoration.none)
             ],
@@ -203,10 +245,10 @@ Widget buildSpace({required Size size}) {
               SizedBox(
                 width: size.width * 0.02,
               ),
-              const TextUtils(
+               TextUtils(
                   fontSize: f12,
                   fontWeight: FontWeight.normal,
-                  text: '4.4 ',
+                  text:rate.toString() ,//'4.4 ',
                   color: greyColor,
                   underLine: TextDecoration.none)
             ],

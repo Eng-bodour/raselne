@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -42,7 +43,7 @@ class _AddStoreState extends State<AddStore> {
 
   @override
   Widget build(BuildContext context) {
-    var addStoreProvider = Provider.of<AddStoreProvider>(context);
+    var addStoreProvider = Provider.of<StoreProvider_vm>(context);
     var typesProvider = Provider.of<TypesProvider>(context);
 
     var size = MediaQuery.of(context).size;
@@ -313,12 +314,16 @@ class _AddStoreState extends State<AddStore> {
 
                             // getController.getStore('types');
                             if (fromKey.currentState!.validate()) {
-                              StoreModel store = StoreModel(
+                                  StoreModel store = StoreModel(
                                   nameStore: nameStoreController.text,
                                   typeStore: selectedTypes.toString(),
                                   mobileStore: mobileController.text,
-                                  location: locationController.text);
-                              addStoreProvider.addStore(
+                                  // location: null,
+                                      offer_value: '', rating: '1',
+                                  //itemstore: [],
+                                  IdStore: '',
+                                  descStore: '');
+                                  addStoreProvider.addStore(
                                   nameCollecton: 'store',
                                   storeModel: store.toSnapchot());
 

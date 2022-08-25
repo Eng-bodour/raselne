@@ -54,15 +54,15 @@ Widget InfoUser({required Size size}) {
       Row(
         children: [
           InkWell(
-            child: const Icon(Icons.notifications, color: greyColor),
+            child: const Icon(Icons.notifications, color: mainColor),
             onTap: () {
-              Get.to(NotificationWidget());
+              Get.to(const NotificationWidget());
             },
           ),
           SizedBox(
             width: size.width * 0.02,
           ),
-          LogOutWidget(),
+          const LogOutWidget(),
         ],
       ),
     ],

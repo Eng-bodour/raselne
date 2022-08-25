@@ -2,19 +2,30 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 // to add users collection to app
-class Firebase {
+class FirebaseServices {
   static FirebaseAuth auth = FirebaseAuth.instance;
-  static String uid = auth.currentUser!.uid.toString();
+  static String uid ="YL4gwVLYe0dyr7y4CuiEcJIkt7A3";// auth.currentUser!.uid.toString();
   static String? name;
 
-  static Future<void> userSetUp(String dispalyName) async {
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
+  final _firestore=FirebaseFirestore.instance;
+  late final String namePath;
+  late CollectionReference ref;
+  FirebaseServices(this.namePath){
+    ref= _firestore.collection(namePath);
+  }
 
-    users.add({'dispayName': dispalyName, 'uid': uid});
+   Future<void> userSetUp(String dispalyName) async {
+    //CollectionReference users = _firestore.collection('users');
+    ref.add({'dispayName': dispalyName, 'uid': uid});
+
     return;
+  }
+  Future<DocumentReference> addtofirestore(Map<String,dynamic> data)async{
+   return await ref.add(data);
   }
 
   static Future<String?> getNameuser() async {
+
     var users = FirebaseFirestore.instance
         .collection('users')
         .where('uid', isEqualTo: uid)
@@ -27,4 +38,14 @@ class Firebase {
       }
     });
   }
+
+  Future<QuerySnapshot> getQuerySnapshotFuture()=> ref.get();
+  Stream<QuerySnapshot> getQuerySnapshotStream()=>ref.snapshots();
+  Future<DocumentSnapshot> getDocuments(path)=>ref.doc(path).get();
+  Stream<DocumentSnapshot> getStreamDocuments(path)=>ref.doc(path).snapshots();
+  Future<QuerySnapshot> searchDocuments(searchKey,key)=>ref.orderBy(key)
+      .startAt([searchKey])
+      .endAt([searchKey + '\uf8ff']).get();
+
 }
+

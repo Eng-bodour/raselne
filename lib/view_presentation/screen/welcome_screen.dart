@@ -44,7 +44,7 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      const TextUtils(
+                       TextUtils(
                         fontSize: f30,
                         fontWeight: FontWeight.bold,
                         text: 'Welcome',
@@ -54,7 +54,7 @@ class WelcomeScreen extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.1,
                       ),
-                      const TextUtils(
+                       TextUtils(
                         fontSize: f30,
                         fontWeight: FontWeight.bold,
                         text: "RASELNE",
@@ -81,7 +81,7 @@ class WelcomeScreen extends StatelessWidget {
                 onPressed: () {
                   Get.offNamed(Routes.loginScreen);
                 },
-                child: const TextUtils(
+                child:  TextUtils(
                   fontSize: f22,
                   fontWeight: FontWeight.bold,
                   text: 'Get Start',
@@ -95,7 +95,7 @@ class WelcomeScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const TextUtils(
+                   TextUtils(
                     fontSize: f18,
                     fontWeight: FontWeight.normal,
                     text: "Don't have an Account?",
@@ -106,7 +106,7 @@ class WelcomeScreen extends StatelessWidget {
                     onPressed: () {
                       Get.offNamed(Routes.signUpScreen);
                     },
-                    child: const TextUtils(
+                    child:  TextUtils(
                       text: 'Sign Up',
                       color: Colors.white,
                       fontSize: f18,

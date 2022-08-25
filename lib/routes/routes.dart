@@ -62,10 +62,10 @@ class AppRoutes {
         MainBininding(),
       ],
     ),
-    GetPage(
-      name: Routes.newOrderScreen,
-      page: () => NewOrderScreen(),
-    ),
+    // GetPage(
+    //   name: Routes.newOrderScreen,
+    //   page: () => NewOrderScreen(),
+    // ),
     GetPage(
       name: Routes.addStore,
       page: () => const AddStore(),

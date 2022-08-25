@@ -1,32 +1,42 @@
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class AddStoreProvider extends ChangeNotifier {
+import '../../../data_layer/model/store_model.dart';
+import '../../repositories/store/store_repo.dart';
+
+class StoreProvider_vm extends ChangeNotifier {
   bool isUsedName = false;
+  bool isloading = false;
+  StoreRepository storeRepository;
+  StoreProvider_vm({required this.storeRepository});
 
-  addStore({
-    required String nameCollecton,
-    required Map<String, dynamic> storeModel,
-    // required String typename,
-    // required String nameStore,
-    // required String mobile,
-    // required String location,
-  }) async {
-    CollectionReference firestore =
-        FirebaseFirestore.instance.collection(nameCollecton);
-    firestore.add(storeModel);
-
-    // 'location': storeModel.location,
-    // 'mobile': storeModel.mobileStore,
-    // 'nameStore': storeModel.nameStore,
-    // 'typeStore': storeModel.typeStore,
-    // 'location': location,
-    // 'mobile': mobile,
-    // 'nameStore': nameStore,
-    // 'typeStore': typename,
-    // });
+  List<StoreModel> liststore =[];
+  addStore({required String nameCollecton, required Map<String, dynamic> storeModel,})
+  async {
+    storeRepository.AddStore(nameCollecton, storeModel);
   }
+  item_to_order(String IdItemStore ) {
+    // int index = liststore.indexWhere(
+    //         (element) =>
+    // element.itemstore.indexWhere((item) => item.IdItemStore==IdItemStore));
+    //
+print('IdItemStore '+IdItemStore);
+    for(int i=0;i<liststore.length;i++) {
 
+      liststore[i].itemstore.forEach((element) {
+
+        if(element.IdItemStore==IdItemStore){
+          // liststore[i].isorderd=true;
+          element.isorder=true;
+        }
+      }
+      );
+    }
+    // isorder
+    notifyListeners();
+  }
   getNameStore({required String nameCollecton, required String name}) async {
     CollectionReference firestore =
         FirebaseFirestore.instance.collection(nameCollecton);
@@ -37,5 +47,13 @@ class AddStoreProvider extends ChangeNotifier {
               isUsedName = true;
               print('this name is used');
             }));
+  }
+
+ Future<void> getstores() async {
+   isloading=true;
+   notifyListeners();
+    liststore=await storeRepository.getAllStores();
+   isloading=false;
+    notifyListeners();
   }
 }

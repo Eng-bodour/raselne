@@ -1,36 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:raselne/logic/controller/order_vm.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
-class BuildListNewOrder extends StatelessWidget {
+import '../../../data_layer/model/DetailOrder.dart';
+
+class BuildListNewOrder extends StatefulWidget {
   BuildListNewOrder({Key? key}) : super(key: key);
-  var controller = ScrollController();
 
   @override
+  State<BuildListNewOrder> createState() => _BuildListNewOrderState();
+}
+
+class _BuildListNewOrderState extends State<BuildListNewOrder> {
+  var controller = ScrollController();
+
+  List<DetailOrder> listitem=[];
+
+  @override void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // Provider.of<order_vm>(context, listen: false).get_item_is_ordered();
+    });
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
+    listitem=   Provider.of<order_vm>(context,listen: true).list_itemorder;
     var size = MediaQuery.of(context).size;
-    List<String> name = [
-      '1n',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '10',
-      '11',
-      '12',
-      '13',
-      '14',
-      '15',
-      '16',
-      '17',
-      '18',
-      '19',
-      '20'
-    ];
+    // List<String> name = [
+    //   '1n',
+    //   '2',
+    //   '3',
+    //   '4',
+    //   '5',
+    //   '6',
+    //   '7',
+    //   '8',
+    //   '9',
+    //   '10',
+    //   '11',
+    //   '12',
+    //   '13',
+    //   '14',
+    //   '15',
+    //   '16',
+    //   '17',
+    //   '18',
+    //   '19',
+    //   '20'
+    // ];
 
     return ListView.separated(
       shrinkWrap: true,
@@ -38,7 +57,7 @@ class BuildListNewOrder extends StatelessWidget {
       scrollDirection: Axis.vertical,
       // physics: const NeverScrollableScrollPhysics(),
 
-      itemCount: 2,
+      itemCount: listitem.length,
 
       itemBuilder: (BuildContext context, int index) {
         return Padding(
@@ -56,14 +75,25 @@ class BuildListNewOrder extends StatelessWidget {
                         TextUtils(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
-                          text: name[index], //'اسم الوجبة ',
+                          text: listitem[index].item.nameCategory, //'اسم الوجبة ',
+                          color: greyColor,
+                          underLine: TextDecoration.none,
+                        ),
+                        TextUtils(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          text: listitem[index].item.description, //'اسم الوجبة ',
                           color: greyColor,
                           underLine: TextDecoration.none,
                         ),
                         Row(
                           children: [
                             IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  String id= listitem[index].item.IdItemStore;
+
+                                  Provider.of<order_vm>(context,listen:false ).add_quaintity(id);
+                                },
                                 icon: Container(
                                   child: const Icon(
                                     Icons.add,
@@ -78,7 +108,7 @@ class BuildListNewOrder extends StatelessWidget {
                                 TextUtils(
                                     fontSize: size.width * 0.06,
                                     fontWeight: FontWeight.bold,
-                                    text: '1',
+                                    text: listitem[index].quaintity.toString(),
                                     color: Colors.orange,
                                     underLine: TextDecoration.none),
                                 SizedBox(
@@ -87,13 +117,17 @@ class BuildListNewOrder extends StatelessWidget {
                                 TextUtils(
                                     fontSize: size.width * 0.03,
                                     fontWeight: FontWeight.bold,
-                                    text: '22.00 SAR',
+                                    text:  listitem[index].total_item.toString(),
                                     color: Colors.black45,
                                     underLine: TextDecoration.none),
                               ],
                             ),
                             IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  String id= listitem[index].item.IdItemStore;
+
+                                  Provider.of<order_vm>(context,listen:false ).remove_quaintity(id);
+                                },
                                 icon: Container(
                                   // margin: const EdgeInsets.only(bottom: 2),
                                   child: const Icon(Icons.remove,

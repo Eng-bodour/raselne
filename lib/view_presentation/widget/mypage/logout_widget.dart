@@ -13,7 +13,7 @@ class LogOutWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var authProvider = Provider.of<AuthProvider>(context);
+    var authProvider = Provider.of<AuthProvider_vm>(context);
     var size = MediaQuery.of(context).size;
     return Material(
       color: Colors.transparent,
@@ -52,7 +52,7 @@ class LogOutWidget extends StatelessWidget {
         customBorder: const StadiumBorder(),
         child: const Icon(
           Icons.logout,
-          color: greyColor,
+          color: mainColor,
         ),
         // child: Directionality(
         //   textDirection: TextDirection.ltr,

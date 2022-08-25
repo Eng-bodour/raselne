@@ -5,12 +5,16 @@ import 'package:get/get.dart';
 import 'package:raselne/logic/controller/firebase_provider.dart';
 
 import 'package:raselne/utilis/theme.dart';
+import 'package:raselne/view_presentation/screen_driver/orders_driver_screen.dart';
 
 import 'package:raselne/view_presentation/widget/setting/add_category_wedgit.dart';
 import 'package:raselne/view_presentation/widget/setting/add_store_widget.dart';
 
 import 'package:raselne/view_presentation/widget/setting/chat_widget.dart';
 import 'package:raselne/view_presentation/widget/setting/driver.dart';
+import 'package:raselne/view_presentation/screen_driver/home_driver_screen.dart';
+
+import '../text_utilis.dart';
 
 class CustomDrawer extends StatelessWidget {
   CustomDrawer({Key? key}) : super(key: key);
@@ -29,11 +33,11 @@ class CustomDrawer extends StatelessWidget {
               UserAccountsDrawerHeader(
                 accountEmail: const Text(
                     '' //controllerUsers.currentUser!.email.toString(),
-                    ),
+                ),
                 // currentAccountPicture: const Text(''),
                 decoration: BoxDecoration(
                     color: Colors.grey.withOpacity(0.2) //Color(0xFF56ccf2),
-                    ),
+                ),
                 accountName: Row(
                   children: <Widget>[
                     Container(
@@ -125,7 +129,20 @@ class CustomDrawer extends StatelessWidget {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
-              const Driver()
+              const Driver(),
+              TextButton(
+                  onPressed: () {
+                    Get.to(const HomeDriverScreen());
+                  },
+                  child: const Text('home driver')),
+              TextButton(
+                  onPressed: () {
+                    Get.to(const OrdersDriverScreen());
+                  },
+                  child: const Text('ordersDrivers')),
+              TextButton(
+                  onPressed: () {},
+                  child: const Text('show Dialoge for wait accept captain '))
 
               // TextButton(
               //     onPressed: () {

@@ -1,19 +1,28 @@
 //for move between screen class user
 
-class UserPrivate {
-  final String? name;
-  final String? uid;
-  UserPrivate({this.uid, this.name});
-}
-
+// class UserPrivate {
+//   final String? name;
+//   final String? uid;
+//   UserPrivate({this.uid, this.name});
+// }
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 class UserModel {
-  int? id;
+  String? uid;
   String name;
   String email;
-  int mobile;
+  String mobile;
+  late String type;//مندوب-زبون
+ late String dateCreated;
+ late String num_car;
+ late String Id_number;
+ late String type_car;
+ late String num_travel;
 
+  late LatLng? location;
   UserModel({
-    this.id,
+     required this.location,
+    required this.uid,
     required this.name,
     required this.email,
     required this.mobile,

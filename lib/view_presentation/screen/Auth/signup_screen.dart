@@ -24,7 +24,7 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var authProvider = Provider.of<AuthProvider>(context);
+    var authProvider = Provider.of<AuthProvider_vm>(context);
     var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(

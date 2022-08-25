@@ -1,11 +1,19 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 class StoreModel {
   String nameStore;
+  String descStore;
   String typeStore;
   String mobileStore;
-  String location;
-  //Rating rating;
+  late LatLng location;
+  String offer_value;
+  String rating;
+  String? IdStore;
+  //bool isorderd=false;//this value to refer
+ late List<Itemstore> itemstore=[];
 
   // String get name => nameStore;
   // String get type => typeStore;
@@ -14,25 +22,42 @@ class StoreModel {
 
   StoreModel({
     required this.nameStore,
+    required this.descStore,
     required this.typeStore,
     required this.mobileStore,
-    required this.location,
-    // required this.rating,
+
+    required this.offer_value,
+    required this.rating,
+  //   this.itemstore,
+    required this.IdStore,
   });
-  factory StoreModel.fromSnapshot(QueryDocumentSnapshot doc) {
+  factory StoreModel.fromSnapshot(Map<String,dynamic> doc) {
     return StoreModel(
       nameStore: doc['nameStore'],
       typeStore: doc['typeStore'],
       mobileStore: doc['mobileStore'],
-      location: doc['location'],
+      //location: null,//doc['location'],
+      offer_value: doc['offer_value'],
+      rating: doc['rating'],
+      descStore: doc['descStore'],
+      IdStore: doc['IdStore'],
+      // itemstore: (json.decode(doc['itemstore']) as List)
+      //  .map((e) => Itemstore.fromJson(e)).toList(),
     );
   }
 
   Map<String, dynamic> toSnapchot() => {
-        "nameStore": nameStore,
+       "nameStore": nameStore,
         "typeStore": typeStore,
         "mobileStore": mobileStore,
-        "location": location
+        "location": location,
+        "offer_value": offer_value,
+        "rating": rating,
+        "descStore": descStore,
+        "IdStore": IdStore,
+  // _data['products'] =
+  // products!.map((e)=>e.toJson()).toList();
+        "itemstore": itemstore.map((e) => e.toJson()).toList(),
       };
 
   // factory StoreModel.fromJson(Map<String, dynamic> json) => StoreModel(
@@ -50,6 +75,42 @@ class StoreModel {
   //       "location": location,
   //       // "rating": rating.toJson(),
   //     };
+}
+class Itemstore {
+ late String nameCategory;
+ late String type_categore;
+ late String image;
+ late String price;
+ late String description;
+ late String IdItemStore;
+ bool? isorder=false;
+ Itemstore({
+  required this.type_categore,
+  required this.nameCategory,
+  required this.image,
+  required this.price,
+  required this.description,
+  // required this.IdItemStore,
+   this.isorder,
+});
+factory Itemstore.fromJson(Map<String, dynamic> json) =>
+    Itemstore(
+      type_categore: json["type_categore"],
+      nameCategory: json["nameCategory"],
+      image: json["image"],
+      price: json["price"],
+      description: json["description"],
+      //IdItemStore: json["IdItemStore"],
+);
+
+Map<String, dynamic> toJson() => {
+  "type_categore":type_categore,
+  "nameCategory":nameCategory,
+  "image": image,
+  "price": price,
+  "description": description,
+  "IdItemStore": IdItemStore,
+};
 }
 
 class Rating {

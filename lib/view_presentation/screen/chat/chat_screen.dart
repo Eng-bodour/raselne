@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:raselne/data_layer/model/messages_model.dart';
 
 import 'package:raselne/data_layer/model/user_model.dart';
 import 'package:raselne/utilis/theme.dart';
 
+import '../../../logic/controller/auth_controller.dart';
+
 class ChatScreen extends StatefulWidget {
-  final UserModel user;
 
   // ignore: use_key_in_widget_constructors
-  const ChatScreen({required this.user});
+  ChatScreen();
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  late UserModel user;
+
   _buildMessage(Message message, bool isMe, Size size) {
     final Container msg = Container(
       margin: isMe
@@ -125,8 +129,16 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  @override
+  @override void initState() {
+    // TODO: implement initState
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      user = Provider.of<AuthProvider_vm>(context, listen: false)
+          .currentuser;
+    });}
+      @override
   Widget build(BuildContext context) {
+        user = Provider.of<AuthProvider_vm>(context, listen: true)
+            .currentuser;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: mainColor,
@@ -134,7 +146,7 @@ class _ChatScreenState extends State<ChatScreen> {
         backgroundColor: mainColor,
         centerTitle: true,
         title: Text(
-          widget.user.name,
+          user.name,
           style: TextStyle(
               fontSize: size.width * 0.06,
               fontWeight: FontWeight.bold,
@@ -175,7 +187,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     itemCount: messages.length,
                     itemBuilder: (BuildContext context, int index) {
                       final Message message = messages[index];
-                      final bool isMe = message.sender?.id == currentUser.id;
+                      final bool isMe = message.sender?.uid == currentUser.uid;
                       return _buildMessage(message, isMe, size);
                     },
                   ),

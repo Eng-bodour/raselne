@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:raselne/data_layer/model/facebook_model.dart';
+import 'package:raselne/data_layer/model/user_model.dart';
 import 'package:raselne/data_layer/webServices/firebase.dart';
 
 import 'package:raselne/routes/routes.dart';
 
-class AuthProvider extends ChangeNotifier {
+class AuthProvider_vm extends ChangeNotifier {
   bool isVisibilty = false;
   bool isCheckBox = false;
   var displayUserName = ''.obs;
@@ -18,7 +20,7 @@ class AuthProvider extends ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;
   var googleSignIn = GoogleSignIn();
   FaceBookModel? faceBookModel;
-
+  late UserModel currentuser;
   var isSignedIn = false;
   final GetStorage? authBox = GetStorage();
 
@@ -26,14 +28,19 @@ class AuthProvider extends ChangeNotifier {
 
   @override
   void onInit() {
+  print('xxxxx');
     displayUserName.value =
         (userProfiloe != null ? userProfiloe!.displayName : "")!;
     // displayUserPhoto.value =
     //     (userProfiloe != null ? userProfiloe!.photoURL : "")!;
     displayUserEmail.value = (userProfiloe != null ? userProfiloe!.email : "")!;
+    currentuser=UserModel(
+      name: 'displayUserName.value',
+      uid:'userProfiloe?.uid', location: LatLng(35.22,22.50), mobile: '0', email: '', );
+
   }
 
-//create user obj based on firebase
+  // create user obj based on firebase
   // UserPrivate? _userFirebaseUser(User user) {
   //   return user != null ? UserPrivate(uid: user.uid) : null;
   // }
@@ -46,7 +53,6 @@ class AuthProvider extends ChangeNotifier {
 
   void checkBox() {
     isCheckBox = !isCheckBox;
-
     notifyListeners();
   }
 
@@ -64,8 +70,9 @@ class AuthProvider extends ChangeNotifier {
       });
       //to add applecation user and uid
 
+
       notifyListeners();
-      Firebase.userSetUp(name);
+      FirebaseServices("users").userSetUp(name);
       Get.offNamed(Routes.mainScreen);
     } on FirebaseAuthException catch (error) {
       String title = error.code.replaceAll(RegExp('-'), ' ').capitalize!;
@@ -160,7 +167,7 @@ class AuthProvider extends ChangeNotifier {
 
       isSignedIn = true;
       authBox!.write("auth", isSignedIn);
-      Firebase.userSetUp(displayUserName.value);
+      FirebaseServices("users").userSetUp(displayUserName.value);
       notifyListeners();
 
       Get.offNamed(Routes.mainScreen);
@@ -190,7 +197,7 @@ class AuthProvider extends ChangeNotifier {
       // displayUserName.value = faceBookModel!.name!;
       isSignedIn = true;
       authBox!.write("auth", isSignedIn);
-      Firebase.userSetUp(faceBookModel!.name.toString());
+      FirebaseServices("users").userSetUp(faceBookModel!.name.toString());
       notifyListeners();
       Get.offNamed(Routes.mainScreen);
     }

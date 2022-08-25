@@ -19,17 +19,17 @@ class Message {
 
 // YOU - current user
 final UserModel currentUser = UserModel(
-  id: 0,
+  uid: '0',
   email: 'bodour@gmail.com',
   name: 'bodour',
-  mobile: 0567487703,
+  mobile: '0567487703', location: null,
 );
 
 final UserModel nour = UserModel(
-  id: 1,
+  uid: '1',
   email: 'nour@gmail.com',
   name: 'nour',
-  mobile: 0567487703,
+  mobile: '0567487703', location: null,
 );
 // USERS
 // final UserModel aya = UserModel(

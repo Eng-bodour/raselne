@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:raselne/data_layer/webServices/firebase.dart';
+import 'package:raselne/logic/controller/auth_controller.dart';
 import 'package:raselne/logic/controller/main_controller.dart';
 import 'package:raselne/utilis/theme.dart';
 
@@ -15,8 +16,9 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
-    Firebase.name;
-    Firebase.getNameuser();
+    Provider.of<AuthProvider_vm>(context,listen: false).onInit();
+    FirebaseServices.name;
+    FirebaseServices.getNameuser();
     super.initState();
   }
 

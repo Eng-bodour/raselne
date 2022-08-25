@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:raselne/view_presentation/screen/my_page/support/clickOnShowAll.dart';
 
 import 'package:raselne/view_presentation/widget/mypage/row_with_text_and_icon.dart';
 import 'package:raselne/view_presentation/widget/mypage/support/buildlist_horizen.dart';
@@ -13,6 +14,30 @@ class CustomerSupport extends StatelessWidget {
   CustomerSupport({required this.title, Key? key}) : super(key: key);
   List name = ['مشاكل في الطلب', 'المدفوعات والمبالغ المستردة'];
   List nameHelp = ['  عن رسلني'];
+  List allTopics = [
+    'طلبي',
+    'المرسِل',
+    'الكوبونات',
+    'عرض التوصيل',
+    'البحث عن الخدمات والمتاجر',
+    'المدفوعات والمبالغ المستردة',
+    'تقديم الطلب',
+    ' التقييمات والمراجعات',
+    'إدارة الحساب',
+    'إعدادات التطبيق',
+  ];
+  // List iconList = [
+  //   const Icon(Icons.ac_unit),
+  //   const Icon(Icons.car_rental),
+  //   const Icon(Icons.calculate),
+  //   const Icon(Icons.local_offer),
+  //   const Icon(Icons.image_search_rounded),
+  //   const Icon(Icons.payment),
+  //   const Icon(Icons.shopping_cart_rounded),
+  //   const Icon(Icons.stars),
+  //   const Icon(Icons.person_pin),
+  //   const Icon(Icons.settings),
+  // ];
   var controller = ScrollController();
   @override
   Widget build(BuildContext context) {
@@ -41,20 +66,56 @@ class CustomerSupport extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    child: TextUtils(
-                        fontSize: size.width * 0.05,
-                        fontWeight: FontWeight.bold,
-                        text: 'جميع المواضيع',
-                        color: Colors.black,
-                        underLine: TextDecoration.none),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: size.width * 0.03,
+                  InkWell(
+                    onTap: () {
+                      Get.to(ClickOnShowAll(
+                        title: 'Supports',
+                        titleList: allTopics,
+                      ));
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: size.width * 0.03,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            child: TextUtils(
+                                fontSize: size.width * 0.05,
+                                fontWeight: FontWeight.bold,
+                                text: 'جميع المواضيع',
+                                color: Colors.black,
+                                underLine: TextDecoration.none),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: size.width * 0.03,
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              TextUtils(
+                                  fontSize: size.width * 0.03,
+                                  fontWeight: FontWeight.bold,
+                                  text: 'عرض الكل',
+                                  color: Colors.black26,
+                                  underLine: TextDecoration.none),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                size: size.width * 0.03,
+                                color: Colors.black26,
+                              )
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(
-                    height: size.height * 0.15,
-                    child: const BuildListHorizen(),
+                    height: size.height * 0.18,
+                    child: BuildListHorizen(
+                      listTitle: allTopics,
+                      // iconList: iconList,
+                    ),
                   ),
                   SizedBox(
                     height: size.width * 0.09,

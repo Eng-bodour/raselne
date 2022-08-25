@@ -42,7 +42,7 @@ class BuildList extends StatelessWidget {
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
+                              children:  [
                                 TextUtils(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
@@ -68,7 +68,7 @@ class BuildList extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
-                              children: const [
+                              children:  [
                                 Icon(
                                   Icons.star,
                                   color: mainColor,

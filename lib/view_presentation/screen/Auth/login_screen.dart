@@ -22,7 +22,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var authProvider = Provider.of<AuthProvider>(context);
+    var authProvider = Provider.of<AuthProvider_vm>(context);
     var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -47,7 +47,7 @@ class LoginScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            const TextUtils(
+                             TextUtils(
                               fontSize: 28,
                               fontWeight: FontWeight.w500,
                               text: "LOG",

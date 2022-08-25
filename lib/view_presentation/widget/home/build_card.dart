@@ -12,7 +12,7 @@ class BuildCard extends StatelessWidget {
   // final getController = Get.find<TypesController>();
   @override
   Widget build(BuildContext context) {
-    var typesProvider = Provider.of<TypesProvider>(context);
+    // var typesProvider = Provider.of<TypesProvider>(context);
     // var size = MediaQuery.of(context).size;
 
     // if (typesProvider.isLoading.value) {

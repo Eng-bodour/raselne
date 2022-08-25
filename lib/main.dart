@@ -6,23 +6,35 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:raselne/logic/controller/main_controller.dart';
 import 'package:raselne/logic/controller/mypage_controller.dart';
+import 'package:raselne/logic/controller/order_vm.dart';
 import 'package:raselne/logic/controller/store/category_store_controller.dart';
 import 'package:raselne/logic/controller/store/store_controller.dart';
 import 'package:raselne/logic/controller/types_Controller.dart';
+import 'package:raselne/logic/repositories/order/order_firebase.dart';
 import 'package:raselne/routes/routes.dart';
 import 'logic/controller/auth_controller.dart';
+import 'logic/repositories/store/store_firebase.dart';
 
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider<AuthProvider>(create: (context) => AuthProvider()),
+
+    ChangeNotifierProvider<AuthProvider_vm>(create: (context) => AuthProvider_vm()),
+
+    ChangeNotifierProxyProvider<AuthProvider_vm,order_vm>(
+      create: (_)=> order_vm(orderRepository: order_firebase()),
+      update: (ctx,value,prev)=>prev!..setvalue(value.currentuser),
+    ),
     ChangeNotifierProvider<CategoryStoreProvider>(
         create: (context) => CategoryStoreProvider()),
-    ChangeNotifierProvider<AddStoreProvider>(
-        create: (context) => AddStoreProvider()),
+
+    ChangeNotifierProvider<StoreProvider_vm>(
+        create: (context) => StoreProvider_vm(storeRepository: StoreFirebase())),
+
     ChangeNotifierProvider<TypesProvider>(create: (context) => TypesProvider()),
+
     ChangeNotifierProvider<MyPageProvider>(
         create: (context) => MyPageProvider()),
     ChangeNotifierProvider<MainProvider>(create: (context) => MainProvider()),
@@ -44,7 +56,7 @@ class MyApp extends StatelessWidget {
         initialRoute: FirebaseAuth.instance.currentUser != null ||
                 GetStorage().read<bool>('auth') == true
             ? AppRoutes.mainScreen
-            : AppRoutes.welcome,
+            : AppRoutes.mainScreen,
         getPages: AppRoutes.routes,
       ),
     );

@@ -39,19 +39,21 @@ class InsideNamesOfTheItems extends StatelessWidget {
               maxCrossAxisExtent: size.width * 1,
             ),
             itemBuilder: (context, index) {
-              return buildCategory(
-                size: size,
-                ontap: () {
-                  //  Get.to(const ImageProfile());
-                  // Get.to(() => StoreDetailsScreen(
-                  //       titleStore: titleStore[index],
-                  //       subTitleStore: subTitleStore[index],
-                  //     ));
-                },
-                context: context,
-                title: 'كانتون بوكس',
-                image: 'assets/services/market.png',
-              );
+              return SizedBox();
+              //   buildCategory(
+              //   size: size,
+              //   ontap: () {
+              //     //  Get.to(const ImageProfile());
+              //     // Get.to(() => StoreDetailsScreen(
+              //     //       titleStore: titleStore[index],
+              //     //       subTitleStore: subTitleStore[index],
+              //     //     ));
+              //   },
+              //   context: context,
+              //   // title: 'كانتون بوكس',
+              //   // image: 'assets/services/market.png', desc: '', price: '',
+              //   item: Iterator(),
+              // );
             },
           ),
         ],
