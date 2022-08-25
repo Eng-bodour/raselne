@@ -19,7 +19,9 @@ class TextUtils extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
+      // text.length > 13 ? text.substring(0, 13) :
       text,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
         decoration: underLine,
         color: color,
