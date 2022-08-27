@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
 import 'package:raselne/logic/controller/auth_controller.dart';
@@ -15,7 +16,7 @@ import 'package:raselne/view_presentation/widget/text_utilis.dart';
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({Key? key}) : super(key: key);
   final fromKey = GlobalKey<FormState>();
-
+  final GetStorage? authBox = GetStorage();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -219,7 +220,7 @@ class SignUpScreen extends StatelessWidget {
                         AuthButton(
                           // width: size.width * 0.15,
                           // height: size.height * 0.19,
-                          onPressed: () {
+                          onPressed: () async{
                             if (authProvider.isCheckBox == false) {
                               Get.snackbar(
                                 "Check Box",
@@ -232,12 +233,21 @@ class SignUpScreen extends StatelessWidget {
                               String name = nameController.text.trim();
                               String email = emailController.text.trim();
                               String password = passwordController.text;
-                              authProvider.signUpUsingFirebase(
+                              await authProvider.signUp(
                                 name: name,
                                 email: email,
                                 password: password,
                               );
-
+                              if(authProvider.message=='done')
+                                Get.offNamed(Routes.mainScreen);
+                                else
+                              Get.snackbar(
+                                'title',
+                               authProvider.message,
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Colors.green,
+                                colorText: Colors.white,
+                              );
                               authProvider.isCheckBox = true;
                             }
                           },

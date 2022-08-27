@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:raselne/logic/controller/auth_controller.dart';
 import 'package:raselne/utilis/theme.dart';
 
+import '../../../routes/routes.dart';
 import '../text_utilis.dart';
 
 class LogOutWidget extends StatelessWidget {
-  const LogOutWidget({Key? key}) : super(key: key);
-
+   LogOutWidget({Key? key}) : super(key: key);
+  final GetStorage? authBox = GetStorage();
   // final controller = Get.put(AuthController());
 
   @override
@@ -41,8 +43,22 @@ class LogOutWidget extends StatelessWidget {
             onCancel: () {
               Get.back();
             },
-            onConfirm: () {
-              authProvider.signOutFromApp();
+            onConfirm: () async{
+            await  authProvider.signOutFromApp();
+            if(authProvider.message=='done')
+              {
+                authBox!.remove("auth");
+                Get.offNamed(Routes.welcomeScreen);
+              }
+            else{
+              Get.snackbar(
+                'Error!',
+                authProvider.message.toString(),
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: Colors.green,
+                colorText: Colors.white,
+              );
+            }
             },
             buttonColor: mainColor, // Get.isDarkMode ? pinkClr : mainColor,
           );

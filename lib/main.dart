@@ -14,6 +14,7 @@ import 'package:raselne/logic/repositories/order/order_firebase.dart';
 import 'package:raselne/routes/routes.dart';
 import 'logic/controller/auth_controller.dart';
 import 'logic/repositories/store/store_firebase.dart';
+import 'logic/repositories/users/user_firebase.dart';
 
 void main() async {
   await GetStorage.init();
@@ -21,7 +22,8 @@ void main() async {
   await Firebase.initializeApp();
   runApp(MultiProvider(providers: [
 
-    ChangeNotifierProvider<AuthProvider_vm>(create: (context) => AuthProvider_vm()),
+    ChangeNotifierProvider<AuthProvider_vm>(create: (context) =>
+        AuthProvider_vm(userRepository: user_firebase())),
 
     ChangeNotifierProxyProvider<AuthProvider_vm,order_vm>(
       create: (_)=> order_vm(orderRepository: order_firebase()),

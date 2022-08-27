@@ -70,7 +70,7 @@ class InfoDriveer extends StatelessWidget {
             SizedBox(
               width: size.width * 0.02,
             ),
-            const LogOutWidget(),
+             LogOutWidget(),
           ],
         ),
       ],

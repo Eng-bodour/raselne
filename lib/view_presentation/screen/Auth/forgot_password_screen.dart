@@ -131,10 +131,21 @@ class ForgotPasswordScreen extends StatelessWidget {
                   //   );
                   // }),
                   AuthButton(
-                    onPressed: () {
+                    onPressed: () async{
                       if (formKey.currentState!.validate()) {
                         String email = emailController.text.trim();
-                        authProvider.resetPassword(email);
+                        await authProvider.resetPassword(email);
+                       if(authProvider.message=='done'){
+                         Get.back();
+                       } else{
+                         Get.snackbar(
+                           'title',
+                           authProvider.message,
+                           snackPosition: SnackPosition.BOTTOM,
+                           backgroundColor: Colors.green,
+                           colorText: Colors.white,
+                         );
+                       }
                       }
                     },
                     text: "SEND",

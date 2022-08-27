@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:raselne/data_layer/model/user_model.dart';
 
 // to add users collection to app
 class FirebaseServices {
@@ -24,21 +25,25 @@ class FirebaseServices {
    return await ref.add(data);
   }
 
-  static Future<String?> getNameuser() async {
+   Future<UserModel?> getNameuser() async {
 
-    var users = FirebaseFirestore.instance
-        .collection('users')
-        .where('uid', isEqualTo: uid)
-        .snapshots()
-        .listen((event) {
-      for (var element in event.docs) {
-        // print(element.data()['dispayName']);
-        // print('====================');
-        return name = element.data()['dispayName'];
-      }
-    });
+    //  FirebaseFirestore.instance
+    //     .collection('users')
+    //     .where('uid', isEqualTo: uid)
+    //     .snapshots()
+    //     .listen((event) {
+    //   for (var element in event.docs) {
+    //     // print(element.data()['dispayName']);
+    //     // print('====================');
+    //     return UserModel.fromJson(element.data());//['dispayName'];
+    //   }
+    // });
+    return  FirebaseFirestore.instance
+         .collection('users')
+         .where('uid', isEqualTo: uid)
+         .get().then((value) =>
+          UserModel.fromJson(value.docs[0].data()));
   }
-
   Future<QuerySnapshot> getQuerySnapshotFuture()=> ref.get();
   Stream<QuerySnapshot> getQuerySnapshotStream()=>ref.snapshots();
   Future<DocumentSnapshot> getDocuments(path)=>ref.doc(path).get();

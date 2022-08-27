@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:raselne/logic/controller/auth_controller.dart';
 import 'package:raselne/routes/routes.dart';
@@ -14,7 +15,7 @@ import 'package:raselne/view_presentation/widget/text_utilis.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
   final fromKey = GlobalKey<FormState>();
-
+  final GetStorage? authBox = GetStorage();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -222,14 +223,26 @@ class LoginScreen extends StatelessWidget {
                         //   );
                         // }),
                         AuthButton(
-                          onPressed: () {
+                          onPressed: () async{
                             if (fromKey.currentState!.validate()) {
                               String email = emailController.text.trim();
                               String password = passwordController.text;
 
-                              authProvider.logInUsingFirebase(
+                           await   authProvider.logIn(
                                 email: email,
                                 password: password,
+                              );
+                            }
+                            if(authProvider.message=='done'){
+                            authBox!.write("auth", true);
+                            Get.offNamed(Routes.mainScreen);
+                            }else{
+                              Get.snackbar(
+                                'Error!',
+                                authProvider.message.toString(),
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Colors.green,
+                                colorText: Colors.white,
                               );
                             }
                           },
@@ -254,8 +267,21 @@ class LoginScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             InkWell(
-                                onTap: () {
-                                  authProvider.faceBookSignUpApp();
+                                onTap: () async{
+                                 await authProvider.faceBookSignUpApp();
+                                 if(authProvider.isSignedIn){
+                                 authBox!.write("auth",authProvider.isSignedIn );
+                                 Get.offNamed(Routes.mainScreen);}
+                                 else{
+                                   Get.snackbar(
+                                     'Error!',
+                                     authProvider.message.toString(),
+                                     snackPosition: SnackPosition.BOTTOM,
+                                     backgroundColor: Colors.amber,
+                                     colorText: Colors.white,
+                                   );
+                                 }
+
                                 },
                                 child: const Icon(
                                   Icons.facebook,
@@ -282,8 +308,20 @@ class LoginScreen extends StatelessWidget {
                             //   );
                             // }),
                             InkWell(
-                              onTap: () {
-                                authProvider.googleSinUpApp();
+                              onTap: () async{
+                              await  authProvider.googleSinUpApp();
+                             if( authProvider.isSignedIn){
+                              authBox!.write("auth", authProvider.isSignedIn);
+                              Get.offNamed(Routes.mainScreen);}
+                             else{
+                               Get.snackbar(
+                                 'Error!',
+                                 authProvider.message.toString(),
+                                 snackPosition: SnackPosition.BOTTOM,
+                                 backgroundColor: Colors.amber,
+                                 colorText: Colors.white,
+                               );
+                             }
                               },
                               child: Image.asset(
                                 "assets/images/google.png",

@@ -17,8 +17,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     Provider.of<AuthProvider_vm>(context,listen: false).onInit();
-    FirebaseServices.name;
-    FirebaseServices.getNameuser();
+    // FirebaseServices.name;
+    // FirebaseServices().getNameuser();
     super.initState();
   }
 

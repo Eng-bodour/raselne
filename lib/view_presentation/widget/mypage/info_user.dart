@@ -62,7 +62,7 @@ Widget InfoUser({required Size size}) {
           SizedBox(
             width: size.width * 0.02,
           ),
-          const LogOutWidget(),
+           LogOutWidget(),
         ],
       ),
     ],
