@@ -63,7 +63,7 @@ prepareOrder(StoreModel storeModel ){
      // toLocation: currentuser.location,
      storeModel: storeModel, isopen: false, ispause: false, isdone_deilvery: false,
      id_store: storeModel.IdStore.toString(),
-     fromlocation: LatLng(22,22), DateTimeorder: null, toLocation: LatLng(57,62) );
+       DateTimeorder: null, );
      notifyListeners();
 }
 bool isloading=false;

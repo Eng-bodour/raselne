@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:raselne/data_layer/model/orderModel.dart';
+import 'package:raselne/data_layer/model/user_model.dart';
 
 import '../../../data_layer/webServices/firebase.dart';
 import 'order_repo.dart';
@@ -44,16 +45,35 @@ class order_firebase extends OrderRepository{
   Stream<OrderModel> get_offer(String id_order) {
     //ليظهر العرض المقدم من قبل المندوب ليتم قبوله من المستخدم
     // TODO: implement get_offer
-    return
-      FirebaseServices("orders/$id_order").ref.where(
-        'isopen', isEqualTo: true,)
-          .where('ispause' ,isEqualTo: true).snapshots()
-          .map((snap) =>
-          //.map((doc) =>
-          OrderModel.fromSnapshot(snap.docs[0].data(),
-              snap.docs[0].id ));
+  print(id_order);
 
-    throw UnimplementedError();
+      // FirebaseServices("orders").ref.where(
+      //   'isopen', isEqualTo: true,)
+      //     .where('ispause' ,isEqualTo: true).snapshots()
+      //     .map((snap) =>
+      //
+      //     OrderModel.fromSnapshot(snap.docs[0].data(),
+      //         snap.docs[0].id ));
+  OrderModel _ord;
+  Stream<OrderModel> _orderModel= FirebaseServices("orders")
+      .ref.doc(id_order).snapshots().where(
+          (event) => OrderModel.fromSnapshot(
+      event.data() as Map<String, dynamic>, event.id).ispause==true)
+  .map((snap) {
+     _ord=
+    OrderModel.fromSnapshot(
+        snap.data() as Map<String, dynamic>, snap.id);
+     _ord.user_captain=
+     FirebaseServices("users")
+        .ref.where('captain_user',isEqualTo: _ord.captain_user ).get()
+    .then((value) =>UserModel.fromJson( value.docs[0].data())) as UserModel;
+    return _ord;
+  });
+
+
+    return _orderModel;
+  throw UnimplementedError();
+
   }
 
   @override

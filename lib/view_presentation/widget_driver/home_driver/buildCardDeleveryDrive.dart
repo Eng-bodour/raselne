@@ -171,7 +171,12 @@ class _card_deilveryState extends State<card_deilvery> {
               child: Row(
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(
+                              builder: (context)=>
+                                  bottomsheet_offer( order: widget.order,)));
+                    },
                     child: Container(
                       width: size.width * 0.3,
                       height: size.height * 0.03,
@@ -194,14 +199,29 @@ class _card_deilveryState extends State<card_deilvery> {
                   ),
                   InkWell(
                     onTap: () {
-                   Navigator.push(context,
-                       MaterialPageRoute(
-                           builder: (context)=>
-                               bottomsheet_offer( order: widget.order,)));
+                   // Navigator.push(context,
+                   //     MaterialPageRoute(
+                   //         builder: (context)=>
+                   //             bottomsheet_offer( order: widget.order,)));
+                   showModalBottomSheet<dynamic>(
+                     backgroundColor: Colors.grey.shade200,
+                     //  backgroundColor: Colors.transparent,
+                     elevation: 0,
+                     shape: const RoundedRectangleBorder(
+                         borderRadius: BorderRadius.only(
+                           topLeft: Radius.circular(20),
+                           topRight: Radius.circular(20),
+                         )),
+                     context: context,
+                     isScrollControlled: true,
+                     builder: ((context) =>
+                         bottomsheet_offer( order: widget.order,)),
+                     // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
+                   );
                     },
                     child: Container(
                       width: size.width * 0.4,
-                      height: size.height * 0.03,
+                      height: size.height * 0.05,
                       decoration: BoxDecoration(
                           color: Colors.yellow,
                           borderRadius: BorderRadius.circular(size.width * 0.1)),

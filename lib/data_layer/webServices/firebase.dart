@@ -16,8 +16,8 @@ class FirebaseServices {
 
    Future<void> userSetUp(String dispalyName) async {
     //CollectionReference users = _firestore.collection('users');
-    ref.add({'dispayName': dispalyName, 'uid': uid});
-
+    ref.add(
+        {'dispayName': dispalyName, 'uid': uid});
     return;
   }
   Future<DocumentReference> addtofirestore(Map<String,dynamic> data)async{

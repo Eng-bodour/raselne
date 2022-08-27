@@ -34,10 +34,12 @@ class AuthProvider_vm extends ChangeNotifier {
     // displayUserPhoto.value =
     //     (userProfiloe != null ? userProfiloe!.photoURL : "")!;
     displayUserEmail.value = (userProfiloe != null ? userProfiloe!.email : "")!;
+    //
     currentuser=UserModel(
       name: 'displayUserName.value',
-      uid:'userProfiloe?.uid', location: LatLng(35.22,22.50), mobile: '0', email: '', );
-
+      uid:'HjMUL9ksSLg7YSBODxA3zILpZKz2',//'userProfiloe?.uid',
+      location: LatLng(35.22,22.50),
+      mobile: '0', email: '', dateCreated: '', );
   }
 
   // create user obj based on firebase

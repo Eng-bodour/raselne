@@ -8,7 +8,9 @@ import 'DetailOrder.dart';
 import 'package:location/location.dart';
 class OrderModel {
 
-late UserModel user_captain;
+late UserModel user_captain=UserModel(
+    location: LatLng(14,50), uid: 'uid', name: 'name',
+    email: 'email', mobile: 'mobile', dateCreated: '');
 late UserModel user;//المستخدم الذي طلب اوردر
 // late String id_itemstore='';
  late String id_store='';
@@ -49,7 +51,9 @@ OrderModel({required this.total,required this.id_store,
   required this.price_deilvery,
  required this.titleStore,
   this.storeModel,
-  required this.DateTimeorder, required this.fromlocation, required this.toLocation});
+  required this.DateTimeorder,
+  //required this.toLocation
+});
 Map<String, dynamic> toSnapchot() => {
   "total": total,
   "captain_user": captain_user,
@@ -81,7 +85,8 @@ Map<String, dynamic> toSnapchot() => {
        captain_user:doc["captain_user"],
        content_order:doc["content_order"],
        from_user:doc["from_user"],
-       fromlocation:doc["fromlocation"],
+       // fromlocation:GeoPoint(doc["fromlocation"]),
+       //LatLng(doc["fromlocation"],
        //:GeoPoint(toLocation.latitude,toLocation.longitude) ,//fromlocation,
        is_arrive:doc["is_arrive"],
        isdone_recive:doc["isdone_recive"],
@@ -90,17 +95,17 @@ Map<String, dynamic> toSnapchot() => {
        ispause:doc["ispause"],
        price_deilvery:doc["price_deilvery"],
        titleStore:doc["titleStore"],
-       toLocation:doc["toLocation"],//:GeoPoint(toLocation.latitude,toLocation.longitude) ,
+       // toLocation:doc["toLocation"],//:GeoPoint(toLocation.latitude,toLocation.longitude) ,
      id_store:doc["idStore"],
      DateTimeorder:doc["DateTimeorder"],
-     id_order: id, storeModel: null, detailorderList: [],
+     id_order: id, storeModel: null,
+     detailorderList: [],
    );
+     // order.user_captain=
      //calcDistance(List<LatLng> polylineCoordinates)
-
+       print('content : '+order.content_order);
      return order;
  }
-
-
 
 
 }

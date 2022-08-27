@@ -174,9 +174,10 @@ class _map_locationState extends State<map_location> {
                                 )
                               ],
                             ),
-                            Text(
-                                "lat: ${currentLocation.latitude}, "
-                                    "long : ${currentLocation.longitude}"),
+                            // Text(
+                            //     "lat: ${currentLocation.latitude}, "
+                            //         "long : ${currentLocation.longitude}"),
+                            //
                             Text(Address),
                           ],
                         ),
@@ -304,8 +305,8 @@ class _map_locationState extends State<map_location> {
                   horizontal: size.width * 0.04,
                 ),
                 child: ElevatedButton(
-                  onPressed: () {
-                    Provider.of<order_vm>(context,listen: false)
+                  onPressed: () async{
+                  await  Provider.of<order_vm>(context,listen: false)
                         .addlocation(currentLocation,Address,addDetails.text);
                     Navigator.pop(context);
                   },
@@ -437,13 +438,14 @@ class _map_locationState extends State<map_location> {
       markerId: MarkerId('mr'),//_location.toString()
       icon: BitmapDescriptor.defaultMarker,
       // icon: _locationIcon,
-      position: _location,
+      position: currentLocation,
       infoWindow: InfoWindow(
           title: "Title",
           snippet: "${currentLocation.latitude}, ${currentLocation.longitude}"),
     );
     _markers.clear();
     _markers.add(newMarker);
+    GetAddressFromLatLong(currentLocation);
     setState(() {});
   }
 

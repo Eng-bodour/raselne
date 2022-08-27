@@ -22,14 +22,14 @@ final UserModel currentUser = UserModel(
   uid: '0',
   email: 'bodour@gmail.com',
   name: 'bodour',
-  mobile: '0567487703', location: null,
+  mobile: '0567487703', location: null, dateCreated: '',
 );
 
 final UserModel nour = UserModel(
   uid: '1',
   email: 'nour@gmail.com',
   name: 'nour',
-  mobile: '0567487703', location: null,
+  mobile: '0567487703', location: null, dateCreated: '',
 );
 // USERS
 // final UserModel aya = UserModel(

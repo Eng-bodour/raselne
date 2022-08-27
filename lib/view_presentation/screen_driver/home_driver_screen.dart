@@ -49,7 +49,7 @@ class HomeDriverScreen extends StatelessWidget {
                     AsyncSnapshot<List<OrderModel>>
                     snapshot) {
                if(snapshot.hasError){
-                 return Text('something went wrong');
+                 return Text('something went wrong'+snapshot.error.toString());
                }
                if(snapshot.connectionState==ConnectionState.waiting){
                  return Text("Loading");
