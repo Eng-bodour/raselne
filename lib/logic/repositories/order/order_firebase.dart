@@ -55,7 +55,8 @@ class order_firebase extends OrderRepository{
       //     OrderModel.fromSnapshot(snap.docs[0].data(),
       //         snap.docs[0].id ));
   OrderModel _ord;
-  Stream<OrderModel> _orderModel= FirebaseServices("orders")
+  Stream<OrderModel> _orderModel=
+  FirebaseServices("orders")
       .ref.doc(id_order).snapshots().where(
           (event) => OrderModel.fromSnapshot(
       event.data() as Map<String, dynamic>, event.id).ispause==true)
@@ -64,9 +65,10 @@ class order_firebase extends OrderRepository{
     OrderModel.fromSnapshot(
         snap.data() as Map<String, dynamic>, snap.id);
      _ord.user_captain=
-     FirebaseServices("users")
-        .ref.where('captain_user',isEqualTo: _ord.captain_user ).get()
-    .then((value) =>UserModel.fromJson( value.docs[0].data())) as UserModel;
+      FirebaseServices("users")
+        .ref.where('uid',isEqualTo: _ord.captain_user ).get()
+    .then((value) => UserModel.fromJson(
+         value.docs[0].data())) as UserModel;
     return _ord;
   });
 
@@ -124,6 +126,18 @@ else  FirebaseServices("orders").ref
       'isopen':isopen,
     });
     throw UnimplementedError();
+  }
+
+  @override
+  Future<List<OrderModel>> getAllorderUser(String id_user) {
+    // TODO: implement getAllorderUser
+    return
+      FirebaseServices("orders").ref.where(
+        'from_user', isEqualTo: id_user,).get()
+          .then((snap) => snap.docs
+          .map((doc) =>
+          OrderModel.fromSnapshot( doc.data(),doc.id )).toList()
+      );
   }
 
 }

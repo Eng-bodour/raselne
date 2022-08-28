@@ -11,6 +11,7 @@ abstract class UserRepository{
   Future<bool> faceBookSignUp( );
   Future<String> resetPassword(String email);
   Future<String> signOut();
-  Future<UserModel> getuser(String uid);
+  Future<UserModel> getuser();
+  Future<bool> isAuthuser();
 
 }

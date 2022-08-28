@@ -107,7 +107,6 @@ class _map_locationState extends State<map_location> {
                       },
                       onCameraMove: (CameraPosition newPos){
                        setState(() {
-
                          currentLocation=newPos.target;
                        });
                       },
@@ -457,7 +456,7 @@ class _map_locationState extends State<map_location> {
       setState(() {});
     }
   }
-  Future<void> getMyLocation()async{
+  Future<void> getMyLocation() async {
     LocationData _myLocation=await LocationService().getLocation();
     _animateCamera(LatLng(_myLocation.latitude!, _myLocation.longitude!));
     GetAddressFromLatLong(LatLng(_myLocation.latitude!, _myLocation.longitude!));

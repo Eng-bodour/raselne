@@ -12,6 +12,9 @@ import 'package:raselne/logic/controller/store/store_controller.dart';
 import 'package:raselne/logic/controller/types_Controller.dart';
 import 'package:raselne/logic/repositories/order/order_firebase.dart';
 import 'package:raselne/routes/routes.dart';
+import 'package:raselne/view_presentation/screen/main_screen.dart';
+import 'package:raselne/view_presentation/screen/welcome_screen.dart';
+import 'data_layer/model/user_model.dart';
 import 'logic/controller/auth_controller.dart';
 import 'logic/repositories/store/store_firebase.dart';
 import 'logic/repositories/users/user_firebase.dart';
@@ -29,6 +32,7 @@ void main() async {
       create: (_)=> order_vm(orderRepository: order_firebase()),
       update: (ctx,value,prev)=>prev!..setvalue(value.currentuser),
     ),
+
     ChangeNotifierProvider<CategoryStoreProvider>(
         create: (context) => CategoryStoreProvider()),
 
@@ -50,17 +54,54 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Raselne',
-        //home: WelcomeScreen(),
+      child:FutureBuilder<UserModel?>(
+          future: Provider.of<AuthProvider_vm>(context,listen: false)
+              .isAuthuser() ,
+          builder:(context, snapshot) {
+            print('in main builder');
+            if (!snapshot.hasData) {
+              //Center(child: CircularProgressIndicator(),)
+              return MaterialApp(
+                home: Scaffold(
+                  body: Center(
+                    child: Text('Loading....'),
+                  ),
+                ),
+              );
+            }
+            else {
+              return
+                GetMaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  title: 'Raselne',
+                  //home: WelcomeScreen(),
 
-        initialRoute: FirebaseAuth.instance.currentUser != null ||
-                GetStorage().read<bool>('auth') == true
-            ? AppRoutes.mainScreen
-            : AppRoutes.mainScreen,
-        getPages: AppRoutes.routes,
-      ),
+                  initialRoute: FirebaseAuth.instance.currentUser != null ||
+                          GetStorage().read<bool>('auth') == true
+                      ? AppRoutes.mainScreen
+                      : AppRoutes.welcome,
+                  getPages: AppRoutes.routes,
+                );
+                // MaterialApp(
+                //   home: Directionality(
+                //     textDirection: TextDirection.rtl,
+                //     child: snapshot.data?.uid !=null ? MainScreen() : WelcomeScreen(),
+                //   ),
+                // )
+              ;
+            }
+          }),
+      // GetMaterialApp(
+      //   debugShowCheckedModeBanner: false,
+      //   title: 'Raselne',
+      //   //home: WelcomeScreen(),
+      //
+      //   initialRoute: FirebaseAuth.instance.currentUser != null ||
+      //           GetStorage().read<bool>('auth') == true
+      //       ? AppRoutes.mainScreen
+      //       : AppRoutes.welcome,
+      //   getPages: AppRoutes.routes,
+      // ),
     );
   }
 }

@@ -1,13 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
+import 'package:raselne/data_layer/model/orderModel.dart';
+import 'package:raselne/logic/controller/order_vm.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
 import '../widget/orders/build_orders.dart';
 
-class OrdersScreen extends StatelessWidget {
+class OrdersScreen extends StatefulWidget {
   const OrdersScreen({Key? key}) : super(key: key);
 
+  @override
+  State<OrdersScreen> createState() => _OrdersScreenState();
+}
+
+class _OrdersScreenState extends State<OrdersScreen> {
+
+  @override void initState() {
+    // TODO: implement initState
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      Provider.of<order_vm>(context,listen: false).get_myorder();
+    });
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -26,31 +43,50 @@ class OrdersScreen extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: size.width * 0.03),
-                      child: TextUtils(
-                          fontSize: size.width * 0.05,
-                          fontWeight: FontWeight.bold,
-                          text: 'جميع الطلبات',
-                          color: Colors.black54,
-                          underLine: TextDecoration.none),
-                    ),
-                    ListView.separated(
-                      shrinkWrap: true,
-                      controller: ScrollController(),
-                      scrollDirection: Axis.vertical,
-                      itemCount: 20,
-                      itemBuilder: (context, index) {
-                        return buildCardOrders(size: size);
-                      },
-                      separatorBuilder: (context, index) =>
-                          SizedBox(height: size.height * 0.02),
-                    ),
-                  ],
+                child: Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                        child: TextUtils(
+                            fontSize: size.width * 0.05,
+                            fontWeight: FontWeight.bold,
+                            text: 'جميع الطلبات',
+                            color: Colors.black54,
+                            underLine: TextDecoration.none),
+                      ),
+                     Consumer<order_vm>(
+                         builder: (context, value, child) {
+                     return value.isloading==true?
+                     Center(
+                       child: CircularProgressIndicator()
+                     ): value.mylist_order.length==0?
+                     Center(
+                       child: Text('no order'),
+                     ) :Column(
+                       children: [
+                         ListView.separated(
+                           shrinkWrap: true,
+                           controller: ScrollController(),
+                           scrollDirection: Axis.vertical,
+                           itemCount: value.mylist_order.length,
+                           itemBuilder: (context, index) {
+                             return buildCardOrders(
+                                 orderModel: value.mylist_order[index],
+                                 size: size);
+                           },
+                           separatorBuilder: (context, index) =>
+                               SizedBox(height: size.height * 0.02),
+                         )
+                       ],
+                     ) ;
+    }
+    ),
+
+                    ],
+                  ),
                 ),
               ),
             ],

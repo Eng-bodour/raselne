@@ -21,6 +21,7 @@ final List<String> titleStore = [
   'صحي ',
   'المنتجات العضوية ',
 ];
+
 final List<String> typesTitle = [
   'عروض ',
   'الأطباق الرئيسية عادية ',

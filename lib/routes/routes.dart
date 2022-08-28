@@ -22,6 +22,7 @@ class AppRoutes {
   static const welcome = Routes.welcomeScreen;
   //static const homeScreen = Routes.homeScreen;
   static const mainScreen = Routes.mainScreen;
+  static const signup = Routes.signUpScreen;
 
   //getPages
 

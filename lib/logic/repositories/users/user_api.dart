@@ -41,8 +41,14 @@ class user_api extends UserRepository{
   }
 
   @override
-  Future<UserModel> getuser(String uid) {
+  Future<UserModel> getuser() {
     // TODO: implement getuser
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> isAuthuser() {
+    // TODO: implement isAuthuser
     throw UnimplementedError();
   }
 

@@ -13,11 +13,13 @@ import '../repositories/order/order_repo.dart';
 class order_vm extends ChangeNotifier{
 List<DetailOrder> list_itemorder=[];
 late OrderModel order;
+List<OrderModel> mylist_order=[];
 OrderRepository orderRepository;
 order_vm({required this.orderRepository});
 
 late UserModel currentuser;
 setvalue(UserModel val){
+
  currentuser=val;
  notifyListeners();
 }
@@ -42,11 +44,12 @@ Stream<List<OrderModel>> get_orders() async* {
   notifyListeners();
 }
 
-Stream<OrderModel> get_offer()async*{
- yield*  orderRepository.get_offer(order.id_order);
+Stream<OrderModel> get_offer(String id_order)async*{
+  //ليظهر العرض من المندوب للمستخدم ليتم قبوله او رفضه
+ yield*  orderRepository.get_offer(id_order);
 }
 
-prepareOrder(StoreModel storeModel ){
+prepareOrder(StoreModel storeModel ) {
  double total=0;
  list_itemorder.forEach((element) {
   total+=double.parse( element.total_item);
@@ -63,7 +66,7 @@ prepareOrder(StoreModel storeModel ){
      // toLocation: currentuser.location,
      storeModel: storeModel, isopen: false, ispause: false, isdone_deilvery: false,
      id_store: storeModel.IdStore.toString(),
-       DateTimeorder: null, );
+       DateTimeorder: null, state: 'create', );
      notifyListeners();
 }
 bool isloading=false;
@@ -79,17 +82,27 @@ void addOrder() async {
  });
   order.content_order=order.storeModel!.nameStore +"\n"+listdetail;
   order.isopen=true;
-
+  order.state='open';
   order.id_order=await orderRepository.AddOrder(order.toSnapchot());
  isloading=false;
  notifyListeners();
 }
-void getoffertouser() {
-  //
-  orderRepository.get_offer(order.id_order);
+// Future< void > getoffertouser()async {
+//   //
+//  await orderRepository.get_offer(order.id_order);
+//   notifyListeners();
+// }
+Future<void> get_myorder()async{
+  isloading=true;
+  notifyListeners();
+  // print('current user is '+currentuser.uid.toString());
+
+  mylist_order= await orderRepository
+      .getAllorderUser('uyHNE4qdzlZekuu6R6a4JYgMUTs2');
+  isloading=false;
   notifyListeners();
 }
- Future<void> update_order(String id_order)async {
+ Future<void> update_order(String id_order) async {
   //عندما يقدم المندوب على العرض سيتم تحويل قيمة المتحول ispause إلى true
   //وذلك لكي لايظهر الطلب لمندوب آخر
    isloading=true;

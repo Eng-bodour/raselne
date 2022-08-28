@@ -38,6 +38,9 @@ List<DetailOrder> detailorderList=[];//
 String titleStore='';
 String content_order='';// محتويات المنتج الذي طلبه العميل
 StoreModel? storeModel;
+String state='';
+bool isclose=false;
+bool iscancel=false;//ملغى
 
 OrderModel({required this.total,required this.id_store,
   required this.captain_user,required this.content_order,
@@ -50,7 +53,7 @@ OrderModel({required this.total,required this.id_store,
   required this.ispause,
   required this.price_deilvery,
  required this.titleStore,
-  this.storeModel,
+  this.storeModel,required this.state,
   required this.DateTimeorder,
   //required this.toLocation
 });
@@ -61,7 +64,7 @@ Map<String, dynamic> toSnapchot() => {
   "distance_recive_deilvery": distance_recive_deilvery,
   "price_deilvery_captain": price_deilvery_captain,
   // "content_order": content_order,
-
+  "state":state,
   "from_user": from_user,
   "fromlocation":GeoPoint(toLocation.latitude,toLocation.longitude) ,//fromlocation,
   "is_arrive": is_arrive,
@@ -85,24 +88,30 @@ Map<String, dynamic> toSnapchot() => {
        captain_user:doc["captain_user"],
        content_order:doc["content_order"],
        from_user:doc["from_user"],
-       // fromlocation:GeoPoint(doc["fromlocation"]),
-       //LatLng(doc["fromlocation"],
+       // fromlocation:LatLng(gloacationfrom.latitude,gloacationfrom.longitude),
+       //LatLng(doc["fromlocation"]
        //:GeoPoint(toLocation.latitude,toLocation.longitude) ,//fromlocation,
        is_arrive:doc["is_arrive"],
        isdone_recive:doc["isdone_recive"],
+
        isdone_deilvery:doc["isdone_deilvery"],
-       isopen:doc["isopen"],
-       ispause:doc["ispause"],
-       price_deilvery:doc["price_deilvery"],
-       titleStore:doc["titleStore"],
-       // toLocation:doc["toLocation"],//:GeoPoint(toLocation.latitude,toLocation.longitude) ,
+     isopen:doc["isopen"],
+     ispause:doc["ispause"],
+     price_deilvery:doc["price_deilvery"],
+     titleStore:doc["titleStore"],
+     // toLocation:doc["toLocation"],//:GeoPoint(toLocation.latitude,toLocation.longitude) ,
      id_store:doc["idStore"],
      DateTimeorder:doc["DateTimeorder"],
      id_order: id, storeModel: null,
      detailorderList: [],
+       state:  doc['state']==null?'':doc['state'],
    );
      // order.user_captain=
      //calcDistance(List<LatLng> polylineCoordinates)
+   GeoPoint gloacationfrom=doc["fromlocation"];
+   order.fromlocation=LatLng(gloacationfrom.latitude,gloacationfrom.longitude);
+   gloacationfrom=doc["toLocation"];
+   order.toLocation=LatLng(gloacationfrom.latitude,gloacationfrom.longitude);
        print('content : '+order.content_order);
      return order;
  }

@@ -8,8 +8,8 @@ import '../../../logic/controller/order_vm.dart';
 import '../../screen/chat/chat_screen.dart';
 
 class ShowOffers extends StatelessWidget {
-  const ShowOffers({ Key? key}) : super(key: key);
-
+  ShowOffers({required this.id_order, Key? key}) : super(key: key);
+  String id_order;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -24,7 +24,7 @@ class ShowOffers extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                   horizontal: size.width * 0.03, vertical: size.height * 0.27),
               child:  StreamBuilder(
-                stream: Provider.of<order_vm>(context).get_offer(),
+                stream: Provider.of<order_vm>(context).get_offer(id_order),
                 builder: (BuildContext context,
                     AsyncSnapshot<OrderModel>
                     snapshot) {

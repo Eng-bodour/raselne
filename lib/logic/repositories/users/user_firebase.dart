@@ -1,11 +1,13 @@
 
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:raselne/data_layer/model/user_model.dart';
 import 'package:raselne/logic/repositories/users/user_repo.dart';
@@ -15,7 +17,7 @@ import '../../../data_layer/webServices/firebase.dart';
 import '../../../routes/routes.dart';
 
 class user_firebase extends UserRepository{
-  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;// auth.currentUser!.uid.toString();
   User? get userProfiloe => auth.currentUser;
   var googleSignIn = GoogleSignIn();
   var isSignedIn = false;
@@ -33,7 +35,7 @@ class user_firebase extends UserRepository{
     });
     //to add applecation user and uid
 
-   await FirebaseServices("users").userSetUp(name);
+   await FirebaseServices("users").userSetUp(name,email);
 
     message='done';
     } on FirebaseAuthException catch (error) {
@@ -71,7 +73,10 @@ class user_firebase extends UserRepository{
       // displayUserEmail.value = faceBookModel!.email!;
       // displayUserName.value = faceBookModel!.name!;
 
-      await FirebaseServices("users").userSetUp(faceBookModel!.name.toString());
+      await FirebaseServices("users").userSetUp
+        (faceBookModel!.name.toString(),faceBookModel!.email.toString()
+          // faceBookModel!.id.toString()
+      );
 
       return true;
     }
@@ -96,7 +101,12 @@ class user_firebase extends UserRepository{
       await auth.signInWithCredential(credential);
 
 
-     await FirebaseServices("users").userSetUp(googleUser!.displayName!);
+     await FirebaseServices("users")
+         .userSetUp(
+         googleUser!.displayName!,
+         googleUser.email.toString(),
+         // googleUser.id
+     );
 
       return true;
     } catch (error) {
@@ -198,9 +208,26 @@ class user_firebase extends UserRepository{
   }
 
   @override
-  Future<UserModel> getuser(String uid) {
+  Future<UserModel> getuser() {
     // TODO: implement getuser
+
+    return  FirebaseFirestore.instance
+        .collection('users')
+        .where('uid', isEqualTo:
+         auth.currentUser!.uid.toString())
+        .get().then((value) =>
+        UserModel.fromJson(value.docs[0].data()));
+
     throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> isAuthuser()async {
+    // TODO: implement isAuthuser
+    if(FirebaseAuth.instance.currentUser != null ||
+       await GetStorage().read<bool>('auth') == true)
+      return true;
+    else return false;
   }
 
 

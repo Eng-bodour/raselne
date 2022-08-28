@@ -1,11 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:raselne/data_layer/model/user_model.dart';
+
+import '../../services/location_services.dart';
 
 // to add users collection to app
 class FirebaseServices {
   static FirebaseAuth auth = FirebaseAuth.instance;
-  static String uid ="YL4gwVLYe0dyr7y4CuiEcJIkt7A3";// auth.currentUser!.uid.toString();
+  static String uid = auth.currentUser!.uid.toString();
   static String? name;
 
   final _firestore=FirebaseFirestore.instance;
@@ -15,35 +19,43 @@ class FirebaseServices {
     ref= _firestore.collection(namePath);
   }
 
-   Future<void> userSetUp(String dispalyName) async {
+   Future<void> userSetUp(String dispalyName,String email)//,String uid)
+   async {
     //CollectionReference users = _firestore.collection('users');
+     LocationData _myLocation=await LocationService().getLocation();
+
     ref.add(
-        {'dispayName': dispalyName, 'uid': uid});
+    UserModel(
+        name:dispalyName, location: LatLng(_myLocation.latitude!, _myLocation.longitude!), uid: uid,
+        mobile: '0', email: email,
+        dateCreated: DateTime.now().toString()).toJson()
+    );
+//        {'dispayName': dispalyName, 'uid': uid});
     return;
   }
   Future<DocumentReference> addtofirestore(Map<String,dynamic> data)async{
    return await ref.add(data);
   }
 
-   Future<UserModel?> getNameuser() async {
-
-    //  FirebaseFirestore.instance
-    //     .collection('users')
-    //     .where('uid', isEqualTo: uid)
-    //     .snapshots()
-    //     .listen((event) {
-    //   for (var element in event.docs) {
-    //     // print(element.data()['dispayName']);
-    //     // print('====================');
-    //     return UserModel.fromJson(element.data());//['dispayName'];
-    //   }
-    // });
-    return  FirebaseFirestore.instance
-         .collection('users')
-         .where('uid', isEqualTo: uid)
-         .get().then((value) =>
-          UserModel.fromJson(value.docs[0].data()));
-  }
+  //  Future<UserModel?> getNameuser() async {
+  //
+  //   //  FirebaseFirestore.instance
+  //   //     .collection('users')
+  //   //     .where('uid', isEqualTo: uid)
+  //   //     .snapshots()
+  //   //     .listen((event) {
+  //   //   for (var element in event.docs) {
+  //   //     // print(element.data()['dispayName']);
+  //   //     // print('====================');
+  //   //     return UserModel.fromJson(element.data());//['dispayName'];
+  //   //   }
+  //   // });
+  //   return  FirebaseFirestore.instance
+  //        .collection('users')
+  //        .where('uid', isEqualTo: uid)
+  //        .get().then((value) =>
+  //         UserModel.fromJson(value.docs[0].data()));
+  // }
   Future<QuerySnapshot> getQuerySnapshotFuture()=> ref.get();
   Stream<QuerySnapshot> getQuerySnapshotStream()=>ref.snapshots();
   Future<DocumentSnapshot> getDocuments(path)=>ref.doc(path).get();

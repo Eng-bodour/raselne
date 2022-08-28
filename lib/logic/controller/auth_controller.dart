@@ -22,13 +22,18 @@ class AuthProvider_vm extends ChangeNotifier {
   bool isSignedIn = false;
   String message = '';
   late UserModel currentuser;
-
-
   UserRepository userRepository;
-
   AuthProvider_vm({required this.userRepository});
+
+  Future<UserModel?> isAuthuser()async{
+
+  bool isauth= await  userRepository.isAuthuser();
+  if(isauth)
+   return await userRepository.getuser();
+   else return null;
+  }
   @override
-  void onInit() {
+  void onInit()async {
   print('xxxxx');
     // displayUserName.value =
     //     (userProfiloe != null ? userProfiloe!.displayName : "")!;
@@ -36,12 +41,13 @@ class AuthProvider_vm extends ChangeNotifier {
     // //     (userProfiloe != null ? userProfiloe!.photoURL : "")!;
     // displayUserEmail.value = (userProfiloe != null ? userProfiloe!.email : "")!;
     //
+    currentuser=await userRepository.getuser();
+    // currentuser=UserModel(
+    //   name: 'displayUserName.value',
+    //   uid:'HjMUL9ksSLg7YSBODxA3zILpZKz2',//'userProfiloe?.uid',
+    //   location: LatLng(35.22,22.50),
+    //   mobile: '0', email: '', dateCreated: '', );
 
-    currentuser=UserModel(
-      name: 'displayUserName.value',
-      uid:'HjMUL9ksSLg7YSBODxA3zILpZKz2',//'userProfiloe?.uid',
-      location: LatLng(35.22,22.50),
-      mobile: '0', email: '', dateCreated: '', );
   }
 
   // create user obj based on firebase

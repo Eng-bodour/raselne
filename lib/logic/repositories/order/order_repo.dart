@@ -2,6 +2,7 @@ import 'package:raselne/data_layer/model/orderModel.dart';
 
 abstract class OrderRepository {
   Stream<List<OrderModel>> getAllorders();
+  Future<List<OrderModel>> getAllorderUser(String id_user);
   Future<OrderModel> getOrderById(String id);
   Stream<OrderModel> get_offer(String id_order);
 

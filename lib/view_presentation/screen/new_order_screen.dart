@@ -386,7 +386,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
             Provider.of<order_vm>(context,listen:  false)
                 .addOrder( );
            Navigator.of(context).push(MaterialPageRoute(builder:
-               (context)=>ShowOffers()
+               (context)=> ShowOffers(id_order: orderModel.id_order)
            )) ;
           },
           child: Container(
