@@ -11,7 +11,9 @@ class OrderModel {
 late UserModel user_captain=UserModel(
     location: LatLng(14,50), uid: 'uid', name: 'name',
     email: 'email', mobile: 'mobile', dateCreated: '');
+
 late UserModel user;//المستخدم الذي طلب اوردر
+late Stream<UserModel> usertest;//المستخدم الذي طلب اوردر
 // late String id_itemstore='';
  late String id_store='';
 late String id_order='';
@@ -63,6 +65,7 @@ Map<String, dynamic> toSnapchot() => {
   "content_order": content_order,
   "distance_recive_deilvery": distance_recive_deilvery,
   "price_deilvery_captain": price_deilvery_captain,
+
   // "content_order": content_order,
   "state":state,
   "from_user": from_user,

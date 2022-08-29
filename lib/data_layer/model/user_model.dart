@@ -30,9 +30,9 @@ class UserModel {
      this.num_travel,  this.type_car,
      this.Id_number, required this.dateCreated,  this.num_car,
   });
-  factory UserModel.fromJson(Map<String, dynamic> json) {
+  factory UserModel.fromJson(Map<String, dynamic>? json) {
     UserModel userModel= UserModel(
-      name: json["name"],
+      name: json!["name"],
       //.toDouble(),
       email: json["email"],
       mobile: json["mobile"],

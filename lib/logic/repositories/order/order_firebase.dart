@@ -54,30 +54,85 @@ class order_firebase extends OrderRepository{
       //
       //     OrderModel.fromSnapshot(snap.docs[0].data(),
       //         snap.docs[0].id ));
-  OrderModel _ord;
+  OrderModel _ord
+  =OrderModel(
+      total:9 , id_store: 'id_store',
+      captain_user: 'captain_user', content_order: 'content_order',
+      detailorderList: [],
+      from_user: 'from_user', id_order: id_order,
+      is_arrive:false, isdone_recive: false,
+      isdone_deilvery: false, isopen: true,
+      ispause: true, price_deilvery: 'price_deilvery',
+      titleStore: 'titleStore',
+      state: 'state', DateTimeorder: 'DateTimeorder');
+  //
+  // _orderModel.forEach((element) async {
+  //   element.user_captain=await
+  //   getusercaptain(element.captain_user.toString());
+  //   print('ord '+element.user_captain.name.toString());
+  //   _ord=element;
+  // });
+
   Stream<OrderModel> _orderModel=
   FirebaseServices("orders")
       .ref.doc(id_order).snapshots().where(
           (event) => OrderModel.fromSnapshot(
       event.data() as Map<String, dynamic>, event.id).ispause==true)
-  .map((snap) {
+  .map((snap)  {
+    print('bbbbb');
      _ord=
     OrderModel.fromSnapshot(
         snap.data() as Map<String, dynamic>, snap.id);
-     _ord.user_captain=
-      FirebaseServices("users")
-        .ref.where('uid',isEqualTo: _ord.captain_user ).get()
-    .then((value) => UserModel.fromJson(
-         value.docs[0].data())) as UserModel;
+    // _ord.user_captain=
+    //     FirebaseServices("users")
+    //     .ref.where('uid',isEqualTo: _ord.captain_user ).get()
+    // .then((value) => UserModel.fromJson(
+    //      value.docs[0].data())) as UserModel;
+    // print('_ord.user_captain '+_ord.user_captain.name.toString() );
+    // _ord.user_captain=
+    // FirebaseServices("users")
+    //     .ref.doc(_ord.captain_user ).get()
+    //     .then((value) => UserModel.fromJson(
+    //     value.data()))  ;
     return _ord;
   });
+  _orderModel.map((element)async {
+    print('insid ');
+   _ord.user_captain=
+   await FirebaseServices("users")
+        .ref.doc(element.captain_user ).get()
+        .then((value) => UserModel.fromJson(
+        value.data()))  ;
+   return _ord;
+  });
+  // _orderModel.listen((event) {
+  //   event=_ord;
+  // });
 
+  // _orderModel.map((event) async  {
+  //   _ord=event;
+  //   print('sdsdssssssssss'+_ord.captain_user.toString());
+  //   _ord.user_captain =await  FirebaseServices("users")
+  //       .ref.where('uid',isEqualTo: _ord.captain_user ).get()
+  //   .then((value) => UserModel.fromJson(
+  //        value.docs[0].data()));
+  //   print('nnnnnnnnnnname '+ _ord.user_captain .name.toString());
+  // });
 
-    return _orderModel;
-  throw UnimplementedError();
-
+      return _orderModel;
   }
+ Future<UserModel> getusercaptain(String uidcaptain)async{
+    print(uidcaptain);
 
+      UserModel us= await FirebaseServices("users")
+        .ref.where('uid',isEqualTo: uidcaptain).limit(1).get()
+        .then((value) {
+          return UserModel.fromJson(
+         value.docs.map((e) => e.data()).first);
+        });
+      print('us ${us.name}');
+      return us;
+ }
   @override
  Future<void> update_order(String idOrder,String idcaptain,String distance_recive_deilvery,String price_deilvery_captain)async {
 //عندما المندوب يقدم على الطلب

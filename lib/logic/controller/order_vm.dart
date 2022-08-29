@@ -21,6 +21,7 @@ late UserModel currentuser;
 setvalue(UserModel val){
 
  currentuser=val;
+ print('current '+currentuser.name.toString());
  notifyListeners();
 }
  get_item_is_ordered(){
@@ -34,9 +35,9 @@ setvalue(UserModel val){
  }
 addlocation(LatLng location,String Address,String detailAddress){
 
-  order?.toLocation=location;
-  order?.AddresstoLocation=Address;
-  order?.detailAddress=detailAddress;
+  order.toLocation=location;
+  order.AddresstoLocation=Address;
+  order.detailAddress=detailAddress;
   notifyListeners();
 }
 Stream<List<OrderModel>> get_orders() async* {
@@ -46,6 +47,8 @@ Stream<List<OrderModel>> get_orders() async* {
 
 Stream<OrderModel> get_offer(String id_order)async*{
   //ليظهر العرض من المندوب للمستخدم ليتم قبوله او رفضه
+// print(currentuser.name.toString());
+print('cxdcdvdf');
  yield*  orderRepository.get_offer(id_order);
 }
 
@@ -54,6 +57,7 @@ prepareOrder(StoreModel storeModel ) {
  list_itemorder.forEach((element) {
   total+=double.parse( element.total_item);
  });
+
  order=OrderModel(
      total: total, captain_user: null,
      content_order: 'content_order', detailorderList: list_itemorder,

@@ -27,18 +27,18 @@ class ShowOffers extends StatelessWidget {
                 stream: Provider.of<order_vm>(context).get_offer(id_order),
                 builder: (BuildContext context,
                     AsyncSnapshot<OrderModel>
-                    snapshot) {
-                  if(snapshot.hasError){
-                    return Text('something went wrong'+snapshot.error.toString());
+                    snapshot_order) {
+                  if(snapshot_order.hasError){
+                    return Text('something went wrong'+snapshot_order.error.toString());
                   }
-                  if(snapshot.connectionState==ConnectionState.waiting){
+                  if(snapshot_order.connectionState==ConnectionState.waiting){
                     return Text("Loading");
                   }
                   return
                         Column(
                           children: [
                              Text(
-                              'سعر التوصيل المتوقع ${snapshot.data!.price_deilvery} ر.س',
+                              'سعر التوصيل المتوقع ${snapshot_order.data!.price_deilvery} ر.س',
                               style: TextStyle(color: Colors.white),
                             ),
                             Container(
@@ -89,7 +89,7 @@ class ShowOffers extends StatelessWidget {
                                             TextUtils(
                                                 fontSize: size.width * 0.05,
                                                 fontWeight: FontWeight.bold,
-                                                text: snapshot.data!.user_captain.name.toString(),//'حسام', //'${Firebase.name}',
+                                                text: snapshot_order.data!.user_captain.name.toString(),//'حسام', //'${Firebase.name}',
                                                 color: Colors.black54,
                                                 underLine: TextDecoration.none),
                                             Row(
@@ -109,7 +109,7 @@ class ShowOffers extends StatelessWidget {
                                                 TextUtils(
                                                     fontSize: size.width * 0.04,
                                                     fontWeight: FontWeight.bold,
-                                                    text: ' ${snapshot.data!.user_captain.num_travel} رحلة ', //'${Firebase.name}',
+                                                    text: ' ${snapshot_order.data!.user_captain.num_travel} رحلة ', //'${Firebase.name}',
                                                     color: Colors.black54,
                                                     underLine: TextDecoration.none),
                                                 SizedBox(
@@ -118,7 +118,7 @@ class ShowOffers extends StatelessWidget {
                                                 TextUtils(
                                                     fontSize: size.width * 0.04,
                                                     fontWeight: FontWeight.bold,
-                                                    text:snapshot.data!.user_captain.dateCreated,
+                                                    text:snapshot_order.data!.user_captain.dateCreated,
                                                     //'مندوب منذ 2022 jun', //'${Firebase.name}',
                                                     color: Colors.black54,
                                                     underLine: TextDecoration.none),
@@ -141,7 +141,7 @@ class ShowOffers extends StatelessWidget {
                                                 TextUtils(
                                                     fontSize: size.width * 0.04,
                                                     fontWeight: FontWeight.bold,
-                                                    text: snapshot.data!.distance_recive_deilvery,// '5.7 كم ', //'${Firebase.name}',
+                                                    text: snapshot_order.data!.distance_recive_deilvery,// '5.7 كم ', //'${Firebase.name}',
                                                     color: Colors.black54,
                                                     underLine: TextDecoration.none),
                                                 SizedBox(
@@ -177,7 +177,7 @@ class ShowOffers extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
-                                          '${snapshot.data!.price_deilvery_captain} ر.س ',
+                                          '${snapshot_order.data!.price_deilvery_captain} ر.س ',
                                           style: TextStyle(
                                               color: Colors.black54,
                                               fontSize: size.width * 0.05,
@@ -196,7 +196,7 @@ class ShowOffers extends StatelessWidget {
                                         ElevatedButton(
                                           onPressed: () {
                                             Provider.of<order_vm>(context,listen: false).
-                                            approve_order_or_not(snapshot.data!.id_order, true);
+                                            approve_order_or_not(snapshot_order.data!.id_order, true);
                                           },
                                           style: ElevatedButton.styleFrom(
                                             elevation: 0,
@@ -220,7 +220,7 @@ class ShowOffers extends StatelessWidget {
                                         ElevatedButton(
                                             onPressed: () {
                                               Provider.of<order_vm>(context,listen: false).
-                                              approve_order_or_not(snapshot.data!.id_order, false);
+                                              approve_order_or_not(snapshot_order.data!.id_order, false);
                                               Navigator.push(context,
                                                   MaterialPageRoute(builder: (context)=>ChatScreen()));
                                             },

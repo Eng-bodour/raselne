@@ -60,6 +60,7 @@ class MyApp extends StatelessWidget {
           builder:(context, snapshot) {
             print('in main builder');
             if (!snapshot.hasData) {
+              print(snapshot.hasData);
               //Center(child: CircularProgressIndicator(),)
               return MaterialApp(
                 home: Scaffold(
@@ -76,8 +77,7 @@ class MyApp extends StatelessWidget {
                   title: 'Raselne',
                   //home: WelcomeScreen(),
 
-                  initialRoute: FirebaseAuth.instance.currentUser != null ||
-                          GetStorage().read<bool>('auth') == true
+                  initialRoute: snapshot.data?.uid !=null
                       ? AppRoutes.mainScreen
                       : AppRoutes.welcome,
                   getPages: AppRoutes.routes,
@@ -88,8 +88,8 @@ class MyApp extends StatelessWidget {
                 //     child: snapshot.data?.uid !=null ? MainScreen() : WelcomeScreen(),
                 //   ),
                 // )
-              ;
-            }
+
+             }
           }),
       // GetMaterialApp(
       //   debugShowCheckedModeBanner: false,

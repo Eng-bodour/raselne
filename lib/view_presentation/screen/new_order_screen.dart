@@ -28,7 +28,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    orderModel= Provider.of<order_vm>(context,listen: true).order!;
+    orderModel= Provider.of<order_vm>(context,listen: true).order;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -379,9 +379,9 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
         child: InkWell(
           onTap: () {
             Provider.of<order_vm>(context,listen: false)
-                .order?.detailorder=notesController.text;
+                .order.detailorder=notesController.text;
             Provider.of<order_vm>(context,listen: false)
-                .order?.DateTimeorder=DateTime.now().toString();
+                .order.DateTimeorder=DateTime.now().toString();
             //distance_recive_deilvery
             Provider.of<order_vm>(context,listen:  false)
                 .addOrder( );

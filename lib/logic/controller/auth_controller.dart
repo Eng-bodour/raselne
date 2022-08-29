@@ -25,12 +25,14 @@ class AuthProvider_vm extends ChangeNotifier {
   UserRepository userRepository;
   AuthProvider_vm({required this.userRepository});
 
-  Future<UserModel?> isAuthuser()async{
+  Future<UserModel> isAuthuser()async{
 
   bool isauth= await  userRepository.isAuthuser();
   if(isauth)
    return await userRepository.getuser();
-   else return null;
+   else return UserModel(
+      location: LatLng(14,50), uid:null, name: 'name',
+      email: 'email', mobile: 'mobile', dateCreated: '');
   }
   @override
   void onInit()async {
@@ -42,6 +44,7 @@ class AuthProvider_vm extends ChangeNotifier {
     // displayUserEmail.value = (userProfiloe != null ? userProfiloe!.email : "")!;
     //
     currentuser=await userRepository.getuser();
+    print('xxx '+currentuser.uid.toString());
     // currentuser=UserModel(
     //   name: 'displayUserName.value',
     //   uid:'HjMUL9ksSLg7YSBODxA3zILpZKz2',//'userProfiloe?.uid',

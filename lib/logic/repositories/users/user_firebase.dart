@@ -103,7 +103,7 @@ class user_firebase extends UserRepository{
 
      await FirebaseServices("users")
          .userSetUp(
-         googleUser!.displayName!,
+         googleUser.displayName.toString(),
          googleUser.email.toString(),
          // googleUser.id
      );
@@ -125,7 +125,7 @@ class user_firebase extends UserRepository{
       // displayUserName.value = auth.currentUser!.displayName!);
 
       isSignedIn = true;
-
+      message='done';
     } on FirebaseAuthException catch (error) {
       String title = error.code.replaceAll(RegExp('-'), ' ').capitalize!;
 
@@ -149,7 +149,8 @@ class user_firebase extends UserRepository{
       message=error.toString();
 
     }
-    throw UnimplementedError();
+    return message;
+    //throw UnimplementedError();
   }
 
   @override
