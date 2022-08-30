@@ -28,12 +28,14 @@ void main() async {
     ChangeNotifierProvider<AuthProvider_vm>(create: (context) =>
         AuthProvider_vm(userRepository: user_firebase())),
 
-    ChangeNotifierProxyProvider<AuthProvider_vm,order_vm>(
-      create: (_)=> order_vm(orderRepository: order_firebase()),
-      update: (ctx,value,prev)=>prev!..setvalue(value.currentuser),
-    ),
+    // ChangeNotifierProxyProvider<AuthProvider_vm,order_vm>(
+    //   create: (_)=> order_vm(orderRepository: order_firebase()),
+    //   update: (ctx,value,prev)=>prev!..setvalue(value.currentuser),
+    // ),
 
-    ChangeNotifierProvider<CategoryStoreProvider>(
+    ChangeNotifierProvider<order_vm>(
+        create: (context) => order_vm(orderRepository: order_firebase())),
+ ChangeNotifierProvider<CategoryStoreProvider>(
         create: (context) => CategoryStoreProvider()),
 
     ChangeNotifierProvider<StoreProvider_vm>(
@@ -44,18 +46,18 @@ void main() async {
     ChangeNotifierProvider<MyPageProvider>(
         create: (context) => MyPageProvider()),
     ChangeNotifierProvider<MainProvider>(create: (context) => MainProvider()),
-  ], child: const MyApp()));
+  ], child:  MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+   MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child:FutureBuilder<UserModel?>(
-          future: Provider.of<AuthProvider_vm>(context,listen: false)
+          future: Provider.of<AuthProvider_vm>(context)
               .isAuthuser() ,
           builder:(context, snapshot) {
             print('in main builder');

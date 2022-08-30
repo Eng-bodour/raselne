@@ -15,10 +15,13 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_){
-    Provider.of<AuthProvider_vm>(context,listen: false)
-        .onInit();});
+  void initState()  {
+
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Provider.of<AuthProvider_vm>(context,listen: false)
+          .getuser_vm();
+     });
     // FirebaseServices.name;
     // FirebaseServices().getNameuser();
     super.initState();

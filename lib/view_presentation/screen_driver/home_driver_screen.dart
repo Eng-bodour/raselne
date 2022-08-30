@@ -62,7 +62,7 @@ class HomeDriverScreen extends StatelessWidget {
                       card_deilvery(
                           //size: size,
                           order: snapshot.data![index]),
-                  separatorBuilder: (context, index) => SizedBox(
+                    separatorBuilder: (context, index) => SizedBox(
                     height: size.height * 0.03,
                   ),
                 );

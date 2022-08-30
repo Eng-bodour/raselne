@@ -13,6 +13,8 @@ import 'package:raselne/view_presentation/widget/specific%20store/typs_choise_wi
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
 import '../../data_layer/model/DetailOrder.dart';
+import '../../data_layer/model/user_model.dart';
+import '../../logic/controller/auth_controller.dart';
 import '../widget/specific store/bottom_sheet_tomeal.dart';
 import '../widget/specific store/build_category_widget.dart';
 import 'new_order_screen.dart';
@@ -22,6 +24,8 @@ class SpecificStoreScreen extends StatelessWidget {
    SpecificStoreScreen({required this.titestore, required this.index, Key? key}) : super(key: key);
   late List<Itemstore> itemstore;
   String titestore;
+  late UserModel user;
+
   Widget buildSliverAppBar({required Size size}) {
     return SliverAppBar(
       expandedHeight: size.height * 0.1,
@@ -113,6 +117,8 @@ class SpecificStoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    user= Provider.of<AuthProvider_vm>(context,listen: true).currentuser;
+
     print(index);
     itemstore=Provider.of<StoreProvider_vm>(context,listen : true)
         .liststore[index].itemstore;
@@ -422,7 +428,7 @@ class SpecificStoreScreen extends StatelessWidget {
             onTap: () {
               Provider.of<order_vm>(context,listen : false).prepareOrder(
                   Provider.of<StoreProvider_vm>(context,listen : false)
-                  .liststore[index]);
+                  .liststore[index],user.uid.toString());
               // Provider.of<StoreProvider_vm>(context,listen : false).liststore[index]
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context)=>

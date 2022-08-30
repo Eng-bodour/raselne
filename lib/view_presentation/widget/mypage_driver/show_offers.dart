@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:raselne/data_layer/model/user_model.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
@@ -23,21 +24,34 @@ class ShowOffers extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: size.width * 0.03, vertical: size.height * 0.27),
-              child:  StreamBuilder(
+              child: StreamBuilder(
                 stream: Provider.of<order_vm>(context).get_offer(id_order),
                 builder: (BuildContext context,
-                    AsyncSnapshot<OrderModel>
-                    snapshot_order) {
-                  if(snapshot_order.hasError){
-                    return Text('something went wrong'+snapshot_order.error.toString());
+                    AsyncSnapshot<OrderModel> snapshot_order) {
+                  if (snapshot_order.hasError) {
+                    return Text('something went wrong' +
+                        snapshot_order.error.toString());
                   }
-                  if(snapshot_order.connectionState==ConnectionState.waiting){
+                  if (snapshot_order.connectionState ==
+                      ConnectionState.waiting) {
                     return Text("Loading");
                   }
-                  return
-                        Column(
+                  return FutureBuilder(
+                      future: Provider.of<order_vm>(context).getusercaptain(
+                          snapshot_order.data!.captain_user.toString()),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<UserModel> snapshot_user) {
+                        if (snapshot_user.hasError) {
+                          return Text('something went wrong' +
+                              snapshot_user.error.toString());
+                        }
+                        if (snapshot_user.connectionState ==
+                            ConnectionState.waiting) {
+                          return Text("Loading");
+                        }
+                        return Column(
                           children: [
-                             Text(
+                            Text(
                               'سعر التوصيل المتوقع ${snapshot_order.data!.price_deilvery} ر.س',
                               style: TextStyle(color: Colors.white),
                             ),
@@ -45,7 +59,8 @@ class ShowOffers extends StatelessWidget {
                               height: size.height * 0.35,
                               decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(size.width * 0.07)),
+                                  borderRadius:
+                                      BorderRadius.circular(size.width * 0.07)),
                               child: Column(
                                 children: [
                                   Container(
@@ -54,8 +69,10 @@ class ShowOffers extends StatelessWidget {
                                       decoration: BoxDecoration(
                                         color: mainColor,
                                         borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(size.width * 0.07),
-                                            topRight: Radius.circular(size.width * 0.07)),
+                                            topLeft: Radius.circular(
+                                                size.width * 0.07),
+                                            topRight: Radius.circular(
+                                                size.width * 0.07)),
                                       ),
                                       child: Center(
                                         child: Text('العرض الأفضل قيمة',
@@ -69,14 +86,16 @@ class ShowOffers extends StatelessWidget {
                                         horizontal: size.width * 0.04,
                                         vertical: size.height * 0.02),
                                     child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         CircleAvatar(
                                           backgroundColor: greyColor,
                                           radius: size.width * 0.055,
                                           child: Icon(
                                             Icons.person,
-                                            color: Colors.lightBlue.withOpacity(0.9),
+                                            color: Colors.lightBlue
+                                                .withOpacity(0.9),
                                             size: size.width * 0.1,
                                           ),
                                         ),
@@ -84,12 +103,14 @@ class ShowOffers extends StatelessWidget {
                                           width: size.width * 0.02,
                                         ),
                                         Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             TextUtils(
                                                 fontSize: size.width * 0.05,
                                                 fontWeight: FontWeight.bold,
-                                                text: snapshot_order.data!.user_captain.name.toString(),//'حسام', //'${Firebase.name}',
+                                                text: snapshot_user.data!.name
+                                                    .toString(), //'حسام', //'${Firebase.name}',
                                                 color: Colors.black54,
                                                 underLine: TextDecoration.none),
                                             Row(
@@ -109,19 +130,23 @@ class ShowOffers extends StatelessWidget {
                                                 TextUtils(
                                                     fontSize: size.width * 0.04,
                                                     fontWeight: FontWeight.bold,
-                                                    text: ' ${snapshot_order.data!.user_captain.num_travel} رحلة ', //'${Firebase.name}',
+                                                    text:
+                                                        ' ${snapshot_user.data!.num_travel} رحلة ', //'${Firebase.name}',
                                                     color: Colors.black54,
-                                                    underLine: TextDecoration.none),
+                                                    underLine:
+                                                        TextDecoration.none),
                                                 SizedBox(
                                                   width: size.width * 0.03,
                                                 ),
                                                 TextUtils(
                                                     fontSize: size.width * 0.04,
                                                     fontWeight: FontWeight.bold,
-                                                    text:snapshot_order.data!.user_captain.dateCreated,
+                                                    text: snapshot_user
+                                                        .data!.dateCreated,
                                                     //'مندوب منذ 2022 jun', //'${Firebase.name}',
                                                     color: Colors.black54,
-                                                    underLine: TextDecoration.none),
+                                                    underLine:
+                                                        TextDecoration.none),
                                               ],
                                             ),
                                             Row(
@@ -141,9 +166,11 @@ class ShowOffers extends StatelessWidget {
                                                 TextUtils(
                                                     fontSize: size.width * 0.04,
                                                     fontWeight: FontWeight.bold,
-                                                    text: snapshot_order.data!.distance_recive_deilvery,// '5.7 كم ', //'${Firebase.name}',
+                                                    text: snapshot_order.data!
+                                                        .distance_recive_deilvery, // '5.7 كم ', //'${Firebase.name}',
                                                     color: Colors.black54,
-                                                    underLine: TextDecoration.none),
+                                                    underLine:
+                                                        TextDecoration.none),
                                                 SizedBox(
                                                   width: size.width * 0.03,
                                                 ),
@@ -151,9 +178,10 @@ class ShowOffers extends StatelessWidget {
                                                     fontSize: size.width * 0.03,
                                                     fontWeight: FontWeight.bold,
                                                     text:
-                                                    'بجوار موقع الاستلام', //'${Firebase.name}',
+                                                        'بجوار موقع الاستلام', //'${Firebase.name}',
                                                     color: mainColor,
-                                                    underLine: TextDecoration.none),
+                                                    underLine:
+                                                        TextDecoration.none),
                                               ],
                                             ),
                                           ],
@@ -167,7 +195,8 @@ class ShowOffers extends StatelessWidget {
                                       horizontal: size.width * 0.04,
                                     ),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           'عرض التوصيل',
@@ -191,22 +220,29 @@ class ShowOffers extends StatelessWidget {
                                       horizontal: size.width * 0.04,
                                     ),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         ElevatedButton(
                                           onPressed: () {
-                                            Provider.of<order_vm>(context,listen: false).
-                                            approve_order_or_not(snapshot_order.data!.id_order, true);
+                                            Provider.of<order_vm>(context,
+                                                    listen: false)
+                                                .approve_order_or_not(
+                                                    snapshot_order
+                                                        .data!.id_order,
+                                                    true);
                                           },
                                           style: ElevatedButton.styleFrom(
                                             elevation: 0,
                                             primary: greyColor.withOpacity(0.5),
                                             shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(
-                                                  size.width * 0.05),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      size.width * 0.05),
                                             ), //Get.isDarkMode ? pinkClr : mainColor,
                                             minimumSize: Size(
-                                                size.height * 0.16, size.width * 0.1),
+                                                size.height * 0.16,
+                                                size.width * 0.1),
                                           ),
                                           child: TextUtils(
                                             color: Colors.white,
@@ -219,20 +255,29 @@ class ShowOffers extends StatelessWidget {
                                         SizedBox(width: size.width * 0.02),
                                         ElevatedButton(
                                             onPressed: () {
-                                              Provider.of<order_vm>(context,listen: false).
-                                              approve_order_or_not(snapshot_order.data!.id_order, false);
-                                              Navigator.push(context,
-                                                  MaterialPageRoute(builder: (context)=>ChatScreen()));
+                                              Provider.of<order_vm>(context,
+                                                      listen: false)
+                                                  .approve_order_or_not(
+                                                      snapshot_order
+                                                          .data!.id_order,
+                                                      false);
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ChatScreen()));
                                             },
                                             style: ElevatedButton.styleFrom(
                                               elevation: 0,
                                               primary: mainColor,
                                               shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(
-                                                    size.width * 0.05),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        size.width * 0.05),
                                               ), //Get.isDarkMode ? pinkClr : mainColor,
                                               minimumSize: Size(
-                                                  size.height * 0.23, size.width * 0.1),
+                                                  size.height * 0.23,
+                                                  size.width * 0.1),
                                             ),
                                             child: Row(
                                               children: [
@@ -245,7 +290,8 @@ class ShowOffers extends StatelessWidget {
                                                   text: 'قبول',
                                                   fontSize: size.width * 0.05,
                                                   fontWeight: FontWeight.bold,
-                                                  underLine: TextDecoration.none,
+                                                  underLine:
+                                                      TextDecoration.none,
                                                 ),
                                               ],
                                             )),
@@ -257,11 +303,9 @@ class ShowOffers extends StatelessWidget {
                             )
                           ],
                         );
-
+                      });
                 },
-
               ),
-
             ),
           ),
           backgroundColor: greyColor,

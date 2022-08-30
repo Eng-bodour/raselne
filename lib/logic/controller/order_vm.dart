@@ -17,13 +17,13 @@ List<OrderModel> mylist_order=[];
 OrderRepository orderRepository;
 order_vm({required this.orderRepository});
 
-late UserModel currentuser;
-setvalue(UserModel val){
-
- currentuser=val;
- print('current '+currentuser.name.toString());
- notifyListeners();
-}
+// UserModel? currentuser;
+// setvalue(UserModel val){
+//
+//  currentuser=val;
+//  print('current '+currentuser!.name.toString());
+//  notifyListeners();
+// }
  get_item_is_ordered(){
   list_itemorder.forEach((element) {
     if(element.item.isorder==false)
@@ -40,19 +40,22 @@ addlocation(LatLng location,String Address,String detailAddress){
   order.detailAddress=detailAddress;
   notifyListeners();
 }
+Future<UserModel> getusercaptain(String uidcaptain)async{
+return await orderRepository.getusercaptain(uidcaptain);
+}
 Stream<List<OrderModel>> get_orders() async* {
   yield* orderRepository.getAllorders();
   notifyListeners();
 }
 
-Stream<OrderModel> get_offer(String id_order)async*{
+ Stream<OrderModel> get_offer(String id_order)async*{
   //ليظهر العرض من المندوب للمستخدم ليتم قبوله او رفضه
 // print(currentuser.name.toString());
 print('cxdcdvdf');
  yield*  orderRepository.get_offer(id_order);
 }
 
-prepareOrder(StoreModel storeModel ) {
+prepareOrder(StoreModel storeModel,String id ) {
  double total=0;
  list_itemorder.forEach((element) {
   total+=double.parse( element.total_item);
@@ -61,7 +64,7 @@ prepareOrder(StoreModel storeModel ) {
  order=OrderModel(
      total: total, captain_user: null,
      content_order: 'content_order', detailorderList: list_itemorder,
-     from_user: currentuser.uid.toString(),
+     from_user: id,//currentuser!.uid.toString(),
      // fromlocation: storeModel.location,
      id_order: '',
      is_arrive: false, isdone_recive: false,
@@ -74,7 +77,7 @@ prepareOrder(StoreModel storeModel ) {
      notifyListeners();
 }
 bool isloading=false;
-void addOrder() async {
+Future<void> addOrder() async {
  isloading=true;
  notifyListeners();
  String listdetail='';
@@ -85,6 +88,7 @@ void addOrder() async {
    listdetail+=element.item.description.toString()+" عدد "+element.quaintity.toString()+"\n";
  });
   order.content_order=order.storeModel!.nameStore +"\n"+listdetail;
+  order.fromlocation=order.storeModel!.location;
   order.isopen=true;
   order.state='open';
   order.id_order=await orderRepository.AddOrder(order.toSnapchot());
@@ -96,32 +100,43 @@ void addOrder() async {
 //  await orderRepository.get_offer(order.id_order);
 //   notifyListeners();
 // }
-Future<void> get_myorder()async{
+Future<void> get_myorder(String id)async{
   isloading=true;
   notifyListeners();
   // print('current user is '+currentuser.uid.toString());
-
+  //طلباتي
   mylist_order= await orderRepository
-      .getAllorderUser('uyHNE4qdzlZekuu6R6a4JYgMUTs2');
+      .getAllorderUser(id
+    //currentuser!.uid.toString(),
+      // 'uyHNE4qdzlZekuu6R6a4JYgMUTs2'
+  );
   isloading=false;
   notifyListeners();
 }
- Future<void> update_order(String id_order) async {
+ Future<void> update_order(String id_order,String distance_recive_deilvery,
+     String price_deilvery_captain,String id ) async {
   //عندما يقدم المندوب على العرض سيتم تحويل قيمة المتحول ispause إلى true
   //وذلك لكي لايظهر الطلب لمندوب آخر
    isloading=true;
    notifyListeners();
 
    await orderRepository.update_order(
-       id_order,currentuser.uid.toString(),order.distance_recive_deilvery,order.price_deilvery_captain);
+       id_order,
+       id, //currentuser!.uid.toString(),
+       distance_recive_deilvery,
+       price_deilvery_captain);
    isloading=false;
   notifyListeners();
  }
 Future<void> approve_order_or_not(String idOrder, bool isopen)async {
   await orderRepository.approve_order_or_not(idOrder, isopen);
 }
-Stream<OrderModel> check_approve_order() async* {
-  yield*  orderRepository.check_approve_order(order.id_order,currentuser.uid.toString());
+Stream<OrderModel> check_approve_order(String idorder,String id) async* {
+  print(idorder);
+  // print(currentuser!.uid.toString());
+  yield*  orderRepository.check_approve_order(idorder,
+     id// currentuser!.uid.toString()
+  );
   // notifyListeners();
 }
  DetailOrder? get_obj_detailorder(DetailOrder value){

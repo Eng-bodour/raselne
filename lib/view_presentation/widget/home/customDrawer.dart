@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:raselne/data_layer/model/user_model.dart';
+import 'package:raselne/logic/controller/auth_controller.dart';
 
 import 'package:raselne/logic/controller/firebase_provider.dart';
 
@@ -18,11 +21,11 @@ import '../text_utilis.dart';
 
 class CustomDrawer extends StatelessWidget {
   CustomDrawer({Key? key}) : super(key: key);
-  final controllrFirebase = Get.put(FirebaseProvider());
-
+  // final controllrFirebase = Get.put(FirebaseProvider());
+  late UserModel current;
   @override
   Widget build(BuildContext context) {
-    // var controllerUsers= Provider.of<user_vm_provider>(context,listen: true);
+    current= Provider.of<AuthProvider_vm>(context,listen: true).currentuser;
 
     return Drawer(
       child: Container(
@@ -31,8 +34,8 @@ class CustomDrawer extends StatelessWidget {
             padding: EdgeInsets.zero,
             children: <Widget>[
               UserAccountsDrawerHeader(
-                accountEmail: const Text(
-                    '' //controllerUsers.currentUser!.email.toString(),
+                accountEmail:  Text(
+                    current.email,// '' //controllerUsers.currentUser!.email.toString(),
                 ),
                 // currentAccountPicture: const Text(''),
                 decoration: BoxDecoration(
@@ -83,9 +86,10 @@ class CustomDrawer extends StatelessWidget {
                     // }),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const <Widget>[
+                      children:  <Widget>[
                         Text(
-                          'Name User', //'${Firebase.name}',
+                             current.name.toString(),
+                          //  'Name User', //'${Firebase.name}',
                           style: TextStyle(color: Colors.black),
                         ),
                         // GetBuilder<firebaseController>(
@@ -98,7 +102,7 @@ class CustomDrawer extends StatelessWidget {
                         //   },
                         // ),
                         Text(
-                          '@User',
+                            current.email.toString(),//  '@User',
                           style: TextStyle(color: Colors.black),
                         ),
                       ],

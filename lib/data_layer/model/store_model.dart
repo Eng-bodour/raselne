@@ -32,7 +32,7 @@ class StoreModel {
     required this.IdStore,
   });
   factory StoreModel.fromSnapshot(Map<String,dynamic> doc) {
-    return StoreModel(
+    StoreModel store =StoreModel(
       nameStore: doc['nameStore'],
       typeStore: doc['typeStore'],
       mobileStore: doc['mobileStore'],
@@ -44,6 +44,11 @@ class StoreModel {
       // itemstore: (json.decode(doc['itemstore']) as List)
       //  .map((e) => Itemstore.fromJson(e)).toList(),
     );
+    GeoPoint gloacationfrom=doc["location"];
+    store.location=LatLng(gloacationfrom.latitude,gloacationfrom.longitude);
+
+
+    return store;
   }
 
   Map<String, dynamic> toSnapchot() => {

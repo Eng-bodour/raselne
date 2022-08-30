@@ -6,6 +6,8 @@ import 'package:raselne/logic/controller/order_vm.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
+import '../../data_layer/model/user_model.dart';
+import '../../logic/controller/auth_controller.dart';
 import '../widget/orders/build_orders.dart';
 
 class OrdersScreen extends StatefulWidget {
@@ -16,11 +18,16 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
+  late UserModel user;
 
   @override void initState() {
     // TODO: implement initState
+
     WidgetsBinding.instance.addPostFrameCallback((_){
-      Provider.of<order_vm>(context,listen: false).get_myorder();
+      user= Provider.of<AuthProvider_vm>(context,listen: false)
+          .currentuser;
+      Provider.of<order_vm>(context,listen: false)
+          .get_myorder(user!.uid.toString());
     });
 
     super.initState();

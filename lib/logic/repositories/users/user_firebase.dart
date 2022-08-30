@@ -209,17 +209,16 @@ class user_firebase extends UserRepository{
   }
 
   @override
-  Future<UserModel> getuser() {
+  Future<UserModel> getuser()async {
     // TODO: implement getuser
 
-    return  FirebaseFirestore.instance
+    return await FirebaseFirestore.instance
         .collection('users')
         .where('uid', isEqualTo:
          auth.currentUser!.uid.toString())
         .get().then((value) =>
         UserModel.fromJson(value.docs[0].data()));
 
-    throw UnimplementedError();
   }
 
   @override

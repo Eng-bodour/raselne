@@ -26,7 +26,8 @@ class order_firebase extends OrderRepository{
     // TODO: implement getAllorders
    return  
      FirebaseServices("orders").ref.where(
-       'isopen', isEqualTo: true,).where('ispause' ,isEqualTo: false).snapshots()
+       'isopen', isEqualTo: true,)
+         .where('ispause' ,isEqualTo: false).snapshots()
        .map((snap) => snap.docs
        .map((doc) =>
          OrderModel.fromSnapshot( doc.data(),doc.id )).toList()
@@ -78,33 +79,84 @@ class order_firebase extends OrderRepository{
       .ref.doc(id_order).snapshots().where(
           (event) => OrderModel.fromSnapshot(
       event.data() as Map<String, dynamic>, event.id).ispause==true)
-  .map((snap)  {
-    print('bbbbb');
-     _ord=
-    OrderModel.fromSnapshot(
-        snap.data() as Map<String, dynamic>, snap.id);
+      .where((event) =>OrderModel.fromSnapshot(
+      event.data() as Map<String, dynamic>, event.id).isopen==true )
+      .map((snap)  {
+      _ord= OrderModel.fromSnapshot(
+      snap.data() as Map<String, dynamic>, snap.id);
     // _ord.user_captain=
     //     FirebaseServices("users")
     //     .ref.where('uid',isEqualTo: _ord.captain_user ).get()
     // .then((value) => UserModel.fromJson(
     //      value.docs[0].data())) as UserModel;
     // print('_ord.user_captain '+_ord.user_captain.name.toString() );
-    // _ord.user_captain=
-    // FirebaseServices("users")
-    //     .ref.doc(_ord.captain_user ).get()
-    //     .then((value) => UserModel.fromJson(
-    //     value.data()))  ;
+
+   /* FirebaseServices("users")
+        .ref.doc(_ord.captain_user ).get()
+        .then((value) =>
+        UserModel.fromJson(value.data()))
+        .then((value) =>
+        _ord.user_captain=
+        UserModel.fromJson(value as Map<String, dynamic> ))  ;*/
+      // FirebaseServices("users")
+      //       .ref.where('uid', isEqualTo: _ord.captain_user.toString(),)
+      //      .get()
+      //      .then((snap) =>
+      //      snap.docs.map((doc) =>
+      //      UserModel.fromJson(doc.data())).first).then(
+      //         (value) {
+      //           _ord.user_captain=
+      //             UserModel.fromJson(value.toJson());
+      //            print('mappp ' +_ord.user_captain.name.toString());
+      //         }
+      // );
+      // _ord.user_captain= getusercaptain(_ord.captain_user.toString());
     return _ord;
   });
-  _orderModel.map((element)async {
-    print('insid ');
-   _ord.user_captain=
-   await FirebaseServices("users")
-        .ref.doc(element.captain_user ).get()
-        .then((value) => UserModel.fromJson(
-        value.data()))  ;
-   return _ord;
-  });
+
+    _orderModel.forEach((element)async {
+      element.user_captain=  await FirebaseServices("users")
+          .ref.where('uid', isEqualTo: _ord.captain_user.toString(),)
+          .get()
+          .then((snap) =>
+      snap.docs.map((doc) =>
+          UserModel.fromJson(doc.data())).first).then(
+              (value) {
+         return
+                UserModel.fromJson(value.toJson());
+              });
+
+      // _orderModel.listen((event) {
+      //   event=element;
+      //   print('listen');
+      // });
+
+      print('mappp ' +element.user_captain.name.toString());
+
+    });
+   _orderModel.forEach((value) {
+     print('insid ');
+     print(value.user_captain.name);
+   });
+  //  print('insid ');
+  //  _ord.user_captain=
+  //  await FirebaseServices("users")
+  //       .ref.where(
+  //       'uid', isEqualTo: element.captain_user.toString(),).get()
+  //      .then((snap) =>
+  //      snap.docs.map((doc) =>
+  //      UserModel.fromJson(doc.data())).first);
+  //
+  //  // .then((value) => UserModel.fromJson(
+  //       // value.data()))  ;
+  //  // FirebaseServices("orders").ref.where(
+  //  //   'from_user', isEqualTo: id_user,).get()
+  //  //     .then((snap) => snap.docs
+  //  //     .map((doc) =>
+  //  //     OrderModel.fromSnapshot( doc.data(),doc.id )).toList()
+  //  // );
+  //  return _ord;
+  // });
   // _orderModel.listen((event) {
   //   event=_ord;
   // });
@@ -121,7 +173,8 @@ class order_firebase extends OrderRepository{
 
       return _orderModel;
   }
- Future<UserModel> getusercaptain(String uidcaptain)async{
+ @override
+  Future<UserModel> getusercaptain(String uidcaptain)async{
     print(uidcaptain);
 
       UserModel us= await FirebaseServices("users")
@@ -150,17 +203,34 @@ class order_firebase extends OrderRepository{
   }
 
   @override
-  Stream<OrderModel> check_approve_order(String idOrder,String idcaptain) {
+  Stream<OrderModel> check_approve_order(String idOrder,
+      String idcaptain) {
+    print('dsaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+    );
+    print(idcaptain);
+    print(idOrder);
     // TODO: implement check_approve_order
-    //
-
-    FirebaseServices("orders/$idOrder").ref.where(
-      'captain_user', isEqualTo: idcaptain,).snapshots()
-        .map((snap) =>
+  return  FirebaseServices("orders").ref.doc(idOrder).snapshots()
+        .where(
+          (event) => OrderModel.fromSnapshot(
+          event.data() as
+          Map<String, dynamic>, event.id).captain_user==idcaptain
+      // 'captain_user', isEqualTo: idcaptain,
+    )
+      .map((snap) =>
     //.map((doc) =>
-    OrderModel.fromSnapshot(snap.docs[0].data(),
-        snap.docs[0].id ));
-    throw UnimplementedError();
+    OrderModel.fromSnapshot(
+        snap.data() as Map<String, dynamic>, snap.id));
+   // throw UnimplementedError();
+  // FirebaseServices("orders")
+  //     .ref.doc(id_order).snapshots().where(
+  //         (event) => OrderModel.fromSnapshot(
+  //         event.data() as Map<String, dynamic>, event.id).ispause==true)
+  //     .where((event) =>OrderModel.fromSnapshot(
+  //     event.data() as Map<String, dynamic>, event.id).isopen==true )
+  //     .map((snap)  {
+  //   _ord= OrderModel.fromSnapshot(
+  //       snap.data() as Map<String, dynamic>, snap.id);
   }
 
   @override
@@ -173,12 +243,15 @@ class order_firebase extends OrderRepository{
      // 'isopen':false,//ليتم ايقاف ظهور الطلب عند باقي المندوبين لانه تم قبوله
       'ispause': false,
       'isopen':isopen,
+      'isapprove':true,
     });
 else  FirebaseServices("orders").ref
         .doc(idOrder)
         .update({
       // 'isopen':false,//ليتم ايقاف ظهور الطلب عند باقي المندوبين لانه تم قبوله
       'isopen':isopen,
+      'isapprove':false,
+
     });
     throw UnimplementedError();
   }

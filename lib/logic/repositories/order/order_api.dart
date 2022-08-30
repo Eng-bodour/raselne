@@ -1,6 +1,7 @@
 
 
 import 'package:raselne/data_layer/model/orderModel.dart';
+import 'package:raselne/data_layer/model/user_model.dart';
 
 import 'order_repo.dart';
 
@@ -51,6 +52,12 @@ class order_api extends OrderRepository {
   @override
   Future<List<OrderModel>> getAllorderUser(String id_user) {
     // TODO: implement getAllorderUser
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<UserModel> getusercaptain(String uidcaptain) {
+    // TODO: implement getusercaptain
     throw UnimplementedError();
   }
 

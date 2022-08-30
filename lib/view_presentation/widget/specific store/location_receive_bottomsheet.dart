@@ -444,8 +444,10 @@ class _map_locationState extends State<map_location> {
     );
     _markers.clear();
     _markers.add(newMarker);
-    GetAddressFromLatLong(currentLocation);
-    setState(() {});
+    setState(() {
+      GetAddressFromLatLong(currentLocation);
+
+    });
   }
 
   Future<void> _buildMarkerFromAssets() async {
@@ -488,15 +490,6 @@ class _map_locationState extends State<map_location> {
   //       components: [Component(Component.country, "ar")]);
   //   _getLocationFromPlaceId(p!.placeId!);
   // }
-  Future<void> _drawPolyline(LatLng from, LatLng to) async {
-    Polyline polyline = await PolylineService().drawPolyline(from, to);
 
-    _polylines.add(polyline);
-
-    _setMarker(from);
-    _setMarker(to);
-
-    setState(() {});
-  }
 
 }

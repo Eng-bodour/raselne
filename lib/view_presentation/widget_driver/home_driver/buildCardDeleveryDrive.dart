@@ -28,7 +28,7 @@ class _card_deilveryState extends State<card_deilvery> {
 
   @override void initState() {
     // TODO: implement initState
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //WidgetsBinding.instance.addPostFrameCallback((_) async {
     user= Provider.of<AuthProvider_vm>(context,listen: false).currentuser;
 
     widget. order.distance_me_recive=PolylineService().calcDistance(
@@ -38,15 +38,19 @@ class _card_deilveryState extends State<card_deilvery> {
         [LatLng( widget.order.fromlocation.latitude,  widget.order.fromlocation.longitude),
           LatLng( widget.order.toLocation.latitude, widget. order.toLocation.longitude)]);
     print( widget.order.distance_me_recive);
-    print( widget.order.distance_recive_deilvery);});
+    print( widget.order.distance_recive_deilvery);
+  //});
     super.initState();
+    setState(() {
+
+    });
   }
   @override
   Widget build(BuildContext context) {
     user= Provider.of<AuthProvider_vm>(context,listen: true).currentuser;
     size= MediaQuery.of(context).size;
     return  Container(
-      height: size.height * 0.3,
+      height: size.height * 0.4,
       decoration: const BoxDecoration(color: Colors.white),
       child: Padding(
         padding: EdgeInsets.symmetric(

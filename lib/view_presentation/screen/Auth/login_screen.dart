@@ -235,6 +235,7 @@ class LoginScreen extends StatelessWidget {
                             }
                             if(authProvider.message=='done'){
                             authBox!.write("auth", true);
+                            await authProvider.isAuthuser();
                             Get.offNamed(Routes.mainScreen);
                             }else{
                               Get.snackbar(
@@ -271,7 +272,9 @@ class LoginScreen extends StatelessWidget {
                                  await authProvider.faceBookSignUpApp();
                                  if(authProvider.isSignedIn){
                                  authBox!.write("auth",authProvider.isSignedIn );
-                                 Get.offNamed(Routes.mainScreen);}
+                               await  authProvider.isAuthuser();
+                                 Get.offNamed(Routes.mainScreen);
+                                 }
                                  else{
                                    Get.snackbar(
                                      'Error!',
@@ -312,7 +315,9 @@ class LoginScreen extends StatelessWidget {
                               await  authProvider.googleSinUpApp();
                              if( authProvider.isSignedIn){
                               authBox!.write("auth", authProvider.isSignedIn);
-                              Get.offNamed(Routes.mainScreen);}
+                              await  authProvider.isAuthuser();
+                              Get.offNamed(Routes.mainScreen);
+                             }
                              else{
                                Get.snackbar(
                                  'Error!',

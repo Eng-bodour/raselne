@@ -238,10 +238,14 @@ class SignUpScreen extends StatelessWidget {
                                 email: email,
                                 password: password,
                               );
-                              if(authProvider.message=='done')
+                              if(authProvider.message=='done') {
+                               await Provider.of<AuthProvider_vm>
+                                 (context,listen: false).isAuthuser();
+
                                 Get.offNamed(Routes.mainScreen);
-                                else
-                              Get.snackbar(
+
+                              }
+                                else Get.snackbar(
                                 'title',
                                authProvider.message,
                                 snackPosition: SnackPosition.BOTTOM,

@@ -21,7 +21,8 @@ bool isdone_deilvery=false;//هل تم التوصيل
 bool isdone_recive=false;//هل تم الاستلام
 bool isopen=false;//هل الطلب مازال مفتوح او متاح للمندوبين
 bool ispause=false;//ألطلب مفتوح ولكن قيد التفاوض مع المندوب
-String detailAddress='';
+bool isapprove=false;
+  String detailAddress='';
 String detailorder='';
 String distance_me_recive='';
 String distance_recive_deilvery='';
@@ -29,7 +30,7 @@ late String from_user='';
 late String? captain_user='';
 late LatLng fromlocation;
 late String Addressfromlocation='';
-late LatLng toLocation;
+late LatLng toLocation=LatLng(30,20);
 late String AddresstoLocation='';
 String price_deilvery='';
 String price_deilvery_captain='';//السعر الذي قام بوضعه المندوب
@@ -69,11 +70,12 @@ Map<String, dynamic> toSnapchot() => {
   // "content_order": content_order,
   "state":state,
   "from_user": from_user,
-  "fromlocation":GeoPoint(toLocation.latitude,toLocation.longitude) ,//fromlocation,
+  "fromlocation":GeoPoint(fromlocation.latitude,fromlocation.longitude) ,//fromlocation,
   "is_arrive": is_arrive,
   "isdone_recive": isdone_recive,
   "isdone_deilvery": isdone_deilvery,
   "isopen":isopen,
+  "isapprove":isapprove,
   "ispause":ispause,
   "price_deilvery":price_deilvery,
   "titleStore":titleStore,
@@ -111,6 +113,7 @@ Map<String, dynamic> toSnapchot() => {
    );
      // order.user_captain=
      //calcDistance(List<LatLng> polylineCoordinates)
+  order.isapprove=doc['isapprove'];
    GeoPoint gloacationfrom=doc["fromlocation"];
    order.fromlocation=LatLng(gloacationfrom.latitude,gloacationfrom.longitude);
    gloacationfrom=doc["toLocation"];
