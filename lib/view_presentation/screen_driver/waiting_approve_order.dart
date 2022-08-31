@@ -11,12 +11,12 @@ import '../screen/chat/chat_screen.dart';
 class waiting_aprrove_order extends StatelessWidget {
    waiting_aprrove_order({required this.orderModel, Key? key}) : super(key: key);
   OrderModel orderModel;
-   late UserModel user;
+   // late UserModel user;
 
    @override
   Widget build(BuildContext context) {
-     user= Provider.of<AuthProvider_vm>(context,listen: true)
-         .currentuser;
+     // user= Provider.of<AuthProvider_vm>(context,listen: true)
+     //     .currentuser;
 
      var size = MediaQuery.of(context).size;
 
@@ -29,7 +29,7 @@ class waiting_aprrove_order extends StatelessWidget {
 
           child: StreamBuilder(
             stream: Provider.of<order_vm>(context)
-                .check_approve_order(orderModel.id_order,user.uid.toString()),
+                .check_approve_order(orderModel.id_order),
             builder: (BuildContext context,
                 AsyncSnapshot<OrderModel>
                 snapshot) {

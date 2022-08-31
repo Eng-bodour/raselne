@@ -18,16 +18,18 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
-  late UserModel user;
+  // late UserModel user;
 
   @override void initState() {
     // TODO: implement initState
 
     WidgetsBinding.instance.addPostFrameCallback((_){
-      user= Provider.of<AuthProvider_vm>(context,listen: false)
-          .currentuser;
+      // user= Provider.of<AuthProvider_vm>(context,listen: false)
+      //     .currentuser;
       Provider.of<order_vm>(context,listen: false)
-          .get_myorder(user!.uid.toString());
+          .get_myorder(
+          // user!.uid.toString()
+      );
     });
 
     super.initState();

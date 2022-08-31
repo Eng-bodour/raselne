@@ -28,14 +28,15 @@ void main() async {
     ChangeNotifierProvider<AuthProvider_vm>(create: (context) =>
         AuthProvider_vm(userRepository: user_firebase())),
 
-    // ChangeNotifierProxyProvider<AuthProvider_vm,order_vm>(
-    //   create: (_)=> order_vm(orderRepository: order_firebase()),
-    //   update: (ctx,value,prev)=>prev!..setvalue(value.currentuser),
-    // ),
+    ChangeNotifierProxyProvider<AuthProvider_vm,order_vm>(
+      create: (_)=> order_vm(orderRepository: order_firebase()),
+      update: (ctx,value,prev)=>prev!..setvalue(value.currentuser),
+    ),
 
-    ChangeNotifierProvider<order_vm>(
-        create: (context) => order_vm(orderRepository: order_firebase())),
- ChangeNotifierProvider<CategoryStoreProvider>(
+    // ChangeNotifierProvider<order_vm>(
+    //     create: (context) => order_vm(orderRepository: order_firebase())),
+    //
+    ChangeNotifierProvider<CategoryStoreProvider>(
         create: (context) => CategoryStoreProvider()),
 
     ChangeNotifierProvider<StoreProvider_vm>(

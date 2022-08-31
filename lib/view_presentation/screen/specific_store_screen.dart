@@ -428,7 +428,7 @@ class SpecificStoreScreen extends StatelessWidget {
             onTap: () {
               Provider.of<order_vm>(context,listen : false).prepareOrder(
                   Provider.of<StoreProvider_vm>(context,listen : false)
-                  .liststore[index],user.uid.toString());
+                  .liststore[index]);
               // Provider.of<StoreProvider_vm>(context,listen : false).liststore[index]
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context)=>

@@ -49,7 +49,8 @@ class ShowOffers extends StatelessWidget {
                             ConnectionState.waiting) {
                           return Text("Loading");
                         }
-                        return Column(
+                        return
+                          Column(
                           children: [
                             Text(
                               'سعر التوصيل المتوقع ${snapshot_order.data!.price_deilvery} ر.س',

@@ -28,7 +28,7 @@ class bottomsheet_offer extends StatefulWidget {
 
 class _bottomsheet_offerState extends State<bottomsheet_offer> {
    Set<Polyline> _polylines = {};
-   late UserModel user;
+   // late UserModel user;
 
    static late final LatLng  location_init;
    Completer<GoogleMapController> _controller=Completer();
@@ -49,7 +49,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
      // target:location_init,// widget.order.toLocation,
      // zoom: 17.47
      // );\
-     user= Provider.of<AuthProvider_vm>(context,listen: false).currentuser;
+     // user= Provider.of<AuthProvider_vm>(context,listen: false).currentuser;
 
      _animateCamera(widget.order.fromlocation);
      _buildMarkerFromAssets();
@@ -364,7 +364,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                                    widget.order.id_order,
                                    widget.order.distance_recive_deilvery,
                                    widget.order.price_deilvery_captain,
-                                  user.uid.toString()
+                                //  user.uid.toString()
                                );
                                 ///////////////////////////////////////////
                            Navigator.push(context,

@@ -17,13 +17,13 @@ List<OrderModel> mylist_order=[];
 OrderRepository orderRepository;
 order_vm({required this.orderRepository});
 
-// UserModel? currentuser;
-// setvalue(UserModel val){
-//
-//  currentuser=val;
-//  print('current '+currentuser!.name.toString());
-//  notifyListeners();
-// }
+late UserModel currentuser;
+setvalue(UserModel val){
+
+ currentuser=val;
+ print('current '+currentuser.name.toString());
+ notifyListeners();
+}
  get_item_is_ordered(){
   list_itemorder.forEach((element) {
     if(element.item.isorder==false)
@@ -55,7 +55,7 @@ print('cxdcdvdf');
  yield*  orderRepository.get_offer(id_order);
 }
 
-prepareOrder(StoreModel storeModel,String id ) {
+prepareOrder(StoreModel storeModel) {
  double total=0;
  list_itemorder.forEach((element) {
   total+=double.parse( element.total_item);
@@ -64,7 +64,7 @@ prepareOrder(StoreModel storeModel,String id ) {
  order=OrderModel(
      total: total, captain_user: null,
      content_order: 'content_order', detailorderList: list_itemorder,
-     from_user: id,//currentuser!.uid.toString(),
+     from_user:currentuser.uid.toString(),
      // fromlocation: storeModel.location,
      id_order: '',
      is_arrive: false, isdone_recive: false,
@@ -100,21 +100,21 @@ Future<void> addOrder() async {
 //  await orderRepository.get_offer(order.id_order);
 //   notifyListeners();
 // }
-Future<void> get_myorder(String id)async{
+Future<void> get_myorder()async{
   isloading=true;
   notifyListeners();
   // print('current user is '+currentuser.uid.toString());
   //طلباتي
   mylist_order= await orderRepository
-      .getAllorderUser(id
-    //currentuser!.uid.toString(),
+      .getAllorderUser(
+    currentuser.uid.toString(),
       // 'uyHNE4qdzlZekuu6R6a4JYgMUTs2'
   );
   isloading=false;
   notifyListeners();
 }
  Future<void> update_order(String id_order,String distance_recive_deilvery,
-     String price_deilvery_captain,String id ) async {
+     String price_deilvery_captain ) async {
   //عندما يقدم المندوب على العرض سيتم تحويل قيمة المتحول ispause إلى true
   //وذلك لكي لايظهر الطلب لمندوب آخر
    isloading=true;
@@ -122,7 +122,7 @@ Future<void> get_myorder(String id)async{
 
    await orderRepository.update_order(
        id_order,
-       id, //currentuser!.uid.toString(),
+       currentuser.uid.toString(),
        distance_recive_deilvery,
        price_deilvery_captain);
    isloading=false;
@@ -131,11 +131,11 @@ Future<void> get_myorder(String id)async{
 Future<void> approve_order_or_not(String idOrder, bool isopen)async {
   await orderRepository.approve_order_or_not(idOrder, isopen);
 }
-Stream<OrderModel> check_approve_order(String idorder,String id) async* {
+Stream<OrderModel> check_approve_order(String idorder) async* {
   print(idorder);
   // print(currentuser!.uid.toString());
   yield*  orderRepository.check_approve_order(idorder,
-     id// currentuser!.uid.toString()
+      currentuser.uid.toString()
   );
   // notifyListeners();
 }
