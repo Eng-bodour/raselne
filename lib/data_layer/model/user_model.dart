@@ -27,6 +27,7 @@ class UserModel {
     required this.name,
     required this.email,
     required this.mobile,
+    required this.type,
      this.num_travel,  this.type_car,
      this.Id_number, required this.dateCreated,  this.num_car,
   });
@@ -38,6 +39,7 @@ class UserModel {
       mobile: json["mobile"],
       uid: json['uid'],
       location: null,
+      type:json['type'],
       num_travel: json["num_travel"] == null ? '' : json["num_travel"],
       type_car: json["type_car"] == null ? '' : json["type_car"],
       Id_number: json["Id_number"] == null ? '' : json["Id_number"],

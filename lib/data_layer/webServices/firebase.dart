@@ -28,7 +28,7 @@ class FirebaseServices {
     UserModel(
         name:dispalyName, location: LatLng(_myLocation.latitude!, _myLocation.longitude!), uid: uid,
         mobile: '0', email: email,
-        dateCreated: DateTime.now().toString()).toJson()
+        dateCreated: DateTime.now().toString(), type: '').toJson()
     );
 //        {'dispayName': dispalyName, 'uid': uid});
     return;
@@ -56,7 +56,8 @@ class FirebaseServices {
   //        .get().then((value) =>
   //         UserModel.fromJson(value.docs[0].data()));
   // }
-  Future<QuerySnapshot> getQuerySnapshotFuture()=> ref.get();
+  Future<QuerySnapshot> getQuerySnapshotFuture()=> ref.get(
+      GetOptions(source: Source.server));
   Stream<QuerySnapshot> getQuerySnapshotStream()=>ref.snapshots();
   Future<DocumentSnapshot> getDocuments(path)=>ref.doc(path).get();
   Stream<DocumentSnapshot> getStreamDocuments(path)=>ref.doc(path).snapshots();

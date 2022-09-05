@@ -1,6 +1,7 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:raselne/data_layer/model/messages_model.dart';
 import 'package:raselne/data_layer/model/orderModel.dart';
 import 'package:raselne/data_layer/model/user_model.dart';
 
@@ -27,12 +28,13 @@ class order_firebase extends OrderRepository{
    return  
      FirebaseServices("orders").ref.where(
        'isopen', isEqualTo: true,)
-         .where('ispause' ,isEqualTo: false).snapshots()
+         .where('ispause' ,isEqualTo: false)
+         .snapshots(includeMetadataChanges: true)
        .map((snap) => snap.docs
        .map((doc) =>
          OrderModel.fromSnapshot( doc.data(),doc.id )).toList()
      );
-    throw UnimplementedError();
+
   }
 
   @override
@@ -76,7 +78,7 @@ class order_firebase extends OrderRepository{
 
   Stream<OrderModel> _orderModel=
   FirebaseServices("orders")
-      .ref.doc(id_order).snapshots().where(
+      .ref.doc(id_order).snapshots(includeMetadataChanges: true).where(
           (event) => OrderModel.fromSnapshot(
       event.data() as Map<String, dynamic>, event.id).ispause==true)
       .where((event) =>OrderModel.fromSnapshot(
@@ -84,7 +86,7 @@ class order_firebase extends OrderRepository{
       .map((snap)  {
       _ord= OrderModel.fromSnapshot(
       snap.data() as Map<String, dynamic>, snap.id);
-    // _ord.user_captain=
+   // _ord.user_captain=
     //     FirebaseServices("users")
     //     .ref.where('uid',isEqualTo: _ord.captain_user ).get()
     // .then((value) => UserModel.fromJson(
@@ -111,10 +113,13 @@ class order_firebase extends OrderRepository{
       //         }
       // );
       // _ord.user_captain= getusercaptain(_ord.captain_user.toString());
-    return _ord;
+       return _ord;
   });
-
-    _orderModel.forEach((element)async {
+  // db.settings = const Settings(
+  //   persistenceEnabled: true,
+  //   cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
+  // );
+   /* _orderModel.forEach((element)async {
       element.user_captain=  await FirebaseServices("users")
           .ref.where('uid', isEqualTo: _ord.captain_user.toString(),)
           .get()
@@ -125,7 +130,7 @@ class order_firebase extends OrderRepository{
          return
                 UserModel.fromJson(value.toJson());
               });
-
+////////////////////////////////////////////////
       // _orderModel.listen((event) {
       //   event=element;
       //   print('listen');
@@ -133,11 +138,11 @@ class order_firebase extends OrderRepository{
 
       print('mappp ' +element.user_captain.name.toString());
 
-    });
-   _orderModel.forEach((value) {
-     print('insid ');
-     print(value.user_captain.name);
-   });
+    });*/
+   // _orderModel.forEach((value) {
+   //   print('insid ');
+   //   print(value.user_captain.name);
+   // });
   //  print('insid ');
   //  _ord.user_captain=
   //  await FirebaseServices("users")
@@ -174,7 +179,7 @@ class order_firebase extends OrderRepository{
       return _orderModel;
   }
  @override
-  Future<UserModel> getusercaptain(String uidcaptain)async{
+  Future<UserModel> getusercaptain(String uidcaptain) async {
     print(uidcaptain);
 
       UserModel us= await FirebaseServices("users")
@@ -186,6 +191,7 @@ class order_firebase extends OrderRepository{
       print('us ${us.name}');
       return us;
  }
+
   @override
  Future<void> update_order(String idOrder,String idcaptain,String distance_recive_deilvery,String price_deilvery_captain)async {
 //عندما المندوب يقدم على الطلب
@@ -268,4 +274,20 @@ else  FirebaseServices("orders").ref
       );
   }
 
+  @override
+  Stream<List<MessageText>> getChatOrder(String id_order) {
+    // TODO: implement getChatOrder
+    return   FirebaseServices("orders")
+        .ref.doc(id_order).collection('chat')
+        .snapshots().map((event) =>
+      event.docs.map((element) {
+       return MessageText.fromSnapshot( element.data());
+      }).toList());
+
+    // })
+    //     .map((event) =>
+    //     event.docs.forEach  ((doc) =>
+    //     Message.fromSnapshot(doc.data() as Map<String,dynamic>)));
+
+}
 }

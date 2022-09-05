@@ -1,36 +1,57 @@
 import 'package:raselne/data_layer/model/user_model.dart';
 
-class Message {
+class MessageText {
   final UserModel? sender;
-  final String?
-      time; // Would usually be type DateTime or Firebase Timestamp in production apps
-  final String? text;
+  final String senderId;
+  late String? timeMessage; // Would usually be type DateTime or Firebase Timestamp in production apps
+  final String? textMessage;
   final bool? isLiked;
   final bool? unread;
 
-  Message({
+  MessageText({
     this.sender,
-    this.time,
-    this.text,
+    required this.senderId,
+    this.timeMessage,
+    this.textMessage,
     this.isLiked,
     this.unread,
   });
+
+  factory MessageText.fromSnapshot(Map<String, dynamic> doc) {
+    return MessageText(
+      senderId: doc['senderId'],
+      timeMessage: doc['timeMessage'],
+      textMessage: doc['textMessage'],
+      isLiked: doc['isLiked']==null?false: doc['isLiked'],
+      unread: doc['unread']==null?false: doc['unread'],
+    );
+  }
+
+  Map<String, dynamic> toSnapchot() =>
+      {
+        "senderId": senderId,
+        "time": timeMessage,
+        "textMessage": textMessage,
+        "isLiked": isLiked,
+        "unread": unread,
+
+      };
+
 }
-
 // YOU - current user
-final UserModel currentUser = UserModel(
-  uid: '0',
-  email: 'bodour@gmail.com',
-  name: 'bodour',
-  mobile: '0567487703', location: null, dateCreated: '',
-);
-
-final UserModel nour = UserModel(
-  uid: '1',
-  email: 'nour@gmail.com',
-  name: 'nour',
-  mobile: '0567487703', location: null, dateCreated: '',
-);
+// final UserModel currentUser = UserModel(
+//   uid: '0',
+//   email: 'bodour@gmail.com',
+//   name: 'bodour',
+//   mobile: '0567487703', location: null, dateCreated: '',
+// );
+//
+// final UserModel nour = UserModel(
+//   uid: '1',
+//   email: 'nour@gmail.com',
+//   name: 'nour',
+//   mobile: '0567487703', location: null, dateCreated: '',
+// );
 // USERS
 // final UserModel aya = UserModel(
 //   id: 1,
@@ -40,53 +61,3 @@ final UserModel nour = UserModel(
 // );
 
 // EXAMPLE MESSAGES IN CHAT SCREEN
-List<Message> messages = [
-  Message(
-    sender: currentUser,
-    time: '6:30 PM',
-    text: 'thanks',
-    unread: true,
-  ),
-  Message(
-    sender: nour,
-    time: '5:30 PM',
-    text: 'Hey, how\'s it going? What did you do today?',
-    isLiked: true,
-    unread: true,
-  ),
-  Message(
-    sender: currentUser,
-    time: '4:30 PM',
-    text: 'Just walked my doge. She was super duper cute. The best pupper!!',
-    isLiked: false,
-    unread: true,
-  ),
-  Message(
-    sender: nour,
-    time: '3:45 PM',
-    text: 'How\'s the doggo?',
-    isLiked: false,
-    unread: true,
-  ),
-  Message(
-    sender: nour,
-    time: '3:15 PM',
-    text: 'All the food',
-    isLiked: true,
-    unread: true,
-  ),
-  Message(
-    sender: currentUser,
-    time: '2:30 PM',
-    text: 'Nice! What kind of food did you eat?',
-    isLiked: false,
-    unread: true,
-  ),
-  Message(
-    sender: nour,
-    time: '2:00 PM',
-    text: 'I ate so much food today.',
-    isLiked: false,
-    unread: true,
-  ),
-];

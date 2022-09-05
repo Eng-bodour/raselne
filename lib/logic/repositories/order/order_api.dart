@@ -1,5 +1,6 @@
 
 
+import 'package:raselne/data_layer/model/messages_model.dart';
 import 'package:raselne/data_layer/model/orderModel.dart';
 import 'package:raselne/data_layer/model/user_model.dart';
 
@@ -58,6 +59,12 @@ class order_api extends OrderRepository {
   @override
   Future<UserModel> getusercaptain(String uidcaptain) {
     // TODO: implement getusercaptain
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<MessageText>> getChatOrder(String id_order) {
+    // TODO: implement getChatOrder
     throw UnimplementedError();
   }
 

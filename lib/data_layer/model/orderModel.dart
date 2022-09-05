@@ -10,7 +10,7 @@ class OrderModel {
 
 late UserModel user_captain=UserModel(
     location: LatLng(14,50), uid: 'uid', name: 'name',
-    email: 'email', mobile: 'mobile', dateCreated: '');
+    email: 'email', mobile: 'mobile', dateCreated: '', type: '');
 
 late UserModel user;//المستخدم الذي طلب اوردر
 late Stream<UserModel> usertest;//المستخدم الذي طلب اوردر
@@ -43,6 +43,7 @@ String content_order='';// محتويات المنتج الذي طلبه الع�
 StoreModel? storeModel;
 String state='';
 bool isclose=false;
+bool isstart=false;
 bool iscancel=false;//ملغى
 
 OrderModel({required this.total,required this.id_store,
@@ -96,10 +97,10 @@ Map<String, dynamic> toSnapchot() => {
        // fromlocation:LatLng(gloacationfrom.latitude,gloacationfrom.longitude),
        //LatLng(doc["fromlocation"]
        //:GeoPoint(toLocation.latitude,toLocation.longitude) ,//fromlocation,
-       is_arrive:doc["is_arrive"],
-       isdone_recive:doc["isdone_recive"],
+       is_arrive:doc["is_arrive"],//وصل لموقع العميل
+       isdone_recive:doc["isdone_recive"],//تم استلام الطلب
 
-       isdone_deilvery:doc["isdone_deilvery"],
+       isdone_deilvery:doc["isdone_deilvery"],//تم التسليم
      isopen:doc["isopen"],
      ispause:doc["ispause"],
      price_deilvery:doc["price_deilvery"],
@@ -113,6 +114,7 @@ Map<String, dynamic> toSnapchot() => {
    );
      // order.user_captain=
      //calcDistance(List<LatLng> polylineCoordinates)
+  order.isstart=doc['isstart']==null?false:doc['isstart'];
   order.isapprove=doc['isapprove'];
    GeoPoint gloacationfrom=doc["fromlocation"];
    order.fromlocation=LatLng(gloacationfrom.latitude,gloacationfrom.longitude);

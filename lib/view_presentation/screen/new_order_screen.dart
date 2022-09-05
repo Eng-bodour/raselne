@@ -463,10 +463,11 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
            await Provider.of<order_vm>(context,listen:  false)
                 .addOrder( );
            Navigator.of(context).push(MaterialPageRoute(builder:
-               (context)=> ShowOffers(id_order: orderModel.id_order)
+               (context)=> ShowOffers(orderModel: orderModel)
            )) ;
           },
-          child: Container(
+          child:
+          Container(
             width: size.width * 1,
             height: size.height * 0.1,
             decoration: const BoxDecoration(color: greyColor),

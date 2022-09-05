@@ -30,20 +30,24 @@ class AuthProvider_vm extends ChangeNotifier {
   bool isauth= await  userRepository.isAuthuser();
 
   if(isauth)
-  { currentuser= await userRepository.getuser();
-  notifyListeners();
+  {
+    currentuser= await userRepository.getuser();
+    notifyListeners();
   }
-   else return UserModel(
+   else
+     return UserModel(
       location: LatLng(14,50), uid:null, name: 'name',
-      email: 'email', mobile: 'mobile', dateCreated: '');
-    return currentuser;
+      email: 'email', mobile: 'mobile', dateCreated: '', type: '');
+   notifyListeners();
+   return currentuser;
   }
 
-  Future<void> getuser_vm()async{
+  Future<void> getuser_vm() async {
     currentuser=await userRepository.getuser();
     print('xxx '+currentuser.uid.toString());
     notifyListeners();
   }
+
   @override
   void onInit()async {
   print('xxxxx');

@@ -19,14 +19,14 @@ class chatWidget extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          Get.to(() => ChatScreen(
-              //   user: UserModel(
-              //       uid: '0',
-              //       name: 'bodour',
-              //       email: 'bodour@gmail.com',
-              //       mobile: '0567487700', location: null),
-               )
-          );
+          // Get.to(() => ChatScreen(orderModel: null,
+          //     //   user: UserModel(
+          //     //       uid: '0',
+          //     //       name: 'bodour',
+          //     //       email: 'bodour@gmail.com',
+          //     //       mobile: '0567487700', location: null),
+          //      )
+          // );
         },
         splashColor: Get.isDarkMode ? Colors.pink : Colors.green[100],
         borderRadius: BorderRadius.circular(12),

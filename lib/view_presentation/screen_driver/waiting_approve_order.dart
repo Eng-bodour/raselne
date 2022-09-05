@@ -38,19 +38,32 @@ class waiting_aprrove_order extends StatelessWidget {
                 child:
                 Text('something went wrong'+snapshot.error.toString()));
               }
-              if(snapshot.connectionState==ConnectionState.waiting){
+              if(!snapshot.hasData){
                 return Center(child: Text("waiting approve"));
               }
                 return
-                  Column(
-                  children: [
-                    Center(child: Text('has data')),
-                   snapshot.data!.isapprove==true?
-                   ChatScreen():Text('تم رفض العرض'),
-                  ],
-                );
-            },
+                  Container(
+                    height: size.width * 0.7,
+                    child: ListView(
+                    children: [
+                      Center(child: Text('has data')),
+                     snapshot.data!.isapprove==true?
+                      Center(child:
+                      RaisedButton(
+                        child: Text('press'),
+              onPressed: (){
 
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context)=>
+                        ChatScreen(orderModel: orderModel,)));
+              },
+              ),
+                      )
+                     :Center(child: Text('تم رفض العرض')),
+                    ],
+                ),
+                  );
+            },
           ),
         ),
       ),

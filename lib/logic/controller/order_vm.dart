@@ -3,6 +3,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:raselne/data_layer/model/messages_model.dart';
 import 'package:raselne/data_layer/model/orderModel.dart';
 import 'package:raselne/data_layer/model/store_model.dart';
 import 'package:raselne/data_layer/model/user_model.dart';
@@ -14,6 +15,8 @@ class order_vm extends ChangeNotifier{
 List<DetailOrder> list_itemorder=[];
 late OrderModel order;
 List<OrderModel> mylist_order=[];
+List<MessageText> ChatOrder=[];
+
 OrderRepository orderRepository;
 order_vm({required this.orderRepository});
 
@@ -33,6 +36,11 @@ setvalue(UserModel val){
   print(list_itemorder.length);
   notifyListeners();
  }
+Stream<List<MessageText>> getchat(String id_order )async*{
+
+  yield* orderRepository.getChatOrder('0gMw4jf9RfubMK2Zec8O');
+  // notifyListeners();
+}
 addlocation(LatLng location,String Address,String detailAddress){
 
   order.toLocation=location;
@@ -48,7 +56,7 @@ Stream<List<OrderModel>> get_orders() async* {
   notifyListeners();
 }
 
- Stream<OrderModel> get_offer(String id_order)async*{
+ Stream<OrderModel> get_offer(String id_order) async*{
   //ليظهر العرض من المندوب للمستخدم ليتم قبوله او رفضه
 // print(currentuser.name.toString());
 print('cxdcdvdf');
@@ -134,10 +142,11 @@ Future<void> approve_order_or_not(String idOrder, bool isopen)async {
 Stream<OrderModel> check_approve_order(String idorder) async* {
   print(idorder);
   // print(currentuser!.uid.toString());
-  yield*  orderRepository.check_approve_order(idorder,
+  yield*  orderRepository.check_approve_order('0gMw4jf9RfubMK2Zec8O',
       currentuser.uid.toString()
+
   );
-  // notifyListeners();
+  //notifyListeners();
 }
  DetailOrder? get_obj_detailorder(DetailOrder value){
    int index=list_itemorder.indexWhere((element) => element.item.IdItemStore==value.item.IdItemStore);

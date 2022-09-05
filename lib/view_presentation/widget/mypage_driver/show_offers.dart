@@ -9,8 +9,9 @@ import '../../../logic/controller/order_vm.dart';
 import '../../screen/chat/chat_screen.dart';
 
 class ShowOffers extends StatelessWidget {
-  ShowOffers({required this.id_order, Key? key}) : super(key: key);
-  String id_order;
+  ShowOffers({required this.orderModel, Key? key}) : super(key: key);
+  OrderModel orderModel;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -25,15 +26,14 @@ class ShowOffers extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                   horizontal: size.width * 0.03, vertical: size.height * 0.27),
               child: StreamBuilder(
-                stream: Provider.of<order_vm>(context).get_offer(id_order),
+                stream: Provider.of<order_vm>(context).get_offer(orderModel.id_order),
                 builder: (BuildContext context,
                     AsyncSnapshot<OrderModel> snapshot_order) {
                   if (snapshot_order.hasError) {
                     return Text('something went wrong' +
                         snapshot_order.error.toString());
                   }
-                  if (snapshot_order.connectionState ==
-                      ConnectionState.waiting) {
+                  if (! snapshot_order.hasData) {
                     return Text("Loading");
                   }
                   return FutureBuilder(
@@ -45,8 +45,7 @@ class ShowOffers extends StatelessWidget {
                           return Text('something went wrong' +
                               snapshot_user.error.toString());
                         }
-                        if (snapshot_user.connectionState ==
-                            ConnectionState.waiting) {
+                        if (!snapshot_user.hasData) {
                           return Text("Loading");
                         }
                         return
@@ -265,8 +264,8 @@ class ShowOffers extends StatelessWidget {
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ChatScreen()));
+                                                  builder: (context) =>
+                                                  ChatScreen(orderModel: orderModel,)));
                                             },
                                             style: ElevatedButton.styleFrom(
                                               elevation: 0,

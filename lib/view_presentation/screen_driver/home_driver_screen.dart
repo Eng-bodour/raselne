@@ -44,14 +44,15 @@ class HomeDriverScreen extends StatelessWidget {
                     underLine: TextDecoration.none),
               ),
               StreamBuilder(
-                stream: Provider.of<order_vm>(context).get_orders(),
+                stream: Provider.of<order_vm>(context)
+                    .get_orders(),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<OrderModel>>
                     snapshot) {
                if(snapshot.hasError){
                  return Text('something went wrong'+snapshot.error.toString());
                }
-               if(snapshot.connectionState==ConnectionState.waiting){
+               if(!snapshot.hasData){
                  return Text("Loading");
                }
                 return ListView.separated(

@@ -12,11 +12,12 @@ class StoreFirebase extends StoreRepository {
     List<StoreModel> liststore=[];
     StoreModel storeModel;
     Itemstore itemstore;
-   await  FirebaseServices("store").getQuerySnapshotFuture()
+    await  FirebaseServices("store").getQuerySnapshotFuture()
          .then((value) => value.docs.forEach(
              (element) {
               storeModel=StoreModel.fromSnapshot(element.data());
               storeModel.IdStore=element.id;
+              print(' storeModel.IdStore '+element.id);
                FirebaseServices(
                    "store/"+element.id+"/items_store"
                ).getQuerySnapshotFuture().then((value) =>
@@ -24,10 +25,10 @@ class StoreFirebase extends StoreRepository {
                      print(element.data());
                      itemstore=Itemstore.fromJson(element.data());
                      itemstore.IdItemStore=element.id;
+                     print('itemstore.IdItemStore '+element.id);
                      storeModel.itemstore.add(itemstore);
                      print( storeModel.itemstore[0].description);
                    }));
-
               liststore.add(
                   storeModel
               );

@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:raselne/data_layer/model/messages_model.dart';
+import 'package:raselne/data_layer/model/orderModel.dart';
 
 import 'package:raselne/data_layer/model/user_model.dart';
 import 'package:raselne/utilis/theme.dart';
 
 import '../../../logic/controller/auth_controller.dart';
+import '../../../logic/controller/order_vm.dart';
+import '../../widget/text_utilis.dart';
 
 class ChatScreen extends StatefulWidget {
-
   // ignore: use_key_in_widget_constructors
-  ChatScreen();
-
+  ChatScreen({required this.orderModel});
+  OrderModel orderModel;
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -19,20 +21,20 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   late UserModel user;
 
-  _buildMessage(Message message, bool isMe, Size size) {
+  _buildMessage(MessageText message, bool isMe, Size size) {
     final Container msg = Container(
       margin: isMe
           ? EdgeInsets.only(
-              top: size.height * 0.01,
-              bottom: size.height * 0.01,
-              left: size.width * 0.3,
-              right: size.width * 0.03,
-            )
+        top: size.height * 0.01,
+        bottom: size.height * 0.01,
+        left: size.width * 0.3,
+        right: size.width * 0.03,
+      )
           : EdgeInsets.only(
-              top: size.height * 0.01,
-              left: size.width * 0.03,
-              bottom: size.height * 0.01,
-            ),
+        top: size.height * 0.01,
+        left: size.width * 0.03,
+        bottom: size.height * 0.01,
+      ),
       padding: EdgeInsets.symmetric(
           horizontal: size.width * 0.06, vertical: size.height * 0.03),
       width: size.width * 0.75,
@@ -40,23 +42,23 @@ class _ChatScreenState extends State<ChatScreen> {
         color: isMe ? greyColor.withOpacity(0.1) : mainColor.withOpacity(0.3),
         borderRadius: isMe
             ? BorderRadius.only(
-                topLeft: Radius.circular(size.width * 0.1),
-                topRight: Radius.circular(size.width * 0.02),
-                bottomLeft: Radius.circular(size.width * 0.02),
-                bottomRight: Radius.circular(size.width * 0.1),
-              )
+          topLeft: Radius.circular(size.width * 0.1),
+          topRight: Radius.circular(size.width * 0.02),
+          bottomLeft: Radius.circular(size.width * 0.02),
+          bottomRight: Radius.circular(size.width * 0.1),
+        )
             : BorderRadius.only(
-                topRight: Radius.circular(size.width * 0.1),
-                topLeft: Radius.circular(size.width * 0.02),
-                bottomRight: Radius.circular(size.width * 0.02),
-                bottomLeft: Radius.circular(size.width * 0.1),
-              ),
+          topRight: Radius.circular(size.width * 0.1),
+          topLeft: Radius.circular(size.width * 0.02),
+          bottomRight: Radius.circular(size.width * 0.02),
+          bottomLeft: Radius.circular(size.width * 0.1),
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            message.time!,
+            message.timeMessage!,
             style: TextStyle(
               color: Colors.black,
               fontSize: size.width * 0.035,
@@ -65,7 +67,7 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           SizedBox(height: size.height * 0.005),
           Text(
-            message.text!,
+            message.textMessage!,
             style: TextStyle(
               color: Colors.black,
               fontSize: size.width * 0.035,
@@ -129,16 +131,17 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  @override void initState() {
+  @override
+  void initState() {
     // TODO: implement initState
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      user = Provider.of<AuthProvider_vm>(context, listen: false)
-          .currentuser;
-    });}
-      @override
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      user = Provider.of<AuthProvider_vm>(context, listen: false).currentuser;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-        user = Provider.of<AuthProvider_vm>(context, listen: true)
-            .currentuser;
+    user = Provider.of<AuthProvider_vm>(context, listen: true).currentuser;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: mainColor,
@@ -180,20 +183,57 @@ class _ChatScreenState extends State<ChatScreen> {
                     topLeft: Radius.circular(30.0),
                     topRight: Radius.circular(30.0),
                   ),
-                  child: ListView.builder(
-                    //to reverse message
-                    reverse: true,
-                    padding: EdgeInsets.only(top: size.height * 0.02),
-                    itemCount: messages.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final Message message = messages[index];
-                      final bool isMe = message.sender?.uid == currentUser.uid;
-                      return _buildMessage(message, isMe, size);
-                    },
-                  ),
+                  child:
+                        StreamBuilder(
+                          stream: Provider.of<order_vm>(context).getchat(widget.orderModel.id_order),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<List<MessageText>> snapshot)
+                          {
+                            if(snapshot.hasError) {
+                              return Text('something went wrong' + snapshot.error
+                                  .toString());
+                            }
+                            if(!snapshot.hasData){
+                              return Text("Loading");
+                            }
+                            return
+                             ListView.builder(
+                          //to reverse message
+                          reverse: true,
+                            padding: EdgeInsets.only(top: size.height * 0.02),
+                            itemCount:snapshot.data?.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              // final MessageText message = messages[index];
+                              bool isMe = snapshot.data![index].senderId ==user.uid;
+                              return _buildMessage( snapshot.data![index], isMe, size);
+                            },
+                          );
+                          },
+                        ),
+
                 ),
               ),
             ),
+            user.type=='captain'?
+            InkWell(
+              onTap: () {
+                // widget.orderModel.isstart
+              },
+              child: Container(
+                width: size.width * 1,
+                height: size.height * 0.1,
+                decoration: const BoxDecoration(color: greyColor),
+                child: Center(
+                    child: TextUtils(
+                        fontSize: size.width * 0.05,
+                        fontWeight: FontWeight.bold,
+                        text: 'اصدار فاتورة',
+                        // widget.orderModel.isstart? 'اصدار فاتورة':
+                        // widget.orderModel.isdone_recive?'استلمت الطلب':'',
+                        color: Colors.white,
+                        underLine: TextDecoration.none)),
+              ),
+            ):Container(),
             _buildMessageComposer(size: size),
           ],
         ),

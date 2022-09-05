@@ -162,7 +162,7 @@ class buildCardOrders extends StatelessWidget {
                     if(orderModel.isopen)
                       Navigator.of(context).push(MaterialPageRoute(builder:
                           (context)=>
-                              ShowOffers(id_order: orderModel.id_order)
+                              ShowOffers(orderModel: orderModel)
                       )) ;
 
                   },

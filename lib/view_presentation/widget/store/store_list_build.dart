@@ -19,7 +19,8 @@ class _StoreListBuildState extends State<StoreListBuild> {
 
   @override void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      Provider.of<StoreProvider_vm>(context, listen: false).getstores();
+     await Provider.of<StoreProvider_vm>(context, listen: false)
+         .getstores();
     });
     super.initState();
   }
