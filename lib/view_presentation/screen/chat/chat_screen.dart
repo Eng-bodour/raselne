@@ -9,6 +9,7 @@ import 'package:raselne/utilis/theme.dart';
 import '../../../logic/controller/auth_controller.dart';
 import '../../../logic/controller/order_vm.dart';
 import '../../widget/text_utilis.dart';
+import '../invoiceImage.dart';
 
 class ChatScreen extends StatefulWidget {
   // ignore: use_key_in_widget_constructors
@@ -19,6 +20,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  String textmessage='';
   late UserModel user;
 
   _buildMessage(MessageText message, bool isMe, Size size) {
@@ -108,13 +110,15 @@ class _ChatScreenState extends State<ChatScreen> {
             icon: const Icon(Icons.photo),
             iconSize: 25.0,
             color: mainColor,
-            onPressed: () {},
+            onPressed: () {
+
+            },
           ),
           Expanded(
             child: TextField(
               cursorColor: mainColor,
               textCapitalization: TextCapitalization.sentences,
-              onChanged: (value) {},
+              onChanged: (value) {textmessage=value;},
               decoration: const InputDecoration.collapsed(
                 hintText: 'Send a message...',
               ),
@@ -124,7 +128,18 @@ class _ChatScreenState extends State<ChatScreen> {
             icon: const Icon(Icons.send),
             iconSize: 25.0,
             color: mainColor,
-            onPressed: () {},
+            onPressed: ()async {
+           await   Provider.of<order_vm>(context,listen: false)
+                  .sendMessage(
+                  MessageText(
+                  senderId: user.uid.toString(),
+                      textMessage:textmessage
+                  ,timeMessage: DateTime.now().toString()
+                  ), widget.orderModel.id_order);
+           setState(() {
+             textmessage='';
+           });
+           },
           ),
         ],
       ),
@@ -185,7 +200,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   child:
                         StreamBuilder(
-                          stream: Provider.of<order_vm>(context).getchat(widget.orderModel.id_order),
+                          stream: Provider.of<order_vm>(context,listen: false).getchat(widget.orderModel.id_order),
                           builder: (BuildContext context,
                               AsyncSnapshot<List<MessageText>> snapshot)
                           {
@@ -199,7 +214,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             return
                              ListView.builder(
                           //to reverse message
-                          reverse: true,
+                            reverse: true,
                             padding: EdgeInsets.only(top: size.height * 0.02),
                             itemCount:snapshot.data?.length,
                             itemBuilder: (BuildContext context, int index) {
@@ -218,6 +233,11 @@ class _ChatScreenState extends State<ChatScreen> {
             InkWell(
               onTap: () {
                 // widget.orderModel.isstart
+              Navigator.push(context,
+                  MaterialPageRoute(
+                      builder: (context)=>InvoiceImage(),
+                      fullscreenDialog: true)
+              );
               },
               child: Container(
                 width: size.width * 1,

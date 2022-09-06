@@ -44,7 +44,7 @@ class HomeDriverScreen extends StatelessWidget {
                     underLine: TextDecoration.none),
               ),
               StreamBuilder(
-                stream: Provider.of<order_vm>(context)
+                stream: Provider.of<order_vm>(context,listen: false)
                     .get_orders(),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<OrderModel>>

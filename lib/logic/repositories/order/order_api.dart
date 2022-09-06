@@ -68,4 +68,9 @@ class order_api extends OrderRepository {
     throw UnimplementedError();
   }
 
+  @override
+  Future<void> sendMessage(MessageText message, String id_order)async {
+    // TODO: implement sendMessage
+  }
+
 }

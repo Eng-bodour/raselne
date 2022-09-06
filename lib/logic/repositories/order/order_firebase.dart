@@ -29,7 +29,9 @@ class order_firebase extends OrderRepository{
      FirebaseServices("orders").ref.where(
        'isopen', isEqualTo: true,)
          .where('ispause' ,isEqualTo: false)
-         .snapshots(includeMetadataChanges: true)
+         .snapshots(
+         // includeMetadataChanges: true
+         )
        .map((snap) => snap.docs
        .map((doc) =>
          OrderModel.fromSnapshot( doc.data(),doc.id )).toList()
@@ -199,14 +201,15 @@ class order_firebase extends OrderRepository{
    await FirebaseServices("orders").ref
         .doc(idOrder)
         .update({
-      'ispause': true,
+       'ispause': true,
        'distance_recive_deilvery':distance_recive_deilvery,
-     'price_deilvery_captain':price_deilvery_captain,
-      'captain_user':idcaptain,
+       'price_deilvery_captain':price_deilvery_captain,
+       'captain_user':idcaptain,
     })
         .then((value) => print("User Updated"))
         .catchError((error) => print("Failed to update user: $error"));
   }
+
 
   @override
   Stream<OrderModel> check_approve_order(String idOrder,
@@ -242,22 +245,21 @@ class order_firebase extends OrderRepository{
   @override
   Future<void> approve_order_or_not(String idOrder, bool isopen) {
     // TODO: implement approve_order_or_not
-    if(isopen)//refuse order
+    if( isopen)//refuse order
     FirebaseServices("orders").ref
         .doc(idOrder)
         .update({
-     // 'isopen':false,//ليتم ايقاف ظهور الطلب عند باقي المندوبين لانه تم قبوله
+      //refuse offer
       'ispause': false,
       'isopen':isopen,
-      'isapprove':true,
+      'isapprove':false,
     });
 else  FirebaseServices("orders").ref
         .doc(idOrder)
         .update({
       // 'isopen':false,//ليتم ايقاف ظهور الطلب عند باقي المندوبين لانه تم قبوله
       'isopen':isopen,
-      'isapprove':false,
-
+      'isapprove':true,
     });
     throw UnimplementedError();
   }
@@ -279,6 +281,7 @@ else  FirebaseServices("orders").ref
     // TODO: implement getChatOrder
     return   FirebaseServices("orders")
         .ref.doc(id_order).collection('chat')
+        .orderBy('timeMessage' )
         .snapshots().map((event) =>
       event.docs.map((element) {
        return MessageText.fromSnapshot( element.data());
@@ -290,4 +293,11 @@ else  FirebaseServices("orders").ref
     //     Message.fromSnapshot(doc.data() as Map<String,dynamic>)));
 
 }
+
+  @override
+  Future<void> sendMessage(MessageText message, String id_order)async {
+    // TODO: implement sendMessage
+   await FirebaseServices('orders').ref.doc(id_order).collection('chat').doc()
+        .set(message.toSnapchot());
+  }
 }

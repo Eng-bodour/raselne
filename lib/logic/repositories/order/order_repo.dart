@@ -15,4 +15,5 @@ abstract class OrderRepository {
   Future<void> update_order( String idOrder,String idcaptain,String distance_recive_deilvery,String price_deilvery_captain);
   Future<void> approve_order_or_not( String idOrder,bool isopen);
   //عندما يقدم المندوب على العرض سيتم تحويل قيمة المتحول ispause إلى true
+ Future<void> sendMessage(MessageText message,String id_order);
 }

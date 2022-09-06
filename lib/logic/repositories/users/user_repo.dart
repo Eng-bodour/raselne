@@ -13,5 +13,4 @@ abstract class UserRepository{
   Future<String> signOut();
   Future<UserModel> getuser();
   Future<bool> isAuthuser();
-
 }

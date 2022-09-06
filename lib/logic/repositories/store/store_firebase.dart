@@ -52,7 +52,7 @@ class StoreFirebase extends StoreRepository {
   @override
   Future<StoreModel> AddStore(String nameCollecton,Map<String, dynamic> body)async {
     FirebaseServices firestore =
-  FirebaseServices("store");//.collection(nameCollecton);
+     FirebaseServices("store");//.collection(nameCollecton);
     firestore.addtofirestore(body);
     throw UnimplementedError();
   }

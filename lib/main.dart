@@ -57,8 +57,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
-      child:FutureBuilder<UserModel?>(
-          future: Provider.of<AuthProvider_vm>(context)
+      child:
+      FutureBuilder<UserModel?>(
+          future: Provider.of<AuthProvider_vm>(context,listen: false)
               .isAuthuser() ,
           builder:(context, snapshot) {
             print('in main builder');
@@ -90,54 +91,7 @@ class MyApp extends StatelessWidget {
                 //     child: snapshot.data?.uid !=null ? MainScreen() : WelcomeScreen(),
                 //   ),
                 // )
-              //       StreamBuilder(
-              //         stream: Provider.of<order_vm>(context).getchat(widget.orderModel.id_order),
-              //         builder: (BuildContext context,
-              //             AsyncSnapshot<List<MessageText>> snapshot)
-              //         {
-              //           if(snapshot.hasError) {
-              //             return Text('something went wrong' + snapshot.error
-              //                 .toString());
-              //           }
-              //           if(!snapshot.hasData){
-              //             return Text("Loading");
-              //           }
-              //           return
-              //            ListView.builder(
-              //         //to reverse message
-              //         reverse: true,
-              //           padding: EdgeInsets.only(top: size.height * 0.02),
-              //           itemCount: 3,
-              //           itemBuilder: (BuildContext context, int index) {
-              //             // final MessageText message = messages[index];
-              //             bool isMe = snapshot.data![index].senderId ==user.uid;
-              //             return _buildMessage( snapshot.data![index], isMe, size);
-              //           },
-              //         )
-              //         },
-              //       ),
-              //),
-              // ),
-              // user.type=='captain'?
-              // InkWell(
-              //   onTap: () {
-              //     // widget.orderModel.isstart
-              //   },
-              //   child: Container(
-              //     width: size.width * 1,
-              //     height: size.height * 0.1,
-              //     decoration: const BoxDecoration(color: greyColor),
-              //     child: Center(
-              //         child: TextUtils(
-              //             fontSize: size.width * 0.05,
-              //             fontWeight: FontWeight.bold,
-              //             text: 'اصدار فاتورة',
-              //             // widget.orderModel.isstart? 'اصدار فاتورة':
-              //             // widget.orderModel.isdone_recive?'استلمت الطلب':'',
-              //             color: Colors.white,
-              //             underLine: TextDecoration.none)),
-              //   ),
-              // ):Container(),
+
              }
           }),
       // GetMaterialApp(

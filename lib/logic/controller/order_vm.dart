@@ -38,8 +38,11 @@ setvalue(UserModel val){
  }
 Stream<List<MessageText>> getchat(String id_order )async*{
 
-  yield* orderRepository.getChatOrder('0gMw4jf9RfubMK2Zec8O');
+  yield* orderRepository.getChatOrder(id_order);
   // notifyListeners();
+}
+Future<void> sendMessage(MessageText message,id_order)async{
+ await orderRepository.sendMessage(message, id_order);
 }
 addlocation(LatLng location,String Address,String detailAddress){
 
@@ -56,7 +59,7 @@ Stream<List<OrderModel>> get_orders() async* {
   notifyListeners();
 }
 
- Stream<OrderModel> get_offer(String id_order) async*{
+ Stream<OrderModel> get_offer(String id_order) async* {
   //ليظهر العرض من المندوب للمستخدم ليتم قبوله او رفضه
 // print(currentuser.name.toString());
 print('cxdcdvdf');
@@ -108,7 +111,7 @@ Future<void> addOrder() async {
 //  await orderRepository.get_offer(order.id_order);
 //   notifyListeners();
 // }
-Future<void> get_myorder()async{
+Future<List<OrderModel>> get_myorder()async{
   isloading=true;
   notifyListeners();
   // print('current user is '+currentuser.uid.toString());
@@ -120,6 +123,7 @@ Future<void> get_myorder()async{
   );
   isloading=false;
   notifyListeners();
+  return mylist_order;
 }
  Future<void> update_order(String id_order,String distance_recive_deilvery,
      String price_deilvery_captain ) async {
@@ -138,11 +142,12 @@ Future<void> get_myorder()async{
  }
 Future<void> approve_order_or_not(String idOrder, bool isopen)async {
   await orderRepository.approve_order_or_not(idOrder, isopen);
+
 }
 Stream<OrderModel> check_approve_order(String idorder) async* {
   print(idorder);
   // print(currentuser!.uid.toString());
-  yield*  orderRepository.check_approve_order('0gMw4jf9RfubMK2Zec8O',
+  yield*  orderRepository.check_approve_order(idorder,
       currentuser.uid.toString()
 
   );

@@ -26,7 +26,7 @@ class ShowOffers extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                   horizontal: size.width * 0.03, vertical: size.height * 0.27),
               child: StreamBuilder(
-                stream: Provider.of<order_vm>(context).get_offer(orderModel.id_order),
+                stream: Provider.of<order_vm>(context,listen: false).get_offer(orderModel.id_order),
                 builder: (BuildContext context,
                     AsyncSnapshot<OrderModel> snapshot_order) {
                   if (snapshot_order.hasError) {
@@ -36,8 +36,9 @@ class ShowOffers extends StatelessWidget {
                   if (! snapshot_order.hasData) {
                     return Text("Loading");
                   }
-                  return FutureBuilder(
-                      future: Provider.of<order_vm>(context).getusercaptain(
+                  return
+                    FutureBuilder(
+                      future: Provider.of<order_vm>(context,listen: false).getusercaptain(
                           snapshot_order.data!.captain_user.toString()),
                       builder: (BuildContext context,
                           AsyncSnapshot<UserModel> snapshot_user) {
@@ -49,7 +50,8 @@ class ShowOffers extends StatelessWidget {
                           return Text("Loading");
                         }
                         return
-                          Column(
+                         snapshot_order.data!.ispause==true?
+                         Column(
                           children: [
                             Text(
                               'سعر التوصيل المتوقع ${snapshot_order.data!.price_deilvery} ر.س',
@@ -302,7 +304,7 @@ class ShowOffers extends StatelessWidget {
                               ),
                             )
                           ],
-                        );
+                        ):Container();
                       });
                 },
               ),

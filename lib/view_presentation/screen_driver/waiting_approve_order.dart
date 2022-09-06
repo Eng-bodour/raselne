@@ -28,7 +28,7 @@ class waiting_aprrove_order extends StatelessWidget {
               horizontal: size.width * 0.03, vertical: size.height * 0.27),
 
           child: StreamBuilder(
-            stream: Provider.of<order_vm>(context)
+            stream: Provider.of<order_vm>(context,listen: false)
                 .check_approve_order(orderModel.id_order),
             builder: (BuildContext context,
                 AsyncSnapshot<OrderModel>
@@ -38,8 +38,9 @@ class waiting_aprrove_order extends StatelessWidget {
                 child:
                 Text('something went wrong'+snapshot.error.toString()));
               }
-              if(!snapshot.hasData){
-                return Center(child: Text("waiting approve"));
+              if(snapshot.connectionState==ConnectionState.waiting){
+                return Center(
+                    child: Text("waiting approve"));
               }
                 return
                   Container(
@@ -51,7 +52,7 @@ class waiting_aprrove_order extends StatelessWidget {
                       Center(child:
                       RaisedButton(
                         child: Text('press'),
-              onPressed: (){
+                onPressed: (){
 
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context)=>

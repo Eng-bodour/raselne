@@ -70,7 +70,7 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                             scrollDirection: Axis.vertical,
                             itemCount: 2,
                             itemBuilder: (context, index) {
-                              return buildMyDelevery(size: size);
+                              return buildMyDelevery(size: size);//نوصيل
                             },
                           )
                         : ListView.builder(
@@ -79,8 +79,9 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                             scrollDirection: Axis.vertical,
                             itemCount: 5,
                             itemBuilder: (context, index) {
-                              return Text('data');
-                                //buildCardOrders(size: size);
+                              return
+                                Text('data');
+                                // buildCardOrders(size: size, orderModel: null,);
                             },
                           )
                   ],

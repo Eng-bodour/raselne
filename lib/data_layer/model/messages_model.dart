@@ -30,10 +30,9 @@ class MessageText {
   Map<String, dynamic> toSnapchot() =>
       {
         "senderId": senderId,
-        "time": timeMessage,
+        "timeMessage": timeMessage,
         "textMessage": textMessage,
-        "isLiked": isLiked,
-        "unread": unread,
+
 
       };
 

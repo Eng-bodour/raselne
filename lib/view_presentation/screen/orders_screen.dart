@@ -23,14 +23,14 @@ class _OrdersScreenState extends State<OrdersScreen> {
   @override void initState() {
     // TODO: implement initState
 
-    WidgetsBinding.instance.addPostFrameCallback((_){
-      // user= Provider.of<AuthProvider_vm>(context,listen: false)
-      //     .currentuser;
-      Provider.of<order_vm>(context,listen: false)
-          .get_myorder(
-          // user!.uid.toString()
-      );
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_){
+    //   // user= Provider.of<AuthProvider_vm>(context,listen: false)
+    //   //     .currentuser;
+    //   Provider.of<order_vm>(context,listen: false)
+    //       .get_myorder(
+    //       // user!.uid.toString()
+    //       );
+    // });
 
     super.initState();
   }
@@ -66,34 +66,44 @@ class _OrdersScreenState extends State<OrdersScreen> {
                             color: Colors.black54,
                             underLine: TextDecoration.none),
                       ),
-                     Consumer<order_vm>(
-                         builder: (context, value, child) {
-                     return value.isloading==true?
-                     Center(
-                       child: CircularProgressIndicator()
-                     ): value.mylist_order.length==0?
-                     Center(
-                       child: Text('no order'),
-                     ) :Column(
+                     // Consumer<order_vm>(
+                     //     builder: (context, value, child) {
+                     // return value.isloading==true?
+                     // Center(
+                     //   child: CircularProgressIndicator()
+                     // ): value.mylist_order.length==0?
+                     // Center(
+                     //   child: Text('no order'),
+                     // ) :
+                      FutureBuilder(
+                          future: Provider.of<order_vm>(context,listen: false).get_myorder(),
+                          builder: (BuildContext context, AsyncSnapshot<List<OrderModel> > snapshot) {
+                            if (snapshot.hasError) {
+                              return Text('something went wrong' +
+                                  snapshot.error.toString());
+                            }
+                            if (!snapshot.hasData) {
+                              return Text("Loading");
+                            }
+                            return Column(
                        children: [
                          ListView.separated(
                            shrinkWrap: true,
                            controller: ScrollController(),
                            scrollDirection: Axis.vertical,
-                           itemCount: value.mylist_order.length,
+                           itemCount: snapshot.data!.length,
                            itemBuilder: (context, index) {
                              return buildCardOrders(
-                                 orderModel: value.mylist_order[index],
+                                 orderModel: snapshot.data![index],
                                  size: size);
                            },
                            separatorBuilder: (context, index) =>
                                SizedBox(height: size.height * 0.02),
                          )
                        ],
-                     ) ;
-    }
-    ),
-
+                     );
+   // }),
+  }),
                     ],
                   ),
                 ),
