@@ -32,7 +32,9 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
 
    static late final LatLng  location_init;
    Completer<GoogleMapController> _controller=Completer();
-   Set<Marker> _markers={};
+   Set<Marker> _markers={
+
+   };
    static late final CameraPosition _inialCameraPosition = CameraPosition(
        target:LatLng(33.55,36.28),// widget.order.toLocation,
        zoom: 10
@@ -42,7 +44,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
    BitmapDescriptor? _locationIcon;
 
    @override void initState() {
-    // TODO: implement initState
+      // TODO: implement initState
      // location_init=widget.order.fromlocation;
      // print('long '+location_init.longitude.toString());
      // _inialCameraPosition  = CameraPosition(
@@ -50,11 +52,9 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
      // zoom: 17.47
      // );\
      // user= Provider.of<AuthProvider_vm>(context,listen: false).currentuser;
-
      _animateCamera(widget.order.fromlocation);
      _buildMarkerFromAssets();
      _drawPolyline(widget.order.fromlocation, widget.order.toLocation);
-
      super.initState();
   }
    Future<void> _animateCamera(LatLng _location) async {
@@ -219,7 +219,11 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                     alignment: Alignment.center,
                     children: [
                       GoogleMap(
-                        initialCameraPosition: _inialCameraPosition,
+                        initialCameraPosition:
+                        CameraPosition(
+                            target:
+                            LatLng(widget.order.toLocation.latitude,
+                                widget.order.toLocation.longitude)),
                         mapType: MapType.normal,
                         onMapCreated: (GoogleMapController controller) async{
                           String style = await DefaultAssetBundle.of(context)

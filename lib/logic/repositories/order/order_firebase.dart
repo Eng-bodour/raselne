@@ -1,6 +1,11 @@
 
 
+
+import 'dart:io';
+import 'package:path/path.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:firebase_dart/firebase_dart.dart';
 import 'package:raselne/data_layer/model/messages_model.dart';
 import 'package:raselne/data_layer/model/orderModel.dart';
 import 'package:raselne/data_layer/model/user_model.dart';
@@ -243,25 +248,45 @@ class order_firebase extends OrderRepository{
   }
 
   @override
-  Future<void> approve_order_or_not(String idOrder, bool isopen) {
+  Future<void> approve_order_or_not(OrderModel orderModel, bool isopen)async {
     // TODO: implement approve_order_or_not
     if( isopen)//refuse order
-    FirebaseServices("orders").ref
-        .doc(idOrder)
+   await FirebaseServices("orders").ref
+        .doc(orderModel.id_order)
         .update({
       //refuse offer
       'ispause': false,
       'isopen':isopen,
       'isapprove':false,
     });
-else  FirebaseServices("orders").ref
-        .doc(idOrder)
+else  await FirebaseServices("orders").ref
+        .doc(orderModel.id_order)
         .update({
       // 'isopen':false,//ليتم ايقاف ظهور الطلب عند باقي المندوبين لانه تم قبوله
       'isopen':isopen,
       'isapprove':true,
     });
-    throw UnimplementedError();
+      MessageText message=
+       MessageText(senderId: orderModel.from_user, type_message: 'map',
+       textMessage:orderModel.detailAddress,
+       timeMessage: DateTime.now().toString(),
+       location:GeoPoint( orderModel.toLocation.latitude, orderModel.toLocation.longitude)
+   );
+    await
+        FirebaseServices('orders').ref.doc(orderModel.id_order)
+        .collection('chat').doc()
+        .set(message.toSnapchot());
+    /////////////////////////////////////////////////
+    // message=
+    //     MessageText(senderId: orderModel.from_user, type_message: 'map',
+    //         textMessage:orderModel.detailAddress,//address tolocation
+    //         timeMessage: DateTime.now().toString(),
+    //         location:GeoPoint( orderModel.fromlocation.latitude, orderModel.fromlocation.longitude)
+    //     );
+    // await
+    // FirebaseServices('orders').ref.doc(orderModel.id_order)
+    //     .collection('chat').doc()
+    //     .set(message.toSnapchot());
   }
 
   @override
@@ -300,4 +325,70 @@ else  FirebaseServices("orders").ref
    await FirebaseServices('orders').ref.doc(id_order).collection('chat').doc()
         .set(message.toSnapchot());
   }
+
+  Future<String> uploadImageToFirebase(File imageFile) async {
+    String nameimage=basename(imageFile.path);
+    // Create the file metadata
+    final metadata = SettableMetadata(contentType: "image/jpeg");
+
+    var storageRef=FirebaseStorage.instance.ref();
+    //     .ref('images/');
+
+    // await refstorge.putData(fileimageinvoice);
+
+    // String urlimage=await refstorge.getDownloadURL();
+
+    // Upload file and metadata to the path 'images/mountains.jpg'
+    // Uint8List data=fileimageinvoice.
+    final uploadTask = storageRef
+        .child("images/${nameimage}")
+        .putFile(imageFile,metadata);
+    // Listen for state changes, errors, and completion of the upload.
+    String urlimage='';
+    uploadTask.snapshotEvents.listen((TaskSnapshot taskSnapshot) async {
+      switch (taskSnapshot.state) {
+        case TaskState.running:
+          final progress =
+              100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
+          print("Upload is $progress% complete.");
+          break;
+        case TaskState.paused:
+          print("Upload is paused.");
+          break;
+        case TaskState.canceled:
+          print("Upload was canceled");
+          break;
+        case TaskState.error:
+        // Handle unsuccessful uploads
+          break;
+        case TaskState.success:
+        // Handle successful uploads on complete
+        // ...
+          urlimage=await storageRef.getDownloadURL();
+          break;
+      }
+    });
+    return urlimage;
+  }
+  @override
+  Future<void> addInvoice(File? fileimageinvoice,String senderId,MessageText message, String id_order)
+  async {
+    // TODO: implement addInvoice
+    String imagurl='';
+    if(fileimageinvoice!=null){
+      imagurl= await  uploadImageToFirebase(fileimageinvoice);
+    MessageText messageText =MessageText(
+      senderId: senderId, type_message: 'image');
+      messageText.textMessage=imagurl.toString();
+      messageText.type_message='image';
+      messageText.timeMessage=DateTime.now().toString();
+      await FirebaseServices('orders').ref.doc(id_order).collection('chat').doc()
+          .set(messageText.toSnapchot());
+    }
+   message.senderId=senderId;
+   message.timeMessage=DateTime.now().toString();
+   await FirebaseServices('orders').ref.doc(id_order).collection('chat').doc()
+       .set(message.toSnapchot());
+  }
+
 }

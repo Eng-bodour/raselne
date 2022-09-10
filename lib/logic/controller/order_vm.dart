@@ -1,6 +1,8 @@
 
 
 
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:raselne/data_layer/model/messages_model.dart';
@@ -113,7 +115,7 @@ Future<void> addOrder() async {
 // }
 Future<List<OrderModel>> get_myorder()async{
   isloading=true;
-  notifyListeners();
+  // notifyListeners();
   // print('current user is '+currentuser.uid.toString());
   //طلباتي
   mylist_order= await orderRepository
@@ -122,9 +124,10 @@ Future<List<OrderModel>> get_myorder()async{
       // 'uyHNE4qdzlZekuu6R6a4JYgMUTs2'
   );
   isloading=false;
-  notifyListeners();
+  // notifyListeners();
   return mylist_order;
 }
+
  Future<void> update_order(String id_order,String distance_recive_deilvery,
      String price_deilvery_captain ) async {
   //عندما يقدم المندوب على العرض سيتم تحويل قيمة المتحول ispause إلى true
@@ -140,9 +143,12 @@ Future<List<OrderModel>> get_myorder()async{
    isloading=false;
   notifyListeners();
  }
-Future<void> approve_order_or_not(String idOrder, bool isopen)async {
-  await orderRepository.approve_order_or_not(idOrder, isopen);
-
+Future<void> approve_order_or_not( OrderModel orderModel, bool isopen)async {
+  isloading=true;
+  notifyListeners();
+  await orderRepository.approve_order_or_not(orderModel, isopen);
+  isloading=false;
+  notifyListeners();
 }
 Stream<OrderModel> check_approve_order(String idorder) async* {
   print(idorder);
@@ -210,7 +216,14 @@ Stream<OrderModel> check_approve_order(String idorder) async* {
   }
   notifyListeners();
  }
-
+  Future<void> addInvoice(File? fileimageinvoice,MessageText message, String id_order)
+  async {
+  isloading=true;
+  notifyListeners();
+  await orderRepository.addInvoice(fileimageinvoice, currentuser.uid.toString(), message, id_order);
+  isloading=false;
+  notifyListeners();
+  }
 
 
 }

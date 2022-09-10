@@ -1,12 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:raselne/data_layer/model/user_model.dart';
 
 class MessageText {
   final UserModel? sender;
-  final String senderId;
+  late  String senderId;
   late String? timeMessage; // Would usually be type DateTime or Firebase Timestamp in production apps
-  final String? textMessage;
+  late  String? textMessage;
   final bool? isLiked;
   final bool? unread;
+  GeoPoint? location;
+  String type_message;
+  String? valueCost;
 
   MessageText({
     this.sender,
@@ -15,24 +19,34 @@ class MessageText {
     this.textMessage,
     this.isLiked,
     this.unread,
+    this.location,
+    required this.type_message,
   });
 
   factory MessageText.fromSnapshot(Map<String, dynamic> doc) {
-    return MessageText(
+    MessageText messageText= MessageText(
       senderId: doc['senderId'],
       timeMessage: doc['timeMessage'],
+      location: doc['location']==null?null:doc['location'],
+      // valueCost: doc['valueCost']==null?null:doc['valueCost'],
       textMessage: doc['textMessage'],
+      type_message: doc['type_message'],
       isLiked: doc['isLiked']==null?false: doc['isLiked'],
       unread: doc['unread']==null?false: doc['unread'],
+
     );
+    messageText.valueCost=doc['valueCost']==null?null:doc['valueCost'];
+    return messageText;
   }
 
   Map<String, dynamic> toSnapchot() =>
       {
+
         "senderId": senderId,
         "timeMessage": timeMessage,
         "textMessage": textMessage,
-
+        "location":location,
+        "type_message":type_message,
 
       };
 

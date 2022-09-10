@@ -9,6 +9,7 @@ import 'package:raselne/utilis/theme.dart';
 import '../../../logic/controller/auth_controller.dart';
 import '../../../logic/controller/order_vm.dart';
 import '../../widget/text_utilis.dart';
+import '../../widget/widget_location_map.dart';
 import '../invoiceImage.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -134,7 +135,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   MessageText(
                   senderId: user.uid.toString(),
                       textMessage:textmessage
-                  ,timeMessage: DateTime.now().toString()
+                  ,timeMessage: DateTime.now().toString(), type_message: 'text'
                   ), widget.orderModel.id_order);
            setState(() {
              textmessage='';
@@ -149,7 +150,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       user = Provider.of<AuthProvider_vm>(context, listen: false).currentuser;
     });
   }
@@ -200,7 +201,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   child:
                         StreamBuilder(
-                          stream: Provider.of<order_vm>(context,listen: false).getchat(widget.orderModel.id_order),
+                          stream: Provider.of<order_vm>(context,listen: false)
+                              .getchat(widget.orderModel.id_order),
                           builder: (BuildContext context,
                               AsyncSnapshot<List<MessageText>> snapshot)
                           {
@@ -212,17 +214,87 @@ class _ChatScreenState extends State<ChatScreen> {
                               return Text("Loading");
                             }
                             return
-                             ListView.builder(
+                             Expanded(
+                               flex: 1,
+                               child: ListView.builder(
                           //to reverse message
                             reverse: true,
                             padding: EdgeInsets.only(top: size.height * 0.02),
                             itemCount:snapshot.data?.length,
                             itemBuilder: (BuildContext context, int index) {
-                              // final MessageText message = messages[index];
-                              bool isMe = snapshot.data![index].senderId ==user.uid;
-                              return _buildMessage( snapshot.data![index], isMe, size);
+
+                                // final MessageText message = messages[index];
+                                bool isMe = snapshot.data![index].senderId ==user.uid;
+                                return
+                                  snapshot.data![index].type_message=='text'?
+                                  _buildMessage( snapshot.data![index], isMe, size):
+                                  snapshot.data![index].type_message=='map'?
+                                  mapLocationMessage(
+                                  message: snapshot.data![index],
+                                  size: size,):
+                                  snapshot.data![index].type_message=='image'?
+                                  Container(
+                                     margin:  EdgeInsets.only(
+                                       top: size.height * 0.01,
+                                       left: size.width * 0.03,
+                                       bottom: size.height * 0.01,
+                                     ),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: size.width * 0.06, vertical: size.height * 0.03),
+                                      width: size.width * 0.75,
+                                      decoration: BoxDecoration(
+                                        color: isMe ? greyColor.withOpacity(0.1) : mainColor.withOpacity(0.3),
+                                        borderRadius: isMe
+                                            ? BorderRadius.only(
+                                          topLeft: Radius.circular(size.width * 0.1),
+                                          topRight: Radius.circular(size.width * 0.02),
+                                          bottomLeft: Radius.circular(size.width * 0.02),
+                                          bottomRight: Radius.circular(size.width * 0.1),
+                                        )
+                                            : BorderRadius.only(
+                                          topRight: Radius.circular(size.width * 0.1),
+                                          topLeft: Radius.circular(size.width * 0.02),
+                                          bottomRight: Radius.circular(size.width * 0.02),
+                                          bottomLeft: Radius.circular(size.width * 0.1),
+                                        ),
+                                      ),
+                                      child: Image.network(
+                                          snapshot.data![index].textMessage.toString())):
+                                  Container(
+                                    margin:  EdgeInsets.only(
+                                      top: size.height * 0.01,
+                                      left: size.width * 0.03,
+                                      bottom: size.height * 0.01,
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: size.width * 0.06, vertical: size.height * 0.03),
+                                    width: size.width * 0.75,
+                                    decoration: BoxDecoration(
+                                      color: isMe ? greyColor.withOpacity(0.1) : mainColor.withOpacity(0.3),
+                                      borderRadius: isMe
+                                          ? BorderRadius.only(
+                                        topLeft: Radius.circular(size.width * 0.1),
+                                        topRight: Radius.circular(size.width * 0.02),
+                                        bottomLeft: Radius.circular(size.width * 0.02),
+                                        bottomRight: Radius.circular(size.width * 0.1),
+                                      )
+                                          : BorderRadius.only(
+                                        topRight: Radius.circular(size.width * 0.1),
+                                        topLeft: Radius.circular(size.width * 0.02),
+                                        bottomRight: Radius.circular(size.width * 0.02),
+                                        bottomLeft: Radius.circular(size.width * 0.1),
+                                      ),
+                                    ),
+                                    child:Column(
+                                      children: [
+                                        Text( snapshot.data![index].textMessage.toString()),
+                                        Text( snapshot.data![index].valueCost.toString()),
+                                      ],
+                                    ) ,
+                                  );//invoice
                             },
-                          );
+                          ),
+                             );
                           },
                         ),
 
@@ -235,7 +307,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 // widget.orderModel.isstart
               Navigator.push(context,
                   MaterialPageRoute(
-                      builder: (context)=>InvoiceImage(),
+                      builder: (context)=> InvoiceImage(
+                        orderModel: widget.orderModel,),
                       fullscreenDialog: true)
               );
               },

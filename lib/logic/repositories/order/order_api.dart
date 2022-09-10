@@ -1,5 +1,7 @@
 
 
+import 'dart:io';
+
 import 'package:raselne/data_layer/model/messages_model.dart';
 import 'package:raselne/data_layer/model/orderModel.dart';
 import 'package:raselne/data_layer/model/user_model.dart';
@@ -45,7 +47,7 @@ class order_api extends OrderRepository {
   }
 
   @override
-  Future<void> approve_order_or_not(String idOrder, bool isopen) {
+  Future<void> approve_order_or_not(OrderModel orderModel, bool isopen) {
     // TODO: implement approve_order_or_not
     throw UnimplementedError();
   }
@@ -72,5 +74,13 @@ class order_api extends OrderRepository {
   Future<void> sendMessage(MessageText message, String id_order)async {
     // TODO: implement sendMessage
   }
+
+  @override
+  Future<void> addInvoice(File? fileimageinvoice,String senderId, MessageText message, String id_order) {
+    // TODO: implement addInvoice
+    throw UnimplementedError();
+  }
+
+
 
 }

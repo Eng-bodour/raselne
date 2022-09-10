@@ -22,19 +22,20 @@ bool isdone_recive=false;//هل تم الاستلام
 bool isopen=false;//هل الطلب مازال مفتوح او متاح للمندوبين
 bool ispause=false;//ألطلب مفتوح ولكن قيد التفاوض مع المندوب
 bool isapprove=false;
-  String detailAddress='';
+String detailAddress='';
 String detailorder='';
 String distance_me_recive='';
 String distance_recive_deilvery='';
 late String from_user='';
 late String? captain_user='';
 late LatLng fromlocation;
-late String Addressfromlocation='';
+late String Addressdfromlocation='';
 late LatLng toLocation=LatLng(30,20);
 late String AddresstoLocation='';
 String price_deilvery='';
 String price_deilvery_captain='';//السعر الذي قام بوضعه المندوب
 double total=0;
+String cost_purchases='';
 String? DateTimeorder=null;
 bool is_arrive=false;//
 List<DetailOrder> detailorderList=[];//
@@ -71,7 +72,9 @@ Map<String, dynamic> toSnapchot() => {
   // "content_order": content_order,
   "state":state,
   "from_user": from_user,
-  "fromlocation":GeoPoint(fromlocation.latitude,fromlocation.longitude) ,//fromlocation,
+  "fromlocation":GeoPoint(
+      fromlocation.latitude,
+      fromlocation.longitude) ,//fromlocation,
   "is_arrive": is_arrive,
   "isdone_recive": isdone_recive,
   "isdone_deilvery": isdone_deilvery,
