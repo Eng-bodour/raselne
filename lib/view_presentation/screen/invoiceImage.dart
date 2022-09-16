@@ -39,7 +39,7 @@ class _InvoiceImageState extends State<InvoiceImage> {
         elevation: 0,
       ),
       body: ModalProgressHUD(
-        inAsyncCall: Provider.of<order_vm>(context,listen: true).isloading,
+        inAsyncCall: Provider.of<order_vm>(context).isloading,
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: Padding(

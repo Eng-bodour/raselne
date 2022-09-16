@@ -11,6 +11,7 @@ import '../../../logic/controller/order_vm.dart';
 import '../../widget/text_utilis.dart';
 import '../../widget/widget_location_map.dart';
 import '../invoiceImage.dart';
+import 'invoicechat.dart';
 
 class ChatScreen extends StatefulWidget {
   // ignore: use_key_in_widget_constructors
@@ -220,9 +221,8 @@ class _ChatScreenState extends State<ChatScreen> {
                           //to reverse message
                             reverse: true,
                             padding: EdgeInsets.only(top: size.height * 0.02),
-                            itemCount:snapshot.data?.length,
+                            itemCount:snapshot.data!.length,
                             itemBuilder: (BuildContext context, int index) {
-
                                 // final MessageText message = messages[index];
                                 bool isMe = snapshot.data![index].senderId ==user.uid;
                                 return
@@ -260,37 +260,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                       ),
                                       child: Image.network(
                                           snapshot.data![index].textMessage.toString())):
-                                  Container(
-                                    margin:  EdgeInsets.only(
-                                      top: size.height * 0.01,
-                                      left: size.width * 0.03,
-                                      bottom: size.height * 0.01,
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: size.width * 0.06, vertical: size.height * 0.03),
-                                    width: size.width * 0.75,
-                                    decoration: BoxDecoration(
-                                      color: isMe ? greyColor.withOpacity(0.1) : mainColor.withOpacity(0.3),
-                                      borderRadius: isMe
-                                          ? BorderRadius.only(
-                                        topLeft: Radius.circular(size.width * 0.1),
-                                        topRight: Radius.circular(size.width * 0.02),
-                                        bottomLeft: Radius.circular(size.width * 0.02),
-                                        bottomRight: Radius.circular(size.width * 0.1),
-                                      )
-                                          : BorderRadius.only(
-                                        topRight: Radius.circular(size.width * 0.1),
-                                        topLeft: Radius.circular(size.width * 0.02),
-                                        bottomRight: Radius.circular(size.width * 0.02),
-                                        bottomLeft: Radius.circular(size.width * 0.1),
-                                      ),
-                                    ),
-                                    child:Column(
-                                      children: [
-                                        Text( snapshot.data![index].textMessage.toString()),
-                                        Text( snapshot.data![index].valueCost.toString()),
-                                      ],
-                                    ) ,
+                                  invoice_chat(
+                                    size:size ,
+                                    messageText:   snapshot.data![index],
                                   );//invoice
                             },
                           ),

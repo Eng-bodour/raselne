@@ -270,7 +270,9 @@ else  await FirebaseServices("orders").ref
        MessageText(senderId: orderModel.from_user, type_message: 'map',
        textMessage:orderModel.detailAddress,
        timeMessage: DateTime.now().toString(),
-       location:GeoPoint( orderModel.toLocation.latitude, orderModel.toLocation.longitude)
+       location:GeoPoint(
+           orderModel.toLocation.latitude,
+           orderModel.toLocation.longitude)
    );
     await
         FirebaseServices('orders').ref.doc(orderModel.id_order)
@@ -385,6 +387,7 @@ else  await FirebaseServices("orders").ref
       await FirebaseServices('orders').ref.doc(id_order).collection('chat').doc()
           .set(messageText.toSnapchot());
     }
+
    message.senderId=senderId;
    message.timeMessage=DateTime.now().toString();
    await FirebaseServices('orders').ref.doc(id_order).collection('chat').doc()

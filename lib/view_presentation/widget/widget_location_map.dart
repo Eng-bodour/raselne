@@ -25,11 +25,14 @@ class _mapLocationMessageState extends State<mapLocationMessage> {
 
   Uint8List? imageBytes;
   @override
-  void initState() async {
+  void initState()   {
     // TODO: implement initState
-    await takeSnapShot();
-    super.initState();
-  }
+    //
+    // WidgetsBinding.instance.addPostFrameCallback((_)async{
+    //   await takeSnapShot();
+    // });
+      super.initState();
+    }
   Future<void> takeSnapShot() async {
     GoogleMap(
         initialCameraPosition: CameraPosition(
@@ -38,6 +41,7 @@ class _mapLocationMessageState extends State<mapLocationMessage> {
         zoom: 14,
       ),
       onMapCreated: (controller) async {
+          print('inside on map ');
         final uin8list = await controller.takeSnapshot(); // its our screenshot
         imageBytes=uin8list;
         // For examle, we can convert this uin8list to base64 and send
@@ -86,10 +90,13 @@ class _mapLocationMessageState extends State<mapLocationMessage> {
                 height: widget.size.height * 0.01,
               ),
               Container(
-                 //height: widget.size.height * 0.15,
+                 height:  widget.size.height * 0.15,
                  color: mainColor.withOpacity(0.2),
                  // child: Image.memory(
-                 //   imageBytes!,height: widget.size.height * 0.15 ,)
+                 //   imageBytes!,
+                 //   fit: BoxFit.fill,
+                 //   width: 10,
+                 //   height: widget.size.height * 0.15 ,)
               ),
               SizedBox(
                 height: widget.size.height * 0.01,
@@ -130,7 +137,7 @@ class _mapLocationMessageState extends State<mapLocationMessage> {
                         ],
                       ),
                       Text(
-                       widget.message.textMessage.toString(),
+                          widget.message.textMessage.toString(),
                         style: TextStyle(
                             fontSize: widget.size.width * 0.034, color: mainColor),
                       ),

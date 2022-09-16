@@ -32,8 +32,8 @@ late LatLng fromlocation;
 late String Addressdfromlocation='';
 late LatLng toLocation=LatLng(30,20);
 late String AddresstoLocation='';
-String price_deilvery='';
-String price_deilvery_captain='';//السعر الذي قام بوضعه المندوب
+String price_deilvery='0';
+String price_deilvery_captain='0';//السعر الذي قام بوضعه المندوب
 double total=0;
 String cost_purchases='';
 String? DateTimeorder=null;

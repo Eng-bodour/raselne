@@ -33,7 +33,6 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
    static late final LatLng  location_init;
    Completer<GoogleMapController> _controller=Completer();
    Set<Marker> _markers={
-
    };
    static late final CameraPosition _inialCameraPosition = CameraPosition(
        target:LatLng(33.55,36.28),// widget.order.toLocation,
@@ -42,7 +41,11 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
    LatLng currentLocation=_inialCameraPosition.target;
 
    BitmapDescriptor? _locationIcon;
+@override void dispose() {
+    // TODO: implement dispose
 
+    super.dispose();
+  }
    @override void initState() {
       // TODO: implement initState
      // location_init=widget.order.fromlocation;
