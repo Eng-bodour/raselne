@@ -121,32 +121,36 @@ class CustomDrawer extends StatelessWidget {
               //   child: const Text('Add category'),
               // ),
 
-              const AddStoreWidget(),
+              Provider.of<AuthProvider_vm>(context,
+                  listen: false).currentuser.type=='captain'?
+              const AddStoreWidget():Container(),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
-              const AddCategoryWidget(),
+              Provider.of<AuthProvider_vm>(context,
+                  listen: false).currentuser.type=='store'?
+              const AddCategoryWidget():Container(),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
-              const chatWidget(),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.03,
-              ),
+              // const chatWidget(),
+              // SizedBox(
+              //   height: MediaQuery.of(context).size.height * 0.03,
+              // ),
               const Driver(),
               TextButton(
                   onPressed: () {
                     Get.to(const HomeDriverScreen());
                   },
                   child: const Text('home driver')),
-              TextButton(
-                  onPressed: () {
-                    Get.to( OrdersDriverScreen());
-                  },
-                  child: const Text('ordersDrivers')),
-              TextButton(
-                  onPressed: () {},
-                  child: const Text('show Dialoge for wait accept captain '))
+              // TextButton(
+              //     onPressed: () {
+              //       Get.to( OrdersDriverScreen());
+              //     },
+              //     child: const Text('ordersDrivers')),
+              // TextButton(
+              //     onPressed: () {},
+              //     child: const Text('show Dialoge for wait accept captain '))
 
               // TextButton(
               //     onPressed: () {

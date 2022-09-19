@@ -195,9 +195,8 @@ class _AddCategoryState extends State<AddCategory> {
                             // print(GetServices.GetTypes('types'));
 
                             // getController.getStore('types');
-
                             if (fromKey.currentState!.validate()) {
-                              categoryStoreProvider.addCategory(
+                                categoryStoreProvider.addCategory(
                                 nameCollection: 'number1',
                                 nameCategory: nameCategoryController.text,
                                 description: descriptionController.text,

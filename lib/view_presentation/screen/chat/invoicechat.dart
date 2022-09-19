@@ -27,7 +27,7 @@ class invoice_chat extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
                 child: Text(
-                  'تم اصدار الفاتورة بواسطة معاذ محمد سعد',
+                  'تم اصدار الفاتورة بواسطة  ${messageText.nameSenderInvoice.toString()}',
                   style: TextStyle(
                       fontSize: size.width * 0.03, color: Colors.black45),
                 ),

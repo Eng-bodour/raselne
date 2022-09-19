@@ -319,7 +319,8 @@ class _AddStoreState extends State<AddStore> {
                                   typeStore: selectedTypes.toString(),
                                   mobileStore: mobileController.text,
                                   // location: null,
-                                      offer_value: '', rating: '1',
+                                      offer_value: '',
+                                      rating: '1',
                                   //itemstore: [],
                                   IdStore: '',
                                   descStore: '');

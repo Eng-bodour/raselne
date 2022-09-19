@@ -259,25 +259,38 @@ class order_firebase extends OrderRepository{
       'isopen':isopen,
       'isapprove':false,
     });
-else  await FirebaseServices("orders").ref
+else {
+      MessageText message=
+      MessageText(senderId: orderModel.from_user, type_message: 'map',
+          textMessage:' مكان الاستلام '+orderModel.detailAddress,
+          timeMessage: DateTime.now().toString(),
+          location:GeoPoint(
+              orderModel.fromlocation.latitude,
+              orderModel.fromlocation.longitude)
+      );
+      message=
+          MessageText(senderId: orderModel.from_user, type_message: 'map',
+              textMessage:' مكان التسليم '+orderModel.detailAddress,
+              timeMessage: DateTime.now().toString(),
+              location:GeoPoint(
+                  orderModel.toLocation.latitude,
+                  orderModel.toLocation.longitude)
+          );
+      await
+      FirebaseServices('orders').ref.doc(orderModel.id_order)
+          .collection('chat')
+          .add(message.toSnapchot());
+
+  await FirebaseServices("orders").ref
         .doc(orderModel.id_order)
         .update({
       // 'isopen':false,//ليتم ايقاف ظهور الطلب عند باقي المندوبين لانه تم قبوله
-      'isopen':isopen,
+      'isopen':true,
       'isapprove':true,
-    });
-      MessageText message=
-       MessageText(senderId: orderModel.from_user, type_message: 'map',
-       textMessage:orderModel.detailAddress,
-       timeMessage: DateTime.now().toString(),
-       location:GeoPoint(
-           orderModel.toLocation.latitude,
-           orderModel.toLocation.longitude)
-   );
-    await
-        FirebaseServices('orders').ref.doc(orderModel.id_order)
-        .collection('chat').doc()
-        .set(message.toSnapchot());
+      'ispause': true,
+
+  });
+}
     /////////////////////////////////////////////////
     // message=
     //     MessageText(senderId: orderModel.from_user, type_message: 'map',
@@ -310,8 +323,9 @@ else  await FirebaseServices("orders").ref
         .ref.doc(id_order).collection('chat')
         .orderBy('timeMessage' )
         .snapshots().map((event) =>
-      event.docs.map((element) {
-       return MessageText.fromSnapshot( element.data());
+         event.docs.map((element) {
+       return
+         MessageText.fromSnapshot( element.data());
       }).toList());
 
     // })
@@ -331,45 +345,49 @@ else  await FirebaseServices("orders").ref
   Future<String> uploadImageToFirebase(File imageFile) async {
     String nameimage=basename(imageFile.path);
     // Create the file metadata
-    final metadata = SettableMetadata(contentType: "image/jpeg");
+    final metadata = SettableMetadata(
+        contentType: "image/jpg");
 
-    var storageRef=FirebaseStorage.instance.ref();
-    //     .ref('images/');
+    var storageRef=FirebaseStorage.instance.
+    ref('images/${nameimage}');
 
-    // await refstorge.putData(fileimageinvoice);
-
-    // String urlimage=await refstorge.getDownloadURL();
+    String urlimage='';
+    final uploadTask = await storageRef.putFile(imageFile,metadata);
+    if(uploadTask.state==TaskState.success)
+      urlimage =await storageRef.getDownloadURL();
 
     // Upload file and metadata to the path 'images/mountains.jpg'
     // Uint8List data=fileimageinvoice.
-    final uploadTask = storageRef
-        .child("images/${nameimage}")
-        .putFile(imageFile,metadata);
+
+    // = storageRef
+    //     .child("images/${nameimage}")
+    //     .putFile(imageFile,metadata);
     // Listen for state changes, errors, and completion of the upload.
-    String urlimage='';
-    uploadTask.snapshotEvents.listen((TaskSnapshot taskSnapshot) async {
-      switch (taskSnapshot.state) {
-        case TaskState.running:
-          final progress =
-              100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
-          print("Upload is $progress% complete.");
-          break;
-        case TaskState.paused:
-          print("Upload is paused.");
-          break;
-        case TaskState.canceled:
-          print("Upload was canceled");
-          break;
-        case TaskState.error:
-        // Handle unsuccessful uploads
-          break;
-        case TaskState.success:
-        // Handle successful uploads on complete
-        // ...
-          urlimage=await storageRef.getDownloadURL();
-          break;
-      }
-    });
+    // String urlimage='';
+    //
+    // uploadTask.snapshotEvents.listen((TaskSnapshot taskSnapshot) async {
+    //   switch (taskSnapshot.state) {
+    //     case TaskState.running:
+    //       final progress =
+    //           100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
+    //       print("Upload is $progress% complete.");
+    //       break;
+    //     case TaskState.paused:
+    //       print("Upload is paused.");
+    //       break;
+    //     case TaskState.canceled:
+    //       print("Upload was canceled");
+    //       break;
+    //     case TaskState.error:
+    //     // Handle unsuccessful uploads
+    //       break;
+    //     case TaskState.success:
+    //     // Handle successful uploads on complete
+    //     // ...
+    //       urlimage=await storageRef.getDownloadURL();
+    //       break;
+    //   }
+    // });
     return urlimage;
   }
   @override
@@ -384,13 +402,15 @@ else  await FirebaseServices("orders").ref
       messageText.textMessage=imagurl.toString();
       messageText.type_message='image';
       messageText.timeMessage=DateTime.now().toString();
-      await FirebaseServices('orders').ref.doc(id_order).collection('chat').doc()
-          .set(messageText.toSnapchot());
+      await FirebaseServices('orders').ref.doc(id_order)
+          .collection('chat')
+          .add(messageText.toSnapchot());
     }
 
    message.senderId=senderId;
    message.timeMessage=DateTime.now().toString();
-   await FirebaseServices('orders').ref.doc(id_order).collection('chat').doc()
+   await FirebaseServices('orders').ref.doc(id_order)
+       .collection('chat').doc()
        .set(message.toSnapchot());
   }
 

@@ -160,8 +160,9 @@ class buildCardOrders extends StatelessWidget {
               ElevatedButton(
                   onPressed: () {
                     if(orderModel.isopen)
-                      Navigator.of(context).push(MaterialPageRoute(builder:
-                          (context)=>
+                      Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context)=>
                               ShowOffers(orderModel: orderModel)
                       )) ;
 

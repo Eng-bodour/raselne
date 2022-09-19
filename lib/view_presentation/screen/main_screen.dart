@@ -41,7 +41,7 @@ class _MainScreenState extends State<MainScreen> {
               Colors.white, //Get.isDarkMode ? darkGreyClr : Colors.white,
           currentIndex: mainProvider.get(),
           type: BottomNavigationBarType.fixed,
-          items: const [
+          items:  [
             BottomNavigationBarItem(
               activeIcon: Icon(Icons.person,
                   color: mainColor //Get.isDarkMode ? pinkClr : mainColor,
@@ -83,7 +83,10 @@ class _MainScreenState extends State<MainScreen> {
                   color: Colors
                       .black //Get.isDarkMode ? Colors.white : Colors.black,
                   ),
-              label: 'المتاجر',
+              label:
+              Provider.of<AuthProvider_vm>(context,
+                  listen: false).currentuser.type=='captain'?
+              'الرئيسية': 'المتاجر',
             ),
           ],
           onTap: (index) {
@@ -92,7 +95,10 @@ class _MainScreenState extends State<MainScreen> {
         ),
         body: IndexedStack(
           index: mainProvider.get(),
-          children: mainProvider.tabs,
+          children: Provider.of<AuthProvider_vm>(context,
+              listen: false).currentuser.type=='captain'?
+          mainProvider.tabscaptain :
+          mainProvider.tabs,
         ),
       ),
       //  Obx(

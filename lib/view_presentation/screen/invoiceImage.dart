@@ -6,6 +6,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:raselne/data_layer/model/messages_model.dart';
 import 'package:raselne/data_layer/model/orderModel.dart';
+import 'package:raselne/logic/controller/auth_controller.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
@@ -21,9 +22,11 @@ class InvoiceImage extends StatefulWidget {
 }
 
 class _InvoiceImageState extends State<InvoiceImage> {
-  late File file;
+ late File? file;
   TextEditingController enterCostProduct = TextEditingController();
-  @override void initState() {
+  @override
+  void initState() {
+    file=null;
     // TODO: implement initState
     enterCostProduct.text='0';
     super.initState();
@@ -146,10 +149,18 @@ class _InvoiceImageState extends State<InvoiceImage> {
                         Container(
                           height: size.height * 0.15,
                           width: size.width * 0.35,
-                          decoration: const BoxDecoration(
+                          decoration:  BoxDecoration(
                               color: Colors.amber,
-                              image: DecorationImage(
-                                  image: AssetImage(''))),
+                              image: 
+                             file!=null?
+                             DecorationImage(
+                                  image: Image.file
+                                    (file!,fit: BoxFit.contain,).image)
+                                 : DecorationImage(
+                                 image: Image.asset(
+                                   'assets/images/user.png',
+                                   fit: BoxFit.contain,).image)
+                          )
                         ),
                         Positioned(
                             child: IconButton(
@@ -167,9 +178,11 @@ class _InvoiceImageState extends State<InvoiceImage> {
 
     // if (permissionStatus.isGranted){
     //Select Image
-               image = await _imagePicker.getImage(source: ImageSource.gallery);
+               image = await _imagePicker.getImage(source: ImageSource.camera);
                file = File(image!.path);
+setState(() {
 
+});
                               },
                             ))
                       ],
@@ -186,6 +199,8 @@ class _InvoiceImageState extends State<InvoiceImage> {
                 senderId: 'senderId', type_message: 'invoice');
             message.textMessage=enterCostProduct.text.toString();
             message.valueCost=widget.orderModel.total.toString();
+            message.nameSenderInvoice=Provider.of<AuthProvider_vm>(context,listen: false)
+                .currentuser.name;
             await   Provider.of<order_vm>(context,listen: false)
             .addInvoice(file, message, widget.orderModel.id_order);
             Navigator.pop(context);

@@ -21,7 +21,7 @@ class card_deilvery extends StatefulWidget {
 
 class _card_deilveryState extends State<card_deilvery> {
 
-
+  TextEditingController valueController=TextEditingController();
   late  Size size;
 
   late UserModel user;
@@ -50,7 +50,7 @@ class _card_deilveryState extends State<card_deilvery> {
     user= Provider.of<AuthProvider_vm>(context,listen: true).currentuser;
     size= MediaQuery.of(context).size;
     return  Container(
-      height: size.height * 0.4,
+      height: size.height * 0.45,
       decoration: const BoxDecoration(color: Colors.white),
       child: Padding(
         padding: EdgeInsets.symmetric(
@@ -176,21 +176,36 @@ class _card_deilveryState extends State<card_deilvery> {
                 children: [
                   InkWell(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(
-                              builder: (context)=>
-                                  bottomsheet_offer( order: widget.order,)));
+                      // Provider.of<order_vm>(context,listen: false).setvaluePriceCaptain(valueController.text);
+                      widget.order.price_deilvery_captain=valueController.text;
+                       showModalBottomSheet<dynamic>(
+                         backgroundColor: Colors.grey.shade200,
+                         //  backgroundColor: Colors.transparent,
+                         elevation: 0,
+                         shape: const RoundedRectangleBorder(
+                             borderRadius: BorderRadius.only(
+                               topLeft: Radius.circular(20),
+                               topRight: Radius.circular(20),
+                             )),
+                         context: context,
+                         isScrollControlled: true,
+                         builder: ((context) =>
+                             bottomsheet_offer( order: widget.order,)),
+                         // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
+                       );
+
                     },
                     child: Container(
                       width: size.width * 0.3,
-                      height: size.height * 0.03,
+                      height: size.height * 0.05,
                       decoration: BoxDecoration(
                           color: Colors.yellow[50],
-                          borderRadius: BorderRadius.circular(size.width * 0.1)),
+                          borderRadius:
+                          BorderRadius.circular(size.width * 0.1)),
                       child: Center(
                         child: TextUtils(
                           color: Colors.black54,
-                          text: 'عرض آخر',
+                          text: 'قدم',
                           fontSize: size.width * 0.03,
                           fontWeight: FontWeight.bold,
                           underLine: TextDecoration.none,
@@ -201,55 +216,86 @@ class _card_deilveryState extends State<card_deilvery> {
                   SizedBox(
                     width: size.width * 0.05,
                   ),
-                  InkWell(
-                    onTap: () {
-                   // Navigator.push(context,
-                   //     MaterialPageRoute(
-                   //         builder: (context)=>
-                   //             bottomsheet_offer( order: widget.order,)));
-                   showModalBottomSheet<dynamic>(
-                     backgroundColor: Colors.grey.shade200,
-                     //  backgroundColor: Colors.transparent,
-                     elevation: 0,
-                     shape: const RoundedRectangleBorder(
-                         borderRadius: BorderRadius.only(
-                           topLeft: Radius.circular(20),
-                           topRight: Radius.circular(20),
-                         )),
-                     context: context,
-                     isScrollControlled: true,
-                     builder: ((context) =>
-                         bottomsheet_offer( order: widget.order,)),
-                     // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
-                   );
-                    },
-                    child: Container(
-                      width: size.width * 0.4,
-                      height: size.height * 0.05,
-                      decoration: BoxDecoration(
-                          color: Colors.yellow,
-                          borderRadius: BorderRadius.circular(size.width * 0.1)),
-                      child: Center(
-                        child: TextUtils(
-                          color: Colors.black,
-                          text: 'قدم عرض 20 ر.س',
-                          fontSize: size.width * 0.03,
-                          fontWeight: FontWeight.bold,
-                          underLine: TextDecoration.none,
+                  Expanded(
+                    child: TextField(
+                      controller: valueController,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        hintText: 'عرض السعر',
+                        hintStyle: const TextStyle(
+                          color: Colors.black45,
+                          fontSize: f16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: mainColor),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: mainColor),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: mainColor),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: mainColor),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
                   ),
+                  // InkWell(
+                  //   onTap: () {
+                  //  // Navigator.push(context,
+                  //  //     MaterialPageRoute(
+                  //  //         builder: (context)=>
+                  //  //             bottomsheet_offer( order: widget.order,)));
+                  //  showModalBottomSheet<dynamic>(
+                  //    backgroundColor: Colors.grey.shade200,
+                  //    //  backgroundColor: Colors.transparent,
+                  //    elevation: 0,
+                  //    shape: const RoundedRectangleBorder(
+                  //        borderRadius: BorderRadius.only(
+                  //          topLeft: Radius.circular(20),
+                  //          topRight: Radius.circular(20),
+                  //        )),
+                  //    context: context,
+                  //    isScrollControlled: true,
+                  //    builder: ((context) =>
+                  //        bottomsheet_offer( order: widget.order,)),
+                  //    // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
+                  //  );
+                  //   },
+                  //   child: Container(
+                  //     width: size.width * 0.4,
+                  //     height: size.height * 0.05,
+                  //     decoration: BoxDecoration(
+                  //         color: Colors.yellow,
+                  //         borderRadius: BorderRadius.circular(size.width * 0.1)),
+                  //     child: Center(
+                  //       child: TextUtils(
+                  //         color: Colors.black,
+                  //         text: 'قدم عرض 20 ر.س',
+                  //         fontSize: size.width * 0.03,
+                  //         fontWeight: FontWeight.bold,
+                  //         underLine: TextDecoration.none,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
-            TextUtils(
-              color: Colors.black26,
-              text: 'من 20 رس إلى 22 رس',
-              fontSize: size.width * 0.03,
-              fontWeight: FontWeight.bold,
-              underLine: TextDecoration.none,
-            ),
+            // TextUtils(
+            //   color: Colors.black26,
+            //   text: 'من 20 رس إلى 22 رس',
+            //   fontSize: size.width * 0.03,
+            //   fontWeight: FontWeight.bold,
+            //   underLine: TextDecoration.none,
+            // ),
           ],
         ),
       ),

@@ -48,10 +48,11 @@ class waiting_aprrove_order extends StatelessWidget {
                     child: ListView(
                     children: [
                       Center(child: Text('has data')),
-                     snapshot.data!.isapprove==true?
+                     snapshot.data!.isapprove==true&&
+                     snapshot.data!.ispause==true?
                       Center(child:
                       RaisedButton(
-                        child: Text('press'),
+                        child: Text('تم قبولك اضغط هنا..'),
                 onPressed: (){
 
                 Navigator.push(context,
@@ -60,7 +61,10 @@ class waiting_aprrove_order extends StatelessWidget {
               },
               ),
                       )
-                     :Center(child: Text('تم رفض العرض')),
+                     : snapshot.data!.isapprove==false&&
+                         snapshot.data!.ispause==false?
+                     Center(child: Text('تم رفض العرض')):
+                     Center(child: Text('loading..')),
                     ],
                 ),
                   );

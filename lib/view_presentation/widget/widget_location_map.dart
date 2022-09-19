@@ -92,6 +92,9 @@ class _mapLocationMessageState extends State<mapLocationMessage> {
               Container(
                  height:  widget.size.height * 0.15,
                  color: mainColor.withOpacity(0.2),
+                 child:Image.asset('assets/images/location.png'
+                 ,fit: BoxFit.contain,
+                 ),
                  // child: Image.memory(
                  //   imageBytes!,
                  //   fit: BoxFit.fill,

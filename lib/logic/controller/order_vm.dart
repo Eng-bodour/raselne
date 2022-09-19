@@ -38,6 +38,10 @@ setvalue(UserModel val){
   print(list_itemorder.length);
   notifyListeners();
  }
+ void setvaluePriceCaptain(String val) {
+  order.price_deilvery_captain=val;
+  notifyListeners();
+ }
 Stream<List<MessageText>> getchat(String id_order )async*{
 
   yield* orderRepository.getChatOrder(id_order);
@@ -143,10 +147,10 @@ Future<List<OrderModel>> get_myorder()async{
    isloading=false;
   notifyListeners();
  }
-Future<void> approve_order_or_not( OrderModel orderModel, bool isopen)async {
+Future<void> approve_order_or_not( OrderModel? orderModel, bool isopen)async {
   isloading=true;
   notifyListeners();
-  await orderRepository.approve_order_or_not(orderModel, isopen);
+  await orderRepository.approve_order_or_not(orderModel!, isopen);
   isloading=false;
   notifyListeners();
 }

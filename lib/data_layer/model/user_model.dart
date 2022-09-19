@@ -13,6 +13,7 @@ class UserModel {
   String name;
   String email;
   String mobile;
+ late double rataing=0.0;
   late String type;//مندوب-زبون
  late String dateCreated='2022-1-8';
  late String? num_car='';

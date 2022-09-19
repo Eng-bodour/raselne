@@ -364,7 +364,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             ElevatedButton(
-                              onPressed: () async{
+                              onPressed: () async {
                                print('sddsdsdvfvvvvbbb');
                                await Provider.of<order_vm>(context,listen: false)
                                     .update_order(
@@ -376,7 +376,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                                 ///////////////////////////////////////////
                            Navigator.push(context,
                                MaterialPageRoute(builder: (context)=>
-                                   waiting_aprrove_order(orderModel: widget.order,)));
+                               waiting_aprrove_order(orderModel: widget.order,)));
                               },
                               style: ElevatedButton.styleFrom(
                                 elevation: 0,
@@ -390,40 +390,40 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                               ),
                               child: TextUtils(
                                 color: mainColor,
-                                text:widget.order.price_deilvery+' ر.س ',// '20ر.س',
+                                text:widget.order.price_deilvery_captain+' ر.س ',// '20ر.س',
                                 fontSize: size.width * 0.05,
                                 fontWeight: FontWeight.bold,
                                 underLine: TextDecoration.none,
                               ),
                             ),
-                            SizedBox(width: size.width * 0.02),
-                            ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  elevation: 0,
-                                  primary: greyColor.withOpacity(0.5),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                    BorderRadius.circular(size.width * 0.03),
-                                  ), //Get.isDarkMode ? pinkClr : mainColor,
-                                  minimumSize:
-                                  Size(size.height * 0.1, size.width * 0.1),
-                                ),
-                                child: Row(
-                                  children: [
-                                    TextUtils(
-                                      color: Colors.white,
-                                      text: 'غير',
-                                      fontSize: size.width * 0.05,
-                                      fontWeight: FontWeight.bold,
-                                      underLine: TextDecoration.none,
-                                    ),
-                                    const Icon(
-                                      Icons.arrow_forward_ios_rounded,
-                                      color: Colors.white,
-                                    ),
-                                  ],
-                                )),
+                            // SizedBox(width: size.width * 0.02),
+                            // ElevatedButton(
+                            //     onPressed: () {},
+                            //     style: ElevatedButton.styleFrom(
+                            //       elevation: 0,
+                            //       primary: greyColor.withOpacity(0.5),
+                            //       shape: RoundedRectangleBorder(
+                            //         borderRadius:
+                            //         BorderRadius.circular(size.width * 0.03),
+                            //       ), //Get.isDarkMode ? pinkClr : mainColor,
+                            //       minimumSize:
+                            //       Size(size.height * 0.1, size.width * 0.1),
+                            //     ),
+                            //     child: Row(
+                            //       children: [
+                            //         TextUtils(
+                            //           color: Colors.white,
+                            //           text: 'غير',
+                            //           fontSize: size.width * 0.05,
+                            //           fontWeight: FontWeight.bold,
+                            //           underLine: TextDecoration.none,
+                            //         ),
+                            //         const Icon(
+                            //           Icons.arrow_forward_ios_rounded,
+                            //           color: Colors.white,
+                            //         ),
+                            //       ],
+                            //     )),
                           ],
                         ),
                       )

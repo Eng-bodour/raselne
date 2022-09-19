@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
-class DriverRating extends StatelessWidget {
+class DriverRating extends StatefulWidget {
   DriverRating({Key? key}) : super(key: key);
+
+  @override
+  State<DriverRating> createState() => _DriverRatingState();
+}
+
+class _DriverRatingState extends State<DriverRating> {
   final TextEditingController notedriver = TextEditingController();
+  double rate=0;
+  @override void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -41,100 +53,120 @@ class DriverRating extends StatelessWidget {
                     padding: EdgeInsets.symmetric(
                         horizontal: size.width * 0.12,
                         vertical: size.height * 0.03),
-                    child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          InkWell(
-                            onTap: () {},
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'assets/rate/5.png',
-                                  fit: BoxFit.cover,
-                                ),
-                                SizedBox(
-                                  height: size.height * 0.01,
-                                ),
-                                const Text(
-                                  '5',
-                                  style: TextStyle(color: Colors.black),
-                                )
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: size.width * 0.04),
-                          InkWell(
-                            onTap: () {},
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'assets/rate/4.png',
-                                ),
-                                SizedBox(
-                                  height: size.height * 0.01,
-                                ),
-                                const Text(
-                                  '4',
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: size.width * 0.04),
-                          InkWell(
-                            onTap: () {},
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'assets/rate/3.png',
-                                ),
-                                SizedBox(
-                                  height: size.height * 0.01,
-                                ),
-                                const Text(
-                                  '3',
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: size.width * 0.04),
-                          InkWell(
-                            onTap: () {},
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'assets/rate/2.png',
-                                ),
-                                SizedBox(
-                                  height: size.height * 0.01,
-                                ),
-                                const Text(
-                                  '2',
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: size.width * 0.04),
-                          InkWell(
-                            onTap: () {},
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'assets/rate/1.png',
-                                ),
-                                SizedBox(
-                                  height: size.height * 0.01,
-                                ),
-                                const Text(
-                                  '1',
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ],
-                            ),
-                          )
-                        ]),
+                    child:
+                    RatingBar.builder(
+                      initialRating: 1,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: false,
+                      itemCount: 5,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        print(rating);
+                        setState(() {
+                          rate=rating;
+                          print(rate);
+                        });
+                      },
+                    ),
+                    // Row(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       InkWell(
+                    //         onTap: () {},
+                    //         child: Column(
+                    //           children: [
+                    //             Image.asset(
+                    //               'assets/rate/5.png',
+                    //               fit: BoxFit.cover,
+                    //             ),
+                    //             SizedBox(
+                    //               height: size.height * 0.01,
+                    //             ),
+                    //             const Text(
+                    //               '5',
+                    //               style: TextStyle(color: Colors.black),
+                    //             )
+                    //           ],
+                    //         ),
+                    //       ),
+                    //       SizedBox(width: size.width * 0.04),
+                    //       InkWell(
+                    //         onTap: () {},
+                    //         child: Column(
+                    //           children: [
+                    //             Image.asset(
+                    //               'assets/rate/4.png',
+                    //             ),
+                    //             SizedBox(
+                    //               height: size.height * 0.01,
+                    //             ),
+                    //             const Text(
+                    //               '4',
+                    //               style: TextStyle(color: Colors.black),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //       SizedBox(width: size.width * 0.04),
+                    //       InkWell(
+                    //         onTap: () {},
+                    //         child: Column(
+                    //           children: [
+                    //             Image.asset(
+                    //               'assets/rate/3.png',
+                    //             ),
+                    //             SizedBox(
+                    //               height: size.height * 0.01,
+                    //             ),
+                    //             const Text(
+                    //               '3',
+                    //               style: TextStyle(color: Colors.black),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //       SizedBox(width: size.width * 0.04),
+                    //       InkWell(
+                    //         onTap: () {},
+                    //         child: Column(
+                    //           children: [
+                    //             Image.asset(
+                    //               'assets/rate/2.png',
+                    //             ),
+                    //             SizedBox(
+                    //               height: size.height * 0.01,
+                    //             ),
+                    //             const Text(
+                    //               '2',
+                    //               style: TextStyle(color: Colors.black),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //       SizedBox(width: size.width * 0.04),
+                    //       InkWell(
+                    //         onTap: () {},
+                    //         child: Column(
+                    //           children: [
+                    //             Image.asset(
+                    //               'assets/rate/1.png',
+                    //             ),
+                    //             SizedBox(
+                    //               height: size.height * 0.01,
+                    //             ),
+                    //             const Text(
+                    //               '1',
+                    //               style: TextStyle(color: Colors.black),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       )
+                    //     ]),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
@@ -149,7 +181,10 @@ class DriverRating extends StatelessWidget {
                     child: Row(
                       children: [
                         ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+
+
+                            },
                             style: ElevatedButton.styleFrom(
                               elevation: 0,
                               primary: mainColor,

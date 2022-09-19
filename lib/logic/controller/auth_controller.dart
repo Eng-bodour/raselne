@@ -47,7 +47,12 @@ class AuthProvider_vm extends ChangeNotifier {
     print('xxx '+currentuser.uid.toString());
     notifyListeners();
   }
-
+  Future<void> switch_type() async{
+   await userRepository.switch_type(
+       currentuser.uid.toString(),
+       currentuser.type=='user'?'captain':'user');
+    notifyListeners();
+  }
   @override
   void onInit()async {
   print('xxxxx');

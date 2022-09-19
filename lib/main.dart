@@ -46,7 +46,11 @@ void main() async {
 
     ChangeNotifierProvider<MyPageProvider>(
         create: (context) => MyPageProvider()),
-    ChangeNotifierProvider<MainProvider>(create: (context) => MainProvider()),
+    // ChangeNotifierProvider<MainProvider>(create: (context) => MainProvider()),
+    ChangeNotifierProxyProvider<AuthProvider_vm,MainProvider>(
+      create: (_)=> MainProvider(),
+      update: (ctx,value,prev)=>prev!..setvalue(value.currentuser),
+    ),
   ], child:  MyApp()));
 }
 

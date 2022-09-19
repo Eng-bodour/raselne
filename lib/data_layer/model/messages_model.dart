@@ -6,11 +6,12 @@ class MessageText {
   late  String senderId;
   late String? timeMessage; // Would usually be type DateTime or Firebase Timestamp in production apps
   late  String? textMessage;
-  final bool? isLiked;
-  final bool? unread;
+   bool? isLiked;
+   bool? unread;
   GeoPoint? location;
   String type_message;
   String? valueCost;
+  String? nameSenderInvoice;
 
   MessageText({
     this.sender,
@@ -20,6 +21,7 @@ class MessageText {
     this.isLiked,
     this.unread,
     this.location,
+    this.nameSenderInvoice,
     required this.type_message,
   });
 
@@ -31,11 +33,12 @@ class MessageText {
       // valueCost: doc['valueCost']==null?null:doc['valueCost'],
       textMessage: doc['textMessage'],
       type_message: doc['type_message'],
-      isLiked: doc['isLiked']==null?false: doc['isLiked'],
-      unread: doc['unread']==null?false: doc['unread'],
+      // isLiked: doc['isLiked']==null?false: doc['isLiked'],
+      // unread: doc['unread']==null?false: doc['unread'],
+      nameSenderInvoice: doc['nameSenderInvoice']==null?'': doc['nameSenderInvoice'],
 
     );
-    messageText.valueCost=doc['valueCost']==null?null:doc['valueCost'];
+    messageText.valueCost=doc['valueCost']==null?'0':doc['valueCost'];
     return messageText;
   }
 
@@ -47,6 +50,7 @@ class MessageText {
         "textMessage": textMessage,
         "location":location,
         "type_message":type_message,
+        "nameSenderInvoice":nameSenderInvoice,
 
       };
 

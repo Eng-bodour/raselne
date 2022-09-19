@@ -230,5 +230,16 @@ class user_firebase extends UserRepository{
     else return false;
   }
 
+  @override
+  Future<void> switch_type(String id_doc,String type)async {
+    // TODO: implement switch_type
+    await FirebaseFirestore.instance
+        .collection('users').doc(id_doc).set({
+      'type':type
+    });
+
+    // throw UnimplementedError();
+  }
+
 
 }

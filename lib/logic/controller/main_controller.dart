@@ -6,10 +6,23 @@ import 'package:raselne/view_presentation/screen/my_page/mypage_user_screen.dart
 import 'package:raselne/view_presentation/screen/notification_screen.dart';
 import 'package:raselne/view_presentation/screen/orders_screen.dart';
 
+import '../../data_layer/model/user_model.dart';
+import '../../view_presentation/screen_driver/home_driver_screen.dart';
+import '../../view_presentation/screen_driver/orders_driver_screen.dart';
+
 class MainProvider extends ChangeNotifier {
   int currentIndex = 3;
 //  final List<StatelessWidget> tabs = [];
+  UserModel currentuser=UserModel(
+      location: null,name: '',email: '',dateCreated: '',mobile:''
+  ,type: '',uid: '',Id_number: '',num_car: '',num_travel: '',type_car: ''
+  );
+  setvalue(UserModel val){
 
+    currentuser=val;
+    print('current '+currentuser.name.toString());
+    notifyListeners();
+  }
   get() => currentIndex;
   void setCurrentIndex(value) {
     currentIndex = value;
@@ -18,9 +31,15 @@ class MainProvider extends ChangeNotifier {
 
   var tabs = [
     MyPageUserScreen(),
-    const NotificationScreen(),
-    const OrdersScreen(),
+     NotificationScreen(),
+    OrdersScreen(),
     HomeScreen(),
+  ];
+  var tabscaptain = [
+    MyPageUserScreen(),
+    NotificationScreen(),
+    OrdersDriverScreen(),
+    HomeDriverScreen(),
   ];
   var title = [
     "صفحتي",

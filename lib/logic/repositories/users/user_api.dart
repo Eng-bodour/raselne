@@ -52,4 +52,10 @@ class user_api extends UserRepository{
     throw UnimplementedError();
   }
 
+  @override
+  Future<void> switch_type(String id_doc,String type) {
+    // TODO: implement switch_type
+    throw UnimplementedError();
+  }
+
 }

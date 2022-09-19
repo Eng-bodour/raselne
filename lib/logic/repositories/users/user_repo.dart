@@ -13,4 +13,6 @@ abstract class UserRepository{
   Future<String> signOut();
   Future<UserModel> getuser();
   Future<bool> isAuthuser();
+  Future<void> switch_type(String id_doc,String type);
+
 }

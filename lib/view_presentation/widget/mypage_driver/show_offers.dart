@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:raselne/data_layer/model/user_model.dart';
@@ -29,7 +31,8 @@ class ShowOffers extends StatelessWidget {
                 padding: EdgeInsets.symmetric(
                     horizontal: size.width * 0.03, vertical: size.height * 0.27),
                 child: StreamBuilder(
-                  stream: Provider.of<order_vm>(context,listen: false).get_offer(orderModel.id_order),
+                  stream: Provider.of<order_vm>(context,listen: false)
+                      .get_offer(orderModel.id_order),
                   builder: (BuildContext context,
                       AsyncSnapshot<OrderModel> snapshot_order) {
                     if (snapshot_order.hasError) {
@@ -56,16 +59,16 @@ class ShowOffers extends StatelessWidget {
                            snapshot_order.data!.ispause==true?
                            Column(
                             children: [
-                              Text(
-                                'سعر التوصيل المتوقع ${snapshot_order.data!.price_deilvery} ر.س',
-                                style: TextStyle(color: Colors.white),
-                              ),
+                              // Text(
+                              //   'سعر التوصيل المتوقع ${snapshot_order.data!.price_deilvery_captain} ر.س',
+                              //   style: TextStyle(color: Colors.white),
+                              // ),
                               Container(
                                 height: size.height * 0.35,
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius:
-                                        BorderRadius.circular(size.width * 0.07)),
+                                        BorderRadius.circular(size.width * 0.09)),
                                 child: Column(
                                   children: [
                                     Container(
@@ -169,7 +172,7 @@ class ShowOffers extends StatelessWidget {
                                                     width: size.width * 0.01,
                                                   ),
                                                   TextUtils(
-                                                      fontSize: size.width * 0.04,
+                                                      fontSize: size.width * 0.05,
                                                       fontWeight: FontWeight.bold,
                                                       text: snapshot_order.data!
                                                           .distance_recive_deilvery, // '5.7 كم ', //'${Firebase.name}',
@@ -236,6 +239,7 @@ class ShowOffers extends StatelessWidget {
                                                       snapshot_order
                                                           .data!,
                                                       true);
+                                              Navigator.pop(context);//
                                             },
                                             style: ElevatedButton.styleFrom(
                                               elevation: 0,
@@ -265,18 +269,20 @@ class ShowOffers extends StatelessWidget {
                                                         .approve_order_or_not(
                                                         snapshot_order.data!,
                                                         false);
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                    builder: (context) =>
-                                                    ChatScreen(orderModel: orderModel,)));
+                                               // Navigator.pop(context);
+                                                   Get.to(  ChatScreen(orderModel: orderModel,));
+                                                    // Navigator.push(
+                                                    // context,
+                                                    // MaterialPageRoute(
+                                                    // builder: (context) =>
+                                                    // ChatScreen(orderModel: orderModel,)));
                                               },
                                               style: ElevatedButton.styleFrom(
                                                 elevation: 0,
                                                 primary: mainColor,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
-                                                      BorderRadius.circular(
+                                                  BorderRadius.circular(
                                                           size.width * 0.05),
                                                 ), //Get.isDarkMode ? pinkClr : mainColor,
                                                 minimumSize: Size(

@@ -22,6 +22,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  TextEditingController messagecontrol=TextEditingController();
   String textmessage='';
   late UserModel user;
 
@@ -119,6 +120,7 @@ class _ChatScreenState extends State<ChatScreen> {
           Expanded(
             child: TextField(
               cursorColor: mainColor,
+              controller: messagecontrol,
               textCapitalization: TextCapitalization.sentences,
               onChanged: (value) {textmessage=value;},
               decoration: const InputDecoration.collapsed(
@@ -130,16 +132,20 @@ class _ChatScreenState extends State<ChatScreen> {
             icon: const Icon(Icons.send),
             iconSize: 25.0,
             color: mainColor,
-            onPressed: ()async {
+            onPressed: ()
+            async {
+              messagecontrol.text='';
            await   Provider.of<order_vm>(context,listen: false)
                   .sendMessage(
                   MessageText(
                   senderId: user.uid.toString(),
-                      textMessage:textmessage
-                  ,timeMessage: DateTime.now().toString(), type_message: 'text'
+                  textMessage:textmessage,
+                  timeMessage: DateTime.now().toString(),
+                  type_message: 'text'
                   ), widget.orderModel.id_order);
            setState(() {
              textmessage='';
+             messagecontrol.text='';
            });
            },
           ),
@@ -152,7 +158,8 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     // TODO: implement initState
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      user = Provider.of<AuthProvider_vm>(context, listen: false).currentuser;
+      user = Provider.of<AuthProvider_vm>(context, listen: false)
+          .currentuser;
     });
   }
 
@@ -208,7 +215,8 @@ class _ChatScreenState extends State<ChatScreen> {
                               AsyncSnapshot<List<MessageText>> snapshot)
                           {
                             if(snapshot.hasError) {
-                              return Text('something went wrong' + snapshot.error
+                              return Text('something went wrong' +
+                                  snapshot.error
                                   .toString());
                             }
                             if(!snapshot.hasData){
@@ -216,10 +224,9 @@ class _ChatScreenState extends State<ChatScreen> {
                             }
                             return
                              Expanded(
-                               flex: 1,
                                child: ListView.builder(
                           //to reverse message
-                            reverse: true,
+                          //   reverse: true,
                             padding: EdgeInsets.only(top: size.height * 0.02),
                             itemCount:snapshot.data!.length,
                             itemBuilder: (BuildContext context, int index) {

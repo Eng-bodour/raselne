@@ -462,7 +462,8 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
             //distance_recive_deilvery
            await Provider.of<order_vm>(context,listen:  false)
                 .addOrder( );
-           Navigator.of(context).push(MaterialPageRoute(builder:
+           Navigator.of(context).push(
+               MaterialPageRoute(builder:
                (context)=> ShowOffers(orderModel: orderModel)
            )) ;
           },
