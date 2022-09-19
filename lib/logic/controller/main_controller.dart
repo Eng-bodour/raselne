@@ -8,6 +8,7 @@ import 'package:raselne/view_presentation/screen/orders_screen.dart';
 
 import '../../data_layer/model/user_model.dart';
 import '../../view_presentation/screen_driver/home_driver_screen.dart';
+import '../../view_presentation/screen_driver/my_page_driver/mypage_driver_screen.dart';
 import '../../view_presentation/screen_driver/orders_driver_screen.dart';
 
 class MainProvider extends ChangeNotifier {
@@ -36,7 +37,7 @@ class MainProvider extends ChangeNotifier {
     HomeScreen(),
   ];
   var tabscaptain = [
-    MyPageUserScreen(),
+    MyPageDriverScreen(),
     NotificationScreen(),
     OrdersDriverScreen(),
     HomeDriverScreen(),
