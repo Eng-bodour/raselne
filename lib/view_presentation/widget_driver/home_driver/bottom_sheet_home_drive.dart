@@ -18,60 +18,59 @@ import '../../../logic/controller/order_vm.dart';
 import '../../../services/polyline_service.dart';
 
 class bottomsheet_offer extends StatefulWidget {
-   bottomsheet_offer({required this.order, Key? key}) : super(key: key);
+  bottomsheet_offer({required this.order, Key? key}) : super(key: key);
   OrderModel order;
-
 
   @override
   State<bottomsheet_offer> createState() => _bottomsheet_offerState();
 }
 
 class _bottomsheet_offerState extends State<bottomsheet_offer> {
-   Set<Polyline> _polylines = {};
-   // late UserModel user;
+  final Set<Polyline> _polylines = {};
+  // late UserModel user;
 
-   static late final LatLng  location_init;
-   Completer<GoogleMapController> _controller=Completer();
-   Set<Marker> _markers={
+  static late final LatLng location_init;
+  final Completer<GoogleMapController> _controller = Completer();
+  final Set<Marker> _markers = {};
+  static late final CameraPosition _inialCameraPosition = const CameraPosition(
+      target: LatLng(33.55, 36.28), // widget.order.toLocation,
+      zoom: 10);
+  LatLng currentLocation = _inialCameraPosition.target;
 
-   };
-   static late final CameraPosition _inialCameraPosition = CameraPosition(
-       target:LatLng(33.55,36.28),// widget.order.toLocation,
-       zoom: 10
-   );
-   LatLng currentLocation=_inialCameraPosition.target;
+  BitmapDescriptor? _locationIcon;
 
-   BitmapDescriptor? _locationIcon;
-
-   @override void initState() {
-      // TODO: implement initState
-     // location_init=widget.order.fromlocation;
-     // print('long '+location_init.longitude.toString());
-     // _inialCameraPosition  = CameraPosition(
-     // target:location_init,// widget.order.toLocation,
-     // zoom: 17.47
-     // );\
-     // user= Provider.of<AuthProvider_vm>(context,listen: false).currentuser;
-     _animateCamera(widget.order.fromlocation);
-     _buildMarkerFromAssets();
-     _drawPolyline(widget.order.fromlocation, widget.order.toLocation);
-     super.initState();
+  @override
+  void initState() {
+    // TODO: implement initState
+    // location_init=widget.order.fromlocation;
+    // print('long '+location_init.longitude.toString());
+    // _inialCameraPosition  = CameraPosition(
+    // target:location_init,// widget.order.toLocation,
+    // zoom: 17.47
+    // );\
+    // user= Provider.of<AuthProvider_vm>(context,listen: false).currentuser;
+    _animateCamera(widget.order.fromlocation);
+    _buildMarkerFromAssets();
+    _drawPolyline(widget.order.fromlocation, widget.order.toLocation);
+    super.initState();
   }
-   Future<void> _animateCamera(LatLng _location) async {
-     final GoogleMapController controller = await _controller.future;
-     CameraPosition _cameraPosition = CameraPosition(
-       target: _location,
-       zoom: 13.00,
-     );
-     print(
-         "animating camera to (lat: ${_location.latitude}, long: ${_location.longitude}");
-     controller.animateCamera(CameraUpdate.newCameraPosition(_cameraPosition));
-   }
+
+  Future<void> _animateCamera(LatLng _location) async {
+    final GoogleMapController controller = await _controller.future;
+    CameraPosition _cameraPosition = CameraPosition(
+      target: _location,
+      zoom: 13.00,
+    );
+    print(
+        "animating camera to (lat: ${_location.latitude}, long: ${_location.longitude}");
+    controller.animateCamera(CameraUpdate.newCameraPosition(_cameraPosition));
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return ModalProgressHUD(
-      inAsyncCall: Provider.of<order_vm>(context,listen: true).isloading,
+      inAsyncCall: Provider.of<order_vm>(context, listen: true).isloading,
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: Container(
@@ -147,31 +146,41 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                       horizontal: size.width * 0.06,
                     ),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(
-                          Icons.person,
-                          color: mainColor,
-                          size: size.width * 0.1,
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.person,
+                              color: mainColor,
+                              size: size.width * 0.1,
+                            ),
+                            TextUtils(
+                                fontSize: size.width * 0.03,
+                                fontWeight: FontWeight.bold,
+                                text: widget.order.from_user
+                                    .toString(), //'Sa**b',
+                                color: Colors.black45,
+                                underLine: TextDecoration.none),
+                          ],
                         ),
-                        TextUtils(
-                            fontSize: size.width * 0.04,
-                            fontWeight: FontWeight.bold,
-                            text: widget.order.from_user.toString(),//'Sa**b',
-                            color: Colors.black45,
-                            underLine: TextDecoration.none),
-                        SizedBox(width: size.width * 0.02),
-                        Icon(
-                          Icons.star,
-                          color: mainColor,
-                          size: size.width * 0.05,
-                        ),
-                        SizedBox(width: size.width * 0.01),
-                        TextUtils(
-                            fontSize: size.width * 0.04,
-                            fontWeight: FontWeight.bold,
-                            text: '5.0',
-                            color: Colors.black45,
-                            underLine: TextDecoration.none),
+                        // SizedBox(width: size.width * 0.02),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.star,
+                              color: mainColor,
+                              size: size.width * 0.05,
+                            ),
+                            SizedBox(width: size.width * 0.01),
+                            TextUtils(
+                                fontSize: size.width * 0.04,
+                                fontWeight: FontWeight.bold,
+                                text: '5.0',
+                                color: Colors.black45,
+                                underLine: TextDecoration.none),
+                          ],
+                        )
                       ],
                     ),
                   ),
@@ -209,68 +218,68 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                   padding: EdgeInsets.symmetric(
                     horizontal: size.width * 0.06,
                   ),
-                  child: Text(widget.order.content_order.toString(),),
+                  child: Text(
+                    widget.order.content_order.toString(),
+                  ),
                 ),
                 Container(
-                    height: size.height * 0.3,
-                    decoration: const BoxDecoration(color: mainColor)
-                ,child: Scaffold(
-                  body: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      GoogleMap(
-                        initialCameraPosition:
-                        CameraPosition(
-                            target:
-                            LatLng(widget.order.toLocation.latitude,
-                                widget.order.toLocation.longitude)),
-                        mapType: MapType.normal,
-                        onMapCreated: (GoogleMapController controller) async{
-                          String style = await DefaultAssetBundle.of(context)
-                              .loadString('assets/map_style.json');
-                          //customize your map style at: https://mapstyle.withgoogle.com/
-                          controller.setMapStyle(style);
-                          _controller.complete(controller);
-
-                        },
-                        onCameraMove: (CameraPosition newPos){
-                          setState(() {
-                            currentLocation=newPos.target;
-                          });
-                        },
-                         markers: _markers,
-                        polylines: _polylines,
-                      ),
-                      SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: Image.asset('assets/images/location_icon.png'),
-                      ),
-                    ],
+                  height: size.height * 0.3,
+                  decoration: const BoxDecoration(color: mainColor),
+                  child: Scaffold(
+                    body: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        GoogleMap(
+                          initialCameraPosition: CameraPosition(
+                              target: LatLng(widget.order.toLocation.latitude,
+                                  widget.order.toLocation.longitude)),
+                          mapType: MapType.normal,
+                          onMapCreated: (GoogleMapController controller) async {
+                            String style = await DefaultAssetBundle.of(context)
+                                .loadString('assets/map_style.json');
+                            //customize your map style at: https://mapstyle.withgoogle.com/
+                            controller.setMapStyle(style);
+                            _controller.complete(controller);
+                          },
+                          onCameraMove: (CameraPosition newPos) {
+                            setState(() {
+                              currentLocation = newPos.target;
+                            });
+                          },
+                          markers: _markers,
+                          polylines: _polylines,
+                        ),
+                        SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: Image.asset('assets/images/location_icon.png'),
+                        ),
+                      ],
+                    ),
+                    floatingActionButton: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: const [
+                        // FloatingActionButton(
+                        //   onPressed: () => _drawPolyline(
+                        //       LatLng(38.52900208591146, -98.54919254779816), currentLocation),
+                        //   child: Icon(Icons.settings_ethernet_rounded),
+                        // ),
+                        // FloatingActionButton(
+                        //   onPressed: () => _setMarker(currentLocation),
+                        //   child: Icon(Icons.location_on),
+                        // ),
+                        // FloatingActionButton(
+                        //   onPressed: () => getMyLocation(),
+                        //   child: Icon(Icons.gps_fixed),
+                        // ),
+                      ],
+                    ),
                   ),
-                  floatingActionButton: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      // FloatingActionButton(
-                      //   onPressed: () => _drawPolyline(
-                      //       LatLng(38.52900208591146, -98.54919254779816), currentLocation),
-                      //   child: Icon(Icons.settings_ethernet_rounded),
-                      // ),
-                      // FloatingActionButton(
-                      //   onPressed: () => _setMarker(currentLocation),
-                      //   child: Icon(Icons.location_on),
-                      // ),
-                      // FloatingActionButton(
-                      //   onPressed: () => getMyLocation(),
-                      //   child: Icon(Icons.gps_fixed),
-                      // ),
-                    ],
-                  ),
-                ),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: size.width * 0.06, vertical: size.height * 0.01),
+                      horizontal: size.width * 0.06,
+                      vertical: size.height * 0.01),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -305,7 +314,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                                 color: Colors.black45,
                                 underLine: TextDecoration.none),
                           ]),
-                      const Text('____'),
+                      const Text('________'),
                       Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -356,39 +365,45 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                           underLine: TextDecoration.none),
                       Padding(
                         padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.06),
+                            EdgeInsets.symmetric(horizontal: size.width * 0.06),
                         child: Row(
                           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             ElevatedButton(
-                              onPressed: () async{
-                               print('sddsdsdvfvvvvbbb');
-                               await Provider.of<order_vm>(context,listen: false)
+                              onPressed: () async {
+                                print('sddsdsdvfvvvvbbb');
+                                await Provider.of<order_vm>(context,
+                                        listen: false)
                                     .update_order(
-                                   widget.order.id_order,
-                                   widget.order.distance_recive_deilvery,
-                                   widget.order.price_deilvery_captain,
-                                //  user.uid.toString()
-                               );
+                                  widget.order.id_order,
+                                  widget.order.distance_recive_deilvery,
+                                  widget.order.price_deilvery_captain,
+                                  //  user.uid.toString()
+                                );
                                 ///////////////////////////////////////////
-                           Navigator.push(context,
-                               MaterialPageRoute(builder: (context)=>
-                                   waiting_aprrove_order(orderModel: widget.order,)));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            waiting_aprrove_order(
+                                              orderModel: widget.order,
+                                            )));
                               },
                               style: ElevatedButton.styleFrom(
                                 elevation: 0,
                                 primary: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
-                                  BorderRadius.circular(size.width * 0.03),
+                                      BorderRadius.circular(size.width * 0.03),
                                 ), //Get.isDarkMode ? pinkClr : mainColor,
                                 minimumSize:
-                                Size(size.height * 0.3, size.width * 0.1),
+                                    Size(size.height * 0.3, size.width * 0.1),
                               ),
                               child: TextUtils(
                                 color: mainColor,
-                                text:widget.order.price_deilvery+' ر.س ',// '20ر.س',
-                                fontSize: size.width * 0.05,
+                                text: widget.order.price_deilvery +
+                                    ' ر.س ', // '20ر.س',
+                                fontSize: size.width * 0.04,
                                 fontWeight: FontWeight.bold,
                                 underLine: TextDecoration.none,
                               ),
@@ -400,24 +415,25 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                                   elevation: 0,
                                   primary: greyColor.withOpacity(0.5),
                                   shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                    BorderRadius.circular(size.width * 0.03),
+                                    borderRadius: BorderRadius.circular(
+                                        size.width * 0.03),
                                   ), //Get.isDarkMode ? pinkClr : mainColor,
                                   minimumSize:
-                                  Size(size.height * 0.1, size.width * 0.1),
+                                      Size(size.height * 0.1, size.width * 0.1),
                                 ),
                                 child: Row(
                                   children: [
                                     TextUtils(
                                       color: Colors.white,
                                       text: 'غير',
-                                      fontSize: size.width * 0.05,
+                                      fontSize: size.width * 0.04,
                                       fontWeight: FontWeight.bold,
                                       underLine: TextDecoration.none,
                                     ),
-                                    const Icon(
+                                    Icon(
                                       Icons.arrow_forward_ios_rounded,
                                       color: Colors.white,
+                                      size: size.width * 0.04,
                                     ),
                                   ],
                                 )),
@@ -433,37 +449,39 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
     );
   }
 
-   Future<void> _drawPolyline(LatLng from, LatLng to) async {
-     Polyline polyline = await PolylineService().drawPolyline(from, to);
+  Future<void> _drawPolyline(LatLng from, LatLng to) async {
+    Polyline polyline = await PolylineService().drawPolyline(from, to);
 
-     _polylines.add(polyline);
+    _polylines.add(polyline);
 
-     _setMarker(from);
-     _setMarker(to);
+    _setMarker(from);
+    _setMarker(to);
 
-     setState(() {});
-   }
-   void _setMarker(LatLng _location) {
-     Marker newMarker = Marker(
-       markerId: MarkerId(_location.toString()),
-       icon: BitmapDescriptor.defaultMarker,
-       // icon: _locationIcon,
-       position: currentLocation,
-       infoWindow: InfoWindow(
-           title: "Title",
-           snippet: "${currentLocation.latitude}, ${currentLocation.longitude}"),
-     );
-     _markers.clear();
-     _markers.add(newMarker);
-     // GetAddressFromLatLong(currentLocation);
-     setState(() {});
-   }
-   Future<void> _buildMarkerFromAssets() async {
-     if (_locationIcon == null) {
-       _locationIcon = await BitmapDescriptor.fromAssetImage(
-           ImageConfiguration(size: Size(48, 48)),
-           'assets/images/location_icon.png');
-       setState(() {});
-     }
-   }
+    setState(() {});
+  }
+
+  void _setMarker(LatLng _location) {
+    Marker newMarker = Marker(
+      markerId: MarkerId(_location.toString()),
+      icon: BitmapDescriptor.defaultMarker,
+      // icon: _locationIcon,
+      position: currentLocation,
+      infoWindow: InfoWindow(
+          title: "Title",
+          snippet: "${currentLocation.latitude}, ${currentLocation.longitude}"),
+    );
+    _markers.clear();
+    _markers.add(newMarker);
+    // GetAddressFromLatLong(currentLocation);
+    setState(() {});
+  }
+
+  Future<void> _buildMarkerFromAssets() async {
+    if (_locationIcon == null) {
+      _locationIcon = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(48, 48)),
+          'assets/images/location_icon.png');
+      setState(() {});
+    }
+  }
 }

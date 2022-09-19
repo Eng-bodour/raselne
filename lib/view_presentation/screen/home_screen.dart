@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                 mainColor, // Get.isDarkMode ? darkGreyClr : Colors.white,
             elevation: 0,
             centerTitle: true,
-            title:  TextUtils(
+            title: TextUtils(
               fontSize: f26,
               fontWeight: FontWeight.bold,
               text: 'Raselne',

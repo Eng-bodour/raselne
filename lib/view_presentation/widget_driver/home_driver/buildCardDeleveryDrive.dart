@@ -13,43 +13,46 @@ import '../../../logic/controller/auth_controller.dart';
 import 'bottom_sheet_home_drive.dart';
 
 class card_deilvery extends StatefulWidget {
-  card_deilvery({required this.order,Key? key}) : super(key: key);
+  card_deilvery({required this.order, Key? key}) : super(key: key);
   OrderModel order;
   @override
   State<card_deilvery> createState() => _card_deilveryState();
 }
 
 class _card_deilveryState extends State<card_deilvery> {
-
-
-  late  Size size;
+  late Size size;
 
   late UserModel user;
 
-  @override void initState() {
+  @override
+  void initState() {
     // TODO: implement initState
     //WidgetsBinding.instance.addPostFrameCallback((_) async {
-    user= Provider.of<AuthProvider_vm>(context,listen: false).currentuser;
+    user = Provider.of<AuthProvider_vm>(context, listen: false).currentuser;
 
-    widget. order.distance_me_recive=PolylineService().calcDistance(
-        [LatLng(user.location!.latitude, user.location!.longitude),
-          LatLng( widget.order.fromlocation.latitude,  widget.order.fromlocation.longitude)]);
-   widget.order.distance_recive_deilvery=PolylineService().calcDistance(
-        [LatLng( widget.order.fromlocation.latitude,  widget.order.fromlocation.longitude),
-          LatLng( widget.order.toLocation.latitude, widget. order.toLocation.longitude)]);
-    print( widget.order.distance_me_recive);
-    print( widget.order.distance_recive_deilvery);
-  //});
+    widget.order.distance_me_recive = PolylineService().calcDistance([
+      LatLng(user.location!.latitude, user.location!.longitude),
+      LatLng(widget.order.fromlocation.latitude,
+          widget.order.fromlocation.longitude)
+    ]);
+    widget.order.distance_recive_deilvery = PolylineService().calcDistance([
+      LatLng(widget.order.fromlocation.latitude,
+          widget.order.fromlocation.longitude),
+      LatLng(
+          widget.order.toLocation.latitude, widget.order.toLocation.longitude)
+    ]);
+    print(widget.order.distance_me_recive);
+    print(widget.order.distance_recive_deilvery);
+    //});
     super.initState();
-    setState(() {
-
-    });
+    setState(() {});
   }
+
   @override
   Widget build(BuildContext context) {
-    user= Provider.of<AuthProvider_vm>(context,listen: true).currentuser;
-    size= MediaQuery.of(context).size;
-    return  Container(
+    user = Provider.of<AuthProvider_vm>(context, listen: true).currentuser;
+    size = MediaQuery.of(context).size;
+    return Container(
       height: size.height * 0.4,
       decoration: const BoxDecoration(color: Colors.white),
       child: Padding(
@@ -102,70 +105,75 @@ class _card_deilveryState extends State<card_deilvery> {
             TextUtils(
                 fontSize: size.width * 0.03,
                 fontWeight: FontWeight.bold,
-                text:  widget.order.content_order,//'محل نسبريسو 10 علب  قهوة',
+                text: widget.order.content_order, //'محل نسبريسو 10 علب  قهوة',
                 color: Colors.black45,
                 underLine: TextDecoration.none),
             SizedBox(height: size.height * 0.01),
-            Row(
-              children: [
-                Column(
-                  children: [
-                    Icon(
-                      Icons.car_rental,
-                      color: mainColor,
-                      size: size.width * 0.08,
-                    ),
-                    TextUtils(
-                        fontSize: size.width * 0.03,
-                        fontWeight: FontWeight.bold,
-                        text: 'موقعك الحالي',
-                        color: Colors.black87,
-                        underLine: TextDecoration.none),
-                  ],
-                ),
-                TextUtils(
-                    fontSize: size.width * 0.04,
-                    fontWeight: FontWeight.bold,
-                    text: widget.order.distance_me_recive,// '--   3.55 كم   --',//distance_me_recive
-                    color: Colors.black45,
-                    underLine: TextDecoration.none),
-                Column(
-                  children: [
-                    Icon(
-                      Icons.business_outlined,
-                      color: mainColor,
-                      size: size.width * 0.08,
-                    ),
-                    TextUtils(
-                        fontSize: size.width * 0.03,
-                        fontWeight: FontWeight.bold,
-                        text: 'موقع الاستلام',
-                        color: Colors.black87,
-                        underLine: TextDecoration.none),
-                  ],
-                ),
-                TextUtils(
-                    fontSize: size.width * 0.04,
-                    fontWeight: FontWeight.bold,
-                    text: widget.order.distance_recive_deilvery,// '--   13 كم   --',//distance_recive_deilvery
-                    color: Colors.black45,
-                    underLine: TextDecoration.none),
-                Column(
-                  children: [
-                    Icon(
-                      Icons.bungalow_outlined,
-                      color: mainColor,
-                      size: size.width * 0.08,
-                    ),
-                    TextUtils(
-                        fontSize: size.width * 0.03,
-                        fontWeight: FontWeight.bold,
-                        text: 'موقع التسليم',
-                        color: Colors.black87,
-                        underLine: TextDecoration.none),
-                  ],
-                ),
-              ],
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+              child: Row(
+                children: [
+                  Column(
+                    children: [
+                      Icon(
+                        Icons.car_rental,
+                        color: mainColor,
+                        size: size.width * 0.08,
+                      ),
+                      TextUtils(
+                          fontSize: size.width * 0.03,
+                          fontWeight: FontWeight.bold,
+                          text: 'موقعك الحالي',
+                          color: Colors.black87,
+                          underLine: TextDecoration.none),
+                    ],
+                  ),
+                  TextUtils(
+                      fontSize: size.width * 0.04,
+                      fontWeight: FontWeight.bold,
+                      text:
+                          '--${widget.order.distance_me_recive}--', // '--   3.55 كم   --',//distance_me_recive
+                      color: Colors.black45,
+                      underLine: TextDecoration.none),
+                  Column(
+                    children: [
+                      Icon(
+                        Icons.business_outlined,
+                        color: mainColor,
+                        size: size.width * 0.08,
+                      ),
+                      TextUtils(
+                          fontSize: size.width * 0.03,
+                          fontWeight: FontWeight.bold,
+                          text: 'موقع الاستلام',
+                          color: Colors.black87,
+                          underLine: TextDecoration.none),
+                    ],
+                  ),
+                  TextUtils(
+                      fontSize: size.width * 0.04,
+                      fontWeight: FontWeight.bold,
+                      text:
+                          '--${widget.order.distance_recive_deilvery}--', // '--   13 كم   --',//distance_recive_deilvery
+                      color: Colors.black45,
+                      underLine: TextDecoration.none),
+                  Column(
+                    children: [
+                      Icon(
+                        Icons.bungalow_outlined,
+                        color: mainColor,
+                        size: size.width * 0.08,
+                      ),
+                      TextUtils(
+                          fontSize: size.width * 0.03,
+                          fontWeight: FontWeight.bold,
+                          text: 'موقع التسليم',
+                          color: Colors.black87,
+                          underLine: TextDecoration.none),
+                    ],
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: size.height * 0.03,
@@ -176,17 +184,20 @@ class _card_deilveryState extends State<card_deilvery> {
                 children: [
                   InkWell(
                     onTap: () {
-                      Navigator.push(context,
+                      Navigator.push(
+                          context,
                           MaterialPageRoute(
-                              builder: (context)=>
-                                  bottomsheet_offer( order: widget.order,)));
+                              builder: (context) => bottomsheet_offer(
+                                    order: widget.order,
+                                  )));
                     },
                     child: Container(
                       width: size.width * 0.3,
                       height: size.height * 0.03,
                       decoration: BoxDecoration(
-                          color: Colors.yellow[50],
-                          borderRadius: BorderRadius.circular(size.width * 0.1)),
+                          color: mainColor.withOpacity(0.2),
+                          borderRadius:
+                              BorderRadius.circular(size.width * 0.1)),
                       child: Center(
                         child: TextUtils(
                           color: Colors.black54,
@@ -203,35 +214,37 @@ class _card_deilveryState extends State<card_deilvery> {
                   ),
                   InkWell(
                     onTap: () {
-                   // Navigator.push(context,
-                   //     MaterialPageRoute(
-                   //         builder: (context)=>
-                   //             bottomsheet_offer( order: widget.order,)));
-                   showModalBottomSheet<dynamic>(
-                     backgroundColor: Colors.grey.shade200,
-                     //  backgroundColor: Colors.transparent,
-                     elevation: 0,
-                     shape: const RoundedRectangleBorder(
-                         borderRadius: BorderRadius.only(
-                           topLeft: Radius.circular(20),
-                           topRight: Radius.circular(20),
-                         )),
-                     context: context,
-                     isScrollControlled: true,
-                     builder: ((context) =>
-                         bottomsheet_offer( order: widget.order,)),
-                     // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
-                   );
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(
+                      //         builder: (context)=>
+                      //             bottomsheet_offer( order: widget.order,)));
+                      showModalBottomSheet<dynamic>(
+                        backgroundColor: Colors.grey.shade200,
+                        //  backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        )),
+                        context: context,
+                        isScrollControlled: true,
+                        builder: ((context) => bottomsheet_offer(
+                              order: widget.order,
+                            )),
+                        // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
+                      );
                     },
                     child: Container(
                       width: size.width * 0.4,
                       height: size.height * 0.05,
                       decoration: BoxDecoration(
-                          color: Colors.yellow,
-                          borderRadius: BorderRadius.circular(size.width * 0.1)),
+                          color: mainColor,
+                          borderRadius:
+                              BorderRadius.circular(size.width * 0.1)),
                       child: Center(
                         child: TextUtils(
-                          color: Colors.black,
+                          color: Colors.white,
                           text: 'قدم عرض 20 ر.س',
                           fontSize: size.width * 0.03,
                           fontWeight: FontWeight.bold,

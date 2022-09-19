@@ -7,30 +7,31 @@ import '../../data_layer/model/orderModel.dart';
 import '../../services/polyline_service.dart';
 
 class custom_map_location extends StatefulWidget {
-  custom_map_location({required this.from,required this.to, Key? key}) : super(key: key);
-  LatLng from,to;
+  custom_map_location({required this.from, required this.to, Key? key})
+      : super(key: key);
+  LatLng from, to;
 
   @override
   _custom_map_locationState createState() => _custom_map_locationState();
 }
 
 class _custom_map_locationState extends State<custom_map_location> {
-  Set<Polyline> _polylines = {};
+  final Set<Polyline> _polylines = {};
   // late UserModel user;
 
-  static late final LatLng  location_init;
-  Completer<GoogleMapController> _controller=Completer();
-  Set<Marker> _markers={
-  };
+  static late final LatLng location_init;
+  final Completer<GoogleMapController> _controller = Completer();
+  final Set<Marker> _markers = {};
   // static late   CameraPosition _inialCameraPosition = CameraPosition(
   //     target: LatLng(widget.from.latitude,widget.from.longitude),// widget.order.toLocation,
   //     zoom: 10
   // );
-  late LatLng currentLocation;//=widget.to;//_inialCameraPosition.target;
+  late LatLng currentLocation; //=widget.to;//_inialCameraPosition.target;
 
   BitmapDescriptor? _locationIcon;
 
-  @override void initState() {
+  @override
+  void initState() {
     // TODO: implement initState
     // location_init=widget.order.fromlocation;
     // print('long '+location_init.longitude.toString());
@@ -45,9 +46,10 @@ class _custom_map_locationState extends State<custom_map_location> {
     super.initState();
   }
 
-  Future<void> _animateCamera(LatLng _location, ) async {
-     final GoogleMapController
-    controller = await _controller.future;
+  Future<void> _animateCamera(
+    LatLng _location,
+  ) async {
+    final GoogleMapController controller = await _controller.future;
     CameraPosition _cameraPosition = CameraPosition(
       target: _location,
       zoom: 13.00,
@@ -56,29 +58,24 @@ class _custom_map_locationState extends State<custom_map_location> {
         "animating camera to (lat: ${_location.latitude}, long: ${_location.longitude}");
     controller.animateCamera(CameraUpdate.newCameraPosition(_cameraPosition));
     // _inialCameraPosition=_cameraPosition;
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return   GoogleMap(
-      initialCameraPosition:
-      CameraPosition(
-          target:
-          LatLng(widget.to.latitude,
-              widget.to.longitude)),
-
+    return GoogleMap(
+      initialCameraPosition: CameraPosition(
+          target: LatLng(widget.to.latitude, widget.to.longitude)),
       mapType: MapType.normal,
       onMapCreated: (GoogleMapController controller) async {
-      String style = await DefaultAssetBundle.of(context)
+        String style = await DefaultAssetBundle.of(context)
             .loadString('assets/map_style.json');
         //customize your map style at: https://mapstyle.withgoogle.com/
         controller.setMapStyle(style);
         _controller.complete(controller);
       },
-      onCameraMove: (CameraPosition newPos){
+      onCameraMove: (CameraPosition newPos) {
         setState(() {
-          currentLocation=newPos.target;
+          currentLocation = newPos.target;
         });
       },
       markers: _markers,
@@ -96,6 +93,7 @@ class _custom_map_locationState extends State<custom_map_location> {
 
     setState(() {});
   }
+
   void _setMarker(LatLng _location) {
     Marker newMarker = Marker(
       markerId: MarkerId(_location.toString()),
@@ -111,10 +109,11 @@ class _custom_map_locationState extends State<custom_map_location> {
     // GetAddressFromLatLong(currentLocation);
     setState(() {});
   }
+
   Future<void> _buildMarkerFromAssets() async {
     if (_locationIcon == null) {
       _locationIcon = await BitmapDescriptor.fromAssetImage(
-          ImageConfiguration(size: Size(48, 48)),
+          const ImageConfiguration(size: Size(48, 48)),
           'assets/images/location_icon.png');
       setState(() {});
     }

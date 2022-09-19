@@ -18,7 +18,7 @@ class StoreDetailsScreen extends StatelessWidget {
       backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
         title: TextUtils(
-          fontSize: 20,
+          fontSize: size.width * 0.05,
           fontWeight: FontWeight.normal,
           text: titleStore,
           color: Colors.black45,
@@ -53,7 +53,7 @@ class StoreDetailsScreen extends StatelessWidget {
                   titleStore: titleStore,
                 ),
                 //for  tow lines its ListView
-                StoreListBuild()
+                const StoreListBuild()
               ],
             ),
           ),

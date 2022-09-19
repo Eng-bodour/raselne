@@ -8,8 +8,8 @@ import '../../../utilis/global_method.dart';
 import '../mypage_driver/show_offers.dart';
 
 class buildCardOrders extends StatelessWidget {
-   buildCardOrders({ required this. orderModel,
-    required this. size,Key? key}) : super(key: key);
+  buildCardOrders({required this.orderModel, required this.size, Key? key})
+      : super(key: key);
   OrderModel orderModel;
   Size size;
   @override
@@ -27,7 +27,8 @@ class buildCardOrders extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: size.width * 0.04, vertical: size.height * 0.01),
+                    horizontal: size.width * 0.04,
+                    vertical: size.height * 0.01),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -48,8 +49,7 @@ class buildCardOrders extends StatelessWidget {
                         TextUtils(
                             fontSize: size.width * 0.04,
                             fontWeight: FontWeight.normal,
-                            text: getstate_order
-                              ('isopen') , //'ملغى',
+                            text: getstate_order('isopen'), //'ملغى',
                             color: Colors.red,
                             underLine: TextDecoration.none)
                       ],
@@ -57,7 +57,8 @@ class buildCardOrders extends StatelessWidget {
                     TextUtils(
                         fontSize: size.width * 0.04,
                         fontWeight: FontWeight.normal,
-                        text:orderModel.DateTimeorder.toString(),// 'سنة',
+                        text: orderModel.DateTimeorder.toString()
+                            .substring(0, 19), // 'سنة',
                         color: Colors.black54,
                         underLine: TextDecoration.none)
                   ],
@@ -83,7 +84,8 @@ class buildCardOrders extends StatelessWidget {
                       TextUtils(
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.bold,
-                          text:orderModel.titleStore , //'اسم المطعم', //'${Firebase.name}',
+                          text: orderModel
+                              .titleStore, //'اسم المطعم', //'${Firebase.name}',
                           color: Colors.black54,
                           underLine: TextDecoration.none),
                       Row(
@@ -118,7 +120,7 @@ class buildCardOrders extends StatelessWidget {
                 child: TextUtils(
                     fontSize: size.width * 0.04,
                     fontWeight: FontWeight.normal,
-                    text:'وصف الطلب',
+                    text: 'وصف الطلب',
                     //orderModel.content_order, //
                     color: Colors.black54,
                     underLine: TextDecoration.none),
@@ -127,7 +129,8 @@ class buildCardOrders extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: size.width * 0.05),
                     child: Row(
                       children: [
                         TextUtils(
@@ -147,7 +150,8 @@ class buildCardOrders extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: size.width * 0.05),
                     child: TextUtils(
                         fontSize: size.width * 0.04,
                         fontWeight: FontWeight.normal,
@@ -159,29 +163,29 @@ class buildCardOrders extends StatelessWidget {
               ),
               ElevatedButton(
                   onPressed: () {
-                    if(orderModel.isopen)
-                      Navigator.of(context).push(MaterialPageRoute(builder:
-                          (context)=>
-                              ShowOffers(orderModel: orderModel)
-                      )) ;
-
+                    if (orderModel.isopen) {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              ShowOffers(orderModel: orderModel)));
+                    }
                   },
                   style: ButtonStyle(
                       elevation: MaterialStateProperty.all(0),
                       backgroundColor: MaterialStateProperty.all(mainColor)),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.25),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: size.width * 0.25),
                     child: Row(
                       children: [
-                        orderModel.isopen==true?
-                        Text('متابعة',
-                            style: TextStyle(
-                              fontSize: size.width * 0.045,
-                            )):
-                        Text('إعادة الطلب',
-                            style: TextStyle(
-                              fontSize: size.width * 0.045,
-                            )),
+                        orderModel.isopen == true
+                            ? Text('متابعة',
+                                style: TextStyle(
+                                  fontSize: size.width * 0.045,
+                                ))
+                            : Text('إعادة الطلب',
+                                style: TextStyle(
+                                  fontSize: size.width * 0.045,
+                                )),
                         SizedBox(
                           width: size.width * 0.02,
                         ),
@@ -198,8 +202,3 @@ class buildCardOrders extends StatelessWidget {
     );
   }
 }
-
-
-
-
-

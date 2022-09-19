@@ -24,13 +24,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<AuthProvider_vm>(
+        create: (context) => AuthProvider_vm(userRepository: user_firebase())),
 
-    ChangeNotifierProvider<AuthProvider_vm>(create: (context) =>
-        AuthProvider_vm(userRepository: user_firebase())),
-
-    ChangeNotifierProxyProvider<AuthProvider_vm,order_vm>(
-      create: (_)=> order_vm(orderRepository: order_firebase()),
-      update: (ctx,value,prev)=>prev!..setvalue(value.currentuser),
+    ChangeNotifierProxyProvider<AuthProvider_vm, order_vm>(
+      create: (_) => order_vm(orderRepository: order_firebase()),
+      update: (ctx, value, prev) => prev!..setvalue(value.currentuser),
     ),
 
     // ChangeNotifierProvider<order_vm>(
@@ -40,59 +39,57 @@ void main() async {
         create: (context) => CategoryStoreProvider()),
 
     ChangeNotifierProvider<StoreProvider_vm>(
-        create: (context) => StoreProvider_vm(storeRepository: StoreFirebase())),
+        create: (context) =>
+            StoreProvider_vm(storeRepository: StoreFirebase())),
 
     ChangeNotifierProvider<TypesProvider>(create: (context) => TypesProvider()),
 
     ChangeNotifierProvider<MyPageProvider>(
         create: (context) => MyPageProvider()),
     ChangeNotifierProvider<MainProvider>(create: (context) => MainProvider()),
-  ], child:  MyApp()));
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
-      child:
-      FutureBuilder<UserModel?>(
-          future: Provider.of<AuthProvider_vm>(context,listen: false)
-              .isAuthuser() ,
-          builder:(context, snapshot) {
+      child: FutureBuilder<UserModel?>(
+          future:
+              Provider.of<AuthProvider_vm>(context, listen: false).isAuthuser(),
+          builder: (context, snapshot) {
             print('in main builder');
             if (!snapshot.hasData) {
               print(snapshot.hasData);
               //Center(child: CircularProgressIndicator(),)
-              return MaterialApp(
+              return const MaterialApp(
                 home: Scaffold(
                   body: Center(
                     child: Text('Loading....'),
                   ),
                 ),
               );
-            }
-            else {
-              return
-                GetMaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  title: 'Raselne',
-                  //home: WelcomeScreen(),
-                  initialRoute: snapshot.data?.uid !=null
-                      ? AppRoutes.mainScreen
-                      : AppRoutes.welcome,
-                  getPages: AppRoutes.routes,
-                );
-                // MaterialApp(
-                //   home: Directionality(
-                //     textDirection: TextDirection.rtl,
-                //     child: snapshot.data?.uid !=null ? MainScreen() : WelcomeScreen(),
-                //   ),
-                // )
+            } else {
+              return GetMaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'Raselne',
+                //home: WelcomeScreen(),
+                initialRoute: snapshot.data?.uid != null
+                    ? AppRoutes.mainScreen
+                    : AppRoutes.welcome,
+                getPages: AppRoutes.routes,
+              );
+              // MaterialApp(
+              //   home: Directionality(
+              //     textDirection: TextDirection.rtl,
+              //     child: snapshot.data?.uid !=null ? MainScreen() : WelcomeScreen(),
+              //   ),
+              // )
 
-             }
+            }
           }),
       // GetMaterialApp(
       //   debugShowCheckedModeBanner: false,

@@ -24,16 +24,17 @@ class BuildCard extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: titleStore.length,
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
         childAspectRatio: 0.9, //MediaQuery.of(context).size.width * 0.9
-        mainAxisExtent: 140,
+        mainAxisExtent: MediaQuery.of(context).size.height * 0.16,
         crossAxisSpacing: 3.0,
         mainAxisSpacing: 5.0,
-        maxCrossAxisExtent: 280,
+        maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.4,
       ),
       itemBuilder: (context, index) {
         return buildCardCategory(
             image: imageList[index],
+            context: context,
             //  item: getController.docTyps[index].name,
             item: titleStore[index],
             ontap: () {
@@ -88,14 +89,17 @@ class BuildCard extends StatelessWidget {
   Widget buildCardCategory({
     required String image,
     required String item,
+    required BuildContext context,
     required Function() ontap,
   }) {
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: EdgeInsets.symmetric(
+          vertical: MediaQuery.of(context).size.height * 0.02,
+          horizontal: MediaQuery.of(context).size.width * 0.02),
       child: InkWell(
         onTap: ontap,
         child: Container(
-          width: 150,
+          // width: 150,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
@@ -109,23 +113,21 @@ class BuildCard extends StatelessWidget {
           child: Stack(
             children: [
               Positioned(
-                  right: 20,
-                  bottom: 2,
+                  bottom: MediaQuery.of(context).size.height * 0.01,
+                  right: MediaQuery.of(context).size.width * 0.02,
                   child: Container(
                     height: 30,
                     width: 120,
                     decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.3),
+                      color: mainColor.withOpacity(0.3),
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    child: Center(
-                      child: Text(
-                        item,
-                        style: const TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
+                    child: Text(
+                      item,
+                      style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width * 0.04,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
                     ),
                   )),
             ],
@@ -133,5 +135,50 @@ class BuildCard extends StatelessWidget {
         ),
       ),
     );
+    // return Padding(
+    //padding: EdgeInsets.symmetric(
+    // vertical: MediaQuery.of(context).size.height * 0.02,
+    // horizontal: MediaQuery.of(context).size.width * 0.02),
+    //   child: InkWell(
+    //     onTap: ontap,
+    //     child: Container(
+    //       width: 150,
+    //       decoration: BoxDecoration(
+    //         image: DecorationImage(
+    //           image: AssetImage(
+    //             image,
+    //           ),
+    //           fit: BoxFit.fill,
+    //         ),
+    //         borderRadius: BorderRadius.circular(10),
+    //         color: Colors.white,
+    //       ),
+    //       child: Stack(
+    //         children: [
+    //           Positioned(
+    //               right: 20,
+    //               bottom: 2,
+    //               child: Container(
+    //                 height: 30,
+    //                 width: 120,
+    //                 decoration: BoxDecoration(
+    //                   color: Colors.grey.withOpacity(0.3),
+    //                   borderRadius: BorderRadius.circular(5),
+    //                 ),
+    //                 child: Center(
+    //                   child: Text(
+    //                     item,
+    //                     style: const TextStyle(
+    //                         fontSize: 15,
+    //                         color: Colors.white,
+    //                         fontWeight: FontWeight.bold),
+    //                   ),
+    //                 ),
+    //               )),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 }

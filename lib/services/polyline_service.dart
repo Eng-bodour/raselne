@@ -14,11 +14,12 @@ class PolylineService {
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
         apiKey,
         PointLatLng(from.latitude, from.longitude),
-        PointLatLng(to.latitude, to.longitude));
+        PointLatLng(to.latitude, to.longitude),
+        travelMode: TravelMode.driving);
 
-    result.points.forEach((PointLatLng point) {
+    for (var point in result.points) {
       polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-    });
+    }
     calcDistance(polylineCoordinates);
     return Polyline(
         polylineId: PolylineId("polyline_id ${result.points.length}"),
