@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:raselne/data_layer/model/messages_model.dart';
 import 'package:raselne/data_layer/model/orderModel.dart';
@@ -191,125 +192,175 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
+        child: ModalProgressHUD(
+          inAsyncCall: Provider.of<order_vm>(context,listen: true).isloading,
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30.0),
+                      topRight: Radius.circular(30.0),
+                    ),
                   ),
-                ),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
-                  ),
-                  child:
-                        StreamBuilder(
-                          stream: Provider.of<order_vm>(context,listen: false)
-                              .getchat(widget.orderModel.id_order),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<List<MessageText>> snapshot)
-                          {
-                            if(snapshot.hasError) {
-                              return Text('something went wrong' +
-                                  snapshot.error
-                                  .toString());
-                            }
-                            if(!snapshot.hasData){
-                              return Text("Loading");
-                            }
-                            return
-                             Expanded(
-                               child: ListView.builder(
-                          //to reverse message
-                          //   reverse: true,
-                            padding: EdgeInsets.only(top: size.height * 0.02),
-                            itemCount:snapshot.data!.length,
-                            itemBuilder: (BuildContext context, int index) {
-                                // final MessageText message = messages[index];
-                                bool isMe = snapshot.data![index].senderId ==user.uid;
-                                return
-                                  snapshot.data![index].type_message=='text'?
-                                  _buildMessage( snapshot.data![index], isMe, size):
-                                  snapshot.data![index].type_message=='map'?
-                                  mapLocationMessage(
-                                  message: snapshot.data![index],
-                                  size: size,):
-                                  snapshot.data![index].type_message=='image'?
-                                  Container(
-                                     margin:  EdgeInsets.only(
-                                       top: size.height * 0.01,
-                                       left: size.width * 0.03,
-                                       bottom: size.height * 0.01,
-                                     ),
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: size.width * 0.06, vertical: size.height * 0.03),
-                                      width: size.width * 0.75,
-                                      decoration: BoxDecoration(
-                                        color: isMe ? greyColor.withOpacity(0.1) : mainColor.withOpacity(0.3),
-                                        borderRadius: isMe
-                                            ? BorderRadius.only(
-                                          topLeft: Radius.circular(size.width * 0.1),
-                                          topRight: Radius.circular(size.width * 0.02),
-                                          bottomLeft: Radius.circular(size.width * 0.02),
-                                          bottomRight: Radius.circular(size.width * 0.1),
-                                        )
-                                            : BorderRadius.only(
-                                          topRight: Radius.circular(size.width * 0.1),
-                                          topLeft: Radius.circular(size.width * 0.02),
-                                          bottomRight: Radius.circular(size.width * 0.02),
-                                          bottomLeft: Radius.circular(size.width * 0.1),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(30.0),
+                      topRight: Radius.circular(30.0),
+                    ),
+                    child:
+                          StreamBuilder(
+                            stream: Provider.of<order_vm>(context,listen: false)
+                                .getchat(widget.orderModel.id_order),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<List<MessageText>> snapshot)
+                            {
+                              if(snapshot.hasError) {
+                                return Text('something went wrong' +
+                                    snapshot.error
+                                    .toString());
+                              }
+                              if(!snapshot.hasData){
+                                return Text("Loading");
+                              }
+                              return
+                               Expanded(
+                                 child: ListView.builder(
+                            //to reverse message
+                            //   reverse: true,
+                              padding: EdgeInsets.only(top: size.height * 0.02),
+                              itemCount:snapshot.data!.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                  // final MessageText message = messages[index];
+                                  bool isMe = snapshot.data![index].senderId ==user.uid;
+                                  return
+                                    snapshot.data![index].type_message=='text'?
+                                    _buildMessage( snapshot.data![index], isMe, size):
+                                    snapshot.data![index].type_message=='map'?
+                                    mapLocationMessage(
+                                    message: snapshot.data![index],
+                                    size: size,):
+                                    snapshot.data![index].type_message=='image'?
+                                    Container(
+                                       margin:  EdgeInsets.only(
+                                         top: size.height * 0.01,
+                                         left: size.width * 0.03,
+                                         bottom: size.height * 0.01,
+                                       ),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: size.width * 0.06, vertical: size.height * 0.03),
+                                        width: size.width * 0.75,
+                                        decoration: BoxDecoration(
+                                          color: isMe ? greyColor.withOpacity(0.1) : mainColor.withOpacity(0.3),
+                                          borderRadius: isMe
+                                              ? BorderRadius.only(
+                                            topLeft: Radius.circular(size.width * 0.1),
+                                            topRight: Radius.circular(size.width * 0.02),
+                                            bottomLeft: Radius.circular(size.width * 0.02),
+                                            bottomRight: Radius.circular(size.width * 0.1),
+                                          )
+                                              : BorderRadius.only(
+                                            topRight: Radius.circular(size.width * 0.1),
+                                            topLeft: Radius.circular(size.width * 0.02),
+                                            bottomRight: Radius.circular(size.width * 0.02),
+                                            bottomLeft: Radius.circular(size.width * 0.1),
+                                          ),
                                         ),
-                                      ),
-                                      child: Image.network(
-                                          snapshot.data![index].textMessage.toString())):
-                                  invoice_chat(
-                                    size:size ,
-                                    messageText:   snapshot.data![index],
-                                  );//invoice
+                                        child: Image.network(
+                                            snapshot.data![index].textMessage.toString())):
+                                    invoice_chat(
+                                      size:size ,
+                                      messageText:   snapshot.data![index],
+                                    );//invoice
+                              },
+                            ),
+                               );
                             },
                           ),
-                             );
-                          },
-                        ),
 
+                  ),
                 ),
               ),
-            ),
-            user.type=='captain'?
-            InkWell(
-              onTap: () {
-                // widget.orderModel.isstart
-              Navigator.push(context,
-                  MaterialPageRoute(
-                      builder: (context)=> InvoiceImage(
-                        orderModel: widget.orderModel,),
-                      fullscreenDialog: true)
-              );
-              },
-              child: Container(
-                width: size.width * 1,
-                height: size.height * 0.1,
-                decoration: const BoxDecoration(color: greyColor),
-                child: Center(
-                    child: TextUtils(
-                        fontSize: size.width * 0.05,
-                        fontWeight: FontWeight.bold,
-                        text: 'اصدار فاتورة',
-                        // widget.orderModel.isstart? 'اصدار فاتورة':
-                        // widget.orderModel.isdone_recive?'استلمت الطلب':'',
-                        color: Colors.white,
-                        underLine: TextDecoration.none)),
-              ),
-            ):Container(),
-            _buildMessageComposer(size: size),
-          ],
+              user.type=='captain'?
+              InkWell(
+                onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(
+                              builder: (context)=> InvoiceImage(
+                                orderModel: widget.orderModel,),
+                              fullscreenDialog: true)
+                      );
+                  // widget.orderModel.isstart
+
+               // switch(widget.orderModel.state) {
+               //   case '':
+               //     Navigator.push(context,
+               //         MaterialPageRoute(
+               //             builder: (context)=> InvoiceImage(
+               //               orderModel: widget.orderModel,),
+               //             fullscreenDialog: true)
+               //     );
+               //     break;
+               //   case 'done invoice':
+               //     // return 'استلمت الطلب';
+               //     Provider.of<order_vm>(context,listen: false)
+               //     .update_state(widget.orderModel.id_order,'done recive');
+               //     break;
+               //   case 'done recive':
+               //     // return 'وصلت لموقع العميل';
+               //     Provider.of<order_vm>(context,listen: false)
+               //         .update_state(widget.orderModel.id_order,'done arrive');
+               //     break;
+               //   case 'done arrive':
+               //     // return 'تم التسليم';
+               //     Provider.of<order_vm>(context,listen: false)
+               //         .update_state(widget.orderModel.id_order,'done');
+               //
+               //     break;
+               // }
+               // setState(() {
+               //
+               // });
+                },
+                child: Container(
+                  width: size.width * 1,
+                  height: size.height * 0.1,
+                  decoration: const BoxDecoration(color: greyColor),
+                  child: Center(
+                      child: TextUtils(
+                          fontSize: size.width * 0.05,
+                          fontWeight: FontWeight.bold,
+                          text: 'اصدار فاتورة',
+                          //switch_button(),//
+                          // widget.orderModel.isstart? 'اصدار فاتورة':
+                          // widget.orderModel.isdone_recive?'استلمت الطلب':'',
+                          color: Colors.white,
+                          underLine: TextDecoration.none)),
+                ),
+              ):Container(),
+              _buildMessageComposer(size: size),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  String switch_button() {
+
+    switch(widget.orderModel.state) {
+      case '':
+        return 'اصدار فاتورة';
+      case 'done invoice':
+        return 'استلمت الطلب';
+
+      case 'done recive':
+        return 'وصلت لموقع العميل';
+      case 'done arrive':
+        return 'تم التسليم';
+    }
+    return '';
   }
 }

@@ -412,6 +412,23 @@ else {
    await FirebaseServices('orders').ref.doc(id_order)
        .collection('chat').doc()
        .set(message.toSnapchot());
+     await FirebaseServices('orders').ref.doc(id_order)
+       .update({
+       'state':'done invoice'
+     });
+
+  }
+
+  @override
+  Future<void> update_state(String idOrder, String state) async {
+    // TODO: implement update_state
+    await FirebaseServices("orders").ref
+        .doc(idOrder)
+        .update({
+        'state':state
+        })
+        .then((value) => print("state order Updated"))
+        .catchError((error) => print("Failed to update user: $error"));
   }
 
 }

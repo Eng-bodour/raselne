@@ -147,6 +147,18 @@ Future<List<OrderModel>> get_myorder()async{
    isloading=false;
   notifyListeners();
  }
+ Future<void> update_state(String id_order,String state) async {
+  //عندما يقدم المندوب على العرض سيتم تحويل قيمة المتحول ispause إلى true
+  //وذلك لكي لايظهر الطلب لمندوب آخر
+   isloading=true;
+   notifyListeners();
+
+   await orderRepository.update_state(
+       id_order,
+      state);
+   isloading=false;
+  notifyListeners();
+ }
 Future<void> approve_order_or_not( OrderModel? orderModel, bool isopen)async {
   isloading=true;
   notifyListeners();

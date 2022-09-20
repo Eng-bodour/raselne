@@ -98,7 +98,8 @@ class MyPageUserScreen extends StatelessWidget {
                 Divider(thickness: 1, color: greyColor.withOpacity(0.2)),
                 info(
                     ontap: () {
-                      Get.to(CustomerSupport(
+                      Get.to(
+                        CustomerSupport(
                         title: 'الدعم للعملاء',
                       ));
                     },

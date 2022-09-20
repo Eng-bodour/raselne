@@ -15,8 +15,10 @@ abstract class OrderRepository {
   Stream<OrderModel> check_approve_order(String idOrder,String idcaptain);
   Stream<List<MessageText>> getChatOrder(String id_order);
   Future<void> update_order( String idOrder,String idcaptain,String distance_recive_deilvery,String price_deilvery_captain);
+  Future<void> update_state( String idOrder,String state);
   Future<void> approve_order_or_not( OrderModel orderModel,bool isopen);
   //عندما يقدم المندوب على العرض سيتم تحويل قيمة المتحول ispause إلى true
  Future<void> sendMessage(MessageText message,String id_order);
  Future<void> addInvoice(File? fileimageinvoice,String senderId, MessageText message,String id_order);
+
 }
