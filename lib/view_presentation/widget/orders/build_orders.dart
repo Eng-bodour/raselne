@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 import 'package:raselne/data_layer/model/orderModel.dart';
+import 'package:raselne/logic/controller/auth_controller.dart';
 import 'package:raselne/utilis/theme.dart';
+import 'package:raselne/view_presentation/screen/chat/chat_screen.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
 import '../../../utilis/global_method.dart';
+import '../../screen_driver/waiting_approve_order.dart';
 import '../mypage_driver/show_offers.dart';
 
 class buildCardOrders extends StatelessWidget {
@@ -48,8 +52,7 @@ class buildCardOrders extends StatelessWidget {
                         TextUtils(
                             fontSize: size.width * 0.04,
                             fontWeight: FontWeight.normal,
-                            text: getstate_order
-                              ('isopen') , //'ملغى',
+                            text: getstate_order(orderModel.state) , //'ملغى',
                             color: Colors.red,
                             underLine: TextDecoration.none)
                       ],
@@ -159,13 +162,65 @@ class buildCardOrders extends StatelessWidget {
               ),
               ElevatedButton(
                   onPressed: () {
-                    if(orderModel.isopen)
-                      Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (context)=>
-                              ShowOffers(orderModel: orderModel)
-                      )) ;
+                    // if(orderModel.isopen)
 
+    switch (orderModel.state) {
+      case 'open':
+       Provider.of<AuthProvider_vm>(context,listen: false)
+       .currentuser.type=='user'?
+       Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (context)=>
+                    ShowOffers(orderModel: orderModel)
+            )):
+       Navigator.of(context).push(
+           MaterialPageRoute(
+               builder: (context)=>
+                   waiting_aprrove_order(orderModel: orderModel)
+           ));
+        break;
+      case 'approve':
+      // return 'مفتوح';
+        Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (context)=>
+                    ChatScreen(orderModel: orderModel)
+            )) ;
+        break;
+      case 'done invoice':
+      // return 'مفتوح';
+        Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (context)=>
+                    ChatScreen(orderModel: orderModel)
+            )) ;
+        break;
+      case 'done recive':
+        // return 'مفتوح';
+        Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (context)=>
+                    ChatScreen(orderModel: orderModel)
+            )) ;
+        break;
+        case 'done arrive':
+        // return 'مفتوح';
+        Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (context)=>
+                    ChatScreen(orderModel: orderModel)
+            )) ;
+        break;
+        case 'done':
+        // return 'مفتوح';
+        Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (context)=>
+                    ChatScreen(orderModel: orderModel)
+            )) ;
+        break;
+
+    }
                   },
                   style: ButtonStyle(
                       elevation: MaterialStateProperty.all(0),

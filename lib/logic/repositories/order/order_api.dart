@@ -82,7 +82,7 @@ class order_api extends OrderRepository {
   }
 
   @override
-  Future<void> update_state(String idOrder, String state) {
+  Future<void> update_state(String idOrder, String state,String idSender) {
     // TODO: implement update_state
     throw UnimplementedError();
   }

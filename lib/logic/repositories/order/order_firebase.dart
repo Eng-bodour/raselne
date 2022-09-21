@@ -209,6 +209,8 @@ class order_firebase extends OrderRepository{
        'ispause': true,
        'distance_recive_deilvery':distance_recive_deilvery,
        'price_deilvery_captain':price_deilvery_captain,
+       'price_deilvery':price_deilvery_captain,
+
        'captain_user':idcaptain,
     })
         .then((value) => print("User Updated"))
@@ -288,6 +290,7 @@ else {
       'isopen':true,
       'isapprove':true,
       'ispause': true,
+      'state':'approve',
 
   });
 }
@@ -420,7 +423,7 @@ else {
   }
 
   @override
-  Future<void> update_state(String idOrder, String state) async {
+  Future<void> update_state(String idOrder, String state,String idSender) async {
     // TODO: implement update_state
     await FirebaseServices("orders").ref
         .doc(idOrder)
@@ -429,6 +432,25 @@ else {
         })
         .then((value) => print("state order Updated"))
         .catchError((error) => print("Failed to update user: $error"));
+    String state_message='';
+    switch( state) {
+      case 'done recive':
+        state_message= 'تم استلام طلبك ';
+        break;
+
+      case 'done arrive':
+        state_message=  'طلبك رقم 23882 وصل , المندوب عند موقع التسليم الآن';
+        break;
+      case 'done':
+        state_message=  'تم التسليم';
+        break;
+    }
+    MessageText messageText =MessageText(
+        senderId: idSender, type_message: 'text');
+    messageText.textMessage=state_message;
+    messageText.timeMessage=DateTime.now().toString();
+    sendMessage(messageText, idOrder);
+
   }
 
 }

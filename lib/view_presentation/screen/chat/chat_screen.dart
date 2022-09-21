@@ -6,6 +6,7 @@ import 'package:raselne/data_layer/model/orderModel.dart';
 
 import 'package:raselne/data_layer/model/user_model.dart';
 import 'package:raselne/utilis/theme.dart';
+import 'package:raselne/view_presentation/screen_driver/driver_rating.dart';
 
 import '../../../logic/controller/auth_controller.dart';
 import '../../../logic/controller/order_vm.dart';
@@ -161,6 +162,7 @@ class _ChatScreenState extends State<ChatScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       user = Provider.of<AuthProvider_vm>(context, listen: false)
           .currentuser;
+      Provider.of<order_vm>(context, listen: false).order=widget.orderModel;
     });
   }
 
@@ -283,46 +285,66 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
               ),
-              user.type=='captain'?
+              user.type=='captain' && widget.orderModel.state!='done'?
               InkWell(
                 onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(
-                              builder: (context)=> InvoiceImage(
-                                orderModel: widget.orderModel,),
-                              fullscreenDialog: true)
-                      );
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(
+                      //         builder: (context)=> InvoiceImage(
+                      //           orderModel: widget.orderModel,),
+                      //         fullscreenDialog: true)
+                      // );
                   // widget.orderModel.isstart
 
-               // switch(widget.orderModel.state) {
-               //   case '':
-               //     Navigator.push(context,
-               //         MaterialPageRoute(
-               //             builder: (context)=> InvoiceImage(
-               //               orderModel: widget.orderModel,),
-               //             fullscreenDialog: true)
-               //     );
-               //     break;
-               //   case 'done invoice':
-               //     // return 'استلمت الطلب';
-               //     Provider.of<order_vm>(context,listen: false)
-               //     .update_state(widget.orderModel.id_order,'done recive');
-               //     break;
-               //   case 'done recive':
-               //     // return 'وصلت لموقع العميل';
-               //     Provider.of<order_vm>(context,listen: false)
-               //         .update_state(widget.orderModel.id_order,'done arrive');
-               //     break;
-               //   case 'done arrive':
-               //     // return 'تم التسليم';
-               //     Provider.of<order_vm>(context,listen: false)
-               //         .update_state(widget.orderModel.id_order,'done');
-               //
-               //     break;
-               // }
-               // setState(() {
-               //
-               // });
+               switch( Provider.of<order_vm>(context, listen: false)
+                   .order.state) {
+                 case 'approve':
+                   Navigator.push(context,
+                       MaterialPageRoute(
+                           builder: (context)=> InvoiceImage(
+                             orderModel:  Provider.of<order_vm>(context, listen: false).order,),
+                           fullscreenDialog: true)
+                   );
+                   break;
+                 case 'done invoice':
+                   // return 'استلمت الطلب';
+                   Provider.of<order_vm>(context,listen: false)
+                   .update_state( Provider.of<order_vm>(context, listen: false).order.id_order,
+                       'done recive');
+                   break;
+                 case 'done recive':
+                   // return 'وصلت لموقع العميل';
+                   Provider.of<order_vm>(context,listen: false)
+                       .update_state( Provider.of<order_vm>(context, listen: false).order.id_order,
+                       'done arrive');
+                   break;
+                 case 'done arrive':
+                   // return 'تم التسليم';
+                   Provider.of<order_vm>(context,listen: false)
+                       .update_state( Provider.of<order_vm>(context, listen: false).order.id_order,
+                       'done');
+                   break;
+                   case 'done':
+                   // return 'تم التسليم';
+                            showModalBottomSheet<dynamic>(
+                              backgroundColor: Colors.grey.shade200,
+                              //  backgroundColor: Colors.transparent,
+                              elevation: 0,
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20),
+                                  )),
+                              context: context,
+                              isScrollControlled: true,
+                              builder: ((context) => DriverRating()),
+                              // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
+                            );
+                   break;
+               }
+               setState(() {
+                 // Provider.of<order_vm>(context,listen: false).order;
+               });
                 },
                 child: Container(
                   width: size.width * 1,
@@ -332,14 +354,34 @@ class _ChatScreenState extends State<ChatScreen> {
                       child: TextUtils(
                           fontSize: size.width * 0.05,
                           fontWeight: FontWeight.bold,
-                          text: 'اصدار فاتورة',
-                          //switch_button(),//
+                          text: //'اصدار فاتورة',
+                          switch_button(),//
                           // widget.orderModel.isstart? 'اصدار فاتورة':
                           // widget.orderModel.isdone_recive?'استلمت الطلب':'',
                           color: Colors.white,
                           underLine: TextDecoration.none)),
                 ),
               ):Container(),
+              // Provider.of<order_vm>(context,listen: true)
+              //     .order.state=='done'?
+              //    RaisedButton(
+              //      child: Text('قيم'),
+              //        onPressed: (){
+              //          showModalBottomSheet<dynamic>(
+              //            backgroundColor: Colors.grey.shade200,
+              //            //  backgroundColor: Colors.transparent,
+              //            elevation: 0,
+              //            shape: const RoundedRectangleBorder(
+              //                borderRadius: BorderRadius.only(
+              //                  topLeft: Radius.circular(20),
+              //                  topRight: Radius.circular(20),
+              //                )),
+              //            context: context,
+              //            isScrollControlled: true,
+              //            builder: ((context) => DriverRating()),
+              //            // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
+              //          );
+              //    }) :Container(),
               _buildMessageComposer(size: size),
             ],
           ),
@@ -350,16 +392,20 @@ class _ChatScreenState extends State<ChatScreen> {
 
   String switch_button() {
 
-    switch(widget.orderModel.state) {
-      case '':
+    switch( Provider.of<order_vm>(context, listen: true).order.state) {
+      case 'approve':
         return 'اصدار فاتورة';
+
       case 'done invoice':
         return 'استلمت الطلب';
 
       case 'done recive':
         return 'وصلت لموقع العميل';
+
       case 'done arrive':
         return 'تم التسليم';
+        case 'done':
+        return 'قيم ';
     }
     return '';
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/screen/my_page/services_review_screen.dart';
@@ -14,12 +15,18 @@ import 'package:raselne/view_presentation/widget/mypage/num_order.dart';
 
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
+import '../../../data_layer/model/user_model.dart';
+import '../../../logic/controller/auth_controller.dart';
+import 'package:raselne/view_presentation/widget_driver/mypage_driver/mode_user.dart';
+
 class MyPageUserScreen extends StatelessWidget {
   MyPageUserScreen({Key? key}) : super(key: key);
   final TextEditingController couponController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    UserModel user= Provider.of<AuthProvider_vm>(context,listen: true).currentuser;
+
     var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
@@ -86,6 +93,67 @@ class MyPageUserScreen extends StatelessWidget {
                     icon: const Icon(Icons.notes_outlined,
                         color: Colors.black26)),
                 Divider(thickness: 1, color: greyColor.withOpacity(0.2)),
+                modeUser(
+                    context: context,
+                    size: size,
+                    ontap: () {},
+                    title: 'وضع المستخدم',
+                    subtitle: TextButton(
+                      onPressed: () {
+                        Get.defaultDialog(
+                          title: user.type=='captain'
+                              ? "التحويل إلى وضع التسوق؟"
+                              : "التحويل إلى وضع المندوب ؟",
+                          titleStyle: TextStyle(
+                            fontSize: size.width * 0.05,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          middleText: user.type=='captain'
+                              ? 'يمكنك وضع التسوق من التسوق عبر التطبيق. لكي تتمكن منتوصيل الطلبات عليك أن تعيد تفعيل وضع المراسيل'
+                              : "يمكنك وضع المناديب من توصيل الطلبات بشكل أسهل .لكي تتمكنمن التسوق عبر التطبيق عليك أن تعيد تفعيل وضع التسوق",
+                          middleTextStyle: TextStyle(
+                            fontSize: size.width * 0.04,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.normal,
+                          ),
+                          backgroundColor: Colors.white,
+                          radius: size.width * 0.04,
+                          textCancel: 'رجوع',
+                          cancelTextColor: Colors.black,
+                          textConfirm: 'تحويل',
+                          confirmTextColor: Colors.white,
+                          onCancel: () {
+                            Get.back();
+                            // to delete
+                          },
+                          onConfirm: () async{
+                           await Provider.of<AuthProvider_vm>(context,listen: false)
+                                .switch_type();
+                            // authProvider.signOutFromApp();
+                          },
+
+                          buttonColor:
+                          mainColor, // Get.isDarkMode ? pinkClr : mainColor,
+                        );
+                      },
+                      child: user.type=='captain'
+                          ? Text(
+                        'وضع المندوب',
+                        style: TextStyle(
+                            color: mainColor,
+                            fontSize: size.width * 0.05),
+                      )
+                          : Text(
+                        'وضع المتسوق',
+                        style: TextStyle(
+                            color: mainColor,
+                            fontSize: size.width * 0.05),
+                      ),
+                    ),
+                    icon: const Icon(Icons.person, color: Colors.black26)),
+                Divider(thickness: 1, color: greyColor.withOpacity(0.2)),
+
                 info(
                     ontap: () {},
                     context: context,

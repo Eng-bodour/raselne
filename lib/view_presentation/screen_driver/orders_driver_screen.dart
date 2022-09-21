@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:group_button/group_button.dart';
+import 'package:provider/provider.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
+import '../../data_layer/model/orderModel.dart';
+import '../../logic/controller/order_vm.dart';
 import '../screen/orders_screen.dart';
 import '../widget/orders/build_orders.dart';
 
@@ -73,17 +76,47 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                               return buildMyDelevery(size: size);//نوصيل
                             },
                           )
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            controller: ScrollController(),
-                            scrollDirection: Axis.vertical,
-                            itemCount: 5,
-                            itemBuilder: (context, index) {
-                              return
-                                Text('data');
-                                // buildCardOrders(size: size, orderModel: null,);
-                            },
-                          )
+                        :  FutureBuilder(
+                        future: Provider.of<order_vm>(context,listen: false)
+                            .get_myorder(),
+                        builder: (BuildContext context, AsyncSnapshot<List<OrderModel> > snapshot) {
+                          if (snapshot.hasError) {
+                            return Text('something went wrong' +
+                                snapshot.error.toString());
+                          }
+                          if (!snapshot.hasData) {
+                            return Text("Loading");
+                          }
+                          return Column(
+                            children: [
+                              ListView.separated(
+                                shrinkWrap: true,
+                                controller: ScrollController(),
+                                scrollDirection: Axis.vertical,
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (context, index) {
+                                  return buildCardOrders(// buildCardOrders(size: size, orderModel: null,);
+                                      orderModel: snapshot.data![index],
+                                      size: size);
+                                },
+                                separatorBuilder: (context, index) =>
+                                    SizedBox(height: size.height * 0.02),
+                              )
+                            ],
+                          );
+                          // }),
+                        })
+                    // ListView.builder(
+                    //         shrinkWrap: true,
+                    //         controller: ScrollController(),
+                    //         scrollDirection: Axis.vertical,
+                    //         itemCount: 5,
+                    //         itemBuilder: (context, index) {
+                    //           return
+                    //             Text('data');
+                    //             // buildCardOrders(size: size, orderModel: null,);
+                    //         },
+                    //       )
                   ],
                 ))));
   }

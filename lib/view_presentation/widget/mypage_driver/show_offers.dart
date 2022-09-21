@@ -270,7 +270,7 @@ class ShowOffers extends StatelessWidget {
                                                         snapshot_order.data!,
                                                         false);
                                                // Navigator.pop(context);
-                                                   Get.to(  ChatScreen(orderModel: orderModel,));
+                                                   Get.to( ChatScreen(orderModel: orderModel,) );
                                                     // Navigator.push(
                                                     // context,
                                                     // MaterialPageRoute(

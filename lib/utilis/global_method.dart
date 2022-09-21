@@ -5,7 +5,10 @@
 String getstate_order(String state){
 
   switch (state) {
-    case 'isopen':
+    case 'open':
+      return 'مفتوح';
+
+    case 'approve':
       return 'مفتوح';
 
     case 'isclose':
@@ -17,8 +20,8 @@ String getstate_order(String state){
       return 'ملغى';
 
     case 'is_arrive':
-
       return 'قيد التوصيل';
+
     default :
       return '';
   }}
