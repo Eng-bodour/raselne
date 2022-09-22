@@ -107,7 +107,7 @@ Map<String, dynamic> toSnapchot() => {
        isdone_deilvery:doc["isdone_deilvery"],//تم التسليم
      isopen:doc["isopen"],
      ispause:doc["ispause"],
-     price_deilvery:doc["price_deilvery"],
+
      titleStore:doc["titleStore"],
      // toLocation:doc["toLocation"],//:GeoPoint(toLocation.latitude,toLocation.longitude) ,
      id_store:doc["idStore"],

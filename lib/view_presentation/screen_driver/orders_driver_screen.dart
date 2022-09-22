@@ -326,7 +326,8 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                           decoration: BoxDecoration(
                               color:
                               orderModel.isopen==true?
-                              Colors.amberAccent
+                              Colors.amber
+
                               :Colors.yellow,
                               borderRadius:
                                   BorderRadius.circular(size.width * 0.1)),
