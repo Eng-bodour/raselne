@@ -217,7 +217,8 @@ class user_firebase extends UserRepository{
         .where('uid', isEqualTo:
          auth.currentUser!.uid.toString())
         .get().then((value) =>
-        UserModel.fromJson(value.docs[0].data()));
+    // value.size>0?
+    UserModel.fromJson(value.docs[0].data()));
 
   }
 
