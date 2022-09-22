@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 
 import '../../data_layer/model/orderModel.dart';
@@ -54,10 +56,10 @@ class waiting_aprrove_order extends StatelessWidget {
                       RaisedButton(
                         child: Text('تم قبولك اضغط هنا..'),
                 onPressed: ()  {
-
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=>
-                        ChatScreen(orderModel: orderModel,)));
+                          Get.to( ChatScreen(orderModel: snapshot.data!,) );
+                  // Navigator.push(context,
+                //     MaterialPageRoute(builder: (context)=>
+                //         ChatScreen(orderModel: orderModel,)));
               },
               ),
                       )

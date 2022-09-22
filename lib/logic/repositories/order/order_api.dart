@@ -87,6 +87,12 @@ class order_api extends OrderRepository {
     throw UnimplementedError();
   }
 
+  @override
+  Future<List<OrderModel>> getAllorderCaptain(String id_Captain) {
+    // TODO: implement getAllorderCaptain
+    throw UnimplementedError();
+  }
+
 
 
 }

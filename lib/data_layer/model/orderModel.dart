@@ -94,6 +94,7 @@ Map<String, dynamic> toSnapchot() => {
        // fromlocation:doc["total"],
        distance_recive_deilvery:doc["distance_recive_deilvery"],
        price_deilvery_captain:doc["price_deilvery_captain"],
+       price_deilvery:doc["price_deilvery"],
        captain_user:doc["captain_user"],
        content_order:doc["content_order"],
        from_user:doc["from_user"],

@@ -32,7 +32,7 @@ class MainProvider extends ChangeNotifier {
 
   var tabs = [
     MyPageUserScreen(),
-     NotificationScreen(),
+    NotificationScreen(),
     OrdersScreen(),
     HomeScreen(),
   ];

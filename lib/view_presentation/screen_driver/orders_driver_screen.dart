@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:group_button/group_button.dart';
 import 'package:provider/provider.dart';
 import 'package:raselne/utilis/theme.dart';
+import 'package:raselne/view_presentation/screen/chat/chat_screen.dart';
+import 'package:raselne/view_presentation/screen_driver/waiting_approve_order.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
 import '../../data_layer/model/orderModel.dart';
 import '../../logic/controller/order_vm.dart';
 import '../screen/orders_screen.dart';
+import '../widget/mypage_driver/show_offers.dart';
 import '../widget/orders/build_orders.dart';
 
 class OrdersDriverScreen extends StatefulWidget {
@@ -67,16 +72,48 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                       ),
                     ),
                     selected == 0
-                        ? ListView.builder(
-                            shrinkWrap: true,
-                            controller: ScrollController(),
-                            scrollDirection: Axis.vertical,
-                            itemCount: 2,
-                            itemBuilder: (context, index) {
-                              return buildMyDelevery(size: size);//نوصيل
-                            },
-                          )
-                        :  FutureBuilder(
+                        ?
+                    // ListView.builder(
+                    //         shrinkWrap: true,
+                    //         controller: ScrollController(),
+                    //         scrollDirection: Axis.vertical,
+                    //         itemCount: 2,
+                    //         itemBuilder: (context, index) {
+                    //           return buildMyDelevery(size: size);//نوصيل
+                    //         },
+                    //       )
+                    FutureBuilder(
+                        future: Provider.of<order_vm>(context,listen: false)
+                            .get_myorderCaptain(),
+                        builder: (BuildContext context, AsyncSnapshot<List<OrderModel> > snapshot) {
+                          if (snapshot.hasError) {
+                            return Text('something went wrong' +
+                                snapshot.error.toString());
+                          }
+                          if (!snapshot.hasData) {
+                            return Text("Loading");
+                          }
+                          return Column(
+                            children: [
+                              ListView.separated(
+                                shrinkWrap: true,
+                                controller: ScrollController(),
+                                scrollDirection: Axis.vertical,
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (context, index) {
+                                  return buildMyDelevery(// buildCardOrders(size: size, orderModel: null,);
+                                      orderModel: snapshot.data![index],
+                                      size: size);
+                                },
+                                separatorBuilder: (context, index) =>
+                                    SizedBox(height: size.height * 0.02),
+                              )
+                            ],
+                          );
+                          // }),
+                        })
+                        :
+                    FutureBuilder(
                         future: Provider.of<order_vm>(context,listen: false)
                             .get_myorder(),
                         builder: (BuildContext context, AsyncSnapshot<List<OrderModel> > snapshot) {
@@ -121,9 +158,55 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                 ))));
   }
 
-  Widget buildMyDelevery({required Size size}) {
+  Widget buildMyDelevery({required OrderModel orderModel, required Size size}) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        switch (orderModel.state) {
+          case 'open':
+          // Provider.of<AuthProvider_vm>(context,listen: false)
+          // .currentuser.type=='user'?
+            Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context)=>
+                        waiting_aprrove_order(orderModel: orderModel)
+                ));
+
+            break;
+          case 'approve':
+          // return 'مفتوح';
+            Get.to(ChatScreen(orderModel: orderModel));
+
+            break;
+          case 'done invoice':
+          // return 'مفتوح';
+            Get.to(ChatScreen(orderModel: orderModel));
+
+            break;
+          case 'done recive':
+          // return 'مفتوح';
+            Get.to(ChatScreen(orderModel: orderModel));
+
+            break;
+          case 'done arrive':
+          // return 'مفتوح';
+            Get.to(ChatScreen(orderModel: orderModel));
+
+            break;
+          case 'done':
+            Get.to(ChatScreen(orderModel: orderModel));
+          // return 'مفتوح';
+          //   Navigator.of(context).push(
+          //       MaterialPageRoute(
+          //           builder: (context)=>
+          //               ChatScreen(orderModel: orderModel)
+          //       )) ;
+            break;
+            // case 'done rate':
+            // Get.to(ChatScreen(orderModel: orderModel));
+            // break;
+
+        }
+      },
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: size.width * 0.03,
@@ -131,7 +214,7 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
         ),
         child: Card(
           child: SizedBox(
-            height: size.height * 0.2,
+            height: size.height * 0.25,
             child: Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: size.width * 0.02, vertical: size.height * 0.02),
@@ -162,15 +245,15 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                               TextUtils(
                                   fontSize: size.width * 0.04,
                                   fontWeight: FontWeight.bold,
-                                  text:
-                                      'صيدلية مستشفى الحبيب', //'${Firebase.name}',
+                                  text:orderModel.titleStore,
+                                      // 'صيدلية مستشفى الحبيب', //'${Firebase.name}',
                                   color: Colors.black54,
                                   underLine: TextDecoration.none),
                               TextUtils(
                                   fontSize: size.width * 0.03,
                                   fontWeight: FontWeight.bold,
-                                  text:
-                                      'وصفة من الصيدلية', //'${Firebase.name}',
+                                  text:orderModel.content_order,
+                                      // 'وصفة من الصيدلية', //'${Firebase.name}',
                                   color: Colors.black38,
                                   underLine: TextDecoration.none),
                             ],
@@ -180,7 +263,7 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                       TextUtils(
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.normal,
-                          text: '#123456777',
+                          text: orderModel.id_order.substring(0,6),//'#123456777',
                           color: Colors.black54,
                           underLine: TextDecoration.none)
                     ],
@@ -197,6 +280,13 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                             size: size.width * 0.04,
                           ),
                           SizedBox(width: size.width * 0.01),
+                          orderModel.isopen==true?
+                          TextUtils(
+                              fontSize: size.width * 0.035,
+                              fontWeight: FontWeight.bold,
+                              text: ' جاري التوصيل ...', //'${Firebase.name}',
+                              color: Colors.black38,
+                              underLine: TextDecoration.none):
                           TextUtils(
                               fontSize: size.width * 0.035,
                               fontWeight: FontWeight.bold,
@@ -216,8 +306,8 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                           TextUtils(
                               fontSize: size.width * 0.035,
                               fontWeight: FontWeight.bold,
-                              text:
-                                  'سعر التوصيل 35.75 رس', //'${Firebase.name}',
+                              text: orderModel.price_deilvery_captain,
+                                  // 'سعر التوصيل 35.75 رس', //'${Firebase.name}',
                               color: Colors.black38,
                               underLine: TextDecoration.none),
                         ],
@@ -234,11 +324,22 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                           width: size.width * 0.4,
                           height: size.height * 0.03,
                           decoration: BoxDecoration(
-                              color: Colors.yellow,
+                              color:
+                              orderModel.isopen==true?
+                              Colors.amberAccent
+                              :Colors.yellow,
                               borderRadius:
                                   BorderRadius.circular(size.width * 0.1)),
                           child: Center(
-                            child: TextUtils(
+                            child:
+                            orderModel.isopen==true?
+                            TextUtils(
+                              color: Colors.black,
+                              text: 'متابعة',
+                              fontSize: size.width * 0.03,
+                              fontWeight: FontWeight.bold,
+                              underLine: TextDecoration.none,
+                            ):TextUtils(
                               color: Colors.black,
                               text: 'تم التوصيل',
                               fontSize: size.width * 0.03,

@@ -25,7 +25,7 @@ class buildCardOrders extends StatelessWidget {
       ),
       child: Card(
         child: SizedBox(
-          height: size.height * 0.29,
+          height: size.height * 0.35,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -118,19 +118,22 @@ class buildCardOrders extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-                child: TextUtils(
-                    fontSize: size.width * 0.04,
-                    fontWeight: FontWeight.normal,
-                    text:'وصف الطلب',
-                    //orderModel.content_order, //
-                    color: Colors.black54,
-                    underLine: TextDecoration.none),
+                child: Expanded(
+                  child: TextUtils(
+                      fontSize: size.width * 0.04,
+                      fontWeight: FontWeight.normal,
+                      text://'وصف الطلب',
+                      orderModel.content_order, //
+                      color: Colors.black54,
+                      underLine: TextDecoration.none),
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: size.width * 0.05),
                     child: Row(
                       children: [
                         TextUtils(
@@ -166,18 +169,18 @@ class buildCardOrders extends StatelessWidget {
 
     switch (orderModel.state) {
       case 'open':
-       Provider.of<AuthProvider_vm>(context,listen: false)
-       .currentuser.type=='user'?
+       // Provider.of<AuthProvider_vm>(context,listen: false)
+       // .currentuser.type=='user'?
        Navigator.of(context).push(
             MaterialPageRoute(
                 builder: (context)=>
                     ShowOffers(orderModel: orderModel)
-            )):
-       Navigator.of(context).push(
-           MaterialPageRoute(
-               builder: (context)=>
-                   waiting_aprrove_order(orderModel: orderModel)
-           ));
+            ));
+       // Navigator.of(context).push(
+       //     MaterialPageRoute(
+       //         builder: (context)=>
+       //             waiting_aprrove_order(orderModel: orderModel)
+       //     ));
         break;
       case 'approve':
       // return 'مفتوح';
@@ -241,7 +244,10 @@ class buildCardOrders extends StatelessWidget {
                         SizedBox(
                           width: size.width * 0.02,
                         ),
+                        orderModel.isopen==true?
                         const Icon(
+                          Icons.arrow_back_rounded,
+                        ):const Icon(
                           Icons.refresh_outlined,
                         ),
                       ],

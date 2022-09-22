@@ -271,7 +271,10 @@ class _ChatScreenState extends State<ChatScreen> {
                                           ),
                                         ),
                                         child: Image.network(
-                                            snapshot.data![index].textMessage.toString())):
+                                            snapshot.data![index].textMessage.toString(),
+                                          width: 30,
+                                          height: 35,
+                                        )):
                                     invoice_chat(
                                       size:size ,
                                       messageText:   snapshot.data![index],
@@ -285,7 +288,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
               ),
-              user.type=='captain' && widget.orderModel.state!='done'?
+              user.type=='captain' && widget.orderModel.state!='done rate'?
               InkWell(
                 onTap: () {
                       // Navigator.push(context,
@@ -343,7 +346,7 @@ class _ChatScreenState extends State<ChatScreen> {
                    break;
                }
                setState(() {
-                 // Provider.of<order_vm>(context,listen: false).order;
+                 Provider.of<order_vm>(context,listen: false).order;
                });
                 },
                 child: Container(

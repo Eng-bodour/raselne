@@ -17,6 +17,7 @@ class order_vm extends ChangeNotifier{
 List<DetailOrder> list_itemorder=[];
 late OrderModel order;
 List<OrderModel> mylist_order=[];
+List<OrderModel> mylist_orderCaptain=[];
 List<MessageText> ChatOrder=[];
 
 OrderRepository orderRepository;
@@ -108,6 +109,7 @@ Future<void> addOrder() async {
   order.fromlocation=order.storeModel!.location;
   order.isopen=true;
   order.state='open';
+  print(order.content_order);
   order.id_order=await orderRepository.AddOrder(order.toSnapchot());
  isloading=false;
  notifyListeners();
@@ -130,6 +132,20 @@ Future<List<OrderModel>> get_myorder()async{
   isloading=false;
   // notifyListeners();
   return mylist_order;
+}
+Future<List<OrderModel>> get_myorderCaptain()async{
+  isloading=true;
+  // notifyListeners();
+  // print('current user is '+currentuser.uid.toString());
+  //طلباتي
+  mylist_orderCaptain= await orderRepository
+      .getAllorderCaptain(
+    currentuser.uid.toString(),
+      // 'uyHNE4qdzlZekuu6R6a4JYgMUTs2'
+  );
+  isloading=false;
+  // notifyListeners();
+  return mylist_orderCaptain;
 }
 
  Future<void> update_order(String id_order,String distance_recive_deilvery,
@@ -238,6 +254,7 @@ Stream<OrderModel> check_approve_order(String idorder) async* {
   isloading=true;
   notifyListeners();
   await orderRepository.addInvoice(fileimageinvoice, currentuser.uid.toString(), message, id_order);
+  order.state='done invoice';
   isloading=false;
   notifyListeners();
   }

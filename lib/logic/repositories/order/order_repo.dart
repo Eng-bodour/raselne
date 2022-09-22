@@ -7,7 +7,8 @@ import '../../../data_layer/model/user_model.dart';
 
 abstract class OrderRepository {
   Stream<List<OrderModel>> getAllorders();
-  Future<List<OrderModel>> getAllorderUser(String id_user);
+  Future<List<OrderModel>> getAllorderUser(String id_user);//تحميل الطلبات التي طلبها المستخدم
+  Future<List<OrderModel>> getAllorderCaptain(String id_Captain);//تحميل الطلبات التي استلمها المندوب لكي يوصلها
   Future<OrderModel> getOrderById(String id);
   Stream<OrderModel> get_offer(String id_order);
   Future<UserModel> getusercaptain(String uidcaptain);

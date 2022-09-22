@@ -210,7 +210,6 @@ class order_firebase extends OrderRepository{
        'distance_recive_deilvery':distance_recive_deilvery,
        'price_deilvery_captain':price_deilvery_captain,
        'price_deilvery':price_deilvery_captain,
-
        'captain_user':idcaptain,
     })
         .then((value) => print("User Updated"))
@@ -451,6 +450,19 @@ else {
     messageText.timeMessage=DateTime.now().toString();
     sendMessage(messageText, idOrder);
 
+  }
+
+  @override
+  Future<List<OrderModel>> getAllorderCaptain(String id_Captain) {
+    // TODO: implement getAllorderCaptain
+   // throw UnimplementedError();
+    return
+      FirebaseServices("orders").ref.where(
+        'captain_user', isEqualTo: id_Captain,).get()
+          .then((snap) => snap.docs
+          .map((doc) =>
+          OrderModel.fromSnapshot( doc.data(),doc.id )).toList()
+      );
   }
 
 }

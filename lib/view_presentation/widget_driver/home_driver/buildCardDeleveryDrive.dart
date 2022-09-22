@@ -85,7 +85,7 @@ class _card_deilveryState extends State<card_deilvery> {
                     TextUtils(
                         fontSize: size.width * 0.03,
                         fontWeight: FontWeight.bold,
-                        text: '#123349599',
+                        text:widget.order.id_order.substring(0,6), //'#123349599',
                         color: Colors.black54,
                         underLine: TextDecoration.none),
                   ],
