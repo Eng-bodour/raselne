@@ -53,7 +53,7 @@ class StoreDetailsScreen extends StatelessWidget {
                   titleStore: titleStore,
                 ),
                 //for  tow lines its ListView
-                StoreListBuild()
+                StoreListBuild(type: titleStore,)
               ],
             ),
           ),

@@ -8,8 +8,8 @@ import 'package:raselne/view_presentation/screen/specific_store_screen.dart';
 import '../text_utilis.dart';
 
 class StoreListBuild extends StatefulWidget {
-  StoreListBuild({Key? key}) : super(key: key);
-
+  StoreListBuild({required this.type, Key? key}) : super(key: key);
+  String type;
   @override
   State<StoreListBuild> createState() => _StoreListBuildState();
 }
@@ -19,8 +19,9 @@ class _StoreListBuildState extends State<StoreListBuild> {
 
   @override void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+
      await Provider.of<StoreProvider_vm>(context, listen: false)
-         .getstores();
+         .getstores(widget.type);
     });
     super.initState();
   }

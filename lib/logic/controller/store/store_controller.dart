@@ -49,10 +49,17 @@ print('IdItemStore '+IdItemStore);
             }));
   }
 
- Future<void> getstores() async {
+ Future<void> getstores(String type) async {
    isloading=true;
    notifyListeners();
     liststore=await storeRepository.getAllStores();
+   print('type  '+type);
+   for(int i=0;i<liststore.length-1;i++){
+     print('typeStore  '+liststore[i].typeStore);
+     if(liststore[i].typeStore==type)
+       liststore[i].isVisible=true;
+   }
+
    isloading=false;
     notifyListeners();
   }

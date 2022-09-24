@@ -8,11 +8,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+class rate {
+  double value_rate=0.0;
+  String id_user='';
+}
+
 class UserModel {
   String? uid=null;
   String name;
   String email;
   String mobile;
+ late rate rating;
  late double rataing=0.0;
   late String type;//مندوب-زبون
  late String dateCreated='2022-1-8';

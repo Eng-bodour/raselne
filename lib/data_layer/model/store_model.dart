@@ -12,6 +12,7 @@ class StoreModel {
   String offer_value;
   String rating;
   String? IdStore;
+  bool isVisible=false;
   //bool isorderd=false;//this value to refer
  late List<Itemstore> itemstore=[];
 
@@ -28,7 +29,7 @@ class StoreModel {
 
     required this.offer_value,
     required this.rating,
-  //   this.itemstore,
+    required this.itemstore,
     required this.IdStore,
   });
   factory StoreModel.fromSnapshot(Map<String,dynamic> doc) {
@@ -40,13 +41,12 @@ class StoreModel {
       offer_value: doc['offer_value'],
       rating: doc['rating'],
       descStore: doc['descStore'],
-      IdStore: doc['IdStore'],
+      IdStore: doc['IdStore'], itemstore: [],
       // itemstore: (json.decode(doc['itemstore']) as List)
       //  .map((e) => Itemstore.fromJson(e)).toList(),
     );
     GeoPoint gloacationfrom=doc["location"];
     store.location=LatLng(gloacationfrom.latitude,gloacationfrom.longitude);
-
 
     return store;
   }

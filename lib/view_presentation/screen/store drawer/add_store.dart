@@ -321,7 +321,7 @@ class _AddStoreState extends State<AddStore> {
                                   // location: null,
                                       offer_value: '',
                                       rating: '1',
-                                  //itemstore: [],
+                                  itemstore: [],
                                   IdStore: '',
                                   descStore: '');
                                   addStoreProvider.addStore(
