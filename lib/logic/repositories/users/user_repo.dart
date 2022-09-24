@@ -9,6 +9,7 @@ abstract class UserRepository{
   Future<String> login(String email,String password);
   Future<bool> googleSinUp();
   Future<bool> faceBookSignUp( );
+  Future<void> rate_user(String value,String iduser,String id_currentUser);
   Future<String> resetPassword(String email);
   Future<String> signOut();
   Future<UserModel> getuser();

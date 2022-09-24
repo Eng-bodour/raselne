@@ -47,7 +47,10 @@ class _StoreListBuildState extends State<StoreListBuild> {
             scrollDirection: Axis.vertical,
             itemCount:  value.liststore.length,
             itemBuilder: (BuildContext context, int index) {
-              return Padding(
+              return
+
+                value.liststore[index].isVisible==true?
+                Padding(
                   padding: const EdgeInsets.all(8),
                   child: InkWell(
 
@@ -107,7 +110,7 @@ class _StoreListBuildState extends State<StoreListBuild> {
                         ),
                       ),
                     ),
-                  ));
+                  )):Container();
             },
           ),
 

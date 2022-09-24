@@ -242,5 +242,21 @@ class user_firebase extends UserRepository{
     // throw UnimplementedError();
   }
 
+  @override
+  Future<void> rate_user(String value, String iduser,String id_currentUser)async {
+    // TODO: implement rate_user
+    List<Map<String, String>> myData = [
+      {
+        'userid': id_currentUser,
+        'val': value
+      },
+      // {'question': 'How much?', 'answer': 'five dollars'},
+    ];
+   await FirebaseFirestore.instance
+        .doc('collection/document')
+        .set({'rate': myData});
+    throw UnimplementedError();
+  }
+
 
 }

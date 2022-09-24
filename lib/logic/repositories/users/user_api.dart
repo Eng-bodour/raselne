@@ -58,4 +58,10 @@ class user_api extends UserRepository{
     throw UnimplementedError();
   }
 
+  @override
+  Future<void> rate_user(String value, String iduser,String id_currentUser) {
+    // TODO: implement rate_user
+    throw UnimplementedError();
+  }
+
 }
