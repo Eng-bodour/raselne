@@ -252,10 +252,15 @@ class user_firebase extends UserRepository{
       },
       // {'question': 'How much?', 'answer': 'five dollars'},
     ];
-   await FirebaseFirestore.instance
-        .doc('collection/document')
+   String doc='';
+ await  FirebaseServices("users").ref.where(
+    'uid', isEqualTo: iduser,).get().then(
+            (value) =>doc= value.docs[0].id
+    );
+    await FirebaseFirestore.instance
+        .doc('users/$doc')
         .set({'rate': myData});
-    throw UnimplementedError();
+    // throw UnimplementedError();
   }
 
 

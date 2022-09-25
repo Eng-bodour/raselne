@@ -86,7 +86,12 @@ class AuthProvider_vm extends ChangeNotifier {
     isCheckBox = !isCheckBox;
     notifyListeners();
   }
+ Future<void> rateUser(String value,String iduser) async {
 
+  await userRepository.rate_user( value, iduser, currentuser.uid.toString());
+
+   notifyListeners();
+ }
   Future<void> signUp({
     required String name,
     required String email,

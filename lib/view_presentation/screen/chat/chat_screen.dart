@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
@@ -270,11 +271,17 @@ class _ChatScreenState extends State<ChatScreen> {
                                             bottomLeft: Radius.circular(size.width * 0.1),
                                           ),
                                         ),
-                                        child: Image.network(
-                                            snapshot.data![index].textMessage.toString(),
-                                          width: 30,
-                                          height: 35,
-                                        )):
+                                        child: CachedNetworkImage(
+                                          imageUrl:  snapshot.data![index].textMessage.toString(),
+                                          placeholder: (context, url) => CircularProgressIndicator(),
+                                          errorWidget: (context, url, error) => Icon(Icons.error),
+                                        ),
+                                        // Image.network(
+                                        //     snapshot.data![index].textMessage.toString(),
+                                        //   width: 30,
+                                        //   height: 35,
+                                        // )
+                                    ):
                                     invoice_chat(
                                       size:size ,
                                       messageText:   snapshot.data![index],
@@ -340,7 +347,14 @@ class _ChatScreenState extends State<ChatScreen> {
                                   )),
                               context: context,
                               isScrollControlled: true,
-                              builder: ((context) => DriverRating()),
+                              builder: ((context) =>
+                                  DriverRating(
+                                    typeUser:  user.type ,
+                                    iduser:
+                                    user.type=='captain'?
+                                    widget.orderModel.from_user.toString():
+                                    widget.orderModel.captain_user.toString(),
+                                  )),
                               // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
                             );
                    break;
@@ -385,7 +399,10 @@ class _ChatScreenState extends State<ChatScreen> {
               //            // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
               //          );
               //    }) :Container(),
-              _buildMessageComposer(size: size),
+              widget.orderModel.state!='done rate' ||
+              widget.orderModel.state!='done'?
+              _buildMessageComposer(size: size):
+              Container(),//done order... close order
             ],
           ),
         ),

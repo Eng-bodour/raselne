@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
+import 'package:raselne/logic/controller/auth_controller.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
 class DriverRating extends StatefulWidget {
-  DriverRating({Key? key}) : super(key: key);
-
+  DriverRating({required this.typeUser, required this.iduser, Key? key}) : super(key: key);
+  String iduser;
+  String typeUser;
   @override
   State<DriverRating> createState() => _DriverRatingState();
 }
@@ -13,6 +16,7 @@ class DriverRating extends StatefulWidget {
 class _DriverRatingState extends State<DriverRating> {
   final TextEditingController notedriver = TextEditingController();
   double rate=0;
+
   @override void initState() {
     // TODO: implement initState
     super.initState();
@@ -69,7 +73,7 @@ class _DriverRatingState extends State<DriverRating> {
                         print(rating);
                         setState(() {
                           rate=rating;
-                          print(rate);
+                           print(rate);
                         });
                       },
                     ),
@@ -181,8 +185,9 @@ class _DriverRatingState extends State<DriverRating> {
                     child: Row(
                       children: [
                         ElevatedButton(
-                            onPressed: () {
-
+                            onPressed: () async {
+                            await  Provider.of<AuthProvider_vm>(context,listen: false)
+                                  .rateUser(rate.toString(),widget.iduser);
 
                             },
                             style: ElevatedButton.styleFrom(

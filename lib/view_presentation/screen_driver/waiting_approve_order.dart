@@ -57,16 +57,16 @@ class waiting_aprrove_order extends StatelessWidget {
                         child: Text('تم قبولك اضغط هنا..'),
                 onPressed: ()  {
                           Get.to( ChatScreen(orderModel: snapshot.data!,) );
-                  // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context)=>
-                //         ChatScreen(orderModel: orderModel,)));
+                //    Navigator.push(context,
+                //    MaterialPageRoute(builder: (context)=>
+                //    ChatScreen(orderModel: orderModel,)));
               },
               ),
                       )
                      : snapshot.data!.isapprove==false&&
-                         snapshot.data!.ispause==false?
-                     Center(child: Text('تم رفض العرض')):
-                     Center(child: Text('loading..')),
+                       snapshot.data!.ispause==false?
+                       Center(child: Text('تم رفض العرض')):
+                       Center(child: Text('loading..')),
                     ],
                 ),
                   );
