@@ -29,8 +29,8 @@ class StoreTitle extends StatelessWidget {
         Row(
           children: [
             CircleAvatar(
-              radius: f18,
-              backgroundColor: Colors.lightBlueAccent.shade200,
+              radius: size.width * 0.05,
+              backgroundColor: mainColor,
               child: IconButton(
                   onPressed: () {},
                   icon: const Icon(

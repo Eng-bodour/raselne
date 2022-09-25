@@ -11,30 +11,32 @@ import 'package:raselne/view_presentation/screen/orders_screen.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
 import '../../../logic/controller/order_vm.dart';
+
 class bottomsheet extends StatefulWidget {
-   bottomsheet({required this.orderitem,Key? key}) : super(key: key);
+  bottomsheet({required this.orderitem, Key? key}) : super(key: key);
   DetailOrder orderitem;
   @override
-  State<bottomsheet>  createState() => _Statebottomsheet();
+  State<bottomsheet> createState() => _Statebottomsheet();
 }
 
-class  _Statebottomsheet extends State<bottomsheet> {
-  int index=0;
-  @override void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      DetailOrder? ord=Provider.of<order_vm>(context,listen:false )
+class _Statebottomsheet extends State<bottomsheet> {
+  int index = 0;
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      DetailOrder? ord = Provider.of<order_vm>(context, listen: false)
           .get_obj_detailorder(widget.orderitem);
-      if(ord!=null)
+      if (ord != null) {
         setState(() {
-          widget.orderitem=ord;
+          widget.orderitem = ord;
         });
+      }
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
-
     Size size = MediaQuery.of(context).size;
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -56,7 +58,7 @@ class  _Statebottomsheet extends State<bottomsheet> {
                     TextUtils(
                         fontSize: size.width * 0.05,
                         fontWeight: FontWeight.bold,
-                        text:widget.orderitem.item.description,
+                        text: widget.orderitem.item.description,
                         //Provider.of<order_vm>(context,listen:true ).list_itemorder[index].item.description, //'تفاح أميركي أحمر سوبر',
                         color: Colors.black54,
                         underLine: TextDecoration.none),
@@ -83,7 +85,8 @@ class  _Statebottomsheet extends State<bottomsheet> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: size.width * 0.24, vertical: size.height * 0.04),
+                    horizontal: size.width * 0.24,
+                    vertical: size.height * 0.04),
                 child: Row(
                   children: [
                     // IconButton(
@@ -95,12 +98,13 @@ class  _Statebottomsheet extends State<bottomsheet> {
                           //     .list_itemorder[index].item.IdItemStore;
                           //
                           // Provider.of<order_vm>(context,listen:false ).add_quaintity(id);
-                       setState(() {
-                         widget.orderitem.quaintity++;
-                         widget.orderitem.total_item=
-                             (widget.orderitem.quaintity*double.parse(widget.orderitem.item.price)).toString();
-
-                       });
+                          setState(() {
+                            widget.orderitem.quaintity++;
+                            widget.orderitem.total_item = (widget
+                                        .orderitem.quaintity *
+                                    double.parse(widget.orderitem.item.price))
+                                .toString();
+                          });
                         },
                         icon: Container(
                           child: const Icon(
@@ -120,7 +124,7 @@ class  _Statebottomsheet extends State<bottomsheet> {
                             fontSize: size.width * 0.06,
                             fontWeight: FontWeight.bold,
                             //Provider.of<order_vm>(context,listen:true ).list_itemorder[index]
-                            text:widget.orderitem.quaintity.toString(),
+                            text: widget.orderitem.quaintity.toString(),
                             //Provider.of<order_vm>(context,listen: true).list_itemorder[index].quaintity.toString(),
                             color: Colors.blueAccent.shade100,
                             underLine: TextDecoration.none),
@@ -130,7 +134,7 @@ class  _Statebottomsheet extends State<bottomsheet> {
                         TextUtils(
                             fontSize: size.width * 0.03,
                             fontWeight: FontWeight.bold,
-                            text:widget.orderitem.total_item.toString(),
+                            text: widget.orderitem.total_item.toString(),
                             //Provider.of<order_vm>(context,listen: true).list_itemorder[index].total_item.toString(),  //'22.00 SAR',
                             color: Colors.black45,
                             underLine: TextDecoration.none),
@@ -147,12 +151,15 @@ class  _Statebottomsheet extends State<bottomsheet> {
                           // String id= Provider.of<order_vm>(context,listen:false ).list_itemorder[index]
                           //     .item.IdItemStore;
                           // Provider.of<order_vm>(context,listen:false ).remove_quaintity(id);
-                         setState(() {
-                           if(  widget.orderitem.quaintity-1>=1)
-                          { widget.orderitem.quaintity--;
-                          widget.orderitem.total_item= (widget.orderitem.quaintity*double.parse(widget.orderitem.item.price)).toString();
-                          }
-                         });
+                          setState(() {
+                            if (widget.orderitem.quaintity - 1 >= 1) {
+                              widget.orderitem.quaintity--;
+                              widget.orderitem.total_item = (widget
+                                          .orderitem.quaintity *
+                                      double.parse(widget.orderitem.item.price))
+                                  .toString();
+                            }
+                          });
                         },
                         icon: Container(
                           // margin: const EdgeInsets.only(bottom: 2),
@@ -175,16 +182,16 @@ class  _Statebottomsheet extends State<bottomsheet> {
                       // String id= Provider.of<order_vm>(context,listen:false ).list_itemorder[index]
                       //     .item.IdItemStore;
                       // print('id '+id);
-                       Provider.of<StoreProvider_vm>(context,listen: false)
-                           .item_to_order(widget.orderitem.item.IdItemStore);
+                      Provider.of<StoreProvider_vm>(context, listen: false)
+                          .item_to_order(widget.orderitem.item.IdItemStore);
 
-                      Provider.of<order_vm>(context,listen:false )
-                        .addto_order(widget.orderitem);
+                      Provider.of<order_vm>(context, listen: false)
+                          .addto_order(widget.orderitem);
 
                       Navigator.pop(context);
                       // Get.toNamed(Routes.newOrderScreen);
                     },
-                    child:  TextUtils(
+                    child: TextUtils(
                       color: Colors.white,
                       text: 'إضافة',
                       fontSize: f18,
@@ -198,8 +205,4 @@ class  _Statebottomsheet extends State<bottomsheet> {
           )),
     );
   }
-
-
 }
-
-

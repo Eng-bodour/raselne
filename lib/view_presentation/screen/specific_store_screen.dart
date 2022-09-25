@@ -19,9 +19,11 @@ import '../widget/specific store/bottom_sheet_tomeal.dart';
 import '../widget/specific store/build_category_widget.dart';
 import 'new_order_screen.dart';
 import 'package:get/get.dart';
+
 class SpecificStoreScreen extends StatelessWidget {
   final int index;
-   SpecificStoreScreen({required this.titestore, required this.index, Key? key}) : super(key: key);
+  SpecificStoreScreen({required this.titestore, required this.index, Key? key})
+      : super(key: key);
   late List<Itemstore> itemstore;
   String titestore;
   late UserModel user;
@@ -36,10 +38,9 @@ class SpecificStoreScreen extends StatelessWidget {
         title: Padding(
           padding: EdgeInsets.only(
               top: size.height * 0.059, right: size.width * 0.02),
-          child:  Text(
-              titestore
-             // 'برجر كنج'
-          ),
+          child: Text(titestore
+              // 'برجر كنج'
+              ),
           // Stack(
           //   children: [
           //     Positioned(
@@ -117,11 +118,12 @@ class SpecificStoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    user= Provider.of<AuthProvider_vm>(context,listen: true).currentuser;
+    user = Provider.of<AuthProvider_vm>(context, listen: true).currentuser;
 
     print(index);
-    itemstore=Provider.of<StoreProvider_vm>(context,listen : true)
-        .liststore[index].itemstore;
+    itemstore = Provider.of<StoreProvider_vm>(context, listen: true)
+        .liststore[index]
+        .itemstore;
     // print(itemstore[0].nameCategory);
     var size = MediaQuery.of(context).size;
     var width = size.width;
@@ -158,14 +160,16 @@ class SpecificStoreScreen extends StatelessWidget {
 
                         //group by
                         //TypesChoiseWidget(itemstore),
-                        Container(
+                        SizedBox(
                           height: 1500,
                           child: GroupedListView<Itemstore, String>(
-                            elements:  itemstore,
-                            groupBy: (element)=>element.type_categore,
+                            elements: itemstore,
+                            groupBy: (element) => element.type_categore,
                             groupComparator: (value1, value2) =>
                                 value2.compareTo(value1),
-                            itemComparator: (item1, item2) => item1.type_categore.compareTo(item2.type_categore),
+                            itemComparator: (item1, item2) => item1
+                                .type_categore
+                                .compareTo(item2.type_categore),
                             order: GroupedListOrder.ASC,
                             useStickyGroupSeparators: true,
                             groupSeparatorBuilder: (String value) => Padding(
@@ -173,224 +177,268 @@ class SpecificStoreScreen extends StatelessWidget {
                               child: Text(
                                 value,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                             ),
                             itemBuilder: (c, element) {
                               return
-                                //Container(
+                                  //Container(
 
-                                //children: _privilgelist.map(( key) {
-                                 // child:
-                                  Stack(
-                                   children:[
-                                     Container(
-
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
-                                        child: InkWell(
-                                          onTap: () {
-                                            showModalBottomSheet<dynamic>(
-                                              backgroundColor: Colors.white,
-                                              //  backgroundColor: Colors.transparent,
-                                              elevation: 0,
-                                              shape: const RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.only(
-                                                    topLeft: Radius.circular(20),
-                                                    topRight: Radius.circular(20),
-                                                  )),
-                                              context: context,
-                                              isScrollControlled: true,
-                                              builder: ((context) =>
-                                              //
-                                              bottomsheet(
-                                                orderitem:
-                                                DetailOrder(element, element.price, 1) ,)));
-                                              // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
-
-                                          },
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  //children: _privilgelist.map(( key) {
+                                  // child:
+                                  Stack(children: [
+                                Container(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: size.width * 0.03),
+                                    child: InkWell(
+                                      onTap: () {
+                                        showModalBottomSheet<dynamic>(
+                                            backgroundColor: Colors.white,
+                                            //  backgroundColor: Colors.transparent,
+                                            elevation: 0,
+                                            shape: const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20),
+                                              topRight: Radius.circular(20),
+                                            )),
+                                            context: context,
+                                            isScrollControlled: true,
+                                            builder: ((context) =>
+                                                //
+                                                bottomsheet(
+                                                  orderitem: DetailOrder(
+                                                      element,
+                                                      element.price,
+                                                      1),
+                                                )));
+                                        // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Divider(
+                                            thickness: 1,
+                                            color: greyColor,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            //crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              const Divider(
-                                                thickness: 1,
-                                                color: greyColor,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                //crossAxisAlignment: CrossAxisAlignment.start,
+                                              // Positioned(
+                                              //     top:50,
+                                              //     // right: 20,
+                                              //     child: Container(
+                                              //       width: 200,
+                                              //       height: 30,
+                                              //       color: Colors.red,
+                                              //     )):
+
+                                              //Container(),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-
-                                                  // Positioned(
-                                                  //     top:50,
-                                                  //     // right: 20,
-                                                  //     child: Container(
-                                                  //       width: 200,
-                                                  //       height: 30,
-                                                  //       color: Colors.red,
-                                                  //     )):
-
-                                                  //Container(),
                                                   Column(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
-                                                      Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        children: [
-                                                          Text(element.nameCategory,),
-                                                          Text(element.description),
-                                                        ],
+                                                      Text(
+                                                        element.nameCategory,
                                                       ),
-                                                      SizedBox(
-                                                        height: size.height * 0.03,
-                                                      ),
-                                                      Text(element.price.toString())
-                                                      //const Divider(thickness: 2)
+                                                      Text(element.description),
                                                     ],
                                                   ),
-                                                  Container(
-                                                    width: size.width * 0.3,
-                                                    height: size.height * 0.13,
-                                                    decoration: BoxDecoration(
-                                                      image: DecorationImage(
-                                                        image: AssetImage('assets/services/market.png'),
-                                                        fit: BoxFit.fill,
-                                                      ),
-                                                      borderRadius: BorderRadius.circular(10),
-                                                      color: Colors.white,
-                                                    ),
-                                                  )
+                                                  SizedBox(
+                                                    height: size.height * 0.03,
+                                                  ),
+                                                  Text(element.price.toString())
+                                                  //const Divider(thickness: 2)
                                                 ],
                                               ),
+                                              Container(
+                                                width: size.width * 0.3,
+                                                height: size.height * 0.13,
+                                                decoration: BoxDecoration(
+                                                  image: const DecorationImage(
+                                                    image: AssetImage(
+                                                        'assets/services/market.png'),
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color: Colors.white,
+                                                ),
+                                              )
                                             ],
                                           ),
-                                        ),
+                                        ],
                                       ),
                                     ),
-                                     element.isorder==true?
-                                     Positioned(
-
-                                         child: Stack(
-                                           children:[
-                                             Container(
-
-                                               child: Padding(
-                                                 padding: EdgeInsets.only(top: size.height * 0.038),
-                                                 child: Container(
-                                                   height: 100,
-                                                   decoration: BoxDecoration(
-                                                       borderRadius: BorderRadius.circular(size.width * 0.01),
-                                                       color: mainColor.withOpacity(0.1)),
-                                                 ),
-                                               ),
-                                             ),
-                                             Positioned(
-                                             child: Padding(
-                                               padding: EdgeInsets.only(
-                                                   top: size.height * 0.08, right: size.width * 0.7),
-                                               child: Row(
-                                                 children: [
-                                                   InkWell(
-                                                     onTap: () {
-                                                       print('bbbbbbbb');
-                                                       showModalBottomSheet<dynamic>(
-                                                         backgroundColor: Colors.white,
-                                                         //  backgroundColor: Colors.transparent,
-                                                         elevation: 0,
-                                                         shape: const RoundedRectangleBorder(
-                                                             borderRadius: BorderRadius.only(
-                                                               topLeft: Radius.circular(20),
-                                                               topRight: Radius.circular(20),
-                                                             )),
-                                                         context: context,
-                                                         isScrollControlled: true,
-                                                         builder: ((context) =>
-                                                             bottomsheet(orderitem: DetailOrder(element, element.price, 1) ,)));
-                                                     },
-                                                     child: Container(
-                                                       width: size.width * 0.1,
-                                                       height: size.height * 0.05,
-                                                       decoration: BoxDecoration(
-                                                           borderRadius: BorderRadius.circular(20),
-                                                           color: mainColor),
-                                                       child: const Icon(
-                                                         Icons.add,
-                                                         color: Colors.white,
-                                                       ),
-                                                     ),
-                                                   ),
-                                                   SizedBox(
-                                                     width: size.width * 0.04,
-                                                   ),
-                                                   InkWell(
-                                                     onTap: () {
-                                                       Get.defaultDialog(
-                                                         title: "",
-                                                         titleStyle: TextStyle(
-                                                           fontSize: size.width * 0.04,
-                                                           color: Colors.black,
-                                                           fontWeight: FontWeight.bold,
-                                                         ),
-                                                         middleText: 'هل أنت متأكد من الحذف',
-                                                         middleTextStyle: TextStyle(
-                                                           fontSize: size.width * 0.05,
-                                                           color: Colors.black,
-                                                           fontWeight: FontWeight.bold,
-                                                         ),
-                                                         backgroundColor: Colors.white,
-                                                         radius: size.width * 0.04,
-                                                         textCancel: 'حذف',
-                                                         cancelTextColor: Colors.black,
-                                                         textConfirm: 'إغلاق',
-                                                         confirmTextColor: Colors.white,
-                                                         onCancel: () {
-                                                           // to delete
-                                                         },
-                                                         onConfirm: () {
-                                                           Get.back();
-                                                           // authProvider.signOutFromApp();
-                                                         },
-                                                         buttonColor:
-                                                         mainColor, // Get.isDarkMode ? pinkClr : mainColor,
-                                                       );
-                                                     },
-                                                     child: Container(
-                                                       width: size.width * 0.1,
-                                                       height: size.height * 0.05,
-                                                       decoration: BoxDecoration(
-                                                           borderRadius: BorderRadius.circular(20),
-                                                           color: mainColor),
-                                                       child: const Icon(
-                                                         Icons.delete_outlined,
-                                                         color: Colors.white,
-                                                       ),
-                                                     ),
-                                                   ),
-                                                 ],
-                                               ),
-                                             ),
-                                           ),
-                                         ])):Container()
-                                   ]);
-                                  // buildCategory(
-                                  //   size: size,
-                                  //   ontap: () {
-                                  //     // Navigator.of(context).push(
-                                  //     //     MaterialPageRoute(
-                                  //     //     builder: (context)=> bottomSheetToMeal(context,element)));
-                                  //     // //  Get.to(const ImageProfile());
-                                  //     // Get.to(() => StoreDetailsScreen(
-                                  //     //       titleStore: titleStore[index],
-                                  //     //       subTitleStore: subTitleStore[index],
-                                  //     //     ));
-                                  //   },
-                                  //   item:element,
-                                  //   context: context,
-                                  //
-                                  // )
-                             // );
-
+                                  ),
+                                ),
+                                element.isorder == true
+                                    ? Positioned(
+                                        child: Stack(children: [
+                                        Container(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                top: size.height * 0.038),
+                                            child: Container(
+                                              height: 100,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          size.width * 0.01),
+                                                  color: mainColor
+                                                      .withOpacity(0.1)),
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                top: size.height * 0.08,
+                                                right: size.width * 0.7),
+                                            child: Row(
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {
+                                                    print('bbbbbbbb');
+                                                    showModalBottomSheet<
+                                                            dynamic>(
+                                                        backgroundColor:
+                                                            Colors.white,
+                                                        //  backgroundColor: Colors.transparent,
+                                                        elevation: 0,
+                                                        shape:
+                                                            const RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  20),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  20),
+                                                        )),
+                                                        context: context,
+                                                        isScrollControlled:
+                                                            true,
+                                                        builder: ((context) =>
+                                                            bottomsheet(
+                                                              orderitem:
+                                                                  DetailOrder(
+                                                                      element,
+                                                                      element
+                                                                          .price,
+                                                                      1),
+                                                            )));
+                                                  },
+                                                  child: Container(
+                                                    width: size.width * 0.1,
+                                                    height: size.height * 0.05,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                        color: mainColor),
+                                                    child: const Icon(
+                                                      Icons.add,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: size.width * 0.04,
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    Get.defaultDialog(
+                                                      title: "",
+                                                      titleStyle: TextStyle(
+                                                        fontSize:
+                                                            size.width * 0.04,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                      middleText:
+                                                          'هل أنت متأكد من الحذف',
+                                                      middleTextStyle:
+                                                          TextStyle(
+                                                        fontSize:
+                                                            size.width * 0.05,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      radius: size.width * 0.04,
+                                                      textCancel: 'حذف',
+                                                      cancelTextColor:
+                                                          Colors.black,
+                                                      textConfirm: 'إغلاق',
+                                                      confirmTextColor:
+                                                          Colors.white,
+                                                      onCancel: () {
+                                                        // to delete
+                                                      },
+                                                      onConfirm: () {
+                                                        Get.back();
+                                                        // authProvider.signOutFromApp();
+                                                      },
+                                                      buttonColor:
+                                                          mainColor, // Get.isDarkMode ? pinkClr : mainColor,
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    width: size.width * 0.1,
+                                                    height: size.height * 0.05,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                        color: mainColor),
+                                                    child: const Icon(
+                                                      Icons.delete_outlined,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ]))
+                                    : Container()
+                              ]);
+                              // buildCategory(
+                              //   size: size,
+                              //   ontap: () {
+                              //     // Navigator.of(context).push(
+                              //     //     MaterialPageRoute(
+                              //     //     builder: (context)=> bottomSheetToMeal(context,element)));
+                              //     // //  Get.to(const ImageProfile());
+                              //     // Get.to(() => StoreDetailsScreen(
+                              //     //       titleStore: titleStore[index],
+                              //     //       subTitleStore: subTitleStore[index],
+                              //     //     ));
+                              //   },
+                              //   item:element,
+                              //   context: context,
+                              //
+                              // )
+                              // );
                             },
                           ),
                         ),
@@ -414,7 +462,6 @@ class SpecificStoreScreen extends StatelessWidget {
                         //   //   color: greyColor.withOpacity(0.2),
                         //   // ),
                         // ),
-
                       ],
                     ),
                   ),
@@ -426,13 +473,12 @@ class SpecificStoreScreen extends StatelessWidget {
         bottomSheet: BottomAppBar(
           child: InkWell(
             onTap: () {
-              Provider.of<order_vm>(context,listen : false).prepareOrder(
-                  Provider.of<StoreProvider_vm>(context,listen : false)
-                  .liststore[index]);
+              Provider.of<order_vm>(context, listen: false).prepareOrder(
+                  Provider.of<StoreProvider_vm>(context, listen: false)
+                      .liststore[index]);
               // Provider.of<StoreProvider_vm>(context,listen : false).liststore[index]
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context)=>
-                  NewOrderScreen   ()));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const NewOrderScreen()));
               // showDialog(
               //     context: context,
               //     builder: (context) {
@@ -485,8 +531,7 @@ class SpecificStoreScreen extends StatelessWidget {
               //       );
               //     });
             },
-            child:
-            Container(
+            child: Container(
               width: size.width * 1,
               height: size.height * 0.1,
               decoration: const BoxDecoration(color: mainColor),

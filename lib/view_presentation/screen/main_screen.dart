@@ -15,13 +15,10 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   @override
-  void initState()  {
-
-
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Provider.of<AuthProvider_vm>(context,listen: false)
-          .getuser_vm();
-     });
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      await Provider.of<AuthProvider_vm>(context, listen: false).getuser_vm();
+    });
     // FirebaseServices.name;
     // FirebaseServices().getNameuser();
     super.initState();
@@ -41,8 +38,8 @@ class _MainScreenState extends State<MainScreen> {
               Colors.white, //Get.isDarkMode ? darkGreyClr : Colors.white,
           currentIndex: mainProvider.get(),
           type: BottomNavigationBarType.fixed,
-          items:  [
-            BottomNavigationBarItem(
+          items: [
+            const BottomNavigationBarItem(
               activeIcon: Icon(Icons.person,
                   color: mainColor //Get.isDarkMode ? pinkClr : mainColor,
                   ),
@@ -53,7 +50,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
               label: 'صفحتي',
             ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               activeIcon: Icon(Icons.notification_important,
                   color: mainColor //Get.isDarkMode ? pinkClr : mainColor,
                   ),
@@ -64,7 +61,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
               label: 'التنبيهات',
             ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               activeIcon: Icon(Icons.car_rental_sharp,
                   color: mainColor //Get.isDarkMode ? pinkClr : mainColor,
                   ),
@@ -76,17 +73,19 @@ class _MainScreenState extends State<MainScreen> {
               label: 'الطلبات',
             ),
             BottomNavigationBarItem(
-              activeIcon: Icon(Icons.shopping_bag,
+              activeIcon: const Icon(Icons.shopping_bag,
                   color: mainColor //Get.isDarkMode ? pinkClr : mainColor,
                   ),
-              icon: Icon(Icons.shopping_bag,
+              icon: const Icon(Icons.shopping_bag,
                   color: Colors
                       .black //Get.isDarkMode ? Colors.white : Colors.black,
                   ),
-              label:
-              Provider.of<AuthProvider_vm>(context,
-                  listen: false).currentuser.type=='captain'?
-              'الرئيسية': 'المتاجر',
+              label: Provider.of<AuthProvider_vm>(context, listen: false)
+                          .currentuser
+                          .type ==
+                      'captain'
+                  ? 'الرئيسية'
+                  : 'المتاجر',
             ),
           ],
           onTap: (index) {
@@ -95,10 +94,12 @@ class _MainScreenState extends State<MainScreen> {
         ),
         body: IndexedStack(
           index: mainProvider.get(),
-          children: Provider.of<AuthProvider_vm>(context,
-              listen: false).currentuser.type=='captain'?
-          mainProvider.tabscaptain :
-          mainProvider.tabs,
+          children: Provider.of<AuthProvider_vm>(context, listen: false)
+                      .currentuser
+                      .type ==
+                  'captain'
+              ? mainProvider.tabscaptain
+              : mainProvider.tabs,
         ),
       ),
       //  Obx(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-const Color mainColor = Colors.amberAccent;
+const Color mainColor = Color.fromRGBO(230, 120, 23, 100);
 const Color darkGreyClr = Color(0xFF121212);
-const Color logOutSettings = Colors.amberAccent;
+const Color logOutSettings = Color.fromRGBO(230, 120, 23, 100);
 const Color greyColor = Colors.grey;
 const Color greyArrow = Colors.black45;
 

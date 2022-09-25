@@ -14,16 +14,24 @@ import '../../view_presentation/screen_driver/orders_driver_screen.dart';
 class MainProvider extends ChangeNotifier {
   int currentIndex = 3;
 //  final List<StatelessWidget> tabs = [];
-  UserModel currentuser=UserModel(
-      location: null,name: '',email: '',dateCreated: '',mobile:''
-  ,type: '',uid: '',Id_number: '',num_car: '',num_travel: '',type_car: ''
-  );
-  setvalue(UserModel val){
-
-    currentuser=val;
-    print('current '+currentuser.name.toString());
+  UserModel currentuser = UserModel(
+      location: null,
+      name: '',
+      email: '',
+      dateCreated: '',
+      mobile: '',
+      type: '',
+      uid: '',
+      Id_number: '',
+      num_car: '',
+      num_travel: '',
+      type_car: '');
+  setvalue(UserModel val) {
+    currentuser = val;
+    print('current ' + currentuser.name.toString());
     notifyListeners();
   }
+
   get() => currentIndex;
   void setCurrentIndex(value) {
     currentIndex = value;
@@ -32,15 +40,15 @@ class MainProvider extends ChangeNotifier {
 
   var tabs = [
     MyPageUserScreen(),
-    NotificationScreen(),
-    OrdersScreen(),
+    const NotificationScreen(),
+    const OrdersScreen(),
     HomeScreen(),
   ];
   var tabscaptain = [
     MyPageDriverScreen(),
-    NotificationScreen(),
+    const NotificationScreen(),
     OrdersDriverScreen(),
-    HomeDriverScreen(),
+    const HomeDriverScreen(),
   ];
   var title = [
     "صفحتي",

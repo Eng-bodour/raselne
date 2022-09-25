@@ -25,24 +25,24 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  TextEditingController messagecontrol=TextEditingController();
-  String textmessage='';
+  TextEditingController messagecontrol = TextEditingController();
+  String textmessage = '';
   late UserModel user;
 
   _buildMessage(MessageText message, bool isMe, Size size) {
     final Container msg = Container(
       margin: isMe
           ? EdgeInsets.only(
-        top: size.height * 0.01,
-        bottom: size.height * 0.01,
-        left: size.width * 0.3,
-        right: size.width * 0.03,
-      )
+              top: size.height * 0.01,
+              bottom: size.height * 0.01,
+              left: size.width * 0.3,
+              right: size.width * 0.03,
+            )
           : EdgeInsets.only(
-        top: size.height * 0.01,
-        left: size.width * 0.03,
-        bottom: size.height * 0.01,
-      ),
+              top: size.height * 0.01,
+              left: size.width * 0.03,
+              bottom: size.height * 0.01,
+            ),
       padding: EdgeInsets.symmetric(
           horizontal: size.width * 0.06, vertical: size.height * 0.03),
       width: size.width * 0.75,
@@ -50,17 +50,17 @@ class _ChatScreenState extends State<ChatScreen> {
         color: isMe ? greyColor.withOpacity(0.1) : mainColor.withOpacity(0.3),
         borderRadius: isMe
             ? BorderRadius.only(
-          topLeft: Radius.circular(size.width * 0.1),
-          topRight: Radius.circular(size.width * 0.02),
-          bottomLeft: Radius.circular(size.width * 0.02),
-          bottomRight: Radius.circular(size.width * 0.1),
-        )
+                topLeft: Radius.circular(size.width * 0.1),
+                topRight: Radius.circular(size.width * 0.02),
+                bottomLeft: Radius.circular(size.width * 0.02),
+                bottomRight: Radius.circular(size.width * 0.1),
+              )
             : BorderRadius.only(
-          topRight: Radius.circular(size.width * 0.1),
-          topLeft: Radius.circular(size.width * 0.02),
-          bottomRight: Radius.circular(size.width * 0.02),
-          bottomLeft: Radius.circular(size.width * 0.1),
-        ),
+                topRight: Radius.circular(size.width * 0.1),
+                topLeft: Radius.circular(size.width * 0.02),
+                bottomRight: Radius.circular(size.width * 0.02),
+                bottomLeft: Radius.circular(size.width * 0.1),
+              ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,16 +116,16 @@ class _ChatScreenState extends State<ChatScreen> {
             icon: const Icon(Icons.photo),
             iconSize: 25.0,
             color: mainColor,
-            onPressed: () {
-
-            },
+            onPressed: () {},
           ),
           Expanded(
             child: TextField(
               cursorColor: mainColor,
               controller: messagecontrol,
               textCapitalization: TextCapitalization.sentences,
-              onChanged: (value) {textmessage=value;},
+              onChanged: (value) {
+                textmessage = value;
+              },
               decoration: const InputDecoration.collapsed(
                 hintText: 'Send a message...',
               ),
@@ -135,22 +135,20 @@ class _ChatScreenState extends State<ChatScreen> {
             icon: const Icon(Icons.send),
             iconSize: 25.0,
             color: mainColor,
-            onPressed: ()
-            async {
-              messagecontrol.text='';
-           await   Provider.of<order_vm>(context,listen: false)
-                  .sendMessage(
+            onPressed: () async {
+              messagecontrol.text = '';
+              await Provider.of<order_vm>(context, listen: false).sendMessage(
                   MessageText(
-                  senderId: user.uid.toString(),
-                  textMessage:textmessage,
-                  timeMessage: DateTime.now().toString(),
-                  type_message: 'text'
-                  ), widget.orderModel.id_order);
-           setState(() {
-             textmessage='';
-             messagecontrol.text='';
-           });
-           },
+                      senderId: user.uid.toString(),
+                      textMessage: textmessage,
+                      timeMessage: DateTime.now().toString(),
+                      type_message: 'text'),
+                  widget.orderModel.id_order);
+              setState(() {
+                textmessage = '';
+                messagecontrol.text = '';
+              });
+            },
           ),
         ],
       ),
@@ -160,10 +158,9 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      user = Provider.of<AuthProvider_vm>(context, listen: false)
-          .currentuser;
-      Provider.of<order_vm>(context, listen: false).order=widget.orderModel;
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      user = Provider.of<AuthProvider_vm>(context, listen: false).currentuser;
+      Provider.of<order_vm>(context, listen: false).order = widget.orderModel;
     });
   }
 
@@ -196,7 +193,7 @@ class _ChatScreenState extends State<ChatScreen> {
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: ModalProgressHUD(
-          inAsyncCall: Provider.of<order_vm>(context,listen: true).isloading,
+          inAsyncCall: Provider.of<order_vm>(context, listen: true).isloading,
           child: Column(
             children: <Widget>[
               Expanded(
@@ -213,172 +210,222 @@ class _ChatScreenState extends State<ChatScreen> {
                       topLeft: Radius.circular(30.0),
                       topRight: Radius.circular(30.0),
                     ),
-                    child:
-                          StreamBuilder(
-                            stream: Provider.of<order_vm>(context,listen: false)
-                                .getchat(widget.orderModel.id_order),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<List<MessageText>> snapshot)
-                            {
-                              if(snapshot.hasError) {
-                                return Text('something went wrong' +
-                                    snapshot.error
-                                    .toString());
-                              }
-                              if(!snapshot.hasData){
-                                return Text("Loading");
-                              }
-                              return
-                               Expanded(
-                                 child: ListView.builder(
+                    child: StreamBuilder(
+                      stream: Provider.of<order_vm>(context, listen: false)
+                          .getchat(widget.orderModel.id_order),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<MessageText>> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('something went wrong' +
+                              snapshot.error.toString());
+                        }
+                        if (!snapshot.hasData) {
+                          return const Text("Loading");
+                        }
+                        return Expanded(
+                          child: ListView.builder(
                             //to reverse message
                             //   reverse: true,
-                              padding: EdgeInsets.only(top: size.height * 0.02),
-                              itemCount:snapshot.data!.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                  // final MessageText message = messages[index];
-                                  bool isMe = snapshot.data![index].senderId ==user.uid;
-                                  return
-                                    snapshot.data![index].type_message=='text'?
-                                    _buildMessage( snapshot.data![index], isMe, size):
-                                    snapshot.data![index].type_message=='map'?
-                                    mapLocationMessage(
-                                    message: snapshot.data![index],
-                                    size: size,):
-                                    snapshot.data![index].type_message=='image'?
-                                    Container(
-                                       margin:  EdgeInsets.only(
-                                         top: size.height * 0.01,
-                                         left: size.width * 0.03,
-                                         bottom: size.height * 0.01,
-                                       ),
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: size.width * 0.06, vertical: size.height * 0.03),
-                                        width: size.width * 0.75,
-                                        decoration: BoxDecoration(
-                                          color: isMe ? greyColor.withOpacity(0.1) : mainColor.withOpacity(0.3),
-                                          borderRadius: isMe
-                                              ? BorderRadius.only(
-                                            topLeft: Radius.circular(size.width * 0.1),
-                                            topRight: Radius.circular(size.width * 0.02),
-                                            bottomLeft: Radius.circular(size.width * 0.02),
-                                            bottomRight: Radius.circular(size.width * 0.1),
-                                          )
-                                              : BorderRadius.only(
-                                            topRight: Radius.circular(size.width * 0.1),
-                                            topLeft: Radius.circular(size.width * 0.02),
-                                            bottomRight: Radius.circular(size.width * 0.02),
-                                            bottomLeft: Radius.circular(size.width * 0.1),
-                                          ),
-                                        ),
-                                        child: CachedNetworkImage(
-                                          imageUrl:  snapshot.data![index].textMessage.toString(),
-                                          placeholder: (context, url) => CircularProgressIndicator(),
-                                          errorWidget: (context, url, error) => Icon(Icons.error),
-                                        ),
-                                        // Image.network(
-                                        //     snapshot.data![index].textMessage.toString(),
-                                        //   width: 30,
-                                        //   height: 35,
-                                        // )
-                                    ):
-                                    invoice_chat(
-                                      size:size ,
-                                      messageText:   snapshot.data![index],
-                                    );//invoice
-                              },
-                            ),
-                               );
+                            padding: EdgeInsets.only(top: size.height * 0.02),
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              // final MessageText message = messages[index];
+                              bool isMe =
+                                  snapshot.data![index].senderId == user.uid;
+                              return snapshot.data![index].type_message ==
+                                      'text'
+                                  ? _buildMessage(
+                                      snapshot.data![index], isMe, size)
+                                  : snapshot.data![index].type_message == 'map'
+                                      ? mapLocationMessage(
+                                          message: snapshot.data![index],
+                                          size: size,
+                                        )
+                                      : snapshot.data![index].type_message ==
+                                              'image'
+                                          ? Container(
+                                              margin: EdgeInsets.only(
+                                                top: size.height * 0.01,
+                                                left: size.width * 0.03,
+                                                bottom: size.height * 0.01,
+                                              ),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: size.width * 0.06,
+                                                  vertical: size.height * 0.03),
+                                              width: size.width * 0.75,
+                                              decoration: BoxDecoration(
+                                                color: isMe
+                                                    ? greyColor.withOpacity(0.1)
+                                                    : mainColor
+                                                        .withOpacity(0.3),
+                                                borderRadius: isMe
+                                                    ? BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(
+                                                                size.width *
+                                                                    0.1),
+                                                        topRight:
+                                                            Radius.circular(
+                                                                size.width *
+                                                                    0.02),
+                                                        bottomLeft:
+                                                            Radius.circular(
+                                                                size.width *
+                                                                    0.02),
+                                                        bottomRight:
+                                                            Radius.circular(
+                                                                size.width *
+                                                                    0.1),
+                                                      )
+                                                    : BorderRadius.only(
+                                                        topRight:
+                                                            Radius.circular(
+                                                                size.width *
+                                                                    0.1),
+                                                        topLeft:
+                                                            Radius.circular(
+                                                                size.width *
+                                                                    0.02),
+                                                        bottomRight:
+                                                            Radius.circular(
+                                                                size.width *
+                                                                    0.02),
+                                                        bottomLeft:
+                                                            Radius.circular(
+                                                                size.width *
+                                                                    0.1),
+                                                      ),
+                                              ),
+                                              child: CachedNetworkImage(
+                                                imageUrl: snapshot
+                                                    .data![index].textMessage
+                                                    .toString(),
+                                                placeholder: (context, url) =>
+                                                    const CircularProgressIndicator(),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        const Icon(Icons.error),
+                                              ),
+                                              // Image.network(
+                                              //     snapshot.data![index].textMessage.toString(),
+                                              //   width: 30,
+                                              //   height: 35,
+                                              // )
+                                            )
+                                          : invoice_chat(
+                                              size: size,
+                                              messageText:
+                                                  snapshot.data![index],
+                                            ); //invoice
                             },
                           ),
-
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
-              user.type=='captain' && widget.orderModel.state!='done rate'?
-              InkWell(
-                onTap: () {
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(
-                      //         builder: (context)=> InvoiceImage(
-                      //           orderModel: widget.orderModel,),
-                      //         fullscreenDialog: true)
-                      // );
-                  // widget.orderModel.isstart
+              user.type == 'captain' && widget.orderModel.state != 'done rate'
+                  ? InkWell(
+                      onTap: () {
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(
+                        //         builder: (context)=> InvoiceImage(
+                        //           orderModel: widget.orderModel,),
+                        //         fullscreenDialog: true)
+                        // );
+                        // widget.orderModel.isstart
 
-               switch( Provider.of<order_vm>(context, listen: false)
-                   .order.state) {
-                 case 'approve':
-                   Navigator.push(context,
-                       MaterialPageRoute(
-                           builder: (context)=> InvoiceImage(
-                             orderModel:  Provider.of<order_vm>(context, listen: false).order,),
-                           fullscreenDialog: true)
-                   );
-                   break;
-                 case 'done invoice':
-                   // return 'استلمت الطلب';
-                   Provider.of<order_vm>(context,listen: false)
-                   .update_state( Provider.of<order_vm>(context, listen: false).order.id_order,
-                       'done recive');
-                   break;
-                 case 'done recive':
-                   // return 'وصلت لموقع العميل';
-                   Provider.of<order_vm>(context,listen: false)
-                       .update_state( Provider.of<order_vm>(context, listen: false).order.id_order,
-                       'done arrive');
-                   break;
-                 case 'done arrive':
-                   // return 'تم التسليم';
-                   Provider.of<order_vm>(context,listen: false)
-                       .update_state( Provider.of<order_vm>(context, listen: false).order.id_order,
-                       'done');
-                   break;
-                   case 'done':
-                   // return 'تم التسليم';
+                        switch (Provider.of<order_vm>(context, listen: false)
+                            .order
+                            .state) {
+                          case 'approve':
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => InvoiceImage(
+                                          orderModel: Provider.of<order_vm>(
+                                                  context,
+                                                  listen: false)
+                                              .order,
+                                        ),
+                                    fullscreenDialog: true));
+                            break;
+                          case 'done invoice':
+                            // return 'استلمت الطلب';
+                            Provider.of<order_vm>(context, listen: false)
+                                .update_state(
+                                    Provider.of<order_vm>(context,
+                                            listen: false)
+                                        .order
+                                        .id_order,
+                                    'done recive');
+                            break;
+                          case 'done recive':
+                            // return 'وصلت لموقع العميل';
+                            Provider.of<order_vm>(context, listen: false)
+                                .update_state(
+                                    Provider.of<order_vm>(context,
+                                            listen: false)
+                                        .order
+                                        .id_order,
+                                    'done arrive');
+                            break;
+                          case 'done arrive':
+                            // return 'تم التسليم';
+                            Provider.of<order_vm>(context, listen: false)
+                                .update_state(
+                                    Provider.of<order_vm>(context,
+                                            listen: false)
+                                        .order
+                                        .id_order,
+                                    'done');
+                            break;
+                          case 'done':
+                            // return 'تم التسليم';
                             showModalBottomSheet<dynamic>(
                               backgroundColor: Colors.grey.shade200,
                               //  backgroundColor: Colors.transparent,
                               elevation: 0,
                               shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    topRight: Radius.circular(20),
-                                  )),
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                              )),
                               context: context,
                               isScrollControlled: true,
-                              builder: ((context) =>
-                                  DriverRating(
-                                    typeUser:  user.type ,
-                                    iduser:
-                                    user.type=='captain'?
-                                    widget.orderModel.from_user.toString():
-                                    widget.orderModel.captain_user.toString(),
+                              builder: ((context) => DriverRating(
+                                    typeUser: user.type,
+                                    iduser: user.type == 'captain'
+                                        ? widget.orderModel.from_user.toString()
+                                        : widget.orderModel.captain_user
+                                            .toString(),
                                   )),
                               // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
                             );
-                   break;
-               }
-               setState(() {
-                 Provider.of<order_vm>(context,listen: false).order;
-               });
-                },
-                child: Container(
-                  width: size.width * 1,
-                  height: size.height * 0.1,
-                  decoration: const BoxDecoration(color: greyColor),
-                  child: Center(
-                      child: TextUtils(
-                          fontSize: size.width * 0.05,
-                          fontWeight: FontWeight.bold,
-                          text: //'اصدار فاتورة',
-                          switch_button(),//
-                          // widget.orderModel.isstart? 'اصدار فاتورة':
-                          // widget.orderModel.isdone_recive?'استلمت الطلب':'',
-                          color: Colors.white,
-                          underLine: TextDecoration.none)),
-                ),
-              ):Container(),
+                            break;
+                        }
+                        setState(() {
+                          Provider.of<order_vm>(context, listen: false).order;
+                        });
+                      },
+                      child: Container(
+                        width: size.width * 1,
+                        height: size.height * 0.1,
+                        decoration: const BoxDecoration(color: greyColor),
+                        child: Center(
+                            child: TextUtils(
+                                fontSize: size.width * 0.05,
+                                fontWeight: FontWeight.bold,
+                                text: //'اصدار فاتورة',
+                                    switch_button(), //
+                                // widget.orderModel.isstart? 'اصدار فاتورة':
+                                // widget.orderModel.isdone_recive?'استلمت الطلب':'',
+                                color: Colors.white,
+                                underLine: TextDecoration.none)),
+                      ),
+                    )
+                  : Container(),
               // Provider.of<order_vm>(context,listen: true)
               //     .order.state=='done'?
               //    RaisedButton(
@@ -399,10 +446,10 @@ class _ChatScreenState extends State<ChatScreen> {
               //            // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
               //          );
               //    }) :Container(),
-              widget.orderModel.state!='done rate' ||
-              widget.orderModel.state!='done'?
-              _buildMessageComposer(size: size):
-              Container(),//done order... close order
+              widget.orderModel.state != 'done rate' ||
+                      widget.orderModel.state != 'done'
+                  ? _buildMessageComposer(size: size)
+                  : Container(), //done order... close order
             ],
           ),
         ),
@@ -411,8 +458,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   String switch_button() {
-
-    switch( Provider.of<order_vm>(context, listen: true).order.state) {
+    switch (Provider.of<order_vm>(context, listen: true).order.state) {
       case 'approve':
         return 'اصدار فاتورة';
 
@@ -424,7 +470,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
       case 'done arrive':
         return 'تم التسليم';
-        case 'done':
+      case 'done':
         return 'قيم ';
     }
     return '';

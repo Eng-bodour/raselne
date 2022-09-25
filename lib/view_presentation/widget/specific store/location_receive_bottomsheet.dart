@@ -26,34 +26,32 @@ class map_location extends StatefulWidget {
 }
 
 class _map_locationState extends State<map_location> {
-  String Address='';
+  String Address = '';
   File? pickedFile;
   ImagePicker imagePicker = ImagePicker();
-  Completer<GoogleMapController> _controller=Completer();
-  static final CameraPosition _inialCameraPosition= CameraPosition(
-      target: LatLng(33.55,36.28),
-      zoom: 17.47
-  );
-  LatLng currentLocation=_inialCameraPosition.target;
+  final Completer<GoogleMapController> _controller = Completer();
+  static const CameraPosition _inialCameraPosition =
+      CameraPosition(target: LatLng(33.55, 36.28), zoom: 17.47);
+  LatLng currentLocation = _inialCameraPosition.target;
 
-  Set<Marker> _markers={};
-  Set<Polyline> _polylines = {};
+  final Set<Marker> _markers = {};
+  final Set<Polyline> _polylines = {};
 
   late Marker newMarker;
   BitmapDescriptor? _locationIcon;
 
-  @override void initState() {
+  @override
+  void initState() {
     _buildMarkerFromAssets();
     getMyLocation();
     // _drawPolyline();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     TextEditingController addDetails = TextEditingController();
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
@@ -88,31 +86,29 @@ class _map_locationState extends State<map_location> {
                 height: size.height * 0.4,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(size.width * 0.01),
-                    color: mainColor
-                ),
+                    color: mainColor),
                 child: Scaffold(
                   body: Stack(
                     alignment: Alignment.center,
                     children: [
                       GoogleMap(
-                      initialCameraPosition: _inialCameraPosition,
-                      mapType: MapType.normal,
-                      onMapCreated: (GoogleMapController controller) async{
-                        String style = await DefaultAssetBundle.of(context)
-                            .loadString('assets/map_style.json');
-                        //customize your map style at: https://mapstyle.withgoogle.com/
-                        controller.setMapStyle(style);
-                        _controller.complete(controller);
-
-                      },
-                      onCameraMove: (CameraPosition newPos){
-                       setState(() {
-                         currentLocation=newPos.target;
-                       });
-                      },
-                      markers: _markers,
+                        initialCameraPosition: _inialCameraPosition,
+                        mapType: MapType.normal,
+                        onMapCreated: (GoogleMapController controller) async {
+                          String style = await DefaultAssetBundle.of(context)
+                              .loadString('assets/map_style.json');
+                          //customize your map style at: https://mapstyle.withgoogle.com/
+                          controller.setMapStyle(style);
+                          _controller.complete(controller);
+                        },
+                        onCameraMove: (CameraPosition newPos) {
+                          setState(() {
+                            currentLocation = newPos.target;
+                          });
+                        },
+                        markers: _markers,
                         polylines: _polylines,
-                    ),
+                      ),
                       SizedBox(
                         width: 40,
                         height: 40,
@@ -120,30 +116,30 @@ class _map_locationState extends State<map_location> {
                       ),
                     ],
                   ),
-              floatingActionButton: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  // FloatingActionButton(
-                  //   onPressed: () => _drawPolyline(
-                  //       LatLng(38.52900208591146, -98.54919254779816), currentLocation),
-                  //   child: Icon(Icons.settings_ethernet_rounded),
-                  // ),
-                  FloatingActionButton(
-                    onPressed: () => _setMarker(currentLocation),
-                    child: Icon(Icons.location_on),
+                  floatingActionButton: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      // FloatingActionButton(
+                      //   onPressed: () => _drawPolyline(
+                      //       LatLng(38.52900208591146, -98.54919254779816), currentLocation),
+                      //   child: Icon(Icons.settings_ethernet_rounded),
+                      // ),
+                      FloatingActionButton(
+                        onPressed: () => _setMarker(currentLocation),
+                        child: const Icon(Icons.location_on),
+                      ),
+                      FloatingActionButton(
+                        onPressed: () => getMyLocation(),
+                        child: const Icon(Icons.gps_fixed),
+                      ),
+                    ],
                   ),
-                  FloatingActionButton(
-                    onPressed: () => getMyLocation(),
-                    child: Icon(Icons.gps_fixed),
-                  ),
-                ],
-              ),
                 ),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
                 child: Container(
-                  height: size.height * 0.25,
+                  height: size.height * 0.3,
                   width: size.width,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(size.width * 0.04),
@@ -177,7 +173,10 @@ class _map_locationState extends State<map_location> {
                             //     "lat: ${currentLocation.latitude}, "
                             //         "long : ${currentLocation.longitude}"),
                             //
-                            Text(Address),
+                            Text(
+                              Address,
+                              style: TextStyle(fontSize: size.width * 0.03),
+                            ),
                           ],
                         ),
                       ),
@@ -196,11 +195,12 @@ class _map_locationState extends State<map_location> {
                       TextFormField(
                         controller: addDetails,
                         decoration: InputDecoration(
+                          border: InputBorder.none,
                           fillColor: mainColor.withOpacity(0.1),
                           hintText: 'رقم العمارة, رقم الشقة, علامة مميزة',
-                          hintStyle: const TextStyle(
+                          hintStyle: TextStyle(
                             color: Colors.black45,
-                            fontSize: f16,
+                            fontSize: size.width * 0.03,
                             fontWeight: FontWeight.w500,
                           ),
                           filled: true,
@@ -217,9 +217,9 @@ class _map_locationState extends State<map_location> {
                             elevation: 0,
                             shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
-                                )),
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            )),
                             context: context,
                             // isScrollControlled: true,
                             builder: ((context) {
@@ -268,29 +268,32 @@ class _map_locationState extends State<map_location> {
                         /// authProvider.checkBox();
                       },
                       child: Container(
-                          height: size.height * 0.04,
-                          width: size.width * 0.08,
+                          height: size.height * 0.03,
+                          width: size.width * 0.06,
                           decoration: BoxDecoration(
-                            color: Colors.black54,
+                            color: greyArrow.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child:
+                          child: const Icon(
+                            Icons.done,
+                            color: mainColor,
+                          )
                           // authProvider.isCheckBox
                           //     ?
 
-                          Image.asset(
-                            'assets/images/check.png',
-                            color: Colors.amber,
-                          )
-                        // : Container(),
-                      ),
+                          //     Image.asset(
+                          //   'assets/images/check.png',
+                          //   color: Colors.amber,
+                          // )
+                          // : Container(),
+                          ),
                     ),
                     SizedBox(
                       width: size.width * 0.02,
                     ),
                     Text('حفظ المكان لاستخدامه لاحقاً',
                         style: TextStyle(
-                            fontSize: size.width * 0.045,
+                            fontSize: size.width * 0.03,
                             fontWeight: FontWeight.bold,
                             color: Colors.black54)),
                   ],
@@ -304,9 +307,9 @@ class _map_locationState extends State<map_location> {
                   horizontal: size.width * 0.04,
                 ),
                 child: ElevatedButton(
-                  onPressed: () async{
-                  await  Provider.of<order_vm>(context,listen: false)
-                        .addlocation(currentLocation,Address,addDetails.text);
+                  onPressed: () async {
+                    await Provider.of<order_vm>(context, listen: false)
+                        .addlocation(currentLocation, Address, addDetails.text);
                     Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
@@ -331,7 +334,6 @@ class _map_locationState extends State<map_location> {
     );
   }
 
-
   Widget addImageBottomSheet(
       {required Size size, required BuildContext context}) {
     return Directionality(
@@ -346,7 +348,7 @@ class _map_locationState extends State<map_location> {
             padding: EdgeInsets.symmetric(
                 horizontal: size.width * 0.06, vertical: size.height * 0.014),
             child:
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('تغيير الصورة الشخصية',
                   style: TextStyle(
                       fontSize: size.width * 0.05,
@@ -413,7 +415,7 @@ class _map_locationState extends State<map_location> {
 
   void takePhoto(ImageSource source, context) async {
     final pickedImage =
-    await imagePicker.pickImage(source: source, imageQuality: 100);
+        await imagePicker.pickImage(source: source, imageQuality: 100);
     pickedFile = File(pickedImage!.path);
     // Provider.of<user_vm_provider>(context, listen: false).currentUser!.path =
     //     pickedFile!.path;
@@ -421,20 +423,21 @@ class _map_locationState extends State<map_location> {
     // Navigator.of(context).pop();
   }
 
-  Future<void> GetAddressFromLatLong(LatLng position)async {
-    List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+  Future<void> GetAddressFromLatLong(LatLng position) async {
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
     print(placemarks);
     Placemark place = placemarks[0];
-    Address = '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
-    setState(()  {
+    Address =
+        '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+    setState(() {
       print(Address);
     });
   }
 
-
   void _setMarker(LatLng _location) {
     newMarker = Marker(
-      markerId: MarkerId('mr'),//_location.toString()
+      markerId: const MarkerId('mr'), //_location.toString()
       icon: BitmapDescriptor.defaultMarker,
       // icon: _locationIcon,
       position: currentLocation,
@@ -446,24 +449,24 @@ class _map_locationState extends State<map_location> {
     _markers.add(newMarker);
     setState(() {
       GetAddressFromLatLong(currentLocation);
-
     });
   }
 
   Future<void> _buildMarkerFromAssets() async {
     if (_locationIcon == null) {
       _locationIcon = await BitmapDescriptor.fromAssetImage(
-          ImageConfiguration(size: Size(48, 48)),
+          const ImageConfiguration(size: Size(48, 48)),
           'assets/images/location_icon.png');
       setState(() {});
     }
   }
-  Future<void> getMyLocation() async {
-    LocationData _myLocation=await LocationService().getLocation();
-    _animateCamera(LatLng(_myLocation.latitude!, _myLocation.longitude!));
-    GetAddressFromLatLong(LatLng(_myLocation.latitude!, _myLocation.longitude!));
-  }
 
+  Future<void> getMyLocation() async {
+    LocationData _myLocation = await LocationService().getLocation();
+    _animateCamera(LatLng(_myLocation.latitude!, _myLocation.longitude!));
+    GetAddressFromLatLong(
+        LatLng(_myLocation.latitude!, _myLocation.longitude!));
+  }
 
   Future<void> _animateCamera(LatLng _location) async {
     final GoogleMapController controller = await _controller.future;
@@ -490,6 +493,5 @@ class _map_locationState extends State<map_location> {
   //       components: [Component(Component.country, "ar")]);
   //   _getLocationFromPlaceId(p!.placeId!);
   // }
-
 
 }

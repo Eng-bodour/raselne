@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                 mainColor, // Get.isDarkMode ? darkGreyClr : Colors.white,
             elevation: 0,
             centerTitle: true,
-            title:  TextUtils(
+            title: TextUtils(
               fontSize: f26,
               fontWeight: FontWeight.bold,
               text: 'Raselne',
@@ -64,15 +64,15 @@ class HomeScreen extends StatelessWidget {
                 height: size.height * 0.01,
               ),
               const SearchFormText(),
-              Padding(
-                padding: EdgeInsets.only(
-                    right: size.width * 0.05, top: size.height * 0.02),
-                child: const Text('الطلبات الحديثة  '),
-              ),
-              SizedBox(
-                height: size.height * 0.15,
-                child: const BuildList(),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.only(
+              //       right: size.width * 0.05, top: size.height * 0.02),
+              //   child: const Text('الطلبات الحديثة  '),
+              // ),
+              // SizedBox(
+              //   height: size.height * 0.15,
+              //   child: const BuildList(),
+              // ),
               Padding(
                 padding: EdgeInsets.only(
                   right: size.width * 0.05,

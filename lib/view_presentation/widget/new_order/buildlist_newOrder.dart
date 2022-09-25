@@ -7,7 +7,7 @@ import 'package:raselne/view_presentation/widget/text_utilis.dart';
 import '../../../data_layer/model/DetailOrder.dart';
 
 class BuildListNewOrder extends StatefulWidget {
-  BuildListNewOrder({Key? key}) : super(key: key);
+  const BuildListNewOrder({Key? key}) : super(key: key);
 
   @override
   State<BuildListNewOrder> createState() => _BuildListNewOrderState();
@@ -16,17 +16,19 @@ class BuildListNewOrder extends StatefulWidget {
 class _BuildListNewOrderState extends State<BuildListNewOrder> {
   var controller = ScrollController();
 
-  List<DetailOrder> listitem=[];
+  List<DetailOrder> listitem = [];
 
-  @override void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
       // Provider.of<order_vm>(context, listen: false).get_item_is_ordered();
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    listitem=   Provider.of<order_vm>(context,listen: true).list_itemorder;
+    listitem = Provider.of<order_vm>(context, listen: true).list_itemorder;
     var size = MediaQuery.of(context).size;
     // List<String> name = [
     //   '1n',
@@ -72,27 +74,37 @@ class _BuildListNewOrderState extends State<BuildListNewOrder> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TextUtils(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          text: listitem[index].item.nameCategory, //'اسم الوجبة ',
-                          color: greyColor,
-                          underLine: TextDecoration.none,
-                        ),
-                        TextUtils(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          text: listitem[index].item.description, //'اسم الوجبة ',
-                          color: greyColor,
-                          underLine: TextDecoration.none,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextUtils(
+                              fontSize: size.width * 0.04,
+                              fontWeight: FontWeight.bold,
+                              text: listitem[index]
+                                  .item
+                                  .nameCategory, //'اسم الوجبة ',
+                              color: Colors.black45,
+                              underLine: TextDecoration.none,
+                            ),
+                            TextUtils(
+                              fontSize: size.width * 0.03,
+                              fontWeight: FontWeight.bold,
+                              text: listitem[index]
+                                  .item
+                                  .description, //'اسم الوجبة ',
+                              color: greyColor,
+                              underLine: TextDecoration.none,
+                            ),
+                          ],
                         ),
                         Row(
                           children: [
                             IconButton(
                                 onPressed: () {
-                                  String id= listitem[index].item.IdItemStore;
+                                  String id = listitem[index].item.IdItemStore;
 
-                                  Provider.of<order_vm>(context,listen:false ).add_quaintity(id);
+                                  Provider.of<order_vm>(context, listen: false)
+                                      .add_quaintity(id);
                                 },
                                 icon: Container(
                                   child: const Icon(
@@ -106,7 +118,7 @@ class _BuildListNewOrderState extends State<BuildListNewOrder> {
                             Column(
                               children: [
                                 TextUtils(
-                                    fontSize: size.width * 0.06,
+                                    fontSize: size.width * 0.045,
                                     fontWeight: FontWeight.bold,
                                     text: listitem[index].quaintity.toString(),
                                     color: Colors.orange,
@@ -117,16 +129,17 @@ class _BuildListNewOrderState extends State<BuildListNewOrder> {
                                 TextUtils(
                                     fontSize: size.width * 0.03,
                                     fontWeight: FontWeight.bold,
-                                    text:  listitem[index].total_item.toString(),
-                                    color: Colors.black45,
+                                    text: listitem[index].total_item.toString(),
+                                    color: Colors.black,
                                     underLine: TextDecoration.none),
                               ],
                             ),
                             IconButton(
                                 onPressed: () {
-                                  String id= listitem[index].item.IdItemStore;
+                                  String id = listitem[index].item.IdItemStore;
 
-                                  Provider.of<order_vm>(context,listen:false ).remove_quaintity(id);
+                                  Provider.of<order_vm>(context, listen: false)
+                                      .remove_quaintity(id);
                                 },
                                 icon: Container(
                                   // margin: const EdgeInsets.only(bottom: 2),

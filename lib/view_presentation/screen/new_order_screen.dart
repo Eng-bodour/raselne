@@ -28,7 +28,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    orderModel= Provider.of<order_vm>(context,listen: true).order;
+    orderModel = Provider.of<order_vm>(context, listen: true).order;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -59,7 +59,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
             TextUtils(
                 fontSize: size.width * 0.05,
                 fontWeight: FontWeight.bold,
-                text:orderModel.titleStore,// 'اسم المطعم ',
+                text: orderModel.titleStore, // 'اسم المطعم ',
                 color: Colors.black54,
                 underLine: TextDecoration.none),
           ],
@@ -96,13 +96,12 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                         elevation: 0,
                         shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20),
-                            )),
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        )),
                         context: context,
                         isScrollControlled: true,
-                        builder: ((context) =>
-                            map_location()),
+                        builder: ((context) => const map_location()),
                         // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
                       );
                     },
@@ -145,11 +144,13 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                             ),
                             Expanded(
                               child: Container(
-                                margin: EdgeInsets.only(right: size.width * 0.06),
+                                margin:
+                                    EdgeInsets.only(right: size.width * 0.06),
                                 child: TextUtils(
                                     fontSize: size.width * 0.03,
                                     fontWeight: FontWeight.bold,
-                                    text:orderModel.AddresstoLocation.toString(),// 'اختر مكان التوصيل',
+                                    text: orderModel.AddresstoLocation
+                                        .toString(), // 'اختر مكان التوصيل',
                                     color: Colors.black54,
                                     underLine: TextDecoration.none),
                               ),
@@ -161,86 +162,87 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                       height: size.height * 0.09,
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(size.width * 0.03)),
+                          borderRadius:
+                              BorderRadius.circular(size.width * 0.03)),
                     ),
                   ),
-                //   SizedBox(height: 10,),
-                // InkWell(
-                //   onTap: () {
-                //     showModalBottomSheet<dynamic>(
-                //       backgroundColor: Colors.grey.shade200,
-                //       //  backgroundColor: Colors.transparent,
-                //       elevation: 0,
-                //       shape: const RoundedRectangleBorder(
-                //           borderRadius: BorderRadius.only(
-                //             topLeft: Radius.circular(20),
-                //             topRight: Radius.circular(20),
-                //           )),
-                //       context: context,
-                //       isScrollControlled: true,
-                //       builder: ((context) =>
-                //           map_location()),
-                //       // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
-                //     );
-                //   },
-                //   child: Container(
-                //     child: Padding(
-                //       padding: EdgeInsets.symmetric(
-                //           horizontal: size.width * 0.03,
-                //           vertical: size.height * 0.01),
-                //       child: Column(
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //           Row(
-                //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //             children: [
-                //               Row(
-                //                 children: const [
-                //                   Icon(
-                //                     Icons.info_rounded,
-                //                     color: mainColor,
-                //                   ),
-                //                   Text(
-                //                     'التوصيل إلى',
-                //                     style: TextStyle(color: Colors.black54),
-                //                   ),
-                //                 ],
-                //               ),
-                //               Row(
-                //                 children: const [
-                //                   Text(
-                //                     'اختر الموقع',
-                //                     style: TextStyle(color: mainColor),
-                //                   ),
-                //                   Icon(
-                //                     Icons.arrow_forward_ios,
-                //                     color: mainColor,
-                //                   )
-                //                 ],
-                //               )
-                //             ],
-                //           ),
-                //           Expanded(
-                //             child: Container(
-                //               margin: EdgeInsets.only(right: size.width * 0.06),
-                //               child: TextUtils(
-                //                   fontSize: size.width * 0.03,
-                //                   fontWeight: FontWeight.bold,
-                //                   text:orderModel.AddresstoLocation.toString(),// 'اختر مكان التوصيل',
-                //                   color: Colors.black54,
-                //                   underLine: TextDecoration.none),
-                //             ),
-                //           )
-                //         ],
-                //       ),
-                //     ),
-                //     // width: size.width * 0.9,
-                //     height: size.height * 0.09,
-                //     decoration: BoxDecoration(
-                //         color: Colors.white,
-                //         borderRadius: BorderRadius.circular(size.width * 0.03)),
-                //   ),
-                // ),
+                  //   SizedBox(height: 10,),
+                  // InkWell(
+                  //   onTap: () {
+                  //     showModalBottomSheet<dynamic>(
+                  //       backgroundColor: Colors.grey.shade200,
+                  //       //  backgroundColor: Colors.transparent,
+                  //       elevation: 0,
+                  //       shape: const RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.only(
+                  //             topLeft: Radius.circular(20),
+                  //             topRight: Radius.circular(20),
+                  //           )),
+                  //       context: context,
+                  //       isScrollControlled: true,
+                  //       builder: ((context) =>
+                  //           map_location()),
+                  //       // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
+                  //     );
+                  //   },
+                  //   child: Container(
+                  //     child: Padding(
+                  //       padding: EdgeInsets.symmetric(
+                  //           horizontal: size.width * 0.03,
+                  //           vertical: size.height * 0.01),
+                  //       child: Column(
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           Row(
+                  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //             children: [
+                  //               Row(
+                  //                 children: const [
+                  //                   Icon(
+                  //                     Icons.info_rounded,
+                  //                     color: mainColor,
+                  //                   ),
+                  //                   Text(
+                  //                     'التوصيل إلى',
+                  //                     style: TextStyle(color: Colors.black54),
+                  //                   ),
+                  //                 ],
+                  //               ),
+                  //               Row(
+                  //                 children: const [
+                  //                   Text(
+                  //                     'اختر الموقع',
+                  //                     style: TextStyle(color: mainColor),
+                  //                   ),
+                  //                   Icon(
+                  //                     Icons.arrow_forward_ios,
+                  //                     color: mainColor,
+                  //                   )
+                  //                 ],
+                  //               )
+                  //             ],
+                  //           ),
+                  //           Expanded(
+                  //             child: Container(
+                  //               margin: EdgeInsets.only(right: size.width * 0.06),
+                  //               child: TextUtils(
+                  //                   fontSize: size.width * 0.03,
+                  //                   fontWeight: FontWeight.bold,
+                  //                   text:orderModel.AddresstoLocation.toString(),// 'اختر مكان التوصيل',
+                  //                   color: Colors.black54,
+                  //                   underLine: TextDecoration.none),
+                  //             ),
+                  //           )
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     // width: size.width * 0.9,
+                  //     height: size.height * 0.09,
+                  //     decoration: BoxDecoration(
+                  //         color: Colors.white,
+                  //         borderRadius: BorderRadius.circular(size.width * 0.03)),
+                  //   ),
+                  // ),
                   SizedBox(
                     height: size.height * 0.01,
                   ),
@@ -258,9 +260,9 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                         elevation: 0,
                         shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20),
-                            )),
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        )),
                         context: context,
                         isScrollControlled: true,
                         builder: ((context) => paymentBottomSheet(context)),
@@ -311,7 +313,8 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                       height: size.height * 0.055,
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(size.width * 0.03)),
+                          borderRadius:
+                              BorderRadius.circular(size.width * 0.03)),
                     ),
                   ),
                   SizedBox(
@@ -404,7 +407,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                   //     )),
                   Column(
                     children: [
-                      BuildListNewOrder(),
+                      const BuildListNewOrder(),
                       SizedBox(
                         height: size.height * 0.02,
                       ),
@@ -417,32 +420,32 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                         child: isAddNote
                             ? showFeildText()
                             : Container(
-                            height: size.height * 0.05,
-                            width: size.width * 0.7,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: size.width * 0.05),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: size.width * 0.1),
-                              child: Row(
-                                children: [
-                                  const Icon(
-                                    Icons.add,
-                                    color: Colors.orange,
+                                height: size.height * 0.05,
+                                width: size.width * 0.7,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: size.width * 0.05),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: size.width * 0.1),
+                                  child: Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.add,
+                                        color: Colors.white,
+                                      ),
+                                      TextUtils(
+                                          fontSize: size.width * 0.04,
+                                          fontWeight: FontWeight.bold,
+                                          text: 'أضف ملاحظاتك',
+                                          color: Colors.white,
+                                          underLine: TextDecoration.none)
+                                    ],
                                   ),
-                                  TextUtils(
-                                      fontSize: size.width * 0.04,
-                                      fontWeight: FontWeight.bold,
-                                      text: 'أضف ملاحظاتك',
-                                      color: Colors.orange,
-                                      underLine: TextDecoration.none)
-                                ],
-                              ),
-                            ),
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                BorderRadius.circular(size.width * 0.05),
-                                color: mainColor.withOpacity(0.7))),
+                                ),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                        size.width * 0.05),
+                                    color: mainColor.withOpacity(0.7))),
                       ),
                     ],
                   )
@@ -454,21 +457,17 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
       ),
       bottomSheet: BottomAppBar(
         child: InkWell(
-          onTap: ()async {
-            Provider.of<order_vm>(context,listen: false)
-                .order.detailorder=notesController.text;
-            Provider.of<order_vm>(context,listen: false)
-                .order.DateTimeorder=DateTime.now().toString();
+          onTap: () async {
+            Provider.of<order_vm>(context, listen: false).order.detailorder =
+                notesController.text;
+            Provider.of<order_vm>(context, listen: false).order.DateTimeorder =
+                DateTime.now().toString();
             //distance_recive_deilvery
-           await Provider.of<order_vm>(context,listen:  false)
-                .addOrder( );
-           Navigator.of(context).push(
-               MaterialPageRoute(builder:
-               (context)=> ShowOffers(orderModel: orderModel)
-           )) ;
+            await Provider.of<order_vm>(context, listen: false).addOrder();
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ShowOffers(orderModel: orderModel)));
           },
-          child:
-          Container(
+          child: Container(
             width: size.width * 1,
             height: size.height * 0.1,
             decoration: const BoxDecoration(color: greyColor),
