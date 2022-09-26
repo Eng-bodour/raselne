@@ -10,7 +10,7 @@ class OrderModel {
 
 late UserModel user_captain=UserModel(
     location: LatLng(14,50), uid: 'uid', name: 'name',
-    email: 'email', mobile: 'mobile', dateCreated: '', type: '');
+    email: 'email', mobile: 'mobile', dateCreated: '', type: '', rataing: 0.0);
 
 late UserModel user;//المستخدم الذي طلب اوردر
 late Stream<UserModel> usertest;//المستخدم الذي طلب اوردر

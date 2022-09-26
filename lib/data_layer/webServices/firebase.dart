@@ -28,7 +28,7 @@ class FirebaseServices {
     UserModel(
         name:dispalyName, location: LatLng(_myLocation.latitude!, _myLocation.longitude!), uid: uid,
         mobile: '0', email: email,
-        dateCreated: DateTime.now().toString(), type: '').toJson()
+        dateCreated: DateTime.now().toString(), type: '', rataing: 0.0).toJson()
     );
 //        {'dispayName': dispalyName, 'uid': uid});
     return;

@@ -424,13 +424,25 @@ else {
   @override
   Future<void> update_state(String idOrder, String state,String idSender) async {
     // TODO: implement update_state
+    if(state=='done')
     await FirebaseServices("orders").ref
         .doc(idOrder)
         .update({
-        'state':state
+         'state':state,
+         'isopen':false,
         })
         .then((value) => print("state order Updated"))
         .catchError((error) => print("Failed to update user: $error"));
+  else
+    await
+        FirebaseServices("orders").ref
+        .doc(idOrder)
+        .update({
+        'state':state,
+    })
+        .then((value) => print("state order Updated"))
+        .catchError((error) => print("Failed to update user: $error"));
+
     String state_message='';
     switch( state) {
       case 'done recive':

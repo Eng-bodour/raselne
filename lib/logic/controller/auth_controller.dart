@@ -15,6 +15,7 @@ import '../repositories/users/user_repo.dart';
 
 class AuthProvider_vm extends ChangeNotifier {
   bool isVisibilty = false;
+  bool isloading = false;
   bool isCheckBox = false;
   // var displayUserName = ''.obs;
   // var displayUserPhoto = ''.obs;
@@ -37,13 +38,14 @@ class AuthProvider_vm extends ChangeNotifier {
    else
      return UserModel(
       location: LatLng(14,50), uid:null, name: 'name',
-      email: 'email', mobile: 'mobile', dateCreated: '', type: '');
+      email: 'email', mobile: 'mobile', dateCreated: '', type: '', rataing: 0.0);
    notifyListeners();
    return currentuser;
   }
 
   Future<void> getuser_vm() async {
     currentuser=await userRepository.getuser();
+    currentuser.rataing=UserModel.getrate(currentuser.rating);
     print('xxx '+currentuser.uid.toString());
     notifyListeners();
   }

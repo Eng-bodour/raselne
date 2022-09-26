@@ -26,7 +26,6 @@ class StoreModel {
     required this.descStore,
     required this.typeStore,
     required this.mobileStore,
-
     required this.offer_value,
     required this.rating,
     required this.itemstore,
@@ -128,7 +127,7 @@ class Rating {
   int count;
 
   factory Rating.fromJson(Map<String, dynamic> json) => Rating(
-        rate: json["rate"].toDouble(),
+        rate: json["rate"].toInt(),
         count: json["count"],
       );
 

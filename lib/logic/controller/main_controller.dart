@@ -25,7 +25,7 @@ class MainProvider extends ChangeNotifier {
       Id_number: '',
       num_car: '',
       num_travel: '',
-      type_car: '');
+      type_car: '', rataing: 0.0);
   setvalue(UserModel val) {
     currentuser = val;
     print('current ' + currentuser.name.toString());

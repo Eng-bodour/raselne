@@ -173,6 +173,7 @@ Future<List<OrderModel>> get_myorderCaptain()async{
        id_order,
        state,currentuser.uid.toString());
     order.state=state;
+
    isloading=false;
   notifyListeners();
  }
