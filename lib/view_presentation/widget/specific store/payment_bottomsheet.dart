@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:raselne/logic/controller/order_vm.dart';
 import 'package:raselne/utilis/theme.dart';
 
 Widget paymentBottomSheet(BuildContext context) {
@@ -46,33 +48,37 @@ Widget paymentBottomSheet(BuildContext context) {
                           fontSize: size.width * 0.05,
                           fontWeight: FontWeight.normal,
                           color: Colors.black54)),
-                  SizedBox(
-                    height: size.height * 0.02,
-                  ),
-                  InkWell(
-                    onTap: () {},
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.payments_rounded,
-                          color: Colors.black54,
-                          size: size.width * 0.08,
-                        ),
-                        SizedBox(
-                          width: size.width * 0.03,
-                        ),
-                        Text('Apple pay',
-                            style: TextStyle(
-                              fontSize: size.width * 0.045,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black54,
-                            )),
-                      ],
-                    ),
-                  ),
+                  // SizedBox(
+                  //   height: size.height * 0.02,
+                  // ),
+                  // InkWell(
+                  //   onTap: () {},
+                  //   child: Row(
+                  //     children: [
+                  //       Icon(
+                  //         Icons.payments_rounded,
+                  //         color: Colors.black54,
+                  //         size: size.width * 0.08,
+                  //       ),
+                  //       SizedBox(
+                  //         width: size.width * 0.03,
+                  //       ),
+                  //       Text('Apple pay',
+                  //           style: TextStyle(
+                  //             fontSize: size.width * 0.045,
+                  //             fontWeight: FontWeight.bold,
+                  //             color: Colors.black54,
+                  //           )),
+                  //     ],
+                  //   ),
+                  // ),
                   SizedBox(height: size.height * 0.02),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Provider.of<order_vm>(context,listen: false)
+                          .change_pay('EBS Pay');
+                      Get.back();
+                    },
                     child: Row(
                       children: [
                         Icon(
@@ -83,7 +89,7 @@ Widget paymentBottomSheet(BuildContext context) {
                         SizedBox(
                           width: size.width * 0.03,
                         ),
-                        Text('Stc pay',
+                        Text('EBS pay',
                             style: TextStyle(
                               fontSize: size.width * 0.045,
                               fontWeight: FontWeight.bold,
@@ -94,7 +100,11 @@ Widget paymentBottomSheet(BuildContext context) {
                   ),
                   SizedBox(height: size.height * 0.02),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Provider.of<order_vm>(context,listen: false)
+                          .change_pay('cash');
+                      Get.back();
+                    },
                     child: Row(
                       children: [
                         Icon(

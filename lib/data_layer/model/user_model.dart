@@ -18,7 +18,7 @@ import 'package:location/location.dart';
    });
    factory Rate.fromJson(Map<String, dynamic> json) =>
        Rate(
-     value_rate: json["value_rate"].toDouble(),
+     value_rate:double.parse( json["value_rate"]),
      id_user:   json["id_user"],
    );
 
@@ -30,9 +30,12 @@ import 'package:location/location.dart';
 
 class UserModel {
   String? uid=null;
-  String name;
-  String email;
-  String mobile;
+  String name='';
+ late String docId;
+  String email='';
+  String mobile='';
+  String? balance='';
+  String? eradat='';
  late List<Rate> rating=[];
  late double rataing=0.0;
   late String type;//مندوب-زبون
@@ -40,20 +43,23 @@ class UserModel {
  late String? num_car='';
  late String? Id_number='';
  late String? type_car='';
- late String? num_travel='0';
+ late String? copoun='';
+ late int? num_travel=0;
  late LatLng? location;
 
   UserModel({
      required this.location,
     required this.uid,
     required this.name,
+    // required this.docId,
     required this.email,
     required this.mobile,
     required this.type,
      this.num_travel,  this.type_car,
+    this.eradat,this.balance,this.copoun,
      this.Id_number, required this.dateCreated,  this.num_car, required double rataing,
   });
-  factory UserModel.fromJson(Map<String, dynamic>? json) {
+   factory UserModel.fromJson(Map<String, dynamic>? json,String docIdUser) {
     UserModel userModel= UserModel(
       name: json!["name"],
       //.toDouble(),
@@ -62,27 +68,50 @@ class UserModel {
       uid: json['uid'],
       location: null,
       type:json['type'],
-      num_travel: json["num_travel"] == null ? '' : json["num_travel"],
+      num_travel: json["num_travel"] == null ? 0 : json["num_travel"],
       type_car: json["type_car"] == null ? '' : json["type_car"],
+      copoun: json["copoun"] == null ? '' : json["copoun"],
       Id_number: json["Id_number"] == null ? '' : json["Id_number"],
       dateCreated: json["dateCreated"] == null ? '' : json["dateCreated"],
-      num_car: json["num_car"] == null ? '' : json["num_car"], rataing: 0.0,
+      num_car: json["num_car"] == null ? '' : json["num_car"],
+      rataing: 1,
     // rataing: getrate(),
     );
-      userModel.rating= json["rate"] == null ? [] :
+   userModel.docId= docIdUser;
+   userModel.balance= json["balance"] == null ? null : json["balance"];
+   userModel.eradat= json["eradat"] == null ? null : json["eradat"];
+    userModel.rating= json["rate"] == null ? [] :
        // json["rate"].tolist();
-    json['rate'].List()
-        .map((e) => Rate.fromJson(e))
-        .toList();
+    // json['rate'].tolist()
+    //     .map((e) => Rate.fromJson(e));
+        // .toList();
+   userModel.getproud(json['rate']);
     GeoPoint gloacationfrom=json["location"];
-    userModel.location=LatLng(gloacationfrom.latitude,gloacationfrom.longitude);
+    userModel.location=LatLng(
+        gloacationfrom.latitude,
+        gloacationfrom.longitude);
     return userModel;
   }
+  List<Rate> getproud(data){
+    List<Rate> prodlist = [];
+    if(data!=null){
+      for (int i = 0; i < data.length; i++) {
+        print(i);
+
+        //print("data "+ "[" + data[i] + "]");
+        prodlist.add(Rate.fromJson(data[i]));
+      }
+    }
+    return prodlist;
+
+  }
+
  static double getrate(List<Rate> listrate){
     int star1=0,star2=0,star3=0,star4=0,star5=0;
     double star1_1=0,star2_2=0,star3_3=0,star4_4=0,star5_5=0;
     for(int i=0;i<listrate.length-1;i++)
     {
+      print('value_rate in loop ' +listrate[i].value_rate.toString());
       switch(listrate[i].value_rate.toString()){
         case '1':
           star1++;
@@ -107,6 +136,8 @@ class UserModel {
    star4_4= star4*4;
    star5_5= star5*5;
    double sumValues=star1_1+star2_2+star3_3+star4_4+star5_5;
+   print('star2_2 '+star2_2.toString());
+   print('sumValues '+ sumValues.toString());
   double rataing=sumValues/listrate.length;
      return rataing;
   }
@@ -120,8 +151,11 @@ class UserModel {
         "Id_number":Id_number,
         "dateCreated":dateCreated,
         "num_car":num_car,
+        "balance":balance,
+        "eradat":eradat,
         "location":GeoPoint(location!.latitude,location!.longitude),
       };
-
+// _data['products'] =
+// products!.map((e)=>e.toJson()).toList();
 }
 

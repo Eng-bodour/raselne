@@ -193,7 +193,7 @@ class order_firebase extends OrderRepository{
         .ref.where('uid',isEqualTo: uidcaptain).limit(1).get()
         .then((value) {
           return UserModel.fromJson(
-         value.docs.map((e) => e.data()).first);
+         value.docs.map((e) => e.data()).first,  value.docs.map((e) => e.id).first);
         });
       print('us ${us.name}');
       return us;
@@ -425,14 +425,9 @@ else {
   Future<void> update_state(String idOrder, String state,String idSender) async {
     // TODO: implement update_state
     if(state=='done')
-    await FirebaseServices("orders").ref
-        .doc(idOrder)
-        .update({
-         'state':state,
-         'isopen':false,
-        })
-        .then((value) => print("state order Updated"))
-        .catchError((error) => print("Failed to update user: $error"));
+   {
+
+   }
   else
     await
         FirebaseServices("orders").ref
@@ -475,6 +470,32 @@ else {
           .map((doc) =>
           OrderModel.fromSnapshot( doc.data(),doc.id )).toList()
       );
+  }
+
+  @override
+  Future<void> done_order(String idOrder, String state, String idSender,
+      int numtravel,String balance,String eradat,String docIdUser) async {
+    // TODO: implement done_order
+    await FirebaseServices("orders").ref
+        .doc(idOrder)
+        .update({
+      'state':state,
+      'isopen':false,
+      'isdone_deilvery':true,
+    })
+        .then((value) => print("state order Updated"))
+        .catchError((error) => print("Failed to update user: $error"));
+
+await FirebaseServices("users").ref
+        .doc(docIdUser)
+        .update({
+      'num_travel':numtravel,
+      'eradat':eradat,
+      'balance':balance,
+    })
+        .then((value) => print("state order Updated"))
+        .catchError((error) => print("Failed to update user: $error"));
+
   }
 
 }

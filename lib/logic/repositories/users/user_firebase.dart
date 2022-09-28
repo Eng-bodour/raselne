@@ -218,7 +218,9 @@ class user_firebase extends UserRepository{
          auth.currentUser!.uid.toString())
         .get().then((value) =>
     // value.size>0?
-    UserModel.fromJson(value.docs[0].data()));
+    UserModel.fromJson(
+        value.docs[0].data(),
+        value.docs[0].id));
 
   }
 
@@ -235,10 +237,9 @@ class user_firebase extends UserRepository{
   Future<void> switch_type(String id_doc,String type)async {
     // TODO: implement switch_type
     await FirebaseFirestore.instance
-        .collection('users').doc(id_doc).set({
+        .collection('users').doc(id_doc).update({
       'type':type
-    });
-
+    });//.whenComplete(() => null);
     // throw UnimplementedError();
   }
 
@@ -247,20 +248,41 @@ class user_firebase extends UserRepository{
     // TODO: implement rate_user
     List<Map<String, String>> myData = [
       {
-        'userid': id_currentUser,
-        'val': value
+        'id_user': id_currentUser,
+        'value_rate': value
       },
       // {'question': 'How much?', 'answer': 'five dollars'},
     ];
    String doc='';
  await  FirebaseServices("users").ref.where(
     'uid', isEqualTo: iduser,).get().then(
-            (value) =>doc= value.docs[0].id
+            (value) =>
+            doc= value.docs[0].id
     );
     await FirebaseFirestore.instance
-        .doc('users/$doc')
-        .set({'rate': myData});
+        .collection('users').doc(doc).update({
+      'rate': myData
+        // .doc('users/$doc')
+        // .update({'rate': myData});
     // throw UnimplementedError();
+  });
+  }
+
+  @override
+  Future<bool> check_Copoun(String id_doc, String copoun)async {
+    // TODO: implement check_Copoun
+  int sizedata=0;
+   await FirebaseFirestore.instance
+        .collection('copoun').where('val_copoun' ,isEqualTo: copoun)
+        .get().then((value) { sizedata= value.size;});
+   if(sizedata!=0) {
+     await FirebaseFirestore.instance
+         .collection('users').doc(id_doc).update({
+       'copoun': copoun
+     });
+     return true;
+   }
+    return false;
   }
 
 

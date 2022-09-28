@@ -24,6 +24,7 @@ bool ispause=false;//ألطلب مفتوح ولكن قيد التفاوض مع �
 bool isapprove=false;
 String detailAddress='';
 String detailorder='';
+String type_pay='';//نوع الدفع
 String distance_me_recive='';
 String distance_recive_deilvery='';
 late String from_user='';

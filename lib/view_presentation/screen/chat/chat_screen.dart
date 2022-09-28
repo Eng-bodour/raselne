@@ -137,7 +137,8 @@ class _ChatScreenState extends State<ChatScreen> {
             color: mainColor,
             onPressed: () async {
               messagecontrol.text = '';
-              await Provider.of<order_vm>(context, listen: false).sendMessage(
+              await Provider.of<order_vm>(context, listen: false)
+                  .sendMessage(
                   MessageText(
                       senderId: user.uid.toString(),
                       textMessage: textmessage,
@@ -374,12 +375,14 @@ class _ChatScreenState extends State<ChatScreen> {
                           case 'done arrive':
                             // return 'تم التسليم';
                             Provider.of<order_vm>(context, listen: false)
-                                .update_state(
-                                    Provider.of<order_vm>(context,
-                                            listen: false)
-                                        .order
-                                        .id_order,
-                                    'done');
+                                .done_order(
+                                    Provider.of<order_vm>(context, listen: false)
+                                        .order.id_order, 'done',
+                                Provider.of<order_vm>(context, listen: false)
+                                .order.total,
+                                double.parse( Provider.of<order_vm>(context, listen: false)
+                                .order.price_deilvery_captain)
+                            );
                             break;
                           case 'done':
                             // return 'تم التسليم';

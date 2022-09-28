@@ -64,4 +64,10 @@ class user_api extends UserRepository{
     throw UnimplementedError();
   }
 
+  @override
+  Future<bool> check_Copoun(String id_doc, String copoun) {
+    // TODO: implement check_Copoun
+    throw UnimplementedError();
+  }
+
 }

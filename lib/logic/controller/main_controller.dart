@@ -24,7 +24,7 @@ class MainProvider extends ChangeNotifier {
       uid: '',
       Id_number: '',
       num_car: '',
-      num_travel: '',
+      num_travel: 0,
       type_car: '', rataing: 0.0);
   setvalue(UserModel val) {
     currentuser = val;
@@ -39,17 +39,20 @@ class MainProvider extends ChangeNotifier {
   }
 
   var tabs = [
-    MyPageUserScreen(),
+    MyPageDriverScreen(),
+    // MyPageUserScreen(),
     const NotificationScreen(),
     const OrdersScreen(),
     HomeScreen(),
   ];
+
   var tabscaptain = [
     MyPageDriverScreen(),
     const NotificationScreen(),
     OrdersDriverScreen(),
     const HomeDriverScreen(),
   ];
+
   var title = [
     "صفحتي",
     "التنبيهات",

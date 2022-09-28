@@ -17,6 +17,7 @@ abstract class OrderRepository {
   Stream<List<MessageText>> getChatOrder(String id_order);
   Future<void> update_order( String idOrder,String idcaptain,String distance_recive_deilvery,String price_deilvery_captain);
   Future<void> update_state( String idOrder,String state,String idSender);
+  Future<void> done_order( String idOrder,String state,String idSender,int numtravel,String balance,String eradat,String docIdUser);
   Future<void> approve_order_or_not( OrderModel orderModel,bool isopen);
   //عندما يقدم المندوب على العرض سيتم تحويل قيمة المتحول ispause إلى true
  Future<void> sendMessage(MessageText message,String id_order);

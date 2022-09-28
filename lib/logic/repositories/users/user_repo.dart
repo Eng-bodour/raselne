@@ -15,5 +15,6 @@ abstract class UserRepository{
   Future<UserModel> getuser();
   Future<bool> isAuthuser();
   Future<void> switch_type(String id_doc,String type);
+  Future<bool> check_Copoun(String id_doc,String copoun);
 
 }

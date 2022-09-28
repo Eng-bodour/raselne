@@ -42,17 +42,30 @@ class AuthProvider_vm extends ChangeNotifier {
    notifyListeners();
    return currentuser;
   }
+  Future<bool> check_Copoun(String copoun) async {
+    isloading=true;
+    notifyListeners();
+    bool res= await userRepository.check_Copoun(currentuser.docId, copoun);
+    isloading=false;
+    notifyListeners();
+    return res;
+  }
 
   Future<void> getuser_vm() async {
     currentuser=await userRepository.getuser();
-    currentuser.rataing=UserModel.getrate(currentuser.rating);
+     currentuser.rataing=UserModel.getrate(currentuser.rating);
     print('xxx '+currentuser.uid.toString());
+    print('rating  '+currentuser.rataing.toString());
     notifyListeners();
   }
   Future<void> switch_type() async{
-   await userRepository.switch_type(
-       currentuser.uid.toString(),
+    isloading=true;
+    notifyListeners();
+    await userRepository.switch_type(
+       currentuser.docId.toString(),
        currentuser.type=='user'?'captain':'user');
+    currentuser.type=='user'?'captain':'user';
+    isloading=false;
     notifyListeners();
   }
   @override

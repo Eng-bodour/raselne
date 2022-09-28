@@ -43,6 +43,10 @@ setvalue(UserModel val){
   order.price_deilvery_captain=val;
   notifyListeners();
  }
+ void change_pay(String pay){
+   order.type_pay=pay;
+  notifyListeners();
+ }
 Stream<List<MessageText>> getchat(String id_order )async*{
 
   yield* orderRepository.getChatOrder(id_order);
@@ -51,9 +55,14 @@ Stream<List<MessageText>> getchat(String id_order )async*{
 Future<void> sendMessage(MessageText message,id_order)async{
  await orderRepository.sendMessage(message, id_order);
 }
-addlocation(LatLng location,String Address,String detailAddress){
+addlocation(LatLng location,String Address,
+    String detailAddress,String type
+    ){
+if(type=='الاستلام')
+  order.fromlocation=location;
+else
+  order.toLocation=location;//التوصيل
 
-  order.toLocation=location;
   order.AddresstoLocation=Address;
   order.detailAddress=detailAddress;
   notifyListeners();
@@ -89,8 +98,28 @@ prepareOrder(StoreModel storeModel) {
      price_deilvery: 'price_deilvery',
      titleStore: storeModel.nameStore,
      // toLocation: currentuser.location,
-     storeModel: storeModel, isopen: false, ispause: false, isdone_deilvery: false,
+     storeModel: storeModel, isopen: false,
+   ispause: false, isdone_deilvery: false,
      id_store: storeModel.IdStore.toString(),
+       DateTimeorder: null, state: 'create', );
+     notifyListeners();
+}
+prepareCustomOrder() {
+
+ order=OrderModel(
+     total: 0, captain_user: null,
+     content_order: 'content_order', detailorderList: list_itemorder,
+     from_user:currentuser.uid.toString(),
+     // fromlocation: storeModel.location,
+     id_order: '',
+     is_arrive: false, isdone_recive: false,
+     price_deilvery: 'price_deilvery',
+     titleStore: '',//storeModel.nameStore,
+     // toLocation: currentuser.location,
+     // storeModel: storeModel,
+   isopen: false,
+   ispause: false, isdone_deilvery: false,
+     id_store: '',
        DateTimeorder: null, state: 'create', );
      notifyListeners();
 }
@@ -114,6 +143,18 @@ Future<void> addOrder() async {
  isloading=false;
  notifyListeners();
 }
+Future<void> addCustomOrder() async {
+ isloading=true;
+ notifyListeners();
+
+  order.isopen=true;
+  order.state='open';
+  print(order.content_order);
+  order.id_order=await orderRepository.AddOrder(order.toSnapchot());
+ isloading=false;
+ notifyListeners();
+}
+
 // Future< void > getoffertouser()async {
 //   //
 //  await orderRepository.get_offer(order.id_order);
@@ -177,6 +218,29 @@ Future<List<OrderModel>> get_myorderCaptain()async{
    isloading=false;
   notifyListeners();
  }
+ Future<void> done_order(String id_order,String state,
+     double total,double delveryprice) async {
+  //عندما يقدم المندوب على العرض سيتم تحويل قيمة المتحول ispause إلى true
+  //وذلك لكي لايظهر الطلب لمندوب آخر
+   isloading=true;
+   notifyListeners();
+   // String idSender,String numtravel,
+   // String balance,String eradat,String docIdUser
+  int numtravel=int.parse(currentuser.num_travel.toString());
+  numtravel++;
+  double balance=double.parse(currentuser.balance.toString());
+  double eradat=double.parse(currentuser.eradat.toString());
+  String bal=(delveryprice+balance).toString();
+  String erd=(total+eradat).toString();
+   await orderRepository.done_order(
+       id_order,
+       state,currentuser.uid.toString(),
+       numtravel,bal,erd,currentuser.docId);
+    order.state=state;
+
+   isloading=false;
+  notifyListeners();
+ }
 Future<void> approve_order_or_not( OrderModel? orderModel, bool isopen)async {
   isloading=true;
   notifyListeners();
@@ -201,7 +265,8 @@ Stream<OrderModel> check_approve_order(String idorder) async* {
    else null;
  }
   int addto_order (DetailOrder value){
-  int index=list_itemorder.indexWhere((element) => element.item.IdItemStore==value.item.IdItemStore);
+  int index=list_itemorder.indexWhere((element) =>
+  element.item.IdItemStore==value.item.IdItemStore);
 
   if(index==-1)
   {

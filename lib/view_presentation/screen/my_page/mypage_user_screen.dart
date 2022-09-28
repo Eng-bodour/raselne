@@ -25,7 +25,8 @@ class MyPageUserScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserModel user= Provider.of<AuthProvider_vm>(context,listen: true).currentuser;
+    UserModel user= Provider.of<AuthProvider_vm>(context,listen: true)
+        .currentuser;
 
     var size = MediaQuery.of(context).size;
     return Scaffold(
@@ -49,22 +50,22 @@ class MyPageUserScreen extends StatelessWidget {
                 horizontal: size.width * 0.05, vertical: size.width * 0.04),
             child: Column(
               children: [
-                infoAccount(
-                    context: context,
-                    size: size,
-                    title: 'رصيد الحساب',
-                    count: '0 رس'),
-                Divider(
-                  thickness: 1,
-                  color: greyColor.withOpacity(0.2),
-                  height: size.height * 0.04,
-                ),
-                numOrder(
-                    size: size, title: 'عدد الطلبات ', subTitle: ' 6 طلبات '),
-                Divider(
-                    thickness: 1,
-                    color: greyColor.withOpacity(0.2),
-                    height: size.height * 0.02),
+                // infoAccount(
+                //     context: context,
+                //     size: size,
+                //     title: 'رصيد الحساب',
+                //     count: '0 رس'),
+                // Divider(
+                //   thickness: 1,
+                //   color: greyColor.withOpacity(0.2),
+                //   height: size.height * 0.04,
+                // ),
+                // numOrder(
+                //     size: size, title: 'عدد الطلبات ', subTitle: ' 6 طلبات '),
+                // Divider(
+                //     thickness: 1,
+                //     color: greyColor.withOpacity(0.2),
+                //     height: size.height * 0.02),
                 info(
                     ontap: () {
                       Get.to(const ServicesReview(
@@ -155,7 +156,9 @@ class MyPageUserScreen extends StatelessWidget {
                 Divider(thickness: 1, color: greyColor.withOpacity(0.2)),
 
                 info(
-                    ontap: () {},
+                    ontap: () {
+
+                    },
                     context: context,
                     bool: true,
                     size: size,

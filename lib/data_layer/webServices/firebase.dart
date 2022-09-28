@@ -26,15 +26,22 @@ class FirebaseServices {
 
     ref.add(
     UserModel(
-        name:dispalyName, location: LatLng(_myLocation.latitude!, _myLocation.longitude!), uid: uid,
+        name:dispalyName,
+        location: LatLng(_myLocation.latitude!, _myLocation.longitude!),
+        uid: uid,
         mobile: '0', email: email,
-        dateCreated: DateTime.now().toString(), type: '', rataing: 0.0).toJson()
+        dateCreated: DateTime.now().toString(),
+        type: '', rataing: 0.0,num_travel: 0,
+        type_car: '',num_car: '',Id_number: '',
+        balance: '0',eradat: '0'
+    ).toJson()
     );
 //        {'dispayName': dispalyName, 'uid': uid});
     return;
   }
   Future<DocumentReference> addtofirestore(Map<String,dynamic> data)async{
-   return await ref.add(data);
+    DocumentReference vv=await ref.add(data);
+   return vv;
   }
 
   //  Future<UserModel?> getNameuser() async {

@@ -233,12 +233,14 @@ class LoginScreen extends StatelessWidget {
                                 password: password,
                               );
                             }
-                            if(authProvider.message=='done'){
+                            if(authProvider.message=='done') {
                                authBox!.write("auth", true);
                                await authProvider.isAuthuser();
-                            Get.offNamed(Routes.mainScreen);
-                            }else{
-                              Get.snackbar(
+                               Get.offNamed(Routes.mainScreen);
+
+                            }
+                            else{
+                                Get.snackbar(
                                 'Error!',
                                 authProvider.message.toString(),
                                 snackPosition: SnackPosition.BOTTOM,

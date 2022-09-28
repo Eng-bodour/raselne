@@ -14,15 +14,16 @@ import '../../../data_layer/model/orderModel.dart';
 import '../../../logic/controller/order_vm.dart';
 import '../widget/mypage_driver/show_offers.dart';
 
-class NewOrderScreen extends StatefulWidget {
-  const NewOrderScreen({Key? key}) : super(key: key);
+class Custom_order extends StatefulWidget {
+  const Custom_order({Key? key}) : super(key: key);
 
   @override
-  State<NewOrderScreen> createState() => _NewOrderScreenState();
+  State<Custom_order> createState() => _Custom_orderState();
 }
 
-class _NewOrderScreenState extends State<NewOrderScreen> {
+class _Custom_orderState extends State<Custom_order> {
   final TextEditingController notesController = TextEditingController();
+  final TextEditingController detailorderController = TextEditingController();
   late OrderModel orderModel;
   bool isAddNote = false;
 
@@ -82,10 +83,17 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 //mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+
+                  TextField(
+                    decoration: InputDecoration(
+
+                    ),
+                    controller: detailorderController,
+                  ),
                   TextUtils(
                       fontSize: size.width * 0.05,
                       fontWeight: FontWeight.bold,
-                      text: 'عناوين التوصيل',
+                      text: ' عنوان الاستلام ',
                       color: Colors.black54,
                       underLine: TextDecoration.none),
                   InkWell(
@@ -96,9 +104,97 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                         elevation: 0,
                         shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                        )),
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            )),
+                        context: context,
+                        isScrollControlled: true,
+                        builder: ((context) =>  map_location(type: 'الاستلام')),
+                        // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
+                      );
+                    },
+                    child: Container(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: size.width * 0.03,
+                            vertical: size.height * 0.01),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: const [
+                                    Icon(
+                                      Icons.info_rounded,
+                                      color: mainColor,
+                                    ),
+                                    Text(
+                                      'التوصيل إلى',
+                                      style: TextStyle(color: Colors.black54),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: const [
+                                    Text(
+                                      'اختر الموقع',
+                                      style: TextStyle(color: mainColor),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: mainColor,
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                            Expanded(
+                              child: Container(
+                                margin:
+                                EdgeInsets.only(right: size.width * 0.06),
+                                child: TextUtils(
+                                    fontSize: size.width * 0.03,
+                                    fontWeight: FontWeight.bold,
+                                    text: orderModel.Addressdfromlocation
+                                        .toString(), // 'اختر مكان التوصيل',
+                                    color: Colors.black54,
+                                    underLine: TextDecoration.none),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      // width: size.width * 0.9,
+                      height: size.height * 0.09,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                          BorderRadius.circular(size.width * 0.03)),
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: size.height * 0.01,
+                  ),
+                  TextUtils(
+                      fontSize: size.width * 0.05,
+                      fontWeight: FontWeight.bold,
+                      text: ' عنوان التوصيل ',
+                      color: Colors.black54,
+                      underLine: TextDecoration.none),
+                  InkWell(
+                    onTap: () {
+                      showModalBottomSheet<dynamic>(
+                        backgroundColor: Colors.grey.shade200,
+                        //  backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            )),
                         context: context,
                         isScrollControlled: true,
                         builder: ((context) =>  map_location(type: 'التوصيل',)),
@@ -145,7 +241,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                             Expanded(
                               child: Container(
                                 margin:
-                                    EdgeInsets.only(right: size.width * 0.06),
+                                EdgeInsets.only(right: size.width * 0.06),
                                 child: TextUtils(
                                     fontSize: size.width * 0.03,
                                     fontWeight: FontWeight.bold,
@@ -163,86 +259,9 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius:
-                              BorderRadius.circular(size.width * 0.03)),
+                          BorderRadius.circular(size.width * 0.03)),
                     ),
                   ),
-                  //   SizedBox(height: 10,),
-                  // InkWell(
-                  //   onTap: () {
-                  //     showModalBottomSheet<dynamic>(
-                  //       backgroundColor: Colors.grey.shade200,
-                  //       //  backgroundColor: Colors.transparent,
-                  //       elevation: 0,
-                  //       shape: const RoundedRectangleBorder(
-                  //           borderRadius: BorderRadius.only(
-                  //             topLeft: Radius.circular(20),
-                  //             topRight: Radius.circular(20),
-                  //           )),
-                  //       context: context,
-                  //       isScrollControlled: true,
-                  //       builder: ((context) =>
-                  //           map_location()),
-                  //       // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
-                  //     );
-                  //   },
-                  //   child: Container(
-                  //     child: Padding(
-                  //       padding: EdgeInsets.symmetric(
-                  //           horizontal: size.width * 0.03,
-                  //           vertical: size.height * 0.01),
-                  //       child: Column(
-                  //         crossAxisAlignment: CrossAxisAlignment.start,
-                  //         children: [
-                  //           Row(
-                  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //             children: [
-                  //               Row(
-                  //                 children: const [
-                  //                   Icon(
-                  //                     Icons.info_rounded,
-                  //                     color: mainColor,
-                  //                   ),
-                  //                   Text(
-                  //                     'التوصيل إلى',
-                  //                     style: TextStyle(color: Colors.black54),
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //               Row(
-                  //                 children: const [
-                  //                   Text(
-                  //                     'اختر الموقع',
-                  //                     style: TextStyle(color: mainColor),
-                  //                   ),
-                  //                   Icon(
-                  //                     Icons.arrow_forward_ios,
-                  //                     color: mainColor,
-                  //                   )
-                  //                 ],
-                  //               )
-                  //             ],
-                  //           ),
-                  //           Expanded(
-                  //             child: Container(
-                  //               margin: EdgeInsets.only(right: size.width * 0.06),
-                  //               child: TextUtils(
-                  //                   fontSize: size.width * 0.03,
-                  //                   fontWeight: FontWeight.bold,
-                  //                   text:orderModel.AddresstoLocation.toString(),// 'اختر مكان التوصيل',
-                  //                   color: Colors.black54,
-                  //                   underLine: TextDecoration.none),
-                  //             ),
-                  //           )
-                  //         ],
-                  //       ),
-                  //     ),
-                  //     // width: size.width * 0.9,
-                  //     height: size.height * 0.09,
-                  //     decoration: BoxDecoration(
-                  //         color: Colors.white,
-                  //         borderRadius: BorderRadius.circular(size.width * 0.03)),
-                  //   ),
-                  // ),
                   SizedBox(
                     height: size.height * 0.01,
                   ),
@@ -251,7 +270,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                       fontWeight: FontWeight.bold,
                       text: ' طريقة الدفع  ${
                           Provider.of<order_vm>(context,listen: true)
-                          .order.type_pay}',
+                              .order.type_pay}',
                       color: Colors.black54,
                       underLine: TextDecoration.none),
                   InkWell(
@@ -262,9 +281,9 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                         elevation: 0,
                         shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                        )),
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            )),
                         context: context,
                         isScrollControlled: true,
                         builder: ((context) => paymentBottomSheet(context)),
@@ -316,141 +335,141 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius:
-                              BorderRadius.circular(size.width * 0.03)),
+                          BorderRadius.circular(size.width * 0.03)),
                     ),
                   ),
                   SizedBox(
                     height: size.height * 0.01,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextUtils(
-                              fontSize: size.width * 0.05,
-                              fontWeight: FontWeight.bold,
-                              text: 'كوبون ',
-                              color: Colors.black54,
-                              underLine: TextDecoration.none),
-                          Row(
-                            children: [
-                              TextUtils(
-                                  fontSize: size.width * 0.03,
-                                  fontWeight: FontWeight.bold,
-                                  text: 'أضف كوبون ',
-                                  color: mainColor,
-                                  underLine: TextDecoration.none),
-                              const Icon(
-                                Icons.add,
-                                color: mainColor,
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                      TextUtils(
-                          fontSize: size.width * 0.03,
-                          fontWeight: FontWeight.normal,
-                          text: 'رسوم التوصيل مخفضة',
-                          color: Colors.orange,
-                          underLine: TextDecoration.none)
-                    ],
-                  ),
-                  SizedBox(
-                    height: size.height * 0.01,
-                  ),
-                  TextUtils(
-                      fontSize: size.width * 0.05,
-                      fontWeight: FontWeight.bold,
-                      text: 'الأصناف ',
-                      color: Colors.black54,
-                      underLine: TextDecoration.none),
-                  // Container(
-                  //     decoration: BoxDecoration(
-                  //         color: Colors.white,
-                  //         borderRadius: BorderRadius.circular(size.width * 0.03)),
-                  //     height: size.height * 0.9,
-                  //     child: Column(
+                  // Column(
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //     Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   //       children: [
-                  //         Expanded(child: BuildListNewOrder()),
-                  //         SizedBox(
-                  //           height: size.height * 0.02,
-                  //         ),
-                  //         Container(
-                  //             height: size.height * 0.05,
-                  //             width: size.width * 0.7,
-                  //             padding: EdgeInsets.symmetric(
-                  //                 horizontal: size.width * 0.05),
-                  //             child: Padding(
-                  //               padding: EdgeInsets.symmetric(
-                  //                   horizontal: size.width * 0.1),
-                  //               child: Row(
-                  //                 children: [
-                  //                   const Icon(
-                  //                     Icons.add,
-                  //                     color: Colors.orange,
-                  //                   ),
-                  //                   TextUtils(
-                  //                       fontSize: size.width * 0.04,
-                  //                       fontWeight: FontWeight.bold,
-                  //                       text: 'أضف ملاحظاتك',
-                  //                       color: Colors.orange,
-                  //                       underLine: TextDecoration.none)
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //             decoration: BoxDecoration(
-                  //                 borderRadius:
-                  //                     BorderRadius.circular(size.width * 0.05),
-                  //                 color: mainColor.withOpacity(0.7))),
+                  //         TextUtils(
+                  //             fontSize: size.width * 0.05,
+                  //             fontWeight: FontWeight.bold,
+                  //             text: 'كوبون ',
+                  //             color: Colors.black54,
+                  //             underLine: TextDecoration.none),
+                  //         Row(
+                  //           children: [
+                  //             TextUtils(
+                  //                 fontSize: size.width * 0.03,
+                  //                 fontWeight: FontWeight.bold,
+                  //                 text: 'أضف كوبون ',
+                  //                 color: mainColor,
+                  //                 underLine: TextDecoration.none),
+                  //             const Icon(
+                  //               Icons.add,
+                  //               color: mainColor,
+                  //             )
+                  //           ],
+                  //         )
                   //       ],
-                  //     )),
-                  Column(
-                    children: [
-                      const BuildListNewOrder(),
-                      SizedBox(
-                        height: size.height * 0.02,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            isAddNote = true;
-                          });
-                        },
-                        child: isAddNote
-                            ? showFeildText()
-                            : Container(
-                                height: size.height * 0.05,
-                                width: size.width * 0.7,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: size.width * 0.05),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: size.width * 0.1),
-                                  child: Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.add,
-                                        color: Colors.white,
-                                      ),
-                                      TextUtils(
-                                          fontSize: size.width * 0.04,
-                                          fontWeight: FontWeight.bold,
-                                          text: 'أضف ملاحظاتك',
-                                          color: Colors.white,
-                                          underLine: TextDecoration.none)
-                                    ],
-                                  ),
-                                ),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                        size.width * 0.05),
-                                    color: mainColor.withOpacity(0.7))),
-                      ),
-                    ],
-                  )
+                  //     ),
+                  //     TextUtils(
+                  //         fontSize: size.width * 0.03,
+                  //         fontWeight: FontWeight.normal,
+                  //         text: 'رسوم التوصيل مخفضة',
+                  //         color: Colors.orange,
+                  //         underLine: TextDecoration.none)
+                  //   ],
+                  // ),
+                  // SizedBox(
+                  //   height: size.height * 0.01,
+                  // ),
+                  // TextUtils(
+                  //     fontSize: size.width * 0.05,
+                  //     fontWeight: FontWeight.bold,
+                  //     text: 'الأصناف ',
+                  //     color: Colors.black54,
+                  //     underLine: TextDecoration.none),
+                  // // Container(
+                  // //     decoration: BoxDecoration(
+                  // //         color: Colors.white,
+                  // //         borderRadius: BorderRadius.circular(size.width * 0.03)),
+                  // //     height: size.height * 0.9,
+                  // //     child: Column(
+                  // //       children: [
+                  // //         Expanded(child: BuildListNewOrder()),
+                  // //         SizedBox(
+                  // //           height: size.height * 0.02,
+                  // //         ),
+                  // //         Container(
+                  // //             height: size.height * 0.05,
+                  // //             width: size.width * 0.7,
+                  // //             padding: EdgeInsets.symmetric(
+                  // //                 horizontal: size.width * 0.05),
+                  // //             child: Padding(
+                  // //               padding: EdgeInsets.symmetric(
+                  // //                   horizontal: size.width * 0.1),
+                  // //               child: Row(
+                  // //                 children: [
+                  // //                   const Icon(
+                  // //                     Icons.add,
+                  // //                     color: Colors.orange,
+                  // //                   ),
+                  // //                   TextUtils(
+                  // //                       fontSize: size.width * 0.04,
+                  // //                       fontWeight: FontWeight.bold,
+                  // //                       text: 'أضف ملاحظاتك',
+                  // //                       color: Colors.orange,
+                  // //                       underLine: TextDecoration.none)
+                  // //                 ],
+                  // //               ),
+                  // //             ),
+                  // //             decoration: BoxDecoration(
+                  // //                 borderRadius:
+                  // //                     BorderRadius.circular(size.width * 0.05),
+                  // //                 color: mainColor.withOpacity(0.7))),
+                  // //       ],
+                  // //     )),
+                  // Column(
+                  //   children: [
+                  //     const BuildListNewOrder(),
+                  //     SizedBox(
+                  //       height: size.height * 0.02,
+                  //     ),
+                  //     InkWell(
+                  //       onTap: () {
+                  //         setState(() {
+                  //           isAddNote = true;
+                  //         });
+                  //       },
+                  //       child: isAddNote
+                  //           ? showFeildText()
+                  //           : Container(
+                  //           height: size.height * 0.05,
+                  //           width: size.width * 0.7,
+                  //           padding: EdgeInsets.symmetric(
+                  //               horizontal: size.width * 0.05),
+                  //           child: Padding(
+                  //             padding: EdgeInsets.symmetric(
+                  //                 horizontal: size.width * 0.1),
+                  //             child: Row(
+                  //               children: [
+                  //                 const Icon(
+                  //                   Icons.add,
+                  //                   color: Colors.white,
+                  //                 ),
+                  //                 TextUtils(
+                  //                     fontSize: size.width * 0.04,
+                  //                     fontWeight: FontWeight.bold,
+                  //                     text: 'أضف ملاحظاتك',
+                  //                     color: Colors.white,
+                  //                     underLine: TextDecoration.none)
+                  //               ],
+                  //             ),
+                  //           ),
+                  //           decoration: BoxDecoration(
+                  //               borderRadius: BorderRadius.circular(
+                  //                   size.width * 0.05),
+                  //               color: mainColor.withOpacity(0.7))),
+                  //     ),
+                  //   ],
+                  // )
                 ],
               ),
             ),
@@ -460,13 +479,14 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
       bottomSheet: BottomAppBar(
         child: InkWell(
           onTap: () async {
-            Provider.of<order_vm>(context, listen: false).order.detailorder =
-                notesController.text;
+            Provider.of<order_vm>(context, listen: false).order.content_order =
+                detailorderController.text;
             Provider.of<order_vm>(context, listen: false).order.DateTimeorder =
                 DateTime.now().toString();
             //distance_recive_deilvery
-            await Provider.of<order_vm>(context, listen: false).addOrder();
-            Navigator.of(context).push(MaterialPageRoute(
+            await Provider.of<order_vm>(context, listen: false).addCustomOrder();
+            Navigator.of(context).push(
+                MaterialPageRoute(
                 builder: (context) => ShowOffers(orderModel: orderModel)));
           },
           child: Container(

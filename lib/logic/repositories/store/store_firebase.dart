@@ -111,7 +111,9 @@ class StoreFirebase extends StoreRepository {
         Map<String, dynamic> body) async {
       FirebaseServices firestore =
       FirebaseServices("store"); //.collection(nameCollecton);
-      firestore.addtofirestore(body);
-      throw UnimplementedError();
+    DocumentReference ref= await firestore.addtofirestore(body);
+      body.addAll({'IdStore':ref.id});
+     return StoreModel.fromSnapshot(body);
+      // throw UnimplementedError();
     }
   }

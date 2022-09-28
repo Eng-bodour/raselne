@@ -19,8 +19,8 @@ import '../../../logic/controller/order_vm.dart';
 import '../../../services/polyline_service.dart';
 
 class map_location extends StatefulWidget {
-  const map_location({Key? key}) : super(key: key);
-
+   map_location({required this.type, Key? key}) : super(key: key);
+  String type;
   @override
   _map_locationState createState() => _map_locationState();
 }
@@ -68,7 +68,8 @@ class _map_locationState extends State<map_location> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('موقع الاستلام ',
+                    Text(
+                       widget.type=='الاستلام'? 'موقع الاستلام ':'موقع التوصيل',
                         style: TextStyle(
                             fontSize: size.width * 0.045,
                             fontWeight: FontWeight.bold,
@@ -265,6 +266,7 @@ class _map_locationState extends State<map_location> {
                   children: [
                     InkWell(
                       onTap: () {
+
                         /// authProvider.checkBox();
                       },
                       child: Container(
@@ -308,8 +310,11 @@ class _map_locationState extends State<map_location> {
                 ),
                 child: ElevatedButton(
                   onPressed: () async {
-                    await Provider.of<order_vm>(context, listen: false)
-                        .addlocation(currentLocation, Address, addDetails.text);
+                   widget.type=='الاستلام'?
+                   await Provider.of<order_vm>(context, listen: false)
+                        .addlocation(currentLocation, Address, addDetails.text,widget.type)
+                   :   await Provider.of<order_vm>(context, listen: false)
+                       .addlocation(currentLocation, Address, addDetails.text,widget.type);
                     Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
@@ -322,7 +327,7 @@ class _map_locationState extends State<map_location> {
                   ),
                   child: TextUtils(
                     color: Colors.white,
-                    text: 'تأكيد مكان الاستلام',
+                    text:widget.type=='الاستلام'? 'تأكيد مكان الاستلام':'تأكيد مكان التوصيل',
                     fontSize: size.width * 0.05,
                     fontWeight: FontWeight.bold,
                     underLine: TextDecoration.none,
