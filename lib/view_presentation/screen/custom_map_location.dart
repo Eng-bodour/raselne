@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../data_layer/model/orderModel.dart';
@@ -39,8 +40,9 @@ class _custom_map_locationState extends State<custom_map_location> {
     // zoom: 17.47
     // );\
     // user= Provider.of<AuthProvider_vm>(context,listen: false).currentuser;
-    _animateCamera(widget.from);
     _buildMarkerFromAssets();
+    _animateCamera(widget.from);
+
     _drawPolyline(widget.from, widget.to);
     super.initState();
   }
@@ -61,7 +63,11 @@ class _custom_map_locationState extends State<custom_map_location> {
 
   @override
   Widget build(BuildContext context) {
-    return   GoogleMap(
+    return   Scaffold(
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+      GoogleMap(
       initialCameraPosition:
       CameraPosition(
           target:
@@ -70,7 +76,7 @@ class _custom_map_locationState extends State<custom_map_location> {
 
       mapType: MapType.normal,
       onMapCreated: (GoogleMapController controller) async {
-      String style = await DefaultAssetBundle.of(context)
+        String style = await DefaultAssetBundle.of(context)
             .loadString('assets/map_style.json');
         //customize your map style at: https://mapstyle.withgoogle.com/
         controller.setMapStyle(style);
@@ -83,6 +89,9 @@ class _custom_map_locationState extends State<custom_map_location> {
       },
       markers: _markers,
       polylines: _polylines,
+  ),
+],
+      ),
     );
   }
 

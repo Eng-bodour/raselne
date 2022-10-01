@@ -80,7 +80,7 @@ class UserModel {
    userModel.docId= docIdUser;
    userModel.balance= json["balance"] == null ? null : json["balance"];
    userModel.eradat= json["eradat"] == null ? null : json["eradat"];
-    userModel.rating= json["rate"] == null ? [] :
+   userModel.rating= json["rate"] == null ? [] :
        // json["rate"].tolist();
     // json['rate'].tolist()
     //     .map((e) => Rate.fromJson(e));
@@ -106,7 +106,7 @@ class UserModel {
 
   }
 
- static double getrate(List<Rate> listrate){
+ static double getrate(List<Rate> listrate) {
     int star1=0,star2=0,star3=0,star4=0,star5=0;
     double star1_1=0,star2_2=0,star3_3=0,star4_4=0,star5_5=0;
     for(int i=0;i<listrate.length-1;i++)
@@ -141,6 +141,7 @@ class UserModel {
   double rataing=sumValues/listrate.length;
      return rataing;
   }
+
   Map<String, dynamic> toJson() => {
         "name": name,
         "email": email,

@@ -26,4 +26,6 @@ class LocationService {
     _locationData = await location.getLocation();
     return _locationData;
   }
+
+
 }

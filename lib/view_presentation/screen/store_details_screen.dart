@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:raselne/view_presentation/screen/store%20drawer/add_store.dart';
 
 import 'package:raselne/view_presentation/widget/store/store_list_build.dart';
 import 'package:raselne/view_presentation/widget/store/store_title.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
+
+import '../../logic/controller/auth_controller.dart';
+import '../../utilis/theme.dart';
 
 class StoreDetailsScreen extends StatelessWidget {
   final String titleStore;
@@ -15,6 +20,21 @@ class StoreDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      floatingActionButton:  Provider.of<AuthProvider_vm>(context,listen: true)
+          .currentuser.type=='store' ?
+      FloatingActionButton(
+        backgroundColor: mainColor,
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(
+              builder: (context) => AddStore(
+                    storemodel: null,
+                   type: 'add',
+                  typeStore:titleStore)));
+        },
+        tooltip: 'إضافة متجر',
+        child: Icon(Icons.add),
+      ):Container(),
       backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
         title: TextUtils(

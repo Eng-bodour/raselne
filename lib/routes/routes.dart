@@ -67,10 +67,10 @@ class AppRoutes {
     //   name: Routes.newOrderScreen,
     //   page: () => NewOrderScreen(),
     // ),
-    GetPage(
-      name: Routes.addStore,
-      page: () => const AddStore(),
-    ),
+    // GetPage(
+    //   name: Routes.addStore,
+    //   page: () =>  AddStore(type: '',),
+    // ),
     GetPage(
       name: Routes.addCategory,
       page: () => const AddCategory(),

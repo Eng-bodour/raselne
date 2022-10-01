@@ -254,7 +254,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                                   horizontal: size.width * 0.06,
                                                   vertical: size.height * 0.03),
                                               width: size.width * 0.75,
-                                              decoration: BoxDecoration(
+                                              decoration:
+                                              BoxDecoration(
                                                 color: isMe
                                                     ? greyColor.withOpacity(0.1)
                                                     : mainColor
@@ -297,7 +298,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                                                     0.1),
                                                       ),
                                               ),
-                                              child: CachedNetworkImage(
+                                              child:
+                                              CachedNetworkImage(
                                                 imageUrl: snapshot
                                                     .data![index].textMessage
                                                     .toString(),

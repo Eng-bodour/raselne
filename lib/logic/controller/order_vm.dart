@@ -135,7 +135,7 @@ Future<void> addOrder() async {
    listdetail+=element.item.description.toString()+" عدد "+element.quaintity.toString()+"\n";
  });
   order.content_order=order.storeModel!.nameStore +"\n"+listdetail;
-  order.fromlocation=order.storeModel!.location;
+  order.fromlocation=order.storeModel!.location!;
   order.isopen=true;
   order.state='open';
   print(order.content_order);

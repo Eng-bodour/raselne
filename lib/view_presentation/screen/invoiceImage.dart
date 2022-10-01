@@ -178,7 +178,9 @@ class _InvoiceImageState extends State<InvoiceImage> {
 
     // if (permissionStatus.isGranted){
     //Select Image
-               image = await _imagePicker.getImage(source: ImageSource.gallery);
+               image = await _imagePicker.getImage(
+                   source: ImageSource.camera,
+                   imageQuality:60 );
 
                file = File(image!.path);
 setState(() {

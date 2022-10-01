@@ -11,7 +11,7 @@ class StoreAPI extends StoreRepository {
   }
 
   @override
-  Future<StoreModel> getStoreById(int id) {
+  Future<List<StoreModel>> getStoreById(String idowner,String typeStore) {
     // TODO: implement getStoreById
     throw UnimplementedError();
   }

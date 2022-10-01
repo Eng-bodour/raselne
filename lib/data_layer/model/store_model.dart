@@ -6,11 +6,14 @@ import 'package:location/location.dart';
 class StoreModel {
   String nameStore;
   String descStore;
+  String stateStore;
   String typeStore;
+  String? imageStore='';
   String mobileStore;
-  late LatLng location;
+  late LatLng? location;
   String offer_value;
   String rating;
+  String idowner;
   String? IdStore;
   bool isVisible=false;
   //bool isorderd=false;//this value to refer
@@ -22,28 +25,38 @@ class StoreModel {
   // String get locationnam => location;
 
   StoreModel({
+    required this.isVisible,
     required this.nameStore,
+    required this.stateStore,
     required this.descStore,
     required this.typeStore,
+    required this.idowner,
     required this.mobileStore,
     required this.offer_value,
     required this.rating,
     required this.itemstore,
     required this.IdStore,
+     this.imageStore,
+      this.location,
   });
   factory StoreModel.fromSnapshot(Map<String,dynamic> doc) {
     StoreModel store =StoreModel(
       nameStore: doc['nameStore'],
       typeStore: doc['typeStore'],
       mobileStore: doc['mobileStore'],
+      imageStore: doc['imageStore'],
+      stateStore: doc['stateStore'],
       //location: null,//doc['location'],
       offer_value: doc['offer_value'],
       rating: doc['rating'],
       descStore: doc['descStore'],
       IdStore: doc['IdStore'], itemstore: [],
+      idowner: doc['idowner'],
+      isVisible: false,
       // itemstore: (json.decode(doc['itemstore']) as List)
       //  .map((e) => Itemstore.fromJson(e)).toList(),
     );
+
     GeoPoint gloacationfrom=doc["location"];
     store.location=LatLng(gloacationfrom.latitude,gloacationfrom.longitude);
 
@@ -54,14 +67,19 @@ class StoreModel {
        "nameStore": nameStore,
         "typeStore": typeStore,
         "mobileStore": mobileStore,
-        "location": location,
+        "location": GeoPoint(
+            location!.latitude,
+            location!.longitude),
+        "stateStore": stateStore,
+        "imageStore": imageStore,
         "offer_value": offer_value,
         "rating": rating,
+        "idowner": idowner,
         "descStore": descStore,
         "IdStore": IdStore,
   // _data['products'] =
   // products!.map((e)=>e.toJson()).toList();
-        "itemstore": itemstore.map((e) => e.toJson()).toList(),
+        //"itemstore": itemstore.map((e) => e.toJson()).toList(),
       };
 
   // factory StoreModel.fromJson(Map<String, dynamic> json) => StoreModel(

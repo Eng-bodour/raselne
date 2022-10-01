@@ -268,9 +268,7 @@ class _Custom_orderState extends State<Custom_order> {
                   TextUtils(
                       fontSize: size.width * 0.05,
                       fontWeight: FontWeight.bold,
-                      text: ' طريقة الدفع  ${
-                          Provider.of<order_vm>(context,listen: true)
-                              .order.type_pay}',
+                      text: ' طريقة الدفع  ',
                       color: Colors.black54,
                       underLine: TextDecoration.none),
                   InkWell(
@@ -302,13 +300,16 @@ class _Custom_orderState extends State<Custom_order> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(
-                                  children: const [
+                                  children:  [
                                     Icon(
                                       Icons.payments,
                                       color: mainColor,
                                     ),
                                     Text(
-                                      ' نوع الدفع',
+                                      '  ${
+                                          Provider.of<order_vm>(context,listen: true)
+                                              .order.type_pay.toString()} نوع الدفع ',
+
                                       style: TextStyle(color: Colors.black54),
                                     ),
                                   ],

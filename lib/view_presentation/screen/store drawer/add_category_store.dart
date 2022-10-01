@@ -65,7 +65,7 @@ class _AddCategoryState extends State<AddCategory> {
                     TextUtils(
                         fontSize: size.width * 0.04,
                         fontWeight: FontWeight.bold,
-                        text: 'اسم الصنف ',
+                        text: 'نوع الصنف ',
                         color: greyColor,
                         underLine: TextDecoration.none), //Text('اسم المحل'),
                     // SizedBox(
@@ -87,7 +87,38 @@ class _AddCategoryState extends State<AddCategory> {
                       },
                       prefixIcon: const Text(''),
                       suffixIcon: const Text(""),
-                      hintText: 'اسم الصنف',
+                      hintText: ' النوع(وجبات-أطباق رئيسية-حلويات عربية) الخ',
+                    ),
+                    SizedBox(
+                      height: size.height * 0.02,
+                    ),
+                    ////////////////////////
+                    TextUtils(
+                        fontSize: size.width * 0.04,
+                        fontWeight: FontWeight.bold,
+                        text: 'عنوان الصنف ',
+                        color: greyColor,
+                        underLine: TextDecoration.none), //Text('اسم المحل'),
+                    // SizedBox(
+                    //   height: size.height * 0.02,
+                    // ),
+                    AuthTextFromField(
+                      read: false,
+                      keyboardType: TextInputType.text,
+                      controller: nameCategoryController,
+                      obscureText: false,
+                      validator: (value) {
+                        if (value.toString().length <= 3) {
+                          //   print(controllerStore.isUsedName);
+                          return 'Enter valid name';
+                        } else {
+                          //   print('false is');
+                          return null;
+                        }
+                      },
+                      prefixIcon: const Text(''),
+                      suffixIcon: const Text(""),
+                      hintText: 'عنوان الصنف',
                     ),
                     SizedBox(
                       height: size.height * 0.02,
@@ -214,7 +245,7 @@ class _AddCategoryState extends State<AddCategory> {
                               Get.back();
                             }
                           },
-                          text: 'Add Store'),
+                          text: 'إضافة صنف'),
                       // GetBuilder<CategoryStoreController>(builder: (_) {
                       //   return AuthButton(
                       //       onPressed: () {

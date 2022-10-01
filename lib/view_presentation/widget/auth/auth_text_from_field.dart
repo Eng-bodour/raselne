@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:raselne/utilis/theme.dart';
 
 class AuthTextFromField extends StatelessWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final bool obscureText;
   final Function validator;
   final Widget prefixIcon;
@@ -13,7 +13,7 @@ class AuthTextFromField extends StatelessWidget {
   // TextDirection? textdirehint;
 
   const AuthTextFromField({
-    required this.controller,
+     this.controller,
     required this.obscureText,
     required this.validator,
     required this.prefixIcon,

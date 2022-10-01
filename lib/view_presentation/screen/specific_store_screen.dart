@@ -7,6 +7,7 @@ import 'package:raselne/data_layer/model/store_model.dart';
 import 'package:raselne/logic/controller/order_vm.dart';
 import 'package:raselne/logic/controller/store/store_controller.dart';
 import 'package:raselne/utilis/theme.dart';
+import 'package:raselne/view_presentation/screen/store%20drawer/add_category_store.dart';
 import 'package:raselne/view_presentation/widget/specific%20store/Inside_namesOf_theItems_widget.dart';
 import 'package:raselne/view_presentation/widget/specific%20store/first_container_widget.dart';
 import 'package:raselne/view_presentation/widget/specific%20store/typs_choise_widget.dart';
@@ -131,6 +132,19 @@ class SpecificStoreScreen extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        floatingActionButton:
+        Provider.of<AuthProvider_vm>(context,listen: true)
+            .currentuser.type=='store' ?
+        FloatingActionButton(
+          backgroundColor: mainColor,
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(
+                builder: (context) => AddCategory()));
+          },
+          tooltip: 'إضافة صنف',
+          child: Icon(Icons.add),
+        ):Container(),
         backgroundColor: Colors.white,
         body: CustomScrollView(
           slivers: [
@@ -187,13 +201,16 @@ class SpecificStoreScreen extends StatelessWidget {
 
                                   //children: _privilgelist.map(( key) {
                                   // child:
-                                  Stack(children: [
+                                  Stack(
+                                      children: [
                                 Container(
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: size.width * 0.03),
                                     child: InkWell(
                                       onTap: () {
+                                        if(Provider.of<AuthProvider_vm>
+                                          (context,listen: false).currentuser.type=='user')
                                         showModalBottomSheet<dynamic>(
                                             backgroundColor: Colors.white,
                                             //  backgroundColor: Colors.transparent,
@@ -213,6 +230,11 @@ class SpecificStoreScreen extends StatelessWidget {
                                                       element.price,
                                                       1),
                                                 )));
+                                       else {
+                                         Navigator.push(context,
+                                         MaterialPageRoute(builder:
+                                             (context)=>AddCategory()));
+                                        }
                                         // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
                                       },
                                       child: Column(
@@ -470,7 +492,9 @@ class SpecificStoreScreen extends StatelessWidget {
             ),
           ],
         ),
-        bottomSheet: BottomAppBar(
+        bottomSheet:
+        Provider.of<AuthProvider_vm>(context,listen: true).currentuser.type=='user'?
+        BottomAppBar(
           child: InkWell(
             onTap: () {
               Provider.of<order_vm>(context, listen: false).prepareOrder(
@@ -545,7 +569,7 @@ class SpecificStoreScreen extends StatelessWidget {
             ),
           ),
           color: mainColor,
-        ),
+        ):null,
       ),
     );
   }
