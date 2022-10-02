@@ -230,11 +230,11 @@ class _map_locationState extends State<location_store> {
                     SizedBox(
                       width: size.width * 0.02,
                     ),
-                    Text('حفظ المكان لاستخدامه لاحقاً',
-                        style: TextStyle(
-                            fontSize: size.width * 0.03,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black54)),
+                    // Text('حفظ المكان لاستخدامه لاحقاً',
+                    //     style: TextStyle(
+                    //         fontSize: size.width * 0.03,
+                    //         fontWeight: FontWeight.bold,
+                    //         color: Colors.black54)),
                   ],
                 ),
               ),

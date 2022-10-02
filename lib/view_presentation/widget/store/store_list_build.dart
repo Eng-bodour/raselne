@@ -177,19 +177,23 @@ Widget buildCardPhotoFromNetwork({required String image, required Size size}) {
     width: size.height * 0.06,
     height: size.height * 0.06,
 
-    child: CachedNetworkImage(
-      imageUrl: image,
-      imageBuilder: (context, imageProvider) => Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: imageProvider,
-            fit: BoxFit.cover,
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(45),
+      child:
+      CachedNetworkImage(
+        imageUrl: image,
+        imageBuilder: (context, imageProvider) => Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: imageProvider,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
+        placeholder: (context, url) =>
+        const CircularProgressIndicator(),
+        fit: BoxFit.fill,
       ),
-      placeholder: (context, url) =>
-      const CircularProgressIndicator(),
-      fit: BoxFit.fill,
     ),
   );
 }

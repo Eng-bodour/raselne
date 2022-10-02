@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:provider/provider.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
+
+import '../../../logic/controller/auth_controller.dart';
 
 Widget modeUser(
     {required Size size,
@@ -9,7 +13,7 @@ Widget modeUser(
     required Icon icon,
     required BuildContext context,
     required Function() ontap}) {
-  return InkWell(
+  return  InkWell(
     highlightColor: Colors.white,
     onTap: ontap,
     child: Row(

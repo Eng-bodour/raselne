@@ -92,13 +92,14 @@ class UserModel {
         gloacationfrom.longitude);
     return userModel;
   }
-  List<Rate> getproud(data){
+  List<Rate> getproud(data) {
     List<Rate> prodlist = [];
     if(data!=null){
+      print('data!=null');
       for (int i = 0; i < data.length; i++) {
         print(i);
 
-        //print("data "+ "[" + data[i] + "]");
+        // print("data "+ "[" + data[i] + "]");
         prodlist.add(Rate.fromJson(data[i]));
       }
     }

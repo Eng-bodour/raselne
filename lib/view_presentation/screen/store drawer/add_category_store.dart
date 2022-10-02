@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:raselne/data_layer/model/store_model.dart';
@@ -219,47 +221,175 @@ class _AddCategoryState extends State<AddCategory> {
                           }
                         },
                         prefixIcon: const Text(""),
-                        suffixIcon: const Text(''),
+                        suffixIcon: IconButton(
+                            onPressed: () async{
+                              final _imagePicker = ImagePicker();
+                              PickedFile? image;
+
+                              image = await _imagePicker.getImage(
+                                  source: ImageSource.gallery,
+                                  //maxHeight: ,
+                                  imageQuality:60 );
+
+                              file = File(image!.path);
+                            },
+                            icon: const Icon(Icons.image)),
                         hintText: 'الصورة',
                       ),
                       SizedBox(
                         height: size.height * 0.1,
                       ),
+                      Container(
+                        margin: EdgeInsets.only(
+                          top: size.height * 0.01,
+                          left: size.width * 0.03,
+                          bottom: size.height * 0.01,
+                        ),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: size.width * 0.06,
+                            vertical: size.height * 0.03),
+                        width: size.width * 0.75,
+                        decoration:
+                        BoxDecoration(
+                            color:
 
+                            mainColor
+                                .withOpacity(0.3),
+                            borderRadius:  BorderRadius.only(
+                              topLeft:
+                              Radius.circular(
+                                  size.width *
+                                      0.1),
+                              topRight:
+                              Radius.circular(
+                                  size.width *
+                                      0.02),
+                              bottomLeft:
+                              Radius.circular(
+                                  size.width *
+                                      0.02),
+                              bottomRight:
+                              Radius.circular(
+                                  size.width *
+                                      0.1),
+                            )
+
+                        ),
+                        child:
+                        file==null?
+                        widget.type=='edit'?
+                        CachedNetworkImage(
+                          imageUrl: widget.itemstore!.image.toString() ,
+                          placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                          errorWidget:
+                              (context, url, error) =>
+                          const Icon(Icons.error),
+                        )
+                            :Container():
+                        Image.file(file!,fit: BoxFit.contain),
+
+                      ),
+                     //deleteItemStore
                       Center(
-                        child: AuthButton(
-                            onPressed: () async{
+                        child:Column(
+                          children: [
+                            AuthButton(
+                                onPressed: () async{
 
-                              if (fromKey.currentState!.validate()) {
-                                  // categoryStoreProvider.addCategory(
-                                  // nameCollection: 'number1',
-                                  // nameCategory: nameCategoryController.text,
-                                  // description: descriptionController.text,
-                                  // price: priceController.text,
-                                  // image: imageController.text,
-                                  // nameCollecton: 'store',
-                                  // typename: selectedTypes.toString(),
-                                  // nameStore: nameStoreController.text,
-                                  // mobile: mobileController.text,
-                                  // location: locationController.text,
-                                  // storeId: Random().nextInt(100000000),
-                                Itemstore item=   Itemstore(
-                                     type_categore:typeCategoryController.text.toString() ,
-                                     nameCategory: nameCategoryController.toString(),
-                                     image: '', price: priceController.text.toString(),
-                                     description: descriptionController.text.toString())
-                                await addStoreProvider.SaveStoreItem(
-                                    fileimage: file,
+                                  if (fromKey.currentState!.validate()) {
+                                    // categoryStoreProvider.addCategory(
+                                    // nameCollection: 'number1',
+                                    // nameCategory: nameCategoryController.text,
+                                    // description: descriptionController.text,
+                                    // price: priceController.text,
+                                    // image: imageController.text,
                                     // nameCollecton: 'store',
-                                    itemStore: item.toJson(),
-                                    type:   widget.type,
-                                    idStore: widget.idStore
-                                );
+                                    // typename: selectedTypes.toString(),
+                                    // nameStore: nameStoreController.text,
+                                    // mobile: mobileController.text,
+                                    // location: locationController.text,
+                                    // storeId: Random().nextInt(100000000),
+                                    if(widget.type=='add'&& file==null)
+                                      Get.snackbar(
+                                        '',
+                                        'حدد صورة للصنف من فضلك',
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: Colors.green,
+                                        colorText: Colors.white,
+                                      );
+                                    else {
+                                      Itemstore item = Itemstore(
+                                          type_categore: typeCategoryController.text
+                                              .toString(),
+                                          nameCategory: nameCategoryController
+                                              .toString(),
+                                          image: '',
+                                          price: priceController.text.toString(),
+                                          description: descriptionController.text
+                                              .toString());
+                                      await
+                                      addStoreProvider.SaveStoreItem(
+                                          fileimage: file,
 
-                                Get.back();
-                              }
-                            },
-                            text: 'إضافة صنف'),
+                                          itemStore: item.toJson(),
+                                          type: widget.type,
+                                          idStore: widget.idStore
+                                      );
+
+                                      Get.back();
+                                    }
+                                  }
+                                },
+                                text: 'حفظ معلومات الصنف'),
+                         widget.type=='edit'?
+                         AuthButton(
+                                onPressed: () async {
+                                  Get.defaultDialog(
+                                    title:'تأكيد',
+                                    titleStyle: TextStyle(
+                                      fontSize: size.width * 0.05,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    middleText:'هل انت متأكد من عملية الحذف .. سيتم حذف المنتج بشكل نهائي ؟ ',
+                                    middleTextStyle: TextStyle(
+                                      fontSize: size.width * 0.04,
+                                      color: Colors.black54,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                    backgroundColor: Colors.white,
+                                    radius: size.width * 0.04,
+                                    textCancel: 'رجوع',
+                                    cancelTextColor: Colors.black,
+                                    textConfirm: 'نعم',
+                                    confirmTextColor: Colors.white,
+                                    onCancel: () {
+                                      Get.back();
+                                      // to delete
+                                    },
+                                    onConfirm: () async {
+
+                                      Itemstore item = Itemstore(
+                                          type_categore: typeCategoryController.text
+                                              .toString(),
+                                          nameCategory: nameCategoryController
+                                              .toString(),
+                                          image: widget.type=='edit'?
+                                          widget.itemstore!.image.toString():'',
+                                          price: priceController.text.toString(),
+                                          description: descriptionController.text
+                                              .toString());
+                                      await addStoreProvider.deleteItemStore(item, widget.idStore);
+
+                                      // authProvider.signOutFromApp();
+                                    },
+                                    buttonColor:
+                                    mainColor, // Get.isDarkMode ? pinkClr : mainColor,
+                                  );},
+                                text: 'حذف الصنف'):Container(),
+                          ],
+                        )
                         // GetBuilder<CategoryStoreController>(builder: (_) {
                         //   return AuthButton(
                         //       onPressed: () {
@@ -293,6 +423,7 @@ class _AddCategoryState extends State<AddCategory> {
                         //       text: 'Add Store');
                         // }),
                       ),
+
                     ],
                   ),
                 ),

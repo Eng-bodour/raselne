@@ -10,7 +10,8 @@ abstract class StoreRepository {
   Future<StoreModel> AddStore(File? fileimage ,
       Map<String,dynamic> body,String TypeOperation);
   Future<Itemstore> AddStoreItem(File? fileimage,
-      Map<String,dynamic> body,String TypeOperation);
+      Map<String,dynamic> body,String TypeOperation,String idStore);
+  Future<void> deleteStoreItem( Map<String,dynamic> body,String idStore);
 
 }
 

@@ -31,8 +31,14 @@ class StoreAPI extends StoreRepository {
   }
 
   @override
-  Future<Itemstore> AddStoreItem(File? fileimage, Map<String, dynamic> body,String TypeOperation) {
+  Future<Itemstore> AddStoreItem(File? fileimage, Map<String, dynamic> body,String TypeOperation,String idStore) {
     // TODO: implement AddStoreItem
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteStoreItem( Map<String, dynamic> body, String idStore) {
+    // TODO: implement deleteStoreItem
     throw UnimplementedError();
   }
 

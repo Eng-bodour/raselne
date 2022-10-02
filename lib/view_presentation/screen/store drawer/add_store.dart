@@ -423,21 +423,21 @@ class _AddStoreState extends State<AddStore> {
                               PickedFile? image;
 
                               image = await _imagePicker.getImage(
-                                  source: ImageSource.camera,
+                                  source: ImageSource.gallery,
                                   //maxHeight: ,
                                   imageQuality:60 );
 
                               file = File(image!.path);
                             },
-                            icon: const Icon(Icons.location_pin)),
+                            icon: const Icon(Icons.image)),
                         hintText: 'صورة المتجر',
                       ),
                       SizedBox(
-                        height: size.height * 0.1,
+                        height:6, //size.height * 0.1,
                       ),
                       Container(
                         margin: EdgeInsets.only(
-                          top: size.height * 0.01,
+                          // top: size.height * 0.01,
                           left: size.width * 0.03,
                           bottom: size.height * 0.01,
                         ),
@@ -453,37 +453,41 @@ class _AddStoreState extends State<AddStore> {
                           //     :
                             mainColor
                               .withOpacity(0.3),
-                          borderRadius:  BorderRadius.only(
-                            topLeft:
-                            Radius.circular(
-                                size.width *
-                                    0.1),
-                            topRight:
-                            Radius.circular(
-                                size.width *
-                                    0.02),
-                            bottomLeft:
-                            Radius.circular(
-                                size.width *
-                                    0.02),
-                            bottomRight:
-                            Radius.circular(
-                                size.width *
-                                    0.1),
-                          )
+                          borderRadius:BorderRadius.all(Radius.circular(20)),
+                          // BorderRadius.only(
+                          //   topLeft:
+                          //   Radius.circular(
+                          //       size.width *
+                          //           0.1),
+                          //   topRight:
+                          //   Radius.circular(
+                          //       size.width *
+                          //           0.02),
+                          //   bottomLeft:
+                          //   Radius.circular(
+                          //       size.width *
+                          //           0.02),
+                          //   bottomRight:
+                          //   Radius.circular(
+                          //       size.width *
+                          //           0.1),
+                          // )
 
                         ),
                         child:
                        file==null?
                        widget.type=='edit'?
-                       CachedNetworkImage(
-                          imageUrl: widget.storemodel!.imageStore.toString() ,
-                          placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                          errorWidget:
-                              (context, url, error) =>
-                          const Icon(Icons.error),
-                        )
+                       ClipRRect(
+                         borderRadius: BorderRadius.circular(45),
+                         child: CachedNetworkImage(
+                            imageUrl: widget.storemodel!.imageStore.toString() ,
+                            placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                            errorWidget:
+                                (context, url, error) =>
+                            const Icon(Icons.error),
+                          ),
+                       )
                        :Container():
                        Image.file(file!,fit: BoxFit.contain),
                         // Image.network(
@@ -535,6 +539,8 @@ class _AddStoreState extends State<AddStore> {
                                                 listen: false).location,
                                             offer_value: '',
                                             rating: '1',
+                                            imageStore: widget.type=='edit'?
+                                            widget.storemodel!.imageStore.toString():'',
                                             itemstore: [],
                                             IdStore: '',
                                             descStore: descStoreController.text.toString(),

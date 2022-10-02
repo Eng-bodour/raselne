@@ -21,7 +21,7 @@ class StoreProvider_vm extends ChangeNotifier {
     address_store=address;
     notifyListeners();
   }
-  SaveStore({File? fileimage, required Map<String, dynamic> storeModel,
+ Future<void> SaveStore({File? fileimage, required Map<String, dynamic> storeModel,
     required String type})
   async {
     isloading=true;
@@ -31,19 +31,28 @@ class StoreProvider_vm extends ChangeNotifier {
     isloading=false;
     notifyListeners();
   }
-  SaveStoreItem({File? fileimage, required Map<String, dynamic> itemStore,
+ Future<void> SaveStoreItem({File? fileimage, required Map<String, dynamic> itemStore,
     required String idStore,
     required String type})
   async {
     isloading=true;
     notifyListeners();
-    await storeRepository.AddStoreItem(fileimage , itemStore,type);
+    await storeRepository.AddStoreItem(fileimage , itemStore,type,idStore);
     int index=liststore.indexWhere((element) => element.IdStore==idStore);
     if(index!=-1)
     liststore[index].itemstore.add(Itemstore.fromJson(itemStore));
     isloading=false;
     notifyListeners();
   }
+  Future<void> deleteItemStore(Itemstore itemstore,String idStore)async{
+    isloading=true;
+    notifyListeners();
+    await storeRepository.deleteStoreItem(itemstore.toJson(),idStore);
+    isloading=false;
+    notifyListeners();
+
+  }
+
   item_to_order(String IdItemStore ) {
     // int index = liststore.indexWhere(
     //         (element) =>

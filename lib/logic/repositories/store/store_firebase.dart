@@ -99,6 +99,7 @@ class StoreFirebase extends StoreRepository {
 
     @override
     Future<List<StoreModel>> getStoreById(String idowner,String typeStore) async {
+    //get owner stores
       // TODO: implement getStoreById
       List<StoreModel> liststore = [];
       List<StoreModel> liststoreNew = [];
@@ -200,7 +201,7 @@ class StoreFirebase extends StoreRepository {
 
       throw UnimplementedError();
     }
-  Future<String> uploadImageToFirebase(File imageFile) async {
+  Future<String> uploadImageToFirebase(File imageFile,String path) async {
     String nameimage=basename(imageFile.path);
     // Create the file metadata
     final metadata = SettableMetadata(
@@ -209,7 +210,7 @@ class StoreFirebase extends StoreRepository {
 
     var random=Random().nextInt(100000);
     var storageRef=FirebaseStorage.instance.
-    ref('images/$random${nameimage}');
+    ref('$path/$random${nameimage}');
 
     String urlimage='';
     final uploadTask = await storageRef.putFile(imageFile,metadata);
@@ -256,7 +257,7 @@ class StoreFirebase extends StoreRepository {
       String imagurl='';
       if(TypeOperation=='add'){
       if(fileimage!=null) {
-        imagurl = await uploadImageToFirebase(fileimage);
+        imagurl = await uploadImageToFirebase(fileimage,'imageStore');
         body.addAll({'imageStore':imagurl});
       }
       FirebaseServices firestore =
@@ -267,7 +268,7 @@ class StoreFirebase extends StoreRepository {
       else{
         if(fileimage!=null) {//upload image
         await  FirebaseStorage.instance.refFromURL(body['imageStore']).delete();
-          imagurl = await uploadImageToFirebase(fileimage);
+          imagurl = await uploadImageToFirebase(fileimage,'imageStore');
           body.addAll({'imageStore':imagurl});
         }
         FirebaseFirestore.instance.collection('store').doc(
@@ -279,14 +280,47 @@ class StoreFirebase extends StoreRepository {
         // body.addAll({'IdStore':ref.id});
       }
 
-      // throw UnimplementedError();
-    
       return StoreModel.fromSnapshot(body);
     }
 
   @override
-  Future<Itemstore> AddStoreItem(File? fileimage, Map<String, dynamic> body,String TypeOperation) {
+  Future<Itemstore> AddStoreItem(File? fileimage, Map<String, dynamic> body,String TypeOperation,String idStore)async {
     // TODO: implement AddStoreItem
-    throw UnimplementedError();
+    String imagurl='';
+    if(TypeOperation=='add'){
+      if(fileimage!=null) {
+        imagurl = await uploadImageToFirebase(fileimage,'imageItemStore');
+        body.addAll({'image':imagurl});
+      }
+      DocumentReference ref= await FirebaseFirestore.instance.collection('store').doc(idStore)
+          .collection('items_store').add(body);
+      // FirebaseServices firestore =
+      // FirebaseServices("store"); //.collection(nameCollecton);
+      // DocumentReference ref= await firestore.addtofirestore(body);
+      body.addAll({'IdItemStore':ref.id});
+    }
+    else{
+      if(fileimage!=null) {//upload image
+        await  FirebaseStorage.instance.refFromURL(body['image']).delete();
+        imagurl = await uploadImageToFirebase(fileimage,'imageItemStore');
+        body.addAll({'image':imagurl});
+      }
+      FirebaseFirestore.instance.collection('store').doc(idStore)
+          .collection('items_store').doc(body['IdItemStore']).update(body);
+      // FirebaseServices firestore =
+      // FirebaseServices("store"); //.collection(nameCollecton);
+      // DocumentReference ref= await firestore.(body);
+      // body.addAll({'IdStore':ref.id});
+    }
+
+    return Itemstore.fromJson(body);
+  }
+
+  @override
+  Future<void> deleteStoreItem( Map<String, dynamic> body, String idStore)async {
+    // TODO: implement deleteStoreItem
+    await  FirebaseStorage.instance.refFromURL(body['image']).delete();//لحذف صورة الصنف
+    await FirebaseFirestore.instance.collection('store').doc(idStore)
+        .collection('items_store').doc(body['IdItemStore']).delete();
   }
 }

@@ -50,7 +50,8 @@ class StoreModel {
       offer_value: doc['offer_value'],
       rating: doc['rating'],
       descStore: doc['descStore'],
-      IdStore: doc['IdStore'], itemstore: [],
+      IdStore: doc['IdStore'],
+      itemstore: [],
       idowner: doc['idowner'],
       isVisible: false,
       // itemstore: (json.decode(doc['itemstore']) as List)
