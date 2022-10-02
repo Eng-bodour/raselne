@@ -2,6 +2,7 @@
 
 
 import 'dart:io';
+import 'dart:math';
 import 'package:path/path.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -350,8 +351,10 @@ else {
     final metadata = SettableMetadata(
         contentType: "image/jpg");
 
+
+    var random=Random().nextInt(100000);
     var storageRef=FirebaseStorage.instance.
-    ref('images/${nameimage}');
+    ref('images/$random${nameimage}');
 
     String urlimage='';
     final uploadTask = await storageRef.putFile(imageFile,metadata);

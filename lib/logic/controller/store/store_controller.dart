@@ -6,7 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../data_layer/model/store_model.dart';
 import '../../repositories/store/store_repo.dart';
-
+import 'dart:io';
 class StoreProvider_vm extends ChangeNotifier {
   bool isUsedName = false;
   bool isloading = false;
@@ -21,10 +21,27 @@ class StoreProvider_vm extends ChangeNotifier {
     address_store=address;
     notifyListeners();
   }
-  addStore({required String nameCollecton, required Map<String, dynamic> storeModel,})
+  SaveStore({File? fileimage, required Map<String, dynamic> storeModel,
+    required String type})
   async {
-    await storeRepository.AddStore(nameCollecton, storeModel);
+    isloading=true;
+    notifyListeners();
+    await storeRepository.AddStore(fileimage , storeModel,type);
     liststore.add(StoreModel.fromSnapshot(storeModel));
+    isloading=false;
+    notifyListeners();
+  }
+  SaveStoreItem({File? fileimage, required Map<String, dynamic> itemStore,
+    required String idStore,
+    required String type})
+  async {
+    isloading=true;
+    notifyListeners();
+    await storeRepository.AddStoreItem(fileimage , itemStore,type);
+    int index=liststore.indexWhere((element) => element.IdStore==idStore);
+    if(index!=-1)
+    liststore[index].itemstore.add(Itemstore.fromJson(itemStore));
+    isloading=false;
     notifyListeners();
   }
   item_to_order(String IdItemStore ) {

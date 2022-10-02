@@ -23,10 +23,11 @@ import 'package:get/get.dart';
 
 class SpecificStoreScreen extends StatelessWidget {
   final int index;
-  SpecificStoreScreen({required this.titestore, required this.index, Key? key})
+  SpecificStoreScreen({required this.idstore, required this.titestore, required this.index, Key? key})
       : super(key: key);
   late List<Itemstore> itemstore;
   String titestore;
+  String idstore;
   late UserModel user;
 
   Widget buildSliverAppBar({required Size size}) {
@@ -140,7 +141,11 @@ class SpecificStoreScreen extends StatelessWidget {
           onPressed: () {
             Navigator.push(
                 context, MaterialPageRoute(
-                builder: (context) => AddCategory()));
+                builder: (context) => AddCategory(
+                  idStore: idstore,
+                  type: 'add',
+                  itemstore: null,
+                )));
           },
           tooltip: 'إضافة صنف',
           child: Icon(Icons.add),
@@ -233,7 +238,11 @@ class SpecificStoreScreen extends StatelessWidget {
                                        else {
                                          Navigator.push(context,
                                          MaterialPageRoute(builder:
-                                             (context)=>AddCategory()));
+                                             (context)=>AddCategory(
+                                               idStore: idstore,
+                                               itemstore: element,
+                                               type: 'edit',
+                                             )));
                                         }
                                         // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
                                       },

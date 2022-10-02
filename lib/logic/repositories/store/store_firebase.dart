@@ -1,10 +1,16 @@
 
 
 
+import 'dart:io';
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_dart/firebase_dart.dart';
 import 'package:raselne/data_layer/model/store_model.dart';
 import 'package:raselne/data_layer/webServices/firebase.dart';
 import 'package:raselne/logic/repositories/store/store_repo.dart';
+import 'package:path/path.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class StoreFirebase extends StoreRepository {
   @override
@@ -194,15 +200,93 @@ class StoreFirebase extends StoreRepository {
 
       throw UnimplementedError();
     }
+  Future<String> uploadImageToFirebase(File imageFile) async {
+    String nameimage=basename(imageFile.path);
+    // Create the file metadata
+    final metadata = SettableMetadata(
+        contentType: "image/jpg");
 
+
+    var random=Random().nextInt(100000);
+    var storageRef=FirebaseStorage.instance.
+    ref('images/$random${nameimage}');
+
+    String urlimage='';
+    final uploadTask = await storageRef.putFile(imageFile,metadata);
+    if(uploadTask.state==TaskState.success)
+      urlimage =await storageRef.getDownloadURL();
+
+    // Upload file and metadata to the path 'images/mountains.jpg'
+    // Uint8List data=fileimageinvoice.
+
+    // = storageRef
+    //     .child("images/${nameimage}")
+    //     .putFile(imageFile,metadata);
+    // Listen for state changes, errors, and completion of the upload.
+    // String urlimage='';
+    //
+    // uploadTask.snapshotEvents.listen((TaskSnapshot taskSnapshot) async {
+    //   switch (taskSnapshot.state) {
+    //     case TaskState.running:
+    //       final progress =
+    //           100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
+    //       print("Upload is $progress% complete.");
+    //       break;
+    //     case TaskState.paused:
+    //       print("Upload is paused.");
+    //       break;
+    //     case TaskState.canceled:
+    //       print("Upload was canceled");
+    //       break;
+    //     case TaskState.error:
+    //     // Handle unsuccessful uploads
+    //       break;
+    //     case TaskState.success:
+    //     // Handle successful uploads on complete
+    //     // ...
+    //       urlimage=await storageRef.getDownloadURL();
+    //       break;
+    //   }
+    // });
+    return urlimage;
+  }
     @override
-    Future<StoreModel> AddStore(String nameCollecton,
-        Map<String, dynamic> body) async {
+    Future<StoreModel> AddStore(File? fileimage,
+        Map<String, dynamic> body,String TypeOperation) async {
+      String imagurl='';
+      if(TypeOperation=='add'){
+      if(fileimage!=null) {
+        imagurl = await uploadImageToFirebase(fileimage);
+        body.addAll({'imageStore':imagurl});
+      }
       FirebaseServices firestore =
       FirebaseServices("store"); //.collection(nameCollecton);
-    DocumentReference ref= await firestore.addtofirestore(body);
+      DocumentReference ref= await firestore.addtofirestore(body);
       body.addAll({'IdStore':ref.id});
-     return StoreModel.fromSnapshot(body);
+      }
+      else{
+        if(fileimage!=null) {//upload image
+        await  FirebaseStorage.instance.refFromURL(body['imageStore']).delete();
+          imagurl = await uploadImageToFirebase(fileimage);
+          body.addAll({'imageStore':imagurl});
+        }
+        FirebaseFirestore.instance.collection('store').doc(
+          body['IdStore']
+        ).update(body);
+        // FirebaseServices firestore =
+        // FirebaseServices("store"); //.collection(nameCollecton);
+        // DocumentReference ref= await firestore.(body);
+        // body.addAll({'IdStore':ref.id});
+      }
+
       // throw UnimplementedError();
+    
+      return StoreModel.fromSnapshot(body);
     }
+
+  @override
+  Future<Itemstore> AddStoreItem(File? fileimage, Map<String, dynamic> body,String TypeOperation) {
+    // TODO: implement AddStoreItem
+    throw UnimplementedError();
   }
+}

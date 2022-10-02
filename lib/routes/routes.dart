@@ -71,10 +71,10 @@ class AppRoutes {
     //   name: Routes.addStore,
     //   page: () =>  AddStore(type: '',),
     // ),
-    GetPage(
-      name: Routes.addCategory,
-      page: () => const AddCategory(),
-    ),
+    // GetPage(
+    //   name: Routes.addCategory,
+    //   page: () =>  AddCategory(),
+    // ),
 
     // GetPage(
     //     name: Routes.imageSliderScreen, page: () => const ImageSliderScreen())

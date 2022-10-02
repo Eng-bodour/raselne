@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:raselne/data_layer/model/store_model.dart';
 import 'package:raselne/logic/repositories/store/store_repo.dart';
 
@@ -23,8 +25,14 @@ class StoreAPI extends StoreRepository {
   }
 
   @override
-  Future<StoreModel> AddStore(String nameCollecton,Map<String, dynamic> body) {
+  Future<StoreModel> AddStore(File? fileimage,Map<String, dynamic> body,String TypeOperation) {
     // TODO: implement AddStore
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Itemstore> AddStoreItem(File? fileimage, Map<String, dynamic> body,String TypeOperation) {
+    // TODO: implement AddStoreItem
     throw UnimplementedError();
   }
 

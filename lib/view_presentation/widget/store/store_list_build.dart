@@ -65,6 +65,7 @@ class _StoreListBuildState extends State<StoreListBuild> {
                                       onTap: () {
                                         Get.to(() =>
                                           SpecificStoreScreen(
+                                            idstore: value.liststore[index].IdStore.toString(),
                                             titestore:
                                                 value.liststore[index].nameStore,
                                             // itemstore: value.liststore[index].itemstore,
