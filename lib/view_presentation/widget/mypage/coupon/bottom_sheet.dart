@@ -156,7 +156,7 @@ Widget bottomSheet(BuildContext context, TextEditingController coupon) {
                   backgroundColor: Colors.green,
                   colorText: Colors.white,
                 );
-              }else{
+              } else{
                 Get.snackbar(
                   '',
                   'الكوبون خاطئ',

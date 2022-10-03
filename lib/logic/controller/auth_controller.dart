@@ -58,7 +58,8 @@ class AuthProvider_vm extends ChangeNotifier {
     print('rating  '+currentuser.rataing.toString());
     notifyListeners();
   }
-  Future<void> switch_type() async{
+
+  Future<void> switch_type() async {
     isloading=true;
     notifyListeners();
     await userRepository.switch_type(
@@ -68,6 +69,7 @@ class AuthProvider_vm extends ChangeNotifier {
     isloading=false;
     notifyListeners();
   }
+
   @override
   void onInit()async {
   print('xxxxx');

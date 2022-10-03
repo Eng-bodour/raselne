@@ -66,6 +66,7 @@ dependencies:
   geocoding: ^2.0.4
   modal_progress_hud_nsn: ^0.2.1
   flutter_polyline_points: ^1.0.0
+  jiffy: ^5.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

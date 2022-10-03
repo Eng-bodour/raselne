@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
@@ -15,14 +16,33 @@ import 'package:raselne/routes/routes.dart';
 import 'package:raselne/view_presentation/screen/main_screen.dart';
 import 'package:raselne/view_presentation/screen/welcome_screen.dart';
 import 'data_layer/model/user_model.dart';
+import 'data_layer/webServices/firebase_option.dart';
 import 'logic/controller/auth_controller.dart';
 import 'logic/repositories/store/store_firebase.dart';
 import 'logic/repositories/users/user_firebase.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+
+  //DefaultFirebaseOptions .currentPlatform );
+  await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform);
+  print("Handling a background message: ${message.messageId}");
+  // print("Handling a background message: ${message.data['idclient']}");
+  // print("Handling a background message: ${message.data['Typenotify']}");
+
+
+}
+
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    // options: DefaultFirebaseOptions.currentPlatform,
+  );
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   runApp(MultiProvider(providers: [
 
     ChangeNotifierProvider<AuthProvider_vm>(create: (context) =>

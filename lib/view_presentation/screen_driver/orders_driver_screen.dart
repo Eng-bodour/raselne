@@ -3,6 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:group_button/group_button.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/screen/chat/chat_screen.dart';
@@ -159,6 +160,19 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
   }
 
   Widget buildMyDelevery({required OrderModel orderModel, required Size size}) {
+    DateTime datanext=DateTime.now();//orderModel.startorder;
+    DateTime datanext2=DateTime.now();//orderModel.endorder;
+    datanext2.difference(datanext1).inMinutes;
+    // int peroidtime= int.parse(peroid.value_config);
+    // datanext=Jiffy().add(days: peroidtime).dateTime;
+    // Jiffy().diff(input);
+    // print(datanext.toString());
+    // $timestamp1 = strtotime($date1);
+    // $timestamp2 = strtotime($date2);
+    // $hour = abs($timestamp2 - $timestamp1)/(60*60);
+    // $hour=Round($hour);
+    //
+    //
     return InkWell(
       onTap: () {
         switch (orderModel.state) {
@@ -290,7 +304,7 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                           TextUtils(
                               fontSize: size.width * 0.035,
                               fontWeight: FontWeight.bold,
-                              text: 'تم التوصيل 3 ساعات', //'${Firebase.name}',
+                              text: 'تم التوصيل ${} ساعات ', //'${Firebase.name}',
                               color: Colors.black38,
                               underLine: TextDecoration.none),
                         ],

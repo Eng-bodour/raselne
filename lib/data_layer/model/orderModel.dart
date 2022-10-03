@@ -47,6 +47,8 @@ String state='';
 bool isclose=false;
 bool isstart=false;
 bool iscancel=false;//ملغى
+DateTime? startorder;
+DateTime? endorder;
 
 OrderModel({required this.total,required this.id_store,
   required this.captain_user,required this.content_order,

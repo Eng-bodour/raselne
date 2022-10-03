@@ -13,7 +13,7 @@ import 'package:raselne/data_layer/model/user_model.dart';
 
 import '../../../data_layer/webServices/firebase.dart';
 import 'order_repo.dart';
-
+import 'package:intl/intl.dart';
 class order_firebase extends OrderRepository{
   @override
   Future<String> AddOrder( Map<String, dynamic> body) async{
@@ -25,7 +25,7 @@ class order_firebase extends OrderRepository{
     FirebaseServices("orders");//.collection(nameCollecton);
     DocumentReference doc=await firestore.addtofirestore(body);
     return  doc.id;
-    // throw UnimplementedError();
+
   }
 
   @override
@@ -291,7 +291,10 @@ else {
       'isapprove':true,
       'ispause': true,
       'state':'approve',
-
+      'startorder':
+      //DateTime.now().toString(),
+      DateFormat('yyyy-MM-dd hh:mm:ss')
+          .format(DateTime.now()),
   });
 }
     /////////////////////////////////////////////////
@@ -485,6 +488,10 @@ else {
       'state':state,
       'isopen':false,
       'isdone_deilvery':true,
+      'endorder':
+      DateFormat('yyyy-MM-dd hh:mm:ss')
+      .format(DateTime.now())
+      //DateTime.now().toString(),
     })
         .then((value) => print("state order Updated"))
         .catchError((error) => print("Failed to update user: $error"));

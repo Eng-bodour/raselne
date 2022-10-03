@@ -5,7 +5,7 @@ import 'package:location/location.dart';
 import 'package:raselne/data_layer/model/user_model.dart';
 
 import '../../services/location_services.dart';
-
+import 'package:intl/intl.dart';
 // to add users collection to app
 class FirebaseServices {
   static FirebaseAuth auth = FirebaseAuth.instance;
@@ -30,7 +30,8 @@ class FirebaseServices {
         location: LatLng(_myLocation.latitude!, _myLocation.longitude!),
         uid: uid,
         mobile: '0', email: email,
-        dateCreated: DateTime.now().toString(),
+        dateCreated:  DateFormat('yyyy-MM-dd hh:mm:ss')
+            .format(DateTime.now()) ,
         type: '', rataing: 0.0,num_travel: 0,
         type_car: '',num_car: '',Id_number: '',
         balance: '0',eradat: '0'

@@ -241,12 +241,12 @@ class ShowOffers extends StatelessWidget {
                                                       true);
                                               Navigator.pop(context);//
                                             },
-                                            style: ElevatedButton.styleFrom(
+                                              style: ElevatedButton.styleFrom(
                                               elevation: 0,
                                               primary: greyColor.withOpacity(0.5),
                                               shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
+                                              borderRadius:
+                                              BorderRadius.circular(
                                                         size.width * 0.05),
                                               ), //Get.isDarkMode ? pinkClr : mainColor,
                                               minimumSize: Size(

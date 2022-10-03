@@ -30,24 +30,23 @@ class MyPageDriverScreen extends StatefulWidget {
 
 class _MyPageDriverScreenState extends State<MyPageDriverScreen> {
   final TextEditingController couponController = TextEditingController();
-
+  late UserModel user ;
   @override
   Widget build(BuildContext context) {
-    UserModel user =
-        Provider.of<AuthProvider_vm>(context, listen: true).currentuser;
+    user =Provider.of<AuthProvider_vm>(context, listen: true).currentuser;
     var size = MediaQuery.of(context).size;
-    SimpleDialog(
-      elevation: 0,
-      //backgroundColor: Colors.yellowAccent,
-      // shape: StadiumBorder(
-      //    side: BorderSide.none
-      // ),
-      titlePadding: const EdgeInsets.fromLTRB(24.0, 1.0, 24.0, 10.0),
-      insetPadding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-      contentPadding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-      title: Center(child: Text('')),
-      children: [],
-    );
+    // SimpleDialog(
+    //   elevation: 0,
+    //   //backgroundColor: Colors.yellowAccent,
+    //   // shape: StadiumBorder(
+    //   //    side: BorderSide.none
+    //   // ),
+    //   titlePadding: const EdgeInsets.fromLTRB(24.0, 1.0, 24.0, 10.0),
+    //   insetPadding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+    //   contentPadding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+    //   title: Center(child: Text('')),
+    //   children: [],
+    // );
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

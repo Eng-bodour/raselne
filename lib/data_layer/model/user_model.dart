@@ -18,7 +18,7 @@ import 'package:location/location.dart';
    });
    factory Rate.fromJson(Map<String, dynamic> json) =>
        Rate(
-     value_rate:double.parse( json["value_rate"]),
+     value_rate:double.parse( json["value_rate"].toString()),
      id_user:   json["id_user"],
    );
 
@@ -93,9 +93,10 @@ class UserModel {
     return userModel;
   }
   List<Rate> getproud(data) {
+    // print(data["value_rate"].toString());
     List<Rate> prodlist = [];
     if(data!=null){
-      print('data!=null');
+      print('data!=null'+data.length.toString());
       for (int i = 0; i < data.length; i++) {
         print(i);
 
@@ -108,25 +109,26 @@ class UserModel {
   }
 
  static double getrate(List<Rate> listrate) {
+
     int star1=0,star2=0,star3=0,star4=0,star5=0;
     double star1_1=0,star2_2=0,star3_3=0,star4_4=0,star5_5=0;
-    for(int i=0;i<listrate.length-1;i++)
+    for(int i=0;i<listrate.length;i++)
     {
       print('value_rate in loop ' +listrate[i].value_rate.toString());
       switch(listrate[i].value_rate.toString()){
-        case '1':
+        case '1.0':
           star1++;
           break;
-        case '2':
+        case '2.0':
           star2++;
           break;
-        case '3':
+        case '3.0':
           star3++;
           break;
-        case '4':
+        case '4.0':
           star4++;
           break;
-          case '5':
+          case '5.0':
           star5++;
           break;
       }
