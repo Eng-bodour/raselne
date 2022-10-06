@@ -42,10 +42,19 @@ class AuthProvider_vm extends ChangeNotifier {
    notifyListeners();
    return currentuser;
   }
-  Future<bool> check_Copoun(String copoun) async {
+  Future<double> check_Copoun(String copoun) async {
     isloading=true;
     notifyListeners();
-    bool res= await userRepository.check_Copoun(currentuser.docId, copoun);
+    double res= await userRepository.check_Copoun(currentuser.docId, copoun);
+    isloading=false;
+    notifyListeners();
+    return res;
+  }
+
+  Future<bool> save_Copoun(String copoun) async {
+    isloading=true;
+    notifyListeners();
+    bool res= await userRepository.save_Copoun(currentuser.docId, copoun);
     isloading=false;
     notifyListeners();
     return res;

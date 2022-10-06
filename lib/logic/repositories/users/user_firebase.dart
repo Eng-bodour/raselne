@@ -269,19 +269,45 @@ class user_firebase extends UserRepository{
   }
 
   @override
-  Future<bool> check_Copoun(String id_doc, String copoun)async {
+  Future<double> check_Copoun(String id_doc, String copoun)async {
     // TODO: implement check_Copoun
-  int sizedata=0;
-   await FirebaseFirestore.instance
+    int sizedata=0;
+    double discount=0.0;
+    QuerySnapshot q= await FirebaseFirestore.instance
+        .collection('copoun').where('val_copoun' ,isEqualTo: copoun)
+        .get().then((value) {
+
+          sizedata= value.size;
+          return value;
+        });
+    if(sizedata!=0) {
+      print('inside for ');
+        q.docs.forEach((element) {
+        discount=double.parse(element.data()['discount']);
+      });
+      // await FirebaseFirestore.instance
+      //     .collection('users').doc(id_doc).update({
+      //   'copoun': copoun
+      // });
+      // return true;
+    }
+    return discount;
+  }
+
+  @override
+  Future<bool> save_Copoun(String id_doc, String copoun)async {
+    // TODO: implement save_Copoun
+    int sizedata=0;
+    await FirebaseFirestore.instance
         .collection('copoun').where('val_copoun' ,isEqualTo: copoun)
         .get().then((value) { sizedata= value.size;});
-   if(sizedata!=0) {
-     await FirebaseFirestore.instance
-         .collection('users').doc(id_doc).update({
-       'copoun': copoun
-     });
-     return true;
-   }
+    if(sizedata!=0) {
+      await FirebaseFirestore.instance
+          .collection('users').doc(id_doc).update({
+        'copoun': copoun
+      });
+      return true;
+    }
     return false;
   }
 

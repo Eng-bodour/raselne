@@ -244,7 +244,7 @@ class MyPageUserScreen extends StatelessWidget {
                         )),
                         context: context,
                         builder: ((context) =>
-                            bottomSheet(context, couponController)),
+                            bottomSheet(context, couponController,'save')),
                       );
                     },
                     child: Container(

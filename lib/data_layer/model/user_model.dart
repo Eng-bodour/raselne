@@ -74,7 +74,7 @@ class UserModel {
       Id_number: json["Id_number"] == null ? '' : json["Id_number"],
       dateCreated: json["dateCreated"] == null ? '' : json["dateCreated"],
       num_car: json["num_car"] == null ? '' : json["num_car"],
-      rataing: 1,
+      rataing: 1.0,
     // rataing: getrate(),
     );
    userModel.docId= docIdUser;
@@ -141,7 +141,8 @@ class UserModel {
    double sumValues=star1_1+star2_2+star3_3+star4_4+star5_5;
    print('star2_2 '+star2_2.toString());
    print('sumValues '+ sumValues.toString());
-  double rataing=sumValues/listrate.length;
+  double rataing=0.0;
+  rataing= sumValues/listrate.length;
      return rataing;
   }
 

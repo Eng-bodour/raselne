@@ -254,20 +254,20 @@ class _MyPageDriverScreenState extends State<MyPageDriverScreen> {
                   thickness: 1,
                   color: greyColor.withOpacity(0.2),
                 ),
-                info(
-                    ontap: () {
-                      Get.to(const ServicesReview(
-                        title: 'تقييمات الخدمات',
-                      ));
-                    },
-                    context: context,
-                    bool: false,
-                    size: size,
-                    title: 'تقييمات الخدمات ',
-                    subtitle: '0',
-                    icon: const Icon(Icons.star_border_rounded,
-                        color: Colors.black26)),
-                Divider(thickness: 1, color: greyColor.withOpacity(0.2)),
+                // info(
+                //     ontap: () {
+                //       Get.to(const ServicesReview(
+                //         title: 'تقييمات الخدمات',
+                //       ));
+                //     },
+                //     context: context,
+                //     bool: false,
+                //     size: size,
+                //     title: 'تقييمات الخدمات ',
+                //     subtitle: '0',
+                //     icon: const Icon(Icons.star_border_rounded,
+                //         color: Colors.black26)),
+                // Divider(thickness: 1, color: greyColor.withOpacity(0.2)),
                 info(
                     ontap: () {
                       Get.to(UserFeedBackScreen(
@@ -286,7 +286,20 @@ class _MyPageDriverScreenState extends State<MyPageDriverScreen> {
                     : Container(),
                 user.type == 'user'
                     ? info(
-                        ontap: () {},
+                        ontap: () {
+                          showModalBottomSheet(
+                            backgroundColor: Colors.white,
+                            elevation: 0,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20),
+                                  topRight: Radius.circular(20),
+                                )),
+                            context: context,
+                            builder: ((context) =>
+                                bottomSheet(context, couponController,'save')),
+                          );
+                        },
                         context: context,
                         bool: true,
                         size: size,
@@ -375,18 +388,7 @@ class _MyPageDriverScreenState extends State<MyPageDriverScreen> {
             bool
                 ? InkWell(
                     onTap: () {
-                      showModalBottomSheet(
-                        backgroundColor: Colors.white,
-                        elevation: 0,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                        )),
-                        context: context,
-                        builder: ((context) =>
-                            bottomSheet(context, couponController)),
-                      );
+
                     },
                     child: Container(
                         padding:

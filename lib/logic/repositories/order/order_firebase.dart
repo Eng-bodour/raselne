@@ -40,7 +40,9 @@ class order_firebase extends OrderRepository{
          )
        .map((snap) => snap.docs
        .map((doc) =>
-         OrderModel.fromSnapshot( doc.data(),doc.id )).toList()
+         OrderModel.fromSnapshot(
+             doc.data(),doc.id))
+         .toList()
      );
 
   }
@@ -489,7 +491,7 @@ else {
       'isopen':false,
       'isdone_deilvery':true,
       'endorder':
-      DateFormat('yyyy-MM-dd hh:mm:ss')
+      DateFormat('yyyy-MM-dd HH:mm:ss')
       .format(DateTime.now())
       //DateTime.now().toString(),
     })
@@ -501,11 +503,10 @@ await FirebaseServices("users").ref
         .update({
       'num_travel':numtravel,
       'eradat':eradat,
-      'balance':balance,
+      // 'balance':balance,
     })
         .then((value) => print("state order Updated"))
         .catchError((error) => print("Failed to update user: $error"));
-
   }
 
 }

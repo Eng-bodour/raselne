@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
+import 'package:raselne/logic/controller/auth_controller.dart';
 import 'package:raselne/utilis/theme.dart';
-import 'package:raselne/view_presentation/widget/auth/auth_text_from_field.dart';
 import 'package:raselne/view_presentation/widget/new_order/buildlist_newOrder.dart';
 
 import 'package:raselne/view_presentation/widget/specific%20store/location_receive_bottomsheet.dart';
@@ -12,8 +12,11 @@ import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
 import '../../../data_layer/model/orderModel.dart';
 import '../../../logic/controller/order_vm.dart';
+import '../widget/mypage/coupon/bottom_sheet.dart';
 import '../widget/mypage_driver/show_offers.dart';
+import 'package:intl/intl.dart';
 
+import 'dart:ui' as rtr;
 class NewOrderScreen extends StatefulWidget {
   const NewOrderScreen({Key? key}) : super(key: key);
 
@@ -23,9 +26,17 @@ class NewOrderScreen extends StatefulWidget {
 
 class _NewOrderScreenState extends State<NewOrderScreen> {
   final TextEditingController notesController = TextEditingController();
+  final TextEditingController couponController = TextEditingController();
+
   late OrderModel orderModel;
   bool isAddNote = false;
 
+  @override void initState() {
+    // TODO: implement initState
+    couponController.text=Provider.of<AuthProvider_vm>(context,listen: false)
+    .currentuser.copoun.toString();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     orderModel = Provider.of<order_vm>(context, listen: true).order;
@@ -48,7 +59,8 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
               },
               icon: const Icon(Icons.close, color: Colors.black))
         ],
-        title: Column(
+        title:
+        Column(
           children: [
             TextUtils(
                 fontSize: size.width * 0.05,
@@ -74,7 +86,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
 
           // scrollDirection: Axis.vertical,
           child: Directionality(
-            textDirection: TextDirection.rtl,
+            textDirection:rtr.TextDirection.rtl,
             child: Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: size.width * 0.05, vertical: size.height * 0.01),
@@ -331,22 +343,38 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                           TextUtils(
                               fontSize: size.width * 0.05,
                               fontWeight: FontWeight.bold,
-                              text: 'كوبون ',
+                              text: 'كوبون  ${orderModel.discount.toString()}',
                               color: Colors.black54,
                               underLine: TextDecoration.none),
-                          Row(
-                            children: [
-                              TextUtils(
-                                  fontSize: size.width * 0.03,
-                                  fontWeight: FontWeight.bold,
-                                  text: 'أضف كوبون ',
+                          InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                backgroundColor: Colors.white,
+                                elevation: 0,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
+                                    )),
+                                context: context,
+                                builder: ((context) =>
+                                    bottomSheet(context, couponController,'check')),
+                              );
+                            },
+                            child: Row(
+                              children: [
+                                TextUtils(
+                                    fontSize: size.width * 0.03,
+                                    fontWeight: FontWeight.bold,
+                                    text: 'أضف كوبون ',
+                                    color: mainColor,
+                                    underLine: TextDecoration.none),
+                                const Icon(
+                                  Icons.add,
                                   color: mainColor,
-                                  underLine: TextDecoration.none),
-                              const Icon(
-                                Icons.add,
-                                color: mainColor,
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           )
                         ],
                       ),
@@ -463,7 +491,8 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
             Provider.of<order_vm>(context, listen: false).order.detailorder =
                 notesController.text;
             Provider.of<order_vm>(context, listen: false).order.DateTimeorder =
-                DateTime.now().toString();
+                DateFormat('yyyy-MM-dd hh:mm:ss')
+                    .format(DateTime.now());
             //distance_recive_deilvery
             await Provider.of<order_vm>(context, listen: false).addOrder();
             Navigator.of(context).push(MaterialPageRoute(
@@ -506,12 +535,12 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
           fontSize: f16,
           fontWeight: FontWeight.w500,
         ),
-        suffixIcon: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.camera,
-              color: Colors.black,
-            )),
+        // suffixIcon: IconButton(
+        //     onPressed: () {},
+        //     icon: const Icon(
+        //       Icons.camera,
+        //       color: Colors.black,
+        //     )),
         filled: true,
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: mainColor),

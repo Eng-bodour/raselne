@@ -17,6 +17,7 @@ class ShowOffers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+print('dicount '+orderModel.discount.toString());
     var size = MediaQuery.of(context).size;
     return SafeArea(
       child:  ModalProgressHUD(
@@ -55,8 +56,10 @@ class ShowOffers extends StatelessWidget {
                           if (!snapshot_user.hasData) {
                             return Text("Loading");
                           }
+
                           return
-                           snapshot_order.data!.ispause==true?
+
+                            snapshot_order.data!.ispause==true?
                            Column(
                             children: [
                               // Text(
@@ -64,7 +67,7 @@ class ShowOffers extends StatelessWidget {
                               //   style: TextStyle(color: Colors.white),
                               // ),
                               Container(
-                                height: size.height * 0.35,
+                                height: size.height * 0.4,
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius:
@@ -73,7 +76,7 @@ class ShowOffers extends StatelessWidget {
                                   children: [
                                     Container(
                                         width: size.width,
-                                        height: size.height * 0.06,
+                                        height: size.height * 0.07,
                                         decoration: BoxDecoration(
                                           color: mainColor,
                                           borderRadius: BorderRadius.only(
@@ -214,7 +217,7 @@ class ShowOffers extends StatelessWidget {
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           Text(
-                                            '${snapshot_order.data!.price_deilvery_captain} ر.س ',
+                                            '${snapshot_order.data!.price_deilvery_captain.toString()} ر.س ',
                                             style: TextStyle(
                                                 color: Colors.black54,
                                                 fontSize: size.width * 0.05,
@@ -223,6 +226,37 @@ class ShowOffers extends StatelessWidget {
                                         ],
                                       ),
                                     ),
+                                    const Divider(thickness: 0.5),
+                                    orderModel.discount!=0.0?
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: size.width * 0.04,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'بعد خصم الكوبون',
+                                            style: TextStyle(
+                                                color: Colors.black54,
+                                                fontSize: size.width * 0.05,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            '${
+                                                double.parse( snapshot_order.data!.price_deilvery_captain)-
+                                                    (orderModel.discount*
+                                               double.parse( snapshot_order.data!.price_deilvery_captain)/100)
+                                            } ر.س ',
+                                            style: TextStyle(
+                                                color: Colors.black54,
+                                                fontSize: size.width * 0.05,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    ):Container(),
                                     Padding(
                                       padding: EdgeInsets.symmetric(
                                         horizontal: size.width * 0.04,

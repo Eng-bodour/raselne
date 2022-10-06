@@ -218,6 +218,10 @@ Future<List<OrderModel>> get_myorderCaptain()async{
    isloading=false;
   notifyListeners();
  }
+ void setvalue_dicount(double val){
+  order.discount=val;
+  notifyListeners();
+ }
  Future<void> done_order(String id_order,String state,
      double total,double delveryprice) async {
   //عندما يقدم المندوب على العرض سيتم تحويل قيمة المتحول ispause إلى true
@@ -228,14 +232,14 @@ Future<List<OrderModel>> get_myorderCaptain()async{
    // String balance,String eradat,String docIdUser
   int numtravel=int.parse(currentuser.num_travel.toString());
   numtravel++;
-  double balance=double.parse(currentuser.balance.toString());
+  // double balance=double.parse(currentuser.balance.toString());
   double eradat=double.parse(currentuser.eradat.toString());
-  String bal=(delveryprice+balance).toString();
-  String erd=(total+eradat).toString();
+  // String bal=(delveryprice+balance).toString();
+  String erd=(delveryprice+eradat).toString();//delveryprice
    await orderRepository.done_order(
        id_order,
        state,currentuser.uid.toString(),
-       numtravel,bal,erd,currentuser.docId);
+       numtravel,'0',erd,currentuser.docId);
     order.state=state;
 
    isloading=false;

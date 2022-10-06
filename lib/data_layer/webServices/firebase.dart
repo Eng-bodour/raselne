@@ -30,9 +30,12 @@ class FirebaseServices {
         location: LatLng(_myLocation.latitude!, _myLocation.longitude!),
         uid: uid,
         mobile: '0', email: email,
-        dateCreated:  DateFormat('yyyy-MM-dd hh:mm:ss')
+        dateCreated:  DateFormat('yyyy-MM-dd HH:mm:ss')
             .format(DateTime.now()) ,
-        type: '', rataing: 0.0,num_travel: 0,
+        type: 'user',
+
+        rataing: 0.0,
+        num_travel: 0,
         type_car: '',num_car: '',Id_number: '',
         balance: '0',eradat: '0'
     ).toJson()

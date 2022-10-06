@@ -160,9 +160,9 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
   }
 
   Widget buildMyDelevery({required OrderModel orderModel, required Size size}) {
-    DateTime datanext=DateTime.now();//orderModel.startorder;
-    DateTime datanext2=DateTime.now();//orderModel.endorder;
-    datanext2.difference(datanext1).inMinutes;
+    // DateTime datanext=DateTime.now();//orderModel.startorder;
+    // DateTime datanext2=DateTime.now();//orderModel.endorder;
+    // datanext2.difference(datanext1).inMinutes;
     // int peroidtime= int.parse(peroid.value_config);
     // datanext=Jiffy().add(days: peroidtime).dateTime;
     // Jiffy().diff(input);
@@ -304,7 +304,7 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                           TextUtils(
                               fontSize: size.width * 0.035,
                               fontWeight: FontWeight.bold,
-                              text: 'تم التوصيل ${} ساعات ', //'${Firebase.name}',
+                              text: 'تم التوصيل ساعات ', //'${Firebase.name}',
                               color: Colors.black38,
                               underLine: TextDecoration.none),
                         ],

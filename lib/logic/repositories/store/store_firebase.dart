@@ -59,7 +59,8 @@ class StoreFirebase extends StoreRepository {
                       rating: storeModel.rating,
                       IdStore: storeModel.IdStore,
                       itemstore: storeModel.itemstore,
-                      idowner: storeModel.idowner, isVisible: false,
+                      idowner: storeModel.idowner,
+                      isVisible: false,
                       stateStore: storeModel.stateStore,
                       location: storeModel.location,
                       imageStore: storeModel.imageStore

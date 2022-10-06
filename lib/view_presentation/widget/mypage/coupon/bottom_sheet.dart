@@ -3,11 +3,12 @@ import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:raselne/logic/controller/auth_controller.dart';
+import 'package:raselne/logic/controller/order_vm.dart';
 import 'package:raselne/utilis/theme.dart';
 
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
-Widget bottomSheet(BuildContext context, TextEditingController coupon) {
+Widget bottomSheet(BuildContext context, TextEditingController coupon,String type) {
   Size size = MediaQuery.of(context).size;
   return Directionality(
     textDirection: TextDirection.rtl,
@@ -146,8 +147,31 @@ Widget bottomSheet(BuildContext context, TextEditingController coupon) {
             ),
             InkWell(
               onTap: ()async {
+                  if(type=='check'){
+                    double val= await Provider.of<AuthProvider_vm>(context,listen: false)
+                        .check_Copoun(coupon.text.toString());
+               Provider.of<order_vm>(context,listen: false)
+                    .setvalue_dicount(val);
+               if(val==0.0) {
+                 Get.snackbar(
+                   '',
+                   'لايوجد خصم أو الكود منتهي الصلاحية ',
+                   snackPosition: SnackPosition.BOTTOM,
+                   backgroundColor: Colors.green,
+                   colorText: Colors.white,
+                 );
+               }else{
+                 Get.snackbar(
+                   '',
+                   'تم التحقق من الكوبون, بإمكانك استخدامه',
+                   snackPosition: SnackPosition.BOTTOM,
+                   backgroundColor: Colors.green,
+                   colorText: Colors.white,
+                 );
+               }
+                  } else{
               bool res= await Provider.of<AuthProvider_vm>(context)
-                    .check_Copoun(coupon.text.toString());
+                    .save_Copoun(coupon.text.toString());
               if(res){
                 Get.snackbar(
                   '',
@@ -165,12 +189,13 @@ Widget bottomSheet(BuildContext context, TextEditingController coupon) {
                   colorText: Colors.white,
                 );
               }
+            }
               },
               child: Container(
                 width: size.width * 0.7,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: mainColor.withOpacity(0.3)),
+                    color: mainColor),//.withOpacity(0.3)),
                 child: Center(
                   child: TextUtils(
                     color: Colors.white,

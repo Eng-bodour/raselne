@@ -29,24 +29,28 @@ class _card_deilveryState extends State<card_deilvery> {
   void initState() {
     // TODO: implement initState
     //WidgetsBinding.instance.addPostFrameCallback((_) async {
-    user = Provider.of<AuthProvider_vm>(context, listen: false).currentuser;
 
-    widget.order.distance_me_recive = PolylineService().calcDistance([
-      LatLng(user.location!.latitude, user.location!.longitude),
-      LatLng(widget.order.fromlocation.latitude,
-          widget.order.fromlocation.longitude)
-    ]);
-    widget.order.distance_recive_deilvery = PolylineService().calcDistance([
-      LatLng(widget.order.fromlocation.latitude,
-          widget.order.fromlocation.longitude),
-      LatLng(
-          widget.order.toLocation.latitude, widget.order.toLocation.longitude)
-    ]);
+    user = Provider.of<AuthProvider_vm>(context, listen: false).currentuser;
+    super.initState();
+
+    // widget.order.distance_me_recive = PolylineService().calcDistance([
+    //   LatLng(user.location!.latitude, user.location!.longitude),
+    //   LatLng(widget.order.fromlocation.latitude,
+    //       widget.order.fromlocation.longitude)
+    // ]);
+    // widget.order.distance_recive_deilvery = PolylineService().calcDistance([
+    //   LatLng(widget.order.fromlocation.latitude,
+    //       widget.order.fromlocation.longitude),
+    //   LatLng(
+    //       widget.order.toLocation.latitude,
+    //       widget.order.toLocation.longitude)
+    // ]);
+    //
     print(widget.order.distance_me_recive);
     print(widget.order.distance_recive_deilvery);
-    //});
-    super.initState();
     setState(() {});
+
+
   }
 
   @override

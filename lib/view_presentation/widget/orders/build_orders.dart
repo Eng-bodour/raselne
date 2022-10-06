@@ -160,7 +160,7 @@ class buildCardOrders extends StatelessWidget {
                     child: TextUtils(
                         fontSize: size.width * 0.04,
                         fontWeight: FontWeight.normal,
-                        text: 'كم 2.7',
+                        text: 'كم ${orderModel.distance_me_recive}',
                         color: Colors.black54,
                         underLine: TextDecoration.none),
                   ),

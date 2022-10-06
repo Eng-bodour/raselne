@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:raselne/data_layer/model/store_model.dart';
 import 'package:raselne/data_layer/model/user_model.dart';
 
+import '../../services/polyline_service.dart';
 import 'DetailOrder.dart';
 import 'package:location/location.dart';
 class OrderModel {
@@ -49,7 +50,7 @@ bool isstart=false;
 bool iscancel=false;//ملغى
 DateTime? startorder;
 DateTime? endorder;
-
+double discount=0.0;
 OrderModel({required this.total,required this.id_store,
   required this.captain_user,required this.content_order,
  required this.detailorderList,required this.from_user,
@@ -89,6 +90,8 @@ Map<String, dynamic> toSnapchot() => {
   "toLocation":GeoPoint(toLocation.latitude,toLocation.longitude) ,
   "idStore":id_store,
   "DateTimeorder":DateTimeorder,
+  "discount":discount,
+
 };
  factory OrderModel.fromSnapshot(Map<String,dynamic> doc,String id) {
 
@@ -128,6 +131,22 @@ Map<String, dynamic> toSnapchot() => {
    gloacationfrom=doc["toLocation"];
    order.toLocation=LatLng(gloacationfrom.latitude,gloacationfrom.longitude);
        print('content : '+order.content_order);
+     order.discount=doc['discount']==null?0.0:
+     double.parse( doc['discount'].toString());
+     order.distance_me_recive ='4.3';
+     // order.distance_me_recive = PolylineService().calcDistance([
+     //   LatLng(user.location!.latitude, user.location!.longitude),
+     //   LatLng(order.fromlocation.latitude,
+     //       order.fromlocation.longitude)
+     // ]);
+     order.distance_recive_deilvery = PolylineService().calcDistance([
+       LatLng(order.fromlocation.latitude,
+           order.fromlocation.longitude),
+       LatLng(
+           order.toLocation.latitude,
+           order.toLocation.longitude)
+     ]);
+
      return order;
  }
 

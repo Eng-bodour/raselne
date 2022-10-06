@@ -127,7 +127,8 @@ class _StoreListBuildState extends State<StoreListBuild> {
                                                             .toString(),
                                                         distance: ""),
                                                     //value.liststore[index].location.toString()),
-                                                   IconButton(
+                                                Provider.of<AuthProvider_vm>(context,listen: false).currentuser.type=='store'?
+                                                IconButton(
                                                        onPressed: (){
                                                          Navigator.push(
                                                              context, MaterialPageRoute(
@@ -136,7 +137,7 @@ class _StoreListBuildState extends State<StoreListBuild> {
                                                                  type: 'edit',
                                                                  typeStore:widget.type)));
                                                        },
-                                                       icon: Icon( Icons.edit))
+                                                       icon: Icon( Icons.edit)):Container()
                                                   ],
                                                 ),
                                               )
@@ -177,23 +178,19 @@ Widget buildCardPhotoFromNetwork({required String image, required Size size}) {
     width: size.height * 0.06,
     height: size.height * 0.06,
 
-    child: ClipRRect(
-      borderRadius: BorderRadius.circular(45),
-      child:
-      CachedNetworkImage(
-        imageUrl: image,
-        imageBuilder: (context, imageProvider) => Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: imageProvider,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        placeholder: (context, url) =>
-        const CircularProgressIndicator(),
-        fit: BoxFit.fill,
-      ),
+    child: CachedNetworkImage(
+      imageUrl: image,
+      // imageBuilder: (context, imageProvider) => Container(
+      //   decoration: BoxDecoration(
+      //     image: DecorationImage(
+      //       image: imageProvider,
+      //       fit: BoxFit.cover,
+      //     ),
+      //   ),
+      // ),
+      placeholder: (context, url) =>
+      const CircularProgressIndicator(),
+      fit: BoxFit.fill,
     ),
   );
 }

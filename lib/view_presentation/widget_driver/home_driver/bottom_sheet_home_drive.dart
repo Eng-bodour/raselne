@@ -117,7 +117,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                               TextUtils(
                                   fontSize: size.width * 0.04,
                                   fontWeight: FontWeight.bold,
-                                  text: widget.order.id_order,
+                                  text: widget.order.id_order.substring(0, 6),
                                   color: Colors.black54,
                                   underLine: TextDecoration.none),
                             ],
@@ -159,7 +159,9 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                         TextUtils(
                             fontSize: size.width * 0.04,
                             fontWeight: FontWeight.bold,
-                            text: widget.order.from_user.toString(),//'Sa**b',
+                            text: Provider.of<AuthProvider_vm>(context,listen: true)
+                            .currentuser.name.toString(),
+                            //widget.order.from_user.toString(),//'Sa**b',
                             color: Colors.black45,
                             underLine: TextDecoration.none),
                         SizedBox(width: size.width * 0.02),
@@ -172,7 +174,8 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                         TextUtils(
                             fontSize: size.width * 0.04,
                             fontWeight: FontWeight.bold,
-                            text: '5.0',
+                            text:Provider.of<AuthProvider_vm>(context,listen: true)
+                                .currentuser.rataing.toString() ,
                             color: Colors.black45,
                             underLine: TextDecoration.none),
                       ],
