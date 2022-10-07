@@ -123,119 +123,120 @@ class _MyPageDriverScreenState extends State<MyPageDriverScreen> {
                         height: size.height * 0.04,
                       )
                     : Container(),
-                modeUser(
-                    context: context,
-                    size: size,
-                    ontap: () {},
-                    title: 'وضع المستخدم',
-                    subtitle: TextButton(
-                      onPressed: () async {
-                        await showDialog(
-                            context: context,
-                            builder: (context) {
-                              return ModalProgressHUD(
-                                  inAsyncCall:
-                                      Provider.of<AuthProvider_vm>(context)
-                                          .isloading,
-                                  child: AlertDialog(
-                                    titlePadding: const EdgeInsets.fromLTRB(
-                                        24.0, 1.0, 24.0, 10.0),
-                                    insetPadding: EdgeInsets.only(
-                                        left: 10, right: 10, bottom: 10),
-                                    contentPadding: EdgeInsets.only(
-                                        left: 10, right: 10, bottom: 10),
-                                    title: Center(child: Text(
-                               user.type=='captain'
-                                    ? "التحويل إلى وضع التسوق؟"
-                                    : "التحويل إلى وضع المندوب ؟",)),
-                                    content: Text(user.type=='captain'
-                                               ? 'يمكنك وضع التسوق من التسوق عبر التطبيق. لكي تتمكن منتوصيل الطلبات عليك أن تعيد تفعيل وضع المراسيل'
-                                               : "يمكنك وضع المناديب من توصيل الطلبات بشكل أسهل .لكي تتمكنمن التسوق عبر التطبيق عليك أن تعيد تفعيل وضع التسوق",),
-                                    actions: <Widget>[
-                                      new FlatButton(
-                                        onPressed: () {
-                                          Navigator.of(context,
-                                                  rootNavigator: true)
-                                              .pop(
-                                                  false); // dismisses only the dialog and returns false
-                                        },
-                                        child: Text('لا'),
-                                      ),
-                                      FlatButton(
-                                        onPressed: () async {
-                                              await Provider.of<AuthProvider_vm>(context,listen: false)
-                                                  .switch_type();
-                                              Navigator.of(context, rootNavigator: true)
-                                                  .pop(true);
-                                              setState(() {
+                ModalProgressHUD(
+                  inAsyncCall:
+                  Provider.of<AuthProvider_vm>(context)
+                      .isloading,
+                  child: modeUser(
+                      context: context,
+                      size: size,
+                      ontap: () {},
+                      title: 'وضع المستخدم',
+                      subtitle: TextButton(
+                        onPressed: () async {
+                          await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  titlePadding: const EdgeInsets.fromLTRB(
+                                      24.0, 1.0, 24.0, 10.0),
+                                  insetPadding: EdgeInsets.only(
+                                      left: 10, right: 10, bottom: 10),
+                                  contentPadding: EdgeInsets.only(
+                                      left: 10, right: 10, bottom: 10),
+                                  title: Center(child: Text(
+                                 user.type=='captain'
+                                  ? "التحويل إلى وضع التسوق؟"
+                                  : "التحويل إلى وضع المندوب ؟",)),
+                                  content: Text(user.type=='captain'
+                                             ? 'يمكنك وضع التسوق من التسوق عبر التطبيق. لكي تتمكن منتوصيل الطلبات عليك أن تعيد تفعيل وضع المراسيل'
+                                             : "يمكنك وضع المناديب من توصيل الطلبات بشكل أسهل .لكي تتمكنمن التسوق عبر التطبيق عليك أن تعيد تفعيل وضع التسوق",),
+                                  actions: <Widget>[
+                                    new FlatButton(
+                                      onPressed: () {
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .pop(
+                                                false); // dismisses only the dialog and returns false
+                                      },
+                                      child: Text('لا'),
+                                    ),
+                                    FlatButton(
+                                      onPressed: () async {
+                                            await Provider.of<AuthProvider_vm>(context,listen: false)
+                                                .switch_type();
+                                            Navigator.of(context, rootNavigator: true)
+                                                .pop(true);
+                                            setState(() {
 
-                                              });
-                                          // dismisses only the dialog and returns true
-                                        },
-                                        child: Text('نعم'),
-                                      ),
-                                    ],
-                                  ));
-                            });
-                        // Get.defaultDialog(
-                        //
-                        //   title: user.type=='captain'
-                        //       ? "التحويل إلى وضع التسوق؟"
-                        //       : "التحويل إلى وضع المندوب ؟",
-                        //   titleStyle: TextStyle(
-                        //     fontSize: size.width * 0.05,
-                        //     color: Colors.black,
-                        //     fontWeight: FontWeight.bold,
-                        //   ),
-                        //   middleText: user.type=='captain'
-                        //       ? 'يمكنك وضع التسوق من التسوق عبر التطبيق. لكي تتمكن منتوصيل الطلبات عليك أن تعيد تفعيل وضع المراسيل'
-                        //       : "يمكنك وضع المناديب من توصيل الطلبات بشكل أسهل .لكي تتمكنمن التسوق عبر التطبيق عليك أن تعيد تفعيل وضع التسوق",
-                        //   middleTextStyle: TextStyle(
-                        //     fontSize: size.width * 0.04,
-                        //     color: Colors.black54,
-                        //     fontWeight: FontWeight.normal,
-                        //   ),
-                        //   backgroundColor: Colors.white,
-                        //   radius: size.width * 0.04,
-                        //   textCancel: 'رجوع',
-                        //   cancelTextColor: Colors.black,
-                        //   textConfirm: 'تحويل',
-                        //   confirmTextColor: Colors.white,
-                        //   onCancel: () {
-                        //     Get.back();
-                        //     // to delete
-                        //   },
-                        //   onConfirm: () async {
-                        //     await Provider.of<AuthProvider_vm>(context,listen: false)
-                        //         .switch_type();
-                        //    // Get.back();
-                        //
-                        //    setState(() {
-                        //
-                        //    });
-                        //     Get.back();
-                        //     // authProvider.signOutFromApp();
-                        //   },
-                        //
-                        //   buttonColor:
-                        //   mainColor, // Get.isDarkMode ? pinkClr : mainColor,
-                        // );
-                      },
-                      child: user.type == 'captain'
-                          ? Text(
-                              'وضع المندوب',
-                              style: TextStyle(
-                                  color: mainColor,
-                                  fontSize: size.width * 0.05),
-                            )
-                          : Text(
-                              'وضع المتسوق',
-                              style: TextStyle(
-                                  color: mainColor,
-                                  fontSize: size.width * 0.05),
-                            ),
-                    ),
-                    icon: const Icon(Icons.person, color: Colors.black26)),
+                                            });
+                                        // dismisses only the dialog and returns true
+                                      },
+                                      child: Text('نعم'),
+                                    ),
+                                  ],
+                                );
+                              });
+                          // Get.defaultDialog(
+                          //
+                          //   title: user.type=='captain'
+                          //       ? "التحويل إلى وضع التسوق؟"
+                          //       : "التحويل إلى وضع المندوب ؟",
+                          //   titleStyle: TextStyle(
+                          //     fontSize: size.width * 0.05,
+                          //     color: Colors.black,
+                          //     fontWeight: FontWeight.bold,
+                          //   ),
+                          //   middleText: user.type=='captain'
+                          //       ? 'يمكنك وضع التسوق من التسوق عبر التطبيق. لكي تتمكن منتوصيل الطلبات عليك أن تعيد تفعيل وضع المراسيل'
+                          //       : "يمكنك وضع المناديب من توصيل الطلبات بشكل أسهل .لكي تتمكنمن التسوق عبر التطبيق عليك أن تعيد تفعيل وضع التسوق",
+                          //   middleTextStyle: TextStyle(
+                          //     fontSize: size.width * 0.04,
+                          //     color: Colors.black54,
+                          //     fontWeight: FontWeight.normal,
+                          //   ),
+                          //   backgroundColor: Colors.white,
+                          //   radius: size.width * 0.04,
+                          //   textCancel: 'رجوع',
+                          //   cancelTextColor: Colors.black,
+                          //   textConfirm: 'تحويل',
+                          //   confirmTextColor: Colors.white,
+                          //   onCancel: () {
+                          //     Get.back();
+                          //     // to delete
+                          //   },
+                          //   onConfirm: () async {
+                          //     await Provider.of<AuthProvider_vm>(context,listen: false)
+                          //         .switch_type();
+                          //    // Get.back();
+                          //
+                          //    setState(() {
+                          //
+                          //    });
+                          //     Get.back();
+                          //     // authProvider.signOutFromApp();
+                          //   },
+                          //
+                          //   buttonColor:
+                          //   mainColor, // Get.isDarkMode ? pinkClr : mainColor,
+                          // );
+                        },
+                        child: user.type == 'captain'
+                            ? Text(
+                                'وضع المندوب',
+                                style: TextStyle(
+                                    color: mainColor,
+                                    fontSize: size.width * 0.05),
+                              )
+                            : Text(
+                                'وضع المتسوق',
+                                style: TextStyle(
+                                    color: mainColor,
+                                    fontSize: size.width * 0.05),
+                              ),
+                      ),
+                      icon: const Icon(Icons.person, color: Colors.black26)),
+                ),
                 // modeUser(
                 //     context: context,
                 //     size: size,
@@ -284,7 +285,8 @@ class _MyPageDriverScreenState extends State<MyPageDriverScreen> {
                 user.type == 'user'
                     ? Divider(thickness: 1, color: greyColor.withOpacity(0.2))
                     : Container(),
-                user.type == 'user'
+                Provider.of<AuthProvider_vm>(context, listen: true)
+                    .currentuser.type == 'user'
                     ? info(
                         ontap: () {
                           showModalBottomSheet(

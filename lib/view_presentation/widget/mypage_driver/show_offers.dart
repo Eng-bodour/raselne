@@ -227,7 +227,7 @@ print('dicount '+orderModel.discount.toString());
                                       ),
                                     ),
                                     const Divider(thickness: 0.5),
-                                    orderModel.discount!=0.0?
+                                    orderModel.discount!=0.0 ?
                                     Padding(
                                       padding: EdgeInsets.symmetric(
                                         horizontal: size.width * 0.04,

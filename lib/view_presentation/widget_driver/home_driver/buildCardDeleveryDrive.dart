@@ -46,15 +46,25 @@ class _card_deilveryState extends State<card_deilvery> {
     //       widget.order.toLocation.longitude)
     // ]);
     //
-    print(widget.order.distance_me_recive);
-    print(widget.order.distance_recive_deilvery);
-    setState(() {});
-
-
+    // setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    widget.order.distance_me_recive = PolylineService().calcDistance([
+      LatLng(user.location!.latitude, user.location!.longitude),
+      LatLng(widget.order.fromlocation.latitude,
+          widget.order.fromlocation.longitude)
+    ]);
+    widget.order.distance_recive_deilvery = PolylineService().calcDistance([
+      LatLng(widget.order.fromlocation.latitude,
+          widget.order.fromlocation.longitude),
+      LatLng(
+          widget.order.toLocation.latitude,
+          widget.order.toLocation.longitude)
+    ]);
+    print(widget.order.distance_me_recive);
+    print(widget.order.distance_recive_deilvery);
     user = Provider.of<AuthProvider_vm>(context, listen: true).currentuser;
     size = MediaQuery.of(context).size;
     return Container(

@@ -67,7 +67,7 @@ class UserModel {
       mobile: json["mobile"],
       uid: json['uid'],
       location: null,
-      type:json['type'],
+      type:json['type']==null?'user':json['type'],
       num_travel: json["num_travel"] == null ? 0 : json["num_travel"],
       type_car: json["type_car"] == null ? '' : json["type_car"],
       copoun: json["copoun"] == null ? '' : json["copoun"],
@@ -142,6 +142,7 @@ class UserModel {
    print('star2_2 '+star2_2.toString());
    print('sumValues '+ sumValues.toString());
   double rataing=0.0;
+  if(listrate.length!=0)
   rataing= sumValues/listrate.length;
      return rataing;
   }
@@ -151,6 +152,7 @@ class UserModel {
         "email": email,
         "mobile": mobile,
         "uid": uid,
+        'type':type,
         "num_travel":num_travel,
         "type_car":type_car,
         "Id_number":Id_number,

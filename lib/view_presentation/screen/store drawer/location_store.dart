@@ -118,8 +118,10 @@ class _map_locationState extends State<location_store> {
                       ),
                     ],
                   ),
-                  floatingActionButton: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                  floatingActionButton: Row(
+
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.,
                     children: [
                       // FloatingActionButton(
                       //   onPressed: () => _drawPolyline(
@@ -130,6 +132,7 @@ class _map_locationState extends State<location_store> {
                         onPressed: () => _setMarker(currentLocation),
                         child: const Icon(Icons.location_on),
                       ),
+                      SizedBox(width: 4,),
                       FloatingActionButton(
                         onPressed: () => getMyLocation(),
                         child: const Icon(Icons.gps_fixed),
@@ -141,7 +144,7 @@ class _map_locationState extends State<location_store> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
                 child: Container(
-                  height: size.height * 0.3,
+                  height: size.height * 0.2,
                   width: size.width,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(size.width * 0.04),
@@ -195,52 +198,52 @@ class _map_locationState extends State<location_store> {
               SizedBox(
                 height: size.height * 0.02,
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: size.width * 0.04,
-                ),
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap: () {
-
-                        /// authProvider.checkBox();
-                      },
-                      child: Container(
-                          height: size.height * 0.03,
-                          width: size.width * 0.06,
-                          decoration: BoxDecoration(
-                            color: greyArrow.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Icon(
-                            Icons.done,
-                            color: mainColor,
-                          )
-                        // authProvider.isCheckBox
-                        //     ?
-
-                        //     Image.asset(
-                        //   'assets/images/check.png',
-                        //   color: Colors.amber,
-                        // )
-                        // : Container(),
-                      ),
-                    ),
-                    SizedBox(
-                      width: size.width * 0.02,
-                    ),
-                    // Text('حفظ المكان لاستخدامه لاحقاً',
-                    //     style: TextStyle(
-                    //         fontSize: size.width * 0.03,
-                    //         fontWeight: FontWeight.bold,
-                    //         color: Colors.black54)),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: size.height * 0.02,
-              ),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(
+              //     horizontal: size.width * 0.04,
+              //   ),
+              //   child: Row(
+              //     children: [
+              //       InkWell(
+              //         onTap: () {
+              //
+              //           /// authProvider.checkBox();
+              //         },
+              //         child: Container(
+              //             height: size.height * 0.03,
+              //             width: size.width * 0.06,
+              //             decoration: BoxDecoration(
+              //               color: greyArrow.withOpacity(0.2),
+              //               borderRadius: BorderRadius.circular(10),
+              //             ),
+              //             child: const Icon(
+              //               Icons.done,
+              //               color: mainColor,
+              //             )
+              //           // authProvider.isCheckBox
+              //           //     ?
+              //
+              //           //     Image.asset(
+              //           //   'assets/images/check.png',
+              //           //   color: Colors.amber,
+              //           // )
+              //           // : Container(),
+              //         ),
+              //       ),
+              //       SizedBox(
+              //         width: size.width * 0.02,
+              //       ),
+              //       // Text('حفظ المكان لاستخدامه لاحقاً',
+              //       //     style: TextStyle(
+              //       //         fontSize: size.width * 0.03,
+              //       //         fontWeight: FontWeight.bold,
+              //       //         color: Colors.black54)),
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: size.height * 0.02,
+              // ),
               Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: size.width * 0.04,

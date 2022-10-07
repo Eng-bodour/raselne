@@ -235,7 +235,7 @@ Future<List<OrderModel>> get_myorderCaptain()async{
   // double balance=double.parse(currentuser.balance.toString());
   double eradat=double.parse(currentuser.eradat.toString());
   // String bal=(delveryprice+balance).toString();
-  String erd=(delveryprice+eradat).toString();//delveryprice
+  String erd=(delveryprice+eradat+order.discount).toString();//delveryprice
    await orderRepository.done_order(
        id_order,
        state,currentuser.uid.toString(),

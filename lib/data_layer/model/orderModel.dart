@@ -96,21 +96,20 @@ Map<String, dynamic> toSnapchot() => {
  factory OrderModel.fromSnapshot(Map<String,dynamic> doc,String id) {
 
      OrderModel order= OrderModel(
-       total:doc["total"],
+     total:doc["total"],
        // fromlocation:doc["total"],
-       distance_recive_deilvery:doc["distance_recive_deilvery"],
-       price_deilvery_captain:doc["price_deilvery_captain"],
-       price_deilvery:doc["price_deilvery"],
-       captain_user:doc["captain_user"],
-       content_order:doc["content_order"],
-       from_user:doc["from_user"],
+
+     price_deilvery:doc["price_deilvery"],
+     captain_user:doc["captain_user"],
+     content_order:doc["content_order"],
+     from_user:doc["from_user"],
        // fromlocation:LatLng(gloacationfrom.latitude,gloacationfrom.longitude),
        //LatLng(doc["fromlocation"]
        //:GeoPoint(toLocation.latitude,toLocation.longitude) ,//fromlocation,
-       is_arrive:doc["is_arrive"],//وصل لموقع العميل
-       isdone_recive:doc["isdone_recive"],//تم استلام الطلب
+     is_arrive:doc["is_arrive"],//وصل لموقع العميل
+     isdone_recive:doc["isdone_recive"],//تم استلام الطلب
 
-       isdone_deilvery:doc["isdone_deilvery"],//تم التسليم
+     isdone_deilvery:doc["isdone_deilvery"],//تم التسليم
      isopen:doc["isopen"],
      ispause:doc["ispause"],
 
@@ -133,20 +132,22 @@ Map<String, dynamic> toSnapchot() => {
        print('content : '+order.content_order);
      order.discount=doc['discount']==null?0.0:
      double.parse( doc['discount'].toString());
-     order.distance_me_recive ='4.3';
+     //order.distance_me_recive ='4.3';
      // order.distance_me_recive = PolylineService().calcDistance([
      //   LatLng(user.location!.latitude, user.location!.longitude),
      //   LatLng(order.fromlocation.latitude,
      //       order.fromlocation.longitude)
      // ]);
-     order.distance_recive_deilvery = PolylineService().calcDistance([
-       LatLng(order.fromlocation.latitude,
-           order.fromlocation.longitude),
-       LatLng(
-           order.toLocation.latitude,
-           order.toLocation.longitude)
-     ]);
-
+     // order.distance_recive_deilvery = PolylineService().calcDistance([
+     //   LatLng(order.fromlocation.latitude,
+     //       order.fromlocation.longitude),
+     //   LatLng(
+     //       order.toLocation.latitude,
+     //       order.toLocation.longitude)
+     // ]);
+    order.distance_recive_deilvery=doc["distance_recive_deilvery"];
+    order.price_deilvery_captain=doc["price_deilvery_captain"];
+     print('price_deilvery_captain '+order.price_deilvery_captain);
      return order;
  }
 

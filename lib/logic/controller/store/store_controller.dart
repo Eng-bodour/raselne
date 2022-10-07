@@ -26,8 +26,14 @@ class StoreProvider_vm extends ChangeNotifier {
   async {
     isloading=true;
     notifyListeners();
-    await storeRepository.AddStore(fileimage , storeModel,type);
-    liststore.add(StoreModel.fromSnapshot(storeModel));
+    StoreModel store=await storeRepository.AddStore(fileimage , storeModel,type);
+    if(type=='add')
+    liststore.add(store);
+    else //edit
+   { int index=liststore.indexWhere((element) => element.IdStore==storeModel['IdStore']);
+    if(index!=-1)
+      liststore[index]=store;
+   }
     isloading=false;
     notifyListeners();
   }
@@ -37,10 +43,20 @@ class StoreProvider_vm extends ChangeNotifier {
   async {
     isloading=true;
     notifyListeners();
-    await storeRepository.AddStoreItem(fileimage , itemStore,type,idStore);
+    Itemstore item= await storeRepository.AddStoreItem(fileimage , itemStore,type,idStore);
+    // int index=liststore.indexWhere((element) => element.IdStore==idStore);
     int index=liststore.indexWhere((element) => element.IdStore==idStore);
-    if(index!=-1)
-    liststore[index].itemstore.add(Itemstore.fromJson(itemStore));
+    if(index!=-1) {
+      int index2 = liststore[index].itemstore.indexWhere((element) =>
+      element.IdItemStore == itemStore['IdItemStore']);
+      if(index2!=-1){
+        liststore[index].itemstore[index2]=item;
+      }else {
+        liststore[index].itemstore.add(item);
+
+      }
+      // .add(Itemstore.fromJson(itemStore));
+    }
     isloading=false;
     notifyListeners();
   }

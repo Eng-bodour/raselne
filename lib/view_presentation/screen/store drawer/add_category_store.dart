@@ -30,6 +30,7 @@ class _AddCategoryState extends State<AddCategory> {
   // String? selectedTypes;
   late File? file=null;
   final fromKey = GlobalKey<FormState>();
+  ImagePicker imagePicker = ImagePicker();
 
   final TextEditingController nameCategoryController = TextEditingController();
 
@@ -209,29 +210,46 @@ class _AddCategoryState extends State<AddCategory> {
                           color: greyColor,
                           underLine: TextDecoration.none),
                       AuthTextFromField(
-                        read: false,
+                        read: true,
                         keyboardType: TextInputType.text,
                         controller: imageController,
                         obscureText: false,
                         validator: (value) {
-                          if (value.toString().length <= 1) {
-                            return 'Enter valid name';
-                          } else {
-                            return null;
-                          }
+                          // if (value.toString().length <= 1) {
+                          //   return 'Enter valid name';
+                          // } else {
+                          //   return null;
+                          // }
                         },
                         prefixIcon: const Text(""),
                         suffixIcon: IconButton(
                             onPressed: () async{
-                              final _imagePicker = ImagePicker();
-                              PickedFile? image;
-
-                              image = await _imagePicker.getImage(
-                                  source: ImageSource.gallery,
-                                  //maxHeight: ,
-                                  imageQuality:60 );
-
-                              file = File(image!.path);
+                              // final _imagePicker = ImagePicker();
+                              // PickedFile? image;
+                              //
+                              // image = await _imagePicker.getImage(
+                              //     source: ImageSource.gallery,
+                              //     //maxHeight: ,
+                              //     imageQuality:60 );
+                              //
+                              // file = File(image!.path);
+                              showModalBottomSheet<dynamic>(
+                                backgroundColor: Colors.grey.shade200,
+                                //  backgroundColor: Colors.transparent,
+                                elevation: 0,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
+                                    )),
+                                context: context,
+                                // isScrollControlled: true,
+                                builder: ((context) {
+                                  return addImageBottomSheet(
+                                      size: size, context: context);
+                                }),
+                                // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
+                              );
                             },
                             icon: const Icon(Icons.image)),
                         hintText: 'الصورة',
@@ -322,12 +340,14 @@ class _AddCategoryState extends State<AddCategory> {
                                       Itemstore item = Itemstore(
                                           type_categore: typeCategoryController.text
                                               .toString(),
-                                          nameCategory: nameCategoryController
+                                          nameCategory: nameCategoryController.text
                                               .toString(),
-                                          image: '',
+                                          image:widget.type=='edit'?
+                                          widget.itemstore!.image.toString():'',
                                           price: priceController.text.toString(),
                                           description: descriptionController.text
                                               .toString());
+                                      item.IdItemStore=widget.itemstore!.IdItemStore;
                                       await
                                       addStoreProvider.SaveStoreItem(
                                           fileimage: file,
@@ -380,6 +400,7 @@ class _AddCategoryState extends State<AddCategory> {
                                           price: priceController.text.toString(),
                                           description: descriptionController.text
                                               .toString());
+                                      item.IdItemStore=widget.itemstore!.IdItemStore;
                                       await addStoreProvider.deleteItemStore(item, widget.idStore);
 
                                       // authProvider.signOutFromApp();
@@ -433,5 +454,93 @@ class _AddCategoryState extends State<AddCategory> {
         ),
       ),
     );
+  }
+
+  Widget addImageBottomSheet({required Size size, required BuildContext context}) {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Container(
+          height: size.height * 0.2,
+          width: double.infinity,
+          margin: EdgeInsets.symmetric(
+            vertical: size.height * 0.01,
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: size.width * 0.06, vertical: size.height * 0.014),
+            child:
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text('اختر الصورة ',
+                  style: TextStyle(
+                      fontSize: size.width * 0.05,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54)),
+              const Divider(
+                thickness: 0.5,
+                color: Colors.black12,
+              ),
+              InkWell(
+                onTap: () {
+                  // to  fetch photo from galeery
+                  takePhoto(ImageSource.gallery, context);
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.photo_camera_back_outlined,
+                      color: mainColor,
+                      size: size.width * 0.08,
+                    ),
+                    SizedBox(
+                      width: size.width * 0.03,
+                    ),
+                    Text('معرض الصور',
+                        style: TextStyle(
+                            fontSize: size.width * 0.045,
+                            fontWeight: FontWeight.bold,
+                            color: mainColor)),
+                  ],
+                ),
+              ),
+              const Divider(
+                thickness: 0.5,
+                color: Colors.black12,
+              ),
+              InkWell(
+                onTap: () {
+                  // to  fetch photo from camera
+                  takePhoto(ImageSource.camera, context);
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.camera_alt_outlined,
+                      color: mainColor,
+                      size: size.width * 0.08,
+                    ),
+                    SizedBox(
+                      width: size.width * 0.03,
+                    ),
+                    Text('التقط صورة',
+                        style: TextStyle(
+                            fontSize: size.width * 0.045,
+                            fontWeight: FontWeight.bold,
+                            color: mainColor)),
+                  ],
+                ),
+              )
+            ]),
+          )),
+    );
+  }
+
+  void takePhoto(ImageSource source, context) async {
+    final pickedImage =
+    await imagePicker.pickImage(source: source, imageQuality: 60);
+    file = File(pickedImage!.path);
+    // Provider.of<user_vm_provider>(context, listen: false).currentUser!.path =
+    //     pickedFile!.path;
+
+    // Navigator.of(context).pop();
   }
 }

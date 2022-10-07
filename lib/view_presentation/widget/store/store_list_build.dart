@@ -24,7 +24,8 @@ class _StoreListBuildState extends State<StoreListBuild> {
   void initState() {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      Provider.of<AuthProvider_vm>(context,listen: false).currentuser.type=='user'?
+      Provider.of<AuthProvider_vm>(context,listen: false)
+          .currentuser.type=='user'?
       await Provider.of<StoreProvider_vm>(context, listen: false)
           .getstores(widget.type):
       await Provider.of<StoreProvider_vm>(context, listen: false)

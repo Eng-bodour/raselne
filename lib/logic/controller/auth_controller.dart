@@ -27,19 +27,23 @@ class AuthProvider_vm extends ChangeNotifier {
   AuthProvider_vm({required this.userRepository});
 
   Future<UserModel> isAuthuser()async{
-
+  isloading=true;
+  notifyListeners();
   bool isauth= await  userRepository.isAuthuser();
 
   if(isauth)
   {
     currentuser= await userRepository.getuser();
+    isloading=false;
     notifyListeners();
   }
    else
      return UserModel(
-      location: LatLng(14,50), uid:null, name: 'name',
+      location: LatLng(14,50),
+         uid:null, name: 'name',
       email: 'email', mobile: 'mobile', dateCreated: '', type: '', rataing: 0.0);
-   notifyListeners();
+  isloading=false;
+  notifyListeners();
    return currentuser;
   }
   Future<double> check_Copoun(String copoun) async {
@@ -123,7 +127,10 @@ class AuthProvider_vm extends ChangeNotifier {
     required String email,
     required String password,
   }) async {
+    isloading=true;
+    notifyListeners();
     message=await  userRepository.creatuser(name, email, password);
+    isloading=false;
     notifyListeners();
   }
 

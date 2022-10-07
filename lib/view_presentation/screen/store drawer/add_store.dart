@@ -51,6 +51,8 @@ class _AddStoreState extends State<AddStore> {
 
   final TextEditingController locationController = TextEditingController();
   late File? file=null;
+  ImagePicker imagePicker = ImagePicker();
+
   // final controllerStore = Get.put(AddStoreController());
   late LatLng location;
   ScrollController controller = ScrollController();
@@ -71,8 +73,9 @@ class _AddStoreState extends State<AddStore> {
     descStoreController.text=widget.storemodel!.descStore.toString();
     stateStoreController.text=widget.storemodel!.stateStore.toString();
     mobileController.text=widget.storemodel!.mobileStore.toString();
-    locationController.text=widget.storemodel!.location.toString();
     String address=await GetAddressFromLatLong(widget.storemodel!.location);
+    locationController.text=address;
+
     Provider.of<StoreProvider_vm>(context,listen: false)
         .setlocation(widget.storemodel!.location, address);
     }});
@@ -91,21 +94,21 @@ class _AddStoreState extends State<AddStore> {
         backgroundColor: mainColor,
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        controller: controller,
-        child: SizedBox(
-          width: double.infinity,
-          //  height: size.height / 1.3,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 25, right: 25, top: 40),
-            child: Directionality(
-              textDirection: TextDirection.rtl,
-              child: Form(
-                key: fromKey,
-                child: ModalProgressHUD(
-                  inAsyncCall: Provider.of<StoreProvider_vm>(context,listen: true)
-                  .isloading,
+      body:  ModalProgressHUD(
+        inAsyncCall: Provider.of<StoreProvider_vm>(context,listen: true)
+            .isloading,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          controller: controller,
+          child: SizedBox(
+            width: double.infinity,
+            //  height: size.height / 1.3,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 25, right: 25, top: 40),
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: Form(
+                  key: fromKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -363,7 +366,7 @@ class _AddStoreState extends State<AddStore> {
                           color: greyColor,
                           underLine: TextDecoration.none),
                       AuthTextFromField(
-                        read: false,
+                        read: true,
                         keyboardType: TextInputType.text,
                         controller: locationController,
                         obscureText: false,
@@ -394,7 +397,8 @@ class _AddStoreState extends State<AddStore> {
                             },
                             icon: const Icon(Icons.location_pin)),
                         hintText: 'موقع  المتجر ${
-                            Provider.of<StoreProvider_vm>(context, listen: true).address_store}',
+                            Provider.of<StoreProvider_vm>(context, listen: true)
+                                .address_store}',
                       ),    SizedBox(
                         height: size.height * 0.02,
                       ),
@@ -410,24 +414,40 @@ class _AddStoreState extends State<AddStore> {
                         // controller: locationController,
                         obscureText: false,
                         validator: (value) {
-                          if (value.toString().length <= 1) {
-                            return 'Enter valid name';
-                          } else {
-                            return null;
-                          }
+                          // if (value.toString().length <= 1) {
+                          //   return 'Enter valid name';
+                          // } else {
+                          //   return null;
+                          // }
                         },
                         prefixIcon: const Text(""),
                         suffixIcon: IconButton(
                             onPressed: () async{
-                              final _imagePicker = ImagePicker();
-                              PickedFile? image;
-
-                              image = await _imagePicker.getImage(
-                                  source: ImageSource.gallery,
-                                  //maxHeight: ,
-                                  imageQuality:60 );
-
-                              file = File(image!.path);
+                              // final _imagePicker = ImagePicker();
+                              // PickedFile? image;
+                              //
+                              // image = await _imagePicker.getImage(
+                              //     source: ImageSource.gallery,
+                              //     //maxHeight: ,
+                              //     imageQuality:60 );
+                              showModalBottomSheet<dynamic>(
+                                backgroundColor: Colors.grey.shade200,
+                                //  backgroundColor: Colors.transparent,
+                                elevation: 0,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
+                                    )),
+                                context: context,
+                                // isScrollControlled: true,
+                                builder: ((context) {
+                                  return addImageBottomSheet(
+                                      size: size, context: context);
+                                }),
+                                // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
+                              );
+                              // file = File(image!.path);
                             },
                             icon: const Icon(Icons.image)),
                         hintText: 'صورة المتجر',
@@ -542,7 +562,7 @@ class _AddStoreState extends State<AddStore> {
                                             imageStore: widget.type=='edit'?
                                             widget.storemodel!.imageStore.toString():'',
                                             itemstore: [],
-                                            IdStore: '',
+                                            IdStore: widget.storemodel!.IdStore.toString(),
                                             descStore: descStoreController.text.toString(),
                                             idowner:
                                             Provider.of<AuthProvider_vm>(context,listen: false)
@@ -596,5 +616,93 @@ class _AddStoreState extends State<AddStore> {
         ),
       ),
     );
+  }
+
+  Widget addImageBottomSheet({required Size size, required BuildContext context}) {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Container(
+          height: size.height * 0.2,
+          width: double.infinity,
+          margin: EdgeInsets.symmetric(
+            vertical: size.height * 0.01,
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: size.width * 0.06, vertical: size.height * 0.014),
+            child:
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text('اختر الصورة ',
+                  style: TextStyle(
+                      fontSize: size.width * 0.05,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54)),
+              const Divider(
+                thickness: 0.5,
+                color: Colors.black12,
+              ),
+              InkWell(
+                onTap: () {
+                  // to  fetch photo from galeery
+                  takePhoto(ImageSource.gallery, context);
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.photo_camera_back_outlined,
+                      color: mainColor,
+                      size: size.width * 0.08,
+                    ),
+                    SizedBox(
+                      width: size.width * 0.03,
+                    ),
+                    Text('معرض الصور',
+                        style: TextStyle(
+                            fontSize: size.width * 0.045,
+                            fontWeight: FontWeight.bold,
+                            color: mainColor)),
+                  ],
+                ),
+              ),
+              const Divider(
+                thickness: 0.5,
+                color: Colors.black12,
+              ),
+              InkWell(
+                onTap: () {
+                  // to  fetch photo from camera
+                  takePhoto(ImageSource.camera, context);
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.camera_alt_outlined,
+                      color: mainColor,
+                      size: size.width * 0.08,
+                    ),
+                    SizedBox(
+                      width: size.width * 0.03,
+                    ),
+                    Text('التقط صورة',
+                        style: TextStyle(
+                            fontSize: size.width * 0.045,
+                            fontWeight: FontWeight.bold,
+                            color: mainColor)),
+                  ],
+                ),
+              )
+            ]),
+          )),
+    );
+  }
+
+  void takePhoto(ImageSource source, context) async {
+    final pickedImage =
+    await imagePicker.pickImage(source: source, imageQuality: 60);
+     file = File(pickedImage!.path);
+    // Provider.of<user_vm_provider>(context, listen: false).currentUser!.path =
+    //     pickedFile!.path;
+
+    // Navigator.of(context).pop();
   }
 }

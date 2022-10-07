@@ -117,8 +117,8 @@ class _map_locationState extends State<map_location> {
                       ),
                     ],
                   ),
-                  floatingActionButton: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                  floatingActionButton: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       // FloatingActionButton(
                       //   onPressed: () => _drawPolyline(
@@ -129,6 +129,7 @@ class _map_locationState extends State<map_location> {
                         onPressed: () => _setMarker(currentLocation),
                         child: const Icon(Icons.location_on),
                       ),
+                      SizedBox(width: 4,),
                       FloatingActionButton(
                         onPressed: () => getMyLocation(),
                         child: const Icon(Icons.gps_fixed),
@@ -339,8 +340,7 @@ class _map_locationState extends State<map_location> {
     );
   }
 
-  Widget addImageBottomSheet(
-      {required Size size, required BuildContext context}) {
+  Widget addImageBottomSheet({required Size size, required BuildContext context}) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
@@ -354,7 +354,7 @@ class _map_locationState extends State<map_location> {
                 horizontal: size.width * 0.06, vertical: size.height * 0.014),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('تغيير الصورة الشخصية',
+              Text('تغيير الصورة ',
                   style: TextStyle(
                       fontSize: size.width * 0.05,
                       fontWeight: FontWeight.bold,

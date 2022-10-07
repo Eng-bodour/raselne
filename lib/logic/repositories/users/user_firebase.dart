@@ -211,7 +211,7 @@ class user_firebase extends UserRepository{
   @override
   Future<UserModel> getuser()async {
     // TODO: implement getuser
-
+   print('auth.currentUser!.uid.toString() '+auth.currentUser!.uid.toString());
     return await FirebaseFirestore.instance
         .collection('users')
         .where('uid', isEqualTo:
