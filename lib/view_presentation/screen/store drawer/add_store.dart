@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -22,14 +21,16 @@ import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
 import 'location_store.dart';
 import 'dart:io';
+
 class AddStore extends StatefulWidget {
   String typeStore;
   String type;
   StoreModel? storemodel;
-   AddStore({
+  AddStore({
     // this.uid, //for id user that add store
-   required this.typeStore, this.storemodel,
-   required this.type,
+    required this.typeStore,
+    this.storemodel,
+    required this.type,
     Key? key,
   }) : super(key: key);
 
@@ -50,7 +51,7 @@ class _AddStoreState extends State<AddStore> {
   final TextEditingController mobileController = TextEditingController();
 
   final TextEditingController locationController = TextEditingController();
-  late File? file=null;
+  late File? file;
   ImagePicker imagePicker = ImagePicker();
 
   // final controllerStore = Get.put(AddStoreController());
@@ -58,29 +59,34 @@ class _AddStoreState extends State<AddStore> {
   ScrollController controller = ScrollController();
   Future<String> GetAddressFromLatLong(LatLng? position) async {
     List<Placemark> placemarks =
-    await placemarkFromCoordinates(position!.latitude, position!.longitude);
+        await placemarkFromCoordinates(position!.latitude, position.longitude);
     print(placemarks);
     Placemark place = placemarks[0];
     String Address =
-    '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
- return Address;
+        '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+    return Address;
   }
-  @override void initState() {
-    // TODO: implement initState
-    WidgetsBinding.instance.addPostFrameCallback((_)async{
-    if(widget.type=='edit'){
-    nameStoreController.text=widget.storemodel!.nameStore.toString();
-    descStoreController.text=widget.storemodel!.descStore.toString();
-    stateStoreController.text=widget.storemodel!.stateStore.toString();
-    mobileController.text=widget.storemodel!.mobileStore.toString();
-    String address=await GetAddressFromLatLong(widget.storemodel!.location);
-    locationController.text=address;
 
-    Provider.of<StoreProvider_vm>(context,listen: false)
-        .setlocation(widget.storemodel!.location, address);
-    }});
+  @override
+  void initState() {
+    // TODO: implement initState
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      if (widget.type == 'edit') {
+        nameStoreController.text = widget.storemodel!.nameStore.toString();
+        descStoreController.text = widget.storemodel!.descStore.toString();
+        stateStoreController.text = widget.storemodel!.stateStore.toString();
+        mobileController.text = widget.storemodel!.mobileStore.toString();
+        String address =
+            await GetAddressFromLatLong(widget.storemodel!.location);
+        locationController.text = address;
+
+        Provider.of<StoreProvider_vm>(context, listen: false)
+            .setlocation(widget.storemodel!.location, address);
+      }
+    });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     var addStoreProvider = Provider.of<StoreProvider_vm>(context);
@@ -94,9 +100,9 @@ class _AddStoreState extends State<AddStore> {
         backgroundColor: mainColor,
         elevation: 0,
       ),
-      body:  ModalProgressHUD(
-        inAsyncCall: Provider.of<StoreProvider_vm>(context,listen: true)
-            .isloading,
+      body: ModalProgressHUD(
+        inAsyncCall:
+            Provider.of<StoreProvider_vm>(context, listen: true).isloading,
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           controller: controller,
@@ -385,21 +391,21 @@ class _AddStoreState extends State<AddStore> {
                                   //  backgroundColor: Colors.transparent,
                                   elevation: 0,
                                   shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20),
-                              )),
-                              context: context,
-                              isScrollControlled: true,
-                              builder: ((context) =>  location_store()));
+                                      borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20),
+                                  )),
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: ((context) => location_store()));
                               // setlocation
                               //  location=Provider.of<StoreProvider_vm>(context)
                             },
                             icon: const Icon(Icons.location_pin)),
-                        hintText: 'موقع  المتجر ${
-                            Provider.of<StoreProvider_vm>(context, listen: true)
-                                .address_store}',
-                      ),    SizedBox(
+                        hintText:
+                            'موقع  المتجر ${Provider.of<StoreProvider_vm>(context, listen: true).address_store}',
+                      ),
+                      SizedBox(
                         height: size.height * 0.02,
                       ),
                       TextUtils(
@@ -422,7 +428,7 @@ class _AddStoreState extends State<AddStore> {
                         },
                         prefixIcon: const Text(""),
                         suffixIcon: IconButton(
-                            onPressed: () async{
+                            onPressed: () async {
                               // final _imagePicker = ImagePicker();
                               // PickedFile? image;
                               //
@@ -436,9 +442,9 @@ class _AddStoreState extends State<AddStore> {
                                 elevation: 0,
                                 shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20),
-                                    )),
+                                  topLeft: Radius.circular(20),
+                                  topRight: Radius.circular(20),
+                                )),
                                 context: context,
                                 // isScrollControlled: true,
                                 builder: ((context) {
@@ -452,8 +458,8 @@ class _AddStoreState extends State<AddStore> {
                             icon: const Icon(Icons.image)),
                         hintText: 'صورة المتجر',
                       ),
-                      SizedBox(
-                        height:6, //size.height * 0.1,
+                      const SizedBox(
+                        height: 6, //size.height * 0.1,
                       ),
                       Container(
                         margin: EdgeInsets.only(
@@ -465,15 +471,14 @@ class _AddStoreState extends State<AddStore> {
                             horizontal: size.width * 0.06,
                             vertical: size.height * 0.03),
                         width: size.width * 0.75,
-                        decoration:
-                        BoxDecoration(
+                        decoration: BoxDecoration(
                           color:
-                          // isMe
-                          //     ? greyColor.withOpacity(0.1)
-                          //     :
-                            mainColor
-                              .withOpacity(0.3),
-                          borderRadius:BorderRadius.all(Radius.circular(20)),
+                              // isMe
+                              //     ? greyColor.withOpacity(0.1)
+                              //     :
+                              mainColor.withOpacity(0.3),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20)),
                           // BorderRadius.only(
                           //   topLeft:
                           //   Radius.circular(
@@ -492,24 +497,22 @@ class _AddStoreState extends State<AddStore> {
                           //       size.width *
                           //           0.1),
                           // )
-
                         ),
-                        child:
-                       file==null?
-                       widget.type=='edit'?
-                       ClipRRect(
-                         borderRadius: BorderRadius.circular(45),
-                         child: CachedNetworkImage(
-                            imageUrl: widget.storemodel!.imageStore.toString() ,
-                            placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
-                            errorWidget:
-                                (context, url, error) =>
-                            const Icon(Icons.error),
-                          ),
-                       )
-                       :Container():
-                       Image.file(file!,fit: BoxFit.contain),
+                        child: file == null
+                            ? widget.type == 'edit'
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(45),
+                                    child: CachedNetworkImage(
+                                      imageUrl: widget.storemodel!.imageStore
+                                          .toString(),
+                                      placeholder: (context, url) =>
+                                          const CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
+                                    ),
+                                  )
+                                : Container()
+                            : Image.file(file!, fit: BoxFit.contain),
                         // Image.network(
                         //     snapshot.data![index].textMessage.toString(),
                         //   width: 30,
@@ -531,7 +534,7 @@ class _AddStoreState extends State<AddStore> {
                       // ),
                       Center(
                         child: AuthButton(
-                            onPressed: () async{
+                            onPressed: () async {
                               // getController.docTyps.length;
                               // print(getController.docTyps.length);
                               // GetServices.GetTypes('types');
@@ -541,7 +544,7 @@ class _AddStoreState extends State<AddStore> {
                               // getController.getStore('types');
 
                               if (fromKey.currentState!.validate()) {
-                                if(widget.type=='add'&& file==null)
+                                if (widget.type == 'add' && file == null) {
                                   Get.snackbar(
                                     '',
                                     'حدد صورة للمتجر من فضلك',
@@ -549,35 +552,46 @@ class _AddStoreState extends State<AddStore> {
                                     backgroundColor: Colors.green,
                                     colorText: Colors.white,
                                   );
-                                    else
-                                      {
-                                        StoreModel store = StoreModel(
-                                            nameStore: nameStoreController.text.toString(),
-                                            typeStore: widget.typeStore, //selectedTypes.toString(),
-                                            mobileStore: mobileController.text.toString(),
-                                            location: Provider.of<StoreProvider_vm>(context,
-                                                listen: false).location,
-                                            offer_value: '',
-                                            rating: '1',
-                                            imageStore: widget.type=='edit'?
-                                            widget.storemodel!.imageStore.toString():'',
-                                            itemstore: [],
-                                            IdStore: widget.storemodel!.IdStore.toString(),
-                                            descStore: descStoreController.text.toString(),
-                                            idowner:
-                                            Provider.of<AuthProvider_vm>(context,listen: false)
-                                                .currentuser.uid.
-                                        toString(), isVisible: false,
-                                        stateStore: stateStoreController.text.toString());
+                                } else {
+                                  StoreModel store = StoreModel(
+                                      nameStore:
+                                          nameStoreController.text.toString(),
+                                      typeStore: widget
+                                          .typeStore, //selectedTypes.toString(),
+                                      mobileStore:
+                                          mobileController.text.toString(),
+                                      location: Provider.of<StoreProvider_vm>(
+                                              context,
+                                              listen: false)
+                                          .location,
+                                      offer_value: '',
+                                      rating: '1',
+                                      imageStore: widget.type == 'edit'
+                                          ? widget.storemodel!.imageStore
+                                              .toString()
+                                          : '',
+                                      itemstore: [],
+                                      IdStore:
+                                          widget.storemodel!.IdStore.toString(),
+                                      descStore:
+                                          descStoreController.text.toString(),
+                                      idowner: Provider.of<AuthProvider_vm>(
+                                              context,
+                                              listen: false)
+                                          .currentuser
+                                          .uid
+                                          .toString(),
+                                      isVisible: false,
+                                      stateStore:
+                                          stateStoreController.text.toString());
 
-                                    await addStoreProvider.SaveStore(
-                                         fileimage: file,
-                                         // nameCollecton: 'store',
-                                         storeModel: store.toSnapchot(),
-                                         type:   widget.type
-                                     );
-                                Get.back();
-                              }
+                                  await addStoreProvider.SaveStore(
+                                      fileimage: file,
+                                      // nameCollecton: 'store',
+                                      storeModel: store.toSnapchot(),
+                                      type: widget.type);
+                                  Get.back();
+                                }
                               }
                             },
                             text: 'Save data Store'),
@@ -618,7 +632,8 @@ class _AddStoreState extends State<AddStore> {
     );
   }
 
-  Widget addImageBottomSheet({required Size size, required BuildContext context}) {
+  Widget addImageBottomSheet(
+      {required Size size, required BuildContext context}) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
@@ -631,7 +646,7 @@ class _AddStoreState extends State<AddStore> {
             padding: EdgeInsets.symmetric(
                 horizontal: size.width * 0.06, vertical: size.height * 0.014),
             child:
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('اختر الصورة ',
                   style: TextStyle(
                       fontSize: size.width * 0.05,
@@ -698,8 +713,8 @@ class _AddStoreState extends State<AddStore> {
 
   void takePhoto(ImageSource source, context) async {
     final pickedImage =
-    await imagePicker.pickImage(source: source, imageQuality: 60);
-     file = File(pickedImage!.path);
+        await imagePicker.pickImage(source: source, imageQuality: 60);
+    file = File(pickedImage!.path);
     // Provider.of<user_vm_provider>(context, listen: false).currentUser!.path =
     //     pickedFile!.path;
 

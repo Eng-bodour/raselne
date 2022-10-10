@@ -39,35 +39,35 @@ class StoreTitle extends StatelessWidget {
                     color: Colors.white,
                   )),
             ),
-            TextButton(
-                onPressed: () {},
-                child: Container(
-                  height: size.height * 0.04,
-                  width: size.width * 0.2,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        right: size.width * 0.02, left: size.width * 0.02),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.card_giftcard,
-                          color: greyColor,
-                        ),
-                        SizedBox(
-                          width: size.width * 0.01,
-                        ),
-                        const Text(
-                          'بطاقة',
-                          style: TextStyle(color: greyColor),
-                        )
-                      ],
-                    ),
-                  ),
-                ))
+            // TextButton(
+            //     onPressed: () {},
+            //     child: Container(
+            //       height: size.height * 0.04,
+            //       width: size.width * 0.2,
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(20),
+            //         color: Colors.white,
+            //       ),
+            //       child: Padding(
+            //         padding: EdgeInsets.only(
+            //             right: size.width * 0.02, left: size.width * 0.02),
+            //         child: Row(
+            //           children: [
+            //             const Icon(
+            //               Icons.card_giftcard,
+            //               color: greyColor,
+            //             ),
+            //             SizedBox(
+            //               width: size.width * 0.01,
+            //             ),
+            //             const Text(
+            //               'بطاقة',
+            //               style: TextStyle(color: greyColor),
+            //             )
+            //           ],
+            //         ),
+            //       ),
+            //     ))
           ],
         )
       ],

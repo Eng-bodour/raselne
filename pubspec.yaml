@@ -41,7 +41,9 @@ dependencies:
   firebase_dart: ^1.0.9 
   firebase_storage: ^8.0.0
   cloud_firestore: ^1.0.1
-  firebase_messaging_platform_interface: ^3.2.0
+
+  firebase_messaging_platform_interface: 3.1.6
+  firebase_database_platform_interface: 0.2.0+5
   flutter_facebook_auth: "^3.5.0"
   smooth_page_indicator: ^1.0.0+2
   carousel_slider: ^4.0.0

@@ -1,5 +1,6 @@
 import 'package:firebase_dart/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:raselne/data_layer/model/orderModel.dart';
@@ -60,15 +61,14 @@ class _card_deilveryState extends State<card_deilvery> {
       LatLng(widget.order.fromlocation.latitude,
           widget.order.fromlocation.longitude),
       LatLng(
-          widget.order.toLocation.latitude,
-          widget.order.toLocation.longitude)
+          widget.order.toLocation.latitude, widget.order.toLocation.longitude)
     ]);
     print(widget.order.distance_me_recive);
     print(widget.order.distance_recive_deilvery);
     user = Provider.of<AuthProvider_vm>(context, listen: true).currentuser;
     size = MediaQuery.of(context).size;
     return Container(
-      height: size.height * 0.45,
+      height: size.height * 0.39,
       decoration: const BoxDecoration(color: Colors.white),
       child: Padding(
         padding: EdgeInsets.symmetric(
@@ -98,7 +98,7 @@ class _card_deilveryState extends State<card_deilvery> {
                         fontSize: size.width * 0.04,
                         fontWeight: FontWeight.bold,
                         text: 'أرسلها عني',
-                        color: Colors.black87,
+                        color: Colors.black,
                         underLine: TextDecoration.none),
                     TextUtils(
                         fontSize: size.width * 0.03,
@@ -116,7 +116,7 @@ class _card_deilveryState extends State<card_deilvery> {
                 fontSize: size.width * 0.03,
                 fontWeight: FontWeight.bold,
                 text: 'تفاصيل الطلب',
-                color: Colors.black38,
+                color: Colors.black,
                 underLine: TextDecoration.none),
             TextUtils(
                 fontSize: size.width * 0.03,
@@ -203,6 +203,9 @@ class _card_deilveryState extends State<card_deilvery> {
                       // Provider.of<order_vm>(context,listen: false).setvaluePriceCaptain(valueController.text);
                       widget.order.price_deilvery_captain =
                           valueController.text;
+                      // Get.to(bottomsheet_offer(
+                      //   order: widget.order,
+                      // ));
                       showModalBottomSheet<dynamic>(
                         backgroundColor: Colors.grey.shade200,
                         //  backgroundColor: Colors.transparent,
@@ -221,97 +224,63 @@ class _card_deilveryState extends State<card_deilvery> {
                       );
                     },
                     child: Container(
-                      width: size.width * 0.3,
+                      width: size.width * 0.4,
                       height: size.height * 0.05,
                       decoration: BoxDecoration(
-                          color: Colors.yellow[50],
+                          color: mainColor,
                           borderRadius:
                               BorderRadius.circular(size.width * 0.1)),
-                      child: TextUtils(
-                        color: Colors.black54,
-                        text: 'قدم',
-                        fontSize: size.width * 0.03,
-                        fontWeight: FontWeight.bold,
-                        underLine: TextDecoration.none,
+                      child: Center(
+                        child: TextUtils(
+                          color: Colors.white,
+                          text: 'قدم عرض',
+                          fontSize: size.width * 0.05,
+                          fontWeight: FontWeight.bold,
+                          underLine: TextDecoration.none,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: size.width * 0.05,
                   ),
                   Expanded(
                     child: TextField(
+                      cursorColor: mainColor,
                       controller: valueController,
                       decoration: InputDecoration(
                         fillColor: Colors.white,
-                        hintText: 'عرض السعر',
-                        hintStyle: const TextStyle(
+                        hintText: ' تقديم عرض السعر',
+                        hintStyle: TextStyle(
                           color: Colors.black45,
-                          fontSize: f16,
+                          fontSize: size.width * 0.04,
                           fontWeight: FontWeight.w500,
                         ),
                         filled: true,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: mainColor),
-                          borderRadius: BorderRadius.circular(10),
+                        enabledBorder: const UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white), //<-- SEE HERE
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: mainColor),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: mainColor),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: mainColor),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                        // enabledBorder: OutlineInputBorder(
+                        //   borderSide: const BorderSide(color: mainColor),
+                        //   borderRadius: BorderRadius.circular(10),
+                        // ),
+                        // focusedBorder: OutlineInputBorder(
+                        //   borderSide: const BorderSide(color: mainColor),
+                        //   borderRadius: BorderRadius.circular(10),
+                        // ),
+                        // errorBorder: OutlineInputBorder(
+                        //   borderSide: const BorderSide(color: mainColor),
+                        //   borderRadius: BorderRadius.circular(10),
+                        // ),
+                        // focusedErrorBorder: OutlineInputBorder(
+                        //   borderSide: const BorderSide(color: mainColor),
+                        //   borderRadius: BorderRadius.circular(10),
+                        // ),
                       ),
                     ),
                   ),
-                  // InkWell(
-                  //   onTap: () {
-                  //  // Navigator.push(context,
-                  //  //     MaterialPageRoute(
-                  //  //         builder: (context)=>
-                  //  //             bottomsheet_offer( order: widget.order,)));
-                  //  showModalBottomSheet<dynamic>(
-                  //    backgroundColor: Colors.grey.shade200,
-                  //    //  backgroundColor: Colors.transparent,
-                  //    elevation: 0,
-                  //    shape: const RoundedRectangleBorder(
-                  //        borderRadius: BorderRadius.only(
-                  //          topLeft: Radius.circular(20),
-                  //          topRight: Radius.circular(20),
-                  //        )),
-                  //    context: context,
-                  //    isScrollControlled: true,
-                  //    builder: ((context) =>
-                  //        bottomsheet_offer( order: widget.order,)),
-                  //    // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
-                  //  );
-                  //   },
-                  //   child: Container(
-                  //     width: size.width * 0.4,
-                  //     height: size.height * 0.05,
-                  //     decoration: BoxDecoration(
-                  //         color: Colors.yellow,
-                  //         borderRadius: BorderRadius.circular(size.width * 0.1)),
-                  //     child: Center(
-                  //       child: TextUtils(
-                  //         color: Colors.black,
-                  //         text: 'قدم عرض 20 ر.س',
-                  //         fontSize: size.width * 0.03,
-                  //         fontWeight: FontWeight.bold,
-                  //         underLine: TextDecoration.none,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
             ),
+
             // TextUtils(
             //   color: Colors.black26,
             //   text: 'من 20 رس إلى 22 رس',
