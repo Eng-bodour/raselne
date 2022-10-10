@@ -197,137 +197,140 @@ class _ChatScreenState extends State<ChatScreen> {
           inAsyncCall: Provider.of<order_vm>(context, listen: true).isloading,
           child: Column(
             children: <Widget>[
-              Expanded(
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30.0),
-                      topRight: Radius.circular(30.0),
-                    ),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(30.0),
-                      topRight: Radius.circular(30.0),
-                    ),
-                    child: StreamBuilder(
-                      stream: Provider.of<order_vm>(context, listen: false)
-                          .getchat(widget.orderModel.id_order),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<List<MessageText>> snapshot) {
-                        if (snapshot.hasError) {
-                          return Text('something went wrong' +
-                              snapshot.error.toString());
-                        }
-                        if (!snapshot.hasData) {
-                          return const Text("Loading");
-                        }
-                        return Expanded(
-                          child: ListView.builder(
-                            //to reverse message
-                            //   reverse: true,
-                            padding: EdgeInsets.only(top: size.height * 0.02),
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              // final MessageText message = messages[index];
-                              bool isMe =
-                                  snapshot.data![index].senderId == user.uid;
-                              return snapshot.data![index].type_message ==
-                                      'text'
-                                  ? _buildMessage(
-                                      snapshot.data![index], isMe, size)
-                                  : snapshot.data![index].type_message == 'map'
-                                      ? mapLocationMessage(
-                                          message: snapshot.data![index],
-                                          size: size,
-                                        )
-                                      : snapshot.data![index].type_message ==
-                                              'image'
-                                          ? Container(
-                                              margin: EdgeInsets.only(
-                                                top: size.height * 0.01,
-                                                left: size.width * 0.03,
-                                                bottom: size.height * 0.01,
-                                              ),
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: size.width * 0.06,
-                                                  vertical: size.height * 0.03),
-                                              width: size.width * 0.75,
-                                              decoration:
-                                              BoxDecoration(
-                                                color: isMe
-                                                    ? greyColor.withOpacity(0.1)
-                                                    : mainColor
-                                                        .withOpacity(0.3),
-                                                borderRadius: isMe
-                                                    ? BorderRadius.only(
-                                                        topLeft:
-                                                            Radius.circular(
-                                                                size.width *
-                                                                    0.1),
-                                                        topRight:
-                                                            Radius.circular(
-                                                                size.width *
-                                                                    0.02),
-                                                        bottomLeft:
-                                                            Radius.circular(
-                                                                size.width *
-                                                                    0.02),
-                                                        bottomRight:
-                                                            Radius.circular(
-                                                                size.width *
-                                                                    0.1),
-                                                      )
-                                                    : BorderRadius.only(
-                                                        topRight:
-                                                            Radius.circular(
-                                                                size.width *
-                                                                    0.1),
-                                                        topLeft:
-                                                            Radius.circular(
-                                                                size.width *
-                                                                    0.02),
-                                                        bottomRight:
-                                                            Radius.circular(
-                                                                size.width *
-                                                                    0.02),
-                                                        bottomLeft:
-                                                            Radius.circular(
-                                                                size.width *
-                                                                    0.1),
-                                                      ),
-                                              ),
-                                              child:
-                                              CachedNetworkImage(
-                                                imageUrl: snapshot
-                                                    .data![index].textMessage
-                                                    .toString(),
-                                                placeholder: (context, url) =>
-                                                    const CircularProgressIndicator(),
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        const Icon(Icons.error),
-                                              ),
-                                              // Image.network(
-                                              //     snapshot.data![index].textMessage.toString(),
-                                              //   width: 30,
-                                              //   height: 35,
-                                              // )
-                                            )
-                                          : invoice_chat(
-                                              size: size,
-                                              messageText:
-                                                  snapshot.data![index],
-                                            ); //invoice
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
+
+
+                 Expanded(
+                   flex: 3,
+                   child: Container(
+                     decoration: const BoxDecoration(
+                       color: Colors.white,
+                       borderRadius: BorderRadius.only(
+                         topLeft: Radius.circular(30.0),
+                         topRight: Radius.circular(30.0),
+                       ),
+                     ),
+                     child: ClipRRect(
+                       borderRadius: const BorderRadius.only(
+                         topLeft: Radius.circular(30.0),
+                         topRight: Radius.circular(30.0),
+                       ),
+                       child: StreamBuilder(
+                         stream: Provider.of<order_vm>(context, listen: false)
+                             .getchat(widget.orderModel.id_order),
+                         builder: (BuildContext context,
+                             AsyncSnapshot<List<MessageText>> snapshot) {
+                           if (snapshot.hasError) {
+                             return Text('something went wrong' +
+                                 snapshot.error.toString());
+                           }
+                           if (!snapshot.hasData) {
+                             return const Text("Loading");
+                           }
+                           return ListView.builder(
+                             //to reverse message
+                             //   reverse: true,
+                             padding: EdgeInsets.only(top: size.height * 0.02),
+                             itemCount: snapshot.data!.length,
+                             itemBuilder: (BuildContext context, int index) {
+                               // final MessageText message = messages[index];
+                               bool isMe =
+                                   snapshot.data![index].senderId == user.uid;
+                               return snapshot.data![index].type_message ==
+                                   'text'
+                                   ? _buildMessage(
+                                   snapshot.data![index], isMe, size)
+                                   : snapshot.data![index].type_message == 'map'
+                                   ? mapLocationMessage(
+                                 message: snapshot.data![index] ,
+                                 size: size,
+                               )
+                                   : snapshot.data![index].type_message ==
+                                   'image'
+                                   ? Container(
+                                 margin: EdgeInsets.only(
+                                   top: size.height * 0.01,
+                                   left: size.width * 0.03,
+                                   bottom: size.height * 0.01,
+                                 ),
+                                 padding: EdgeInsets.symmetric(
+                                     horizontal: size.width * 0.06,
+                                     vertical: size.height * 0.03),
+                                 width: size.width * 0.75,
+                                 decoration:
+                                 BoxDecoration(
+                                   color: isMe
+                                       ? greyColor.withOpacity(0.1)
+                                       : mainColor
+                                       .withOpacity(0.3),
+                                   borderRadius: isMe
+                                       ? BorderRadius.only(
+                                     topLeft:
+                                     Radius.circular(
+                                         size.width *
+                                             0.1),
+                                     topRight:
+                                     Radius.circular(
+                                         size.width *
+                                             0.02),
+                                     bottomLeft:
+                                     Radius.circular(
+                                         size.width *
+                                             0.02),
+                                     bottomRight:
+                                     Radius.circular(
+                                         size.width *
+                                             0.1),
+                                   )
+                                       : BorderRadius.only(
+                                     topRight:
+                                     Radius.circular(
+                                         size.width *
+                                             0.1),
+                                     topLeft:
+                                     Radius.circular(
+                                         size.width *
+                                             0.02),
+                                     bottomRight:
+                                     Radius.circular(
+                                         size.width *
+                                             0.02),
+                                     bottomLeft:
+                                     Radius.circular(
+                                         size.width *
+                                             0.1),
+                                   ),
+                                 ),
+                                 child:
+                                 CachedNetworkImage(
+                                   imageUrl: snapshot
+                                       .data![index].textMessage
+                                       .toString(),
+                                   placeholder: (context, url) =>
+                                   const CircularProgressIndicator(),
+                                   errorWidget:
+                                       (context, url, error) =>
+                                   const Icon(Icons.error),
+                                 ),
+                                 // Image.network(
+                                 //     snapshot.data![index].textMessage.toString(),
+                                 //   width: 30,
+                                 //   height: 35,
+                                 // )
+                               )
+                                   : invoice_chat(
+                                 size: size,
+                                 messageText:
+                                 snapshot.data![index],
+                               ); //invoice
+                             },
+                           );
+                         },
+                       ),
+                     ),
+                   ),
+                 ),
+
+
               user.type == 'captain' && widget.orderModel.state != 'done rate'
                   ? InkWell(
                       onTap: () {

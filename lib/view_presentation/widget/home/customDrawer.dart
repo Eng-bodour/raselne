@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -47,15 +48,44 @@ class CustomDrawer extends StatelessWidget {
                       width: 50,
                       height: 50,
                       decoration: const BoxDecoration(shape: BoxShape.circle),
-                      child: const CircleAvatar(
-                        radius: 8,
-                        backgroundColor: mainColor,
+                      child:  Provider.of<AuthProvider_vm>(context,listen: true).currentuser.imageuser !=''?
+                      CircleAvatar(
+                        radius: 30,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: CachedNetworkImage(
+                            width: 200,
+                            height: 200,
+                            fit: BoxFit.fill,
+                            imageUrl:  Provider.of<AuthProvider_vm>(context,listen: true).currentuser.imageuser
+                                .toString(),
+                            placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                          ),
+                        ),
+                      )
+                          :
+                      CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius:8,
                         child: Icon(
                           Icons.person,
-                          color: Colors.white,
-                          size: 40,
+                          color: Colors.lightBlue.withOpacity(0.9),
+                          size: MediaQuery.of(context).size.width * 0.15,
                         ),
-                      ),
+                      )
+                      // const
+                      // CircleAvatar(
+                      //   radius: 8,
+                      //   backgroundColor: mainColor,
+                      //   child: Icon(
+                      //     Icons.person,
+                      //     color: Colors.white,
+                      //     size: 40,
+                      //   ),
+                      // ),
                     ),
                     const SizedBox(
                       width: 20,
@@ -137,12 +167,12 @@ class CustomDrawer extends StatelessWidget {
               // SizedBox(
               //   height: MediaQuery.of(context).size.height * 0.03,
               // ),
-              const Driver(),
-              TextButton(
-                  onPressed: () {
-                    Get.to(const HomeDriverScreen());
-                  },
-                  child: const Text('home driver')),
+              // const Driver(),
+              // TextButton(
+              //     onPressed: () {
+              //       Get.to(const HomeDriverScreen());
+              //     },
+              //     child: const Text('home driver')),
               // TextButton(
               //     onPressed: () {
               //       Get.to( OrdersDriverScreen());

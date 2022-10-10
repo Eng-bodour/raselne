@@ -35,7 +35,9 @@ class _MainScreenState extends State<MainScreen> {
     var mainProvider = Provider.of<MainProvider>(context, listen: true);
     return Scaffold(
       backgroundColor: Colors.white, //context.theme.backgroundColor,
-      floatingActionButton: Padding(
+      floatingActionButton:
+      Provider.of<AuthProvider_vm>(context, listen: true).currentuser.type=='user'?
+      Padding(
         padding: const EdgeInsets.only(top: 20),
         child: SizedBox(
           height: size.height * 0.1,
@@ -71,9 +73,10 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
         ),
-      ),
+      ):Container(),
       floatingActionButtonLocation:
-      FloatingActionButtonLocation.centerDocked,
+      Provider.of<AuthProvider_vm>(context, listen: true).currentuser.type=='user'?
+      FloatingActionButtonLocation.centerDocked:null,
       bottomNavigationBar: BottomNavigationBar(
         unselectedLabelStyle: const TextStyle(color: Colors.black),
         selectedItemColor: mainColor,

@@ -2,7 +2,7 @@
 
 import 'package:raselne/data_layer/model/user_model.dart';
 import 'package:raselne/logic/repositories/users/user_repo.dart';
-
+import 'dart:io';
 class user_api extends UserRepository{
   @override
   Future<String> creatuser(String name, String email, String password) {
@@ -73,6 +73,12 @@ class user_api extends UserRepository{
   @override
   Future<bool> save_Copoun(String id_doc, String copoun) {
     // TODO: implement save_Copoun
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> setImageProfileUser(String id_doc, String path_old,File? fileimage) {
+    // TODO: implement setImageProfileUser
     throw UnimplementedError();
   }
 

@@ -45,6 +45,7 @@ String titleStore='';
 String content_order='';// محتويات المنتج الذي طلبه العميل
 StoreModel? storeModel;
 String state='';
+String type_order='';
 bool isclose=false;
 bool isstart=false;
 bool iscancel=false;//ملغى
@@ -57,6 +58,7 @@ OrderModel({required this.total,required this.id_store,
     // required this.fromlocation,
   price_deilvery_captain,
   required this.id_order,distance_recive_deilvery,
+  required this.type_order,
   required this.is_arrive,required this.isdone_recive,
   required this.isdone_deilvery,required this.isopen,
   required this.ispause,
@@ -72,6 +74,7 @@ Map<String, dynamic> toSnapchot() => {
   "content_order": content_order,
   "distance_recive_deilvery": distance_recive_deilvery,
   "price_deilvery_captain": price_deilvery_captain,
+  "type_order": type_order,
 
   // "content_order": content_order,
   "state":state,
@@ -100,6 +103,7 @@ Map<String, dynamic> toSnapchot() => {
        // fromlocation:doc["total"],
 
      price_deilvery:doc["price_deilvery"],
+       type_order:doc["type_order"],
      captain_user:doc["captain_user"],
      content_order:doc["content_order"],
      from_user:doc["from_user"],

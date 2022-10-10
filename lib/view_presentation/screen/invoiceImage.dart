@@ -65,6 +65,13 @@ class _InvoiceImageState extends State<InvoiceImage> {
                   onChanged: (val){
 
                   },
+                  validator: (value){
+                    // if (value.toString().trim().isEmpty) {
+                    //   return 'من فضلك ضع صفر بدل الفراغ';
+                    // }
+                    if(double.tryParse(value.toString()) == null)
+                      return 'من فضلك ادخل عدد';
+                  },
                   controller: enterCostProduct,
                   decoration: InputDecoration(
                     border: InputBorder.none,
@@ -123,7 +130,9 @@ class _InvoiceImageState extends State<InvoiceImage> {
                       ),
                       Text(
                         (double.parse(widget.orderModel.price_deilvery.toString())
-                            +double.parse(enterCostProduct.text.toString())
+                            +double.parse(
+                                enterCostProduct.text.toString().isNotEmpty?
+                            enterCostProduct.text.toString():'0')
                         ).toString(),
                         style: TextStyle(
                             color: Colors.black, fontWeight: FontWeight.bold),

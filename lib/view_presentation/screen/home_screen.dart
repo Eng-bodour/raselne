@@ -47,16 +47,17 @@ class HomeScreen extends StatelessWidget {
               underLine: TextDecoration.none,
             )),
         drawer: CustomDrawer(),
-        body: SingleChildScrollView(
+        body:
+        SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: size.height * 0.01),
-              Padding(
-                padding: EdgeInsets.only(
-                    right: size.width * 0.05, bottom: size.height * 0.01),
-                child: const Text('العليا الشرقية'),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.only(
+              //       right: size.width * 0.05, bottom: size.height * 0.01),
+              //   child: const Text('العليا الشرقية'),
+              // ),
               const ImageSliders(
                 imageUrl: 'assets/services/offer.png',
               ),
@@ -73,13 +74,13 @@ class HomeScreen extends StatelessWidget {
               //   height: size.height * 0.15,
               //   child: const BuildList(),
               // ),
-              Padding(
-                padding: EdgeInsets.only(
-                  right: size.width * 0.05,
-                  top: size.height * 0.01,
-                ),
-                child: const Text('الخدمات الأكثر طلباً'),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.only(
+              //     right: size.width * 0.05,
+              //     top: size.height * 0.01,
+              //   ),
+              //   child: const Text('الخدمات الأكثر طلباً'),
+              // ),
               Padding(
                 padding: EdgeInsets.only(
                   left: size.width * 0.02,

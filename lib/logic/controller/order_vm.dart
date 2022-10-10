@@ -101,7 +101,7 @@ prepareOrder(StoreModel storeModel) {
      storeModel: storeModel, isopen: false,
    ispause: false, isdone_deilvery: false,
      id_store: storeModel.IdStore.toString(),
-       DateTimeorder: null, state: 'create', );
+       DateTimeorder: null, state: 'create', type_order: 'طلب من متجر', );
      notifyListeners();
 }
 prepareCustomOrder() {
@@ -120,7 +120,7 @@ prepareCustomOrder() {
    isopen: false,
    ispause: false, isdone_deilvery: false,
      id_store: '',
-       DateTimeorder: null, state: 'create', );
+       DateTimeorder: null, state: 'create', type_order: 'طلب عام', );
      notifyListeners();
 }
 bool isloading=false;

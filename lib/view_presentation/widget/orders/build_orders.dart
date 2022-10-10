@@ -118,9 +118,9 @@ class buildCardOrders extends StatelessWidget {
                   )
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-                child: Expanded(
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
                   child: TextUtils(
                       fontSize: size.width * 0.04,
                       fontWeight: FontWeight.normal,

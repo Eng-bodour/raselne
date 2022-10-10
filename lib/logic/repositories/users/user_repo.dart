@@ -2,7 +2,7 @@
 
 
 import 'package:raselne/data_layer/model/user_model.dart';
-
+import 'dart:io';
 abstract class UserRepository{
 
   Future<String> creatuser(String name,String email,String password);
@@ -15,6 +15,7 @@ abstract class UserRepository{
   Future<UserModel> getuser();
   Future<bool> isAuthuser();
   Future<void> switch_type(String id_doc,String type);
+  Future<String> setImageProfileUser(String id_doc,String path_old,File? fileimage);
   Future<double> check_Copoun(String id_doc,String copoun);
   Future<bool> save_Copoun(String id_doc,String copoun);
 

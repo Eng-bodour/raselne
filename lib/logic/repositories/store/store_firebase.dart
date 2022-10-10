@@ -11,6 +11,7 @@ import 'package:raselne/data_layer/webServices/firebase.dart';
 import 'package:raselne/logic/repositories/store/store_repo.dart';
 import 'package:path/path.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:raselne/services/imageservice.dart';
 
 class StoreFirebase extends StoreRepository {
   @override
@@ -202,63 +203,14 @@ class StoreFirebase extends StoreRepository {
 
       throw UnimplementedError();
     }
-  Future<String> uploadImageToFirebase(File imageFile,String path) async {
-    String nameimage=basename(imageFile.path);
-    // Create the file metadata
-    final metadata = SettableMetadata(
-        contentType: "image/jpg");
 
-
-    var random=Random().nextInt(100000);
-    var storageRef=FirebaseStorage.instance.
-    ref('$path/$random${nameimage}');
-
-    String urlimage='';
-    final uploadTask = await storageRef.putFile(imageFile,metadata);
-    if(uploadTask.state==TaskState.success)
-      urlimage =await storageRef.getDownloadURL();
-
-    // Upload file and metadata to the path 'images/mountains.jpg'
-    // Uint8List data=fileimageinvoice.
-
-    // = storageRef
-    //     .child("images/${nameimage}")
-    //     .putFile(imageFile,metadata);
-    // Listen for state changes, errors, and completion of the upload.
-    // String urlimage='';
-    //
-    // uploadTask.snapshotEvents.listen((TaskSnapshot taskSnapshot) async {
-    //   switch (taskSnapshot.state) {
-    //     case TaskState.running:
-    //       final progress =
-    //           100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
-    //       print("Upload is $progress% complete.");
-    //       break;
-    //     case TaskState.paused:
-    //       print("Upload is paused.");
-    //       break;
-    //     case TaskState.canceled:
-    //       print("Upload was canceled");
-    //       break;
-    //     case TaskState.error:
-    //     // Handle unsuccessful uploads
-    //       break;
-    //     case TaskState.success:
-    //     // Handle successful uploads on complete
-    //     // ...
-    //       urlimage=await storageRef.getDownloadURL();
-    //       break;
-    //   }
-    // });
-    return urlimage;
-  }
     @override
     Future<StoreModel> AddStore(File? fileimage,
         Map<String, dynamic> body,String TypeOperation) async {
       String imagurl='';
       if(TypeOperation=='add'){
       if(fileimage!=null) {
-        imagurl = await uploadImageToFirebase(fileimage,'imageStore');
+        imagurl = await image_service().uploadImageToFirebase(fileimage,'imageStore');//imageUser
         body.addAll({'imageStore':imagurl});
       }
       FirebaseServices firestore =
@@ -269,7 +221,7 @@ class StoreFirebase extends StoreRepository {
       else{
         if(fileimage!=null) {//upload image
         await  FirebaseStorage.instance.refFromURL(body['imageStore']).delete();
-          imagurl = await uploadImageToFirebase(fileimage,'imageStore');
+          imagurl = await image_service(). uploadImageToFirebase(fileimage,'imageStore');
           body.addAll({'imageStore':imagurl});
         }
         FirebaseFirestore.instance.collection('store').doc(
@@ -290,7 +242,7 @@ class StoreFirebase extends StoreRepository {
     String imagurl='';
     if(TypeOperation=='add'){
       if(fileimage!=null) {
-        imagurl = await uploadImageToFirebase(fileimage,'imageItemStore');
+        imagurl = await image_service().uploadImageToFirebase(fileimage,'imageItemStore');
         body.addAll({'image':imagurl});
       }
       DocumentReference ref= await FirebaseFirestore.instance.collection('store').doc(idStore)
@@ -303,7 +255,7 @@ class StoreFirebase extends StoreRepository {
     else{
       if(fileimage!=null) {//upload image
         await  FirebaseStorage.instance.refFromURL(body['image']).delete();
-        imagurl = await uploadImageToFirebase(fileimage,'imageItemStore');
+        imagurl = await image_service().uploadImageToFirebase(fileimage,'imageItemStore');
         body.addAll({'image':imagurl});
       }
       FirebaseFirestore.instance.collection('store').doc(idStore)

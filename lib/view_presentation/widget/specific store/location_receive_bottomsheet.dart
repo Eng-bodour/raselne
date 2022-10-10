@@ -52,291 +52,293 @@ class _map_locationState extends State<map_location> {
   Widget build(BuildContext context) {
     TextEditingController addDetails = TextEditingController();
     Size size = MediaQuery.of(context).size;
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Container(
-          height: size.height * 0.9,
-          width: double.infinity,
-          margin: EdgeInsets.symmetric(
-            vertical: size.height * 0.01,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                       widget.type=='الاستلام'? 'موقع الاستلام ':'موقع التوصيل',
-                        style: TextStyle(
-                            fontSize: size.width * 0.045,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black54)),
-                    IconButton(
-                        onPressed: () {
-                          Get.back();
-                        },
-                        icon: const Icon(Icons.close, color: Colors.black54))
-                  ],
-                ),
-              ),
-              //this for map
-              Container(
-                height: size.height * 0.4,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(size.width * 0.01),
-                    color: mainColor),
-                child: Scaffold(
-                  body: Stack(
-                    alignment: Alignment.center,
+    return Scaffold(
+      body: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Container(
+            height: size.height * 0.9,
+            width: double.infinity,
+            margin: EdgeInsets.symmetric(
+              vertical: size.height * 0.01,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      GoogleMap(
-                        initialCameraPosition: _inialCameraPosition,
-                        mapType: MapType.normal,
-                        onMapCreated: (GoogleMapController controller) async {
-                          String style = await DefaultAssetBundle.of(context)
-                              .loadString('assets/map_style.json');
-                          //customize your map style at: https://mapstyle.withgoogle.com/
-                          controller.setMapStyle(style);
-                          _controller.complete(controller);
-                        },
-                        onCameraMove: (CameraPosition newPos) {
-                          setState(() {
-                            currentLocation = newPos.target;
-                          });
-                        },
-                        markers: _markers,
-                        polylines: _polylines,
-                      ),
-                      SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: Image.asset('assets/images/location_icon.png'),
-                      ),
-                    ],
-                  ),
-                  floatingActionButton: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // FloatingActionButton(
-                      //   onPressed: () => _drawPolyline(
-                      //       LatLng(38.52900208591146, -98.54919254779816), currentLocation),
-                      //   child: Icon(Icons.settings_ethernet_rounded),
-                      // ),
-                      FloatingActionButton(
-                        onPressed: () => _setMarker(currentLocation),
-                        child: const Icon(Icons.location_on),
-                      ),
-                      SizedBox(width: 4,),
-                      FloatingActionButton(
-                        onPressed: () => getMyLocation(),
-                        child: const Icon(Icons.gps_fixed),
-                      ),
+                      Text(
+                         widget.type=='الاستلام'? 'موقع الاستلام ':'موقع التوصيل',
+                          style: TextStyle(
+                              fontSize: size.width * 0.045,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black54)),
+                      IconButton(
+                          onPressed: () {
+                            Get.back();
+                          },
+                          icon: const Icon(Icons.close, color: Colors.black54))
                     ],
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
-                child: Container(
-                  height: size.height * 0.3,
-                  width: size.width,
+                //this for map
+                Container(
+                  height: size.height * 0.4,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(size.width * 0.04),
-                    color: Colors.white,
+                      borderRadius: BorderRadius.circular(size.width * 0.01),
+                      color: mainColor),
+                  child: Scaffold(
+                    body: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        GoogleMap(
+                          initialCameraPosition: _inialCameraPosition,
+                          mapType: MapType.normal,
+                          onMapCreated: (GoogleMapController controller) async {
+                            String style = await DefaultAssetBundle.of(context)
+                                .loadString('assets/map_style.json');
+                            //customize your map style at: https://mapstyle.withgoogle.com/
+                            controller.setMapStyle(style);
+                            _controller.complete(controller);
+                          },
+                          onCameraMove: (CameraPosition newPos) {
+                            setState(() {
+                              currentLocation = newPos.target;
+                            });
+                          },
+                          markers: _markers,
+                          polylines: _polylines,
+                        ),
+                        SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: Image.asset('assets/images/location_icon.png'),
+                        ),
+                      ],
+                    ),
+                    floatingActionButton: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // FloatingActionButton(
+                        //   onPressed: () => _drawPolyline(
+                        //       LatLng(38.52900208591146, -98.54919254779816), currentLocation),
+                        //   child: Icon(Icons.settings_ethernet_rounded),
+                        // ),
+                        FloatingActionButton(
+                          onPressed: () => _setMarker(currentLocation),
+                          child: const Icon(Icons.location_on),
+                        ),
+                        SizedBox(width: 4,),
+                        FloatingActionButton(
+                          onPressed: () => getMyLocation(),
+                          child: const Icon(Icons.gps_fixed),
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
+                  child: Container(
+                    height: size.height * 0.3,
+                    width: size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(size.width * 0.04),
+                      color: Colors.white,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: size.width * 0.04,
+                              vertical: size.height * 0.01),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.location_on,
+                                    color: Colors.black54,
+                                  ),
+                                  SizedBox(
+                                    width: size.width * 0.02,
+                                  ),
+                                  const Text(
+                                    'مكان الوكاشن المحدد من الخريطة',
+                                    style: TextStyle(color: Colors.black54),
+                                  )
+                                ],
+                              ),
+                              // Text(
+                              //     "lat: ${currentLocation.latitude}, "
+                              //         "long : ${currentLocation.longitude}"),
+                              //
+                              Text(
+                                Address,
+                                style: TextStyle(fontSize: size.width * 0.03),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 1,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
                             horizontal: size.width * 0.04,
-                            vertical: size.height * 0.01),
-                        child: Column(
-                          children: [
-                            Row(
+                          ),
+                          child: const Text(
+                            'تفاصيل إضافية',
+                            style: TextStyle(color: Colors.black54),
+                          ),
+                        ),
+                        TextFormField(
+                          controller: addDetails,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            fillColor: mainColor.withOpacity(0.1),
+                            hintText: 'رقم العمارة, رقم الشقة, علامة مميزة',
+                            hintStyle: TextStyle(
+                              color: Colors.black45,
+                              fontSize: size.width * 0.03,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            filled: true,
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 1,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            showModalBottomSheet<dynamic>(
+                              backgroundColor: Colors.grey.shade200,
+                              //  backgroundColor: Colors.transparent,
+                              elevation: 0,
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                              )),
+                              context: context,
+                              // isScrollControlled: true,
+                              builder: ((context) {
+                                return addImageBottomSheet(
+                                    size: size, context: context);
+                              }),
+                              // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
+                            );
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: size.width * 0.04,
+                            ),
+                            child: Row(
                               children: [
                                 const Icon(
-                                  Icons.location_on,
-                                  color: Colors.black54,
+                                  Icons.camera_alt_outlined,
+                                  color: mainColor,
                                 ),
                                 SizedBox(
                                   width: size.width * 0.02,
                                 ),
                                 const Text(
-                                  'مكان الوكاشن المحدد من الخريطة',
-                                  style: TextStyle(color: Colors.black54),
+                                  'قم بإضافة صورة لمدخل المنزل',
+                                  style: TextStyle(color: mainColor),
                                 )
                               ],
                             ),
-                            // Text(
-                            //     "lat: ${currentLocation.latitude}, "
-                            //         "long : ${currentLocation.longitude}"),
-                            //
-                            Text(
-                              Address,
-                              style: TextStyle(fontSize: size.width * 0.03),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Divider(
-                        thickness: 1,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: size.width * 0.04,
-                        ),
-                        child: const Text(
-                          'تفاصيل إضافية',
-                          style: TextStyle(color: Colors.black54),
-                        ),
-                      ),
-                      TextFormField(
-                        controller: addDetails,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          fillColor: mainColor.withOpacity(0.1),
-                          hintText: 'رقم العمارة, رقم الشقة, علامة مميزة',
-                          hintStyle: TextStyle(
-                            color: Colors.black45,
-                            fontSize: size.width * 0.03,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          filled: true,
-                        ),
-                      ),
-                      const Divider(
-                        thickness: 1,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          showModalBottomSheet<dynamic>(
-                            backgroundColor: Colors.grey.shade200,
-                            //  backgroundColor: Colors.transparent,
-                            elevation: 0,
-                            shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20),
-                            )),
-                            context: context,
-                            // isScrollControlled: true,
-                            builder: ((context) {
-                              return addImageBottomSheet(
-                                  size: size, context: context);
-                            }),
-                            // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
-                          );
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: size.width * 0.04,
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.camera_alt_outlined,
-                                color: mainColor,
-                              ),
-                              SizedBox(
-                                width: size.width * 0.02,
-                              ),
-                              const Text(
-                                'قم بإضافة صورة لمدخل المنزل',
-                                style: TextStyle(color: mainColor),
-                              )
-                            ],
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: size.height * 0.02,
-              ),
-              // Padding(
-              //   padding: EdgeInsets.symmetric(
-              //     horizontal: size.width * 0.04,
-              //   ),
-              //   child: Row(
-              //     children: [
-              //       InkWell(
-              //         onTap: () {
-              //
-              //           /// authProvider.checkBox();
-              //         },
-              //         child: Container(
-              //             height: size.height * 0.03,
-              //             width: size.width * 0.06,
-              //             decoration: BoxDecoration(
-              //               color: greyArrow.withOpacity(0.2),
-              //               borderRadius: BorderRadius.circular(10),
-              //             ),
-              //             child: const Icon(
-              //               Icons.done,
-              //               color: mainColor,
-              //             )
-              //             // authProvider.isCheckBox
-              //             //     ?
-              //
-              //             //     Image.asset(
-              //             //   'assets/images/check.png',
-              //             //   color: Colors.amber,
-              //             // )
-              //             // : Container(),
-              //             ),
-              //       ),
-              //       SizedBox(
-              //         width: size.width * 0.02,
-              //       ),
-              //       Text('حفظ المكان لاستخدامه لاحقاً',
-              //           style: TextStyle(
-              //               fontSize: size.width * 0.03,
-              //               fontWeight: FontWeight.bold,
-              //               color: Colors.black54)),
-              //     ],
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: size.height * 0.02,
-              // ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: size.width * 0.04,
+                SizedBox(
+                  height: size.height * 0.02,
                 ),
-                child: ElevatedButton(
-                  onPressed: () async {
-                   widget.type=='الاستلام'?
-                   await Provider.of<order_vm>(context, listen: false)
-                        .addlocation(currentLocation, Address, addDetails.text,widget.type)
-                   :   await Provider.of<order_vm>(context, listen: false)
-                       .addlocation(currentLocation, Address, addDetails.text,widget.type);
-                    Navigator.pop(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    primary: mainColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(size.width * 0.05),
-                    ), //Get.isDarkMode ? pinkClr : mainColor,
-                    minimumSize: Size(size.height, size.width * 0.12),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(
+                //     horizontal: size.width * 0.04,
+                //   ),
+                //   child: Row(
+                //     children: [
+                //       InkWell(
+                //         onTap: () {
+                //
+                //           /// authProvider.checkBox();
+                //         },
+                //         child: Container(
+                //             height: size.height * 0.03,
+                //             width: size.width * 0.06,
+                //             decoration: BoxDecoration(
+                //               color: greyArrow.withOpacity(0.2),
+                //               borderRadius: BorderRadius.circular(10),
+                //             ),
+                //             child: const Icon(
+                //               Icons.done,
+                //               color: mainColor,
+                //             )
+                //             // authProvider.isCheckBox
+                //             //     ?
+                //
+                //             //     Image.asset(
+                //             //   'assets/images/check.png',
+                //             //   color: Colors.amber,
+                //             // )
+                //             // : Container(),
+                //             ),
+                //       ),
+                //       SizedBox(
+                //         width: size.width * 0.02,
+                //       ),
+                //       Text('حفظ المكان لاستخدامه لاحقاً',
+                //           style: TextStyle(
+                //               fontSize: size.width * 0.03,
+                //               fontWeight: FontWeight.bold,
+                //               color: Colors.black54)),
+                //     ],
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: size.height * 0.02,
+                // ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: size.width * 0.04,
                   ),
-                  child: TextUtils(
-                    color: Colors.white,
-                    text:widget.type=='الاستلام'? 'تأكيد مكان الاستلام':'تأكيد مكان التوصيل',
-                    fontSize: size.width * 0.05,
-                    fontWeight: FontWeight.bold,
-                    underLine: TextDecoration.none,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                     widget.type=='الاستلام'?
+                     await Provider.of<order_vm>(context, listen: false)
+                          .addlocation(currentLocation, Address, addDetails.text,widget.type)
+                     :   await Provider.of<order_vm>(context, listen: false)
+                         .addlocation(currentLocation, Address, addDetails.text,widget.type);
+                      Navigator.pop(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      primary: mainColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(size.width * 0.05),
+                      ), //Get.isDarkMode ? pinkClr : mainColor,
+                      minimumSize: Size(size.height, size.width * 0.12),
+                    ),
+                    child: TextUtils(
+                      color: Colors.white,
+                      text:widget.type=='الاستلام'? 'تأكيد مكان الاستلام':'تأكيد مكان التوصيل',
+                      fontSize: size.width * 0.05,
+                      fontWeight: FontWeight.bold,
+                      underLine: TextDecoration.none,
+                    ),
                   ),
-                ),
-              )
-            ],
-          )),
+                )
+              ],
+            )),
+      ),
     );
   }
 

@@ -107,7 +107,8 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                       underLine: TextDecoration.none),
                   InkWell(
                     onTap: () {
-                      Get.to(const DeliveryToScreen());
+                      // Get.to(const DeliveryToScreen());
+                      Get.to( map_location(type: 'التوصيل'));
                       // showModalBottomSheet<dynamic>(
                       //   backgroundColor: Colors.grey.shade200,
                       //   //  backgroundColor: Colors.transparent,

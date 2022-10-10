@@ -44,6 +44,7 @@ class UserModel {
  late String? Id_number='';
  late String? type_car='';
  late String? copoun='';
+ late String? imageuser='';
  late int? num_travel=0;
  late LatLng? location;
 
@@ -55,7 +56,7 @@ class UserModel {
     required this.email,
     required this.mobile,
     required this.type,
-     this.num_travel,  this.type_car,
+     this.num_travel,  this.type_car,this.imageuser,
     this.eradat,this.balance,this.copoun,
      this.Id_number, required this.dateCreated,  this.num_car, required double rataing,
   });
@@ -68,6 +69,7 @@ class UserModel {
       uid: json['uid'],
       location: null,
       type:json['type']==null?'user':json['type'],
+      imageuser:json['imageuser']==null?'':json['imageuser'],
       num_travel: json["num_travel"] == null ? 0 : json["num_travel"],
       type_car: json["type_car"] == null ? '' : json["type_car"],
       copoun: json["copoun"] == null ? '' : json["copoun"],

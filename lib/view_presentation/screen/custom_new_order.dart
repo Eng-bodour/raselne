@@ -26,7 +26,12 @@ class _Custom_orderState extends State<Custom_order> {
   final TextEditingController detailorderController = TextEditingController();
   late OrderModel orderModel;
   bool isAddNote = false;
-
+  @override void dispose() {
+    // TODO: implement dispose
+    notesController.dispose();
+    detailorderController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     orderModel = Provider.of<order_vm>(context, listen: true).order;
@@ -83,8 +88,10 @@ class _Custom_orderState extends State<Custom_order> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 //mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-
+                    Text('اكتب تفاصيل الطلب'),
+                  SizedBox(height: 5,),
                   TextField(
+                    maxLength: 4,
                     decoration: InputDecoration(
 
                     ),
@@ -98,20 +105,21 @@ class _Custom_orderState extends State<Custom_order> {
                       underLine: TextDecoration.none),
                   InkWell(
                     onTap: () {
-                      showModalBottomSheet<dynamic>(
-                        backgroundColor: Colors.grey.shade200,
-                        //  backgroundColor: Colors.transparent,
-                        elevation: 0,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20),
-                            )),
-                        context: context,
-                        isScrollControlled: true,
-                        builder: ((context) =>  map_location(type: 'الاستلام')),
-                        // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
-                      );
+                      // showModalBottomSheet<dynamic>(
+                      //   backgroundColor: Colors.grey.shade200,
+                      //   //  backgroundColor: Colors.transparent,
+                      //   elevation: 0,
+                      //   shape: const RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.only(
+                      //         topLeft: Radius.circular(20),
+                      //         topRight: Radius.circular(20),
+                      //       )),
+                      //   context: context,
+                      //   isScrollControlled: true,
+                      //   builder: ((context) =>  map_location(type: 'الاستلام')),
+                      //   // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
+                      // );
+                      Get.to(map_location(type: 'الاستلام'));
                     },
                     child: Container(
                       child: Padding(
@@ -186,20 +194,22 @@ class _Custom_orderState extends State<Custom_order> {
                       underLine: TextDecoration.none),
                   InkWell(
                     onTap: () {
-                      showModalBottomSheet<dynamic>(
-                        backgroundColor: Colors.grey.shade200,
-                        //  backgroundColor: Colors.transparent,
-                        elevation: 0,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20),
-                            )),
-                        context: context,
-                        isScrollControlled: true,
-                        builder: ((context) =>  map_location(type: 'التوصيل',)),
-                        // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
-                      );
+                      // showModalBottomSheet<dynamic>(
+                      //   backgroundColor: Colors.grey.shade200,
+                      //   //  backgroundColor: Colors.transparent,
+                      //   elevation: 0,
+                      //   shape: const RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.only(
+                      //         topLeft: Radius.circular(20),
+                      //         topRight: Radius.circular(20),
+                      //       )),
+                      //   context: context,
+                      //   isScrollControlled: true,
+                      //   builder: ((context) =>  map_location(type: 'التوصيل',)),
+                      //   // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
+                      // );
+                      Get.to(map_location(type: 'التوصيل'));
+
                     },
                     child: Container(
                       child: Padding(

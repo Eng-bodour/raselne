@@ -97,7 +97,7 @@ class _card_deilveryState extends State<card_deilvery> {
                     TextUtils(
                         fontSize: size.width * 0.04,
                         fontWeight: FontWeight.bold,
-                        text: 'أرسلها عني',
+                        text: widget.order.type_order,//'أرسلها عني',
                         color: Colors.black,
                         underLine: TextDecoration.none),
                     TextUtils(

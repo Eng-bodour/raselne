@@ -77,7 +77,7 @@ class order_firebase extends OrderRepository{
       isdone_deilvery: false, isopen: true,
       ispause: true, price_deilvery: 'price_deilvery',
       titleStore: 'titleStore',
-      state: 'state', DateTimeorder: 'DateTimeorder');
+      state: 'state', DateTimeorder: 'DateTimeorder', type_order: '');
   //
   // _orderModel.forEach((element) async {
   //   element.user_captain=await
@@ -267,7 +267,8 @@ else {
       MessageText message=
       MessageText(senderId: orderModel.from_user, type_message: 'map',
           textMessage:' مكان الاستلام '+orderModel.detailAddress,
-          timeMessage: DateTime.now().toString(),
+          timeMessage: DateFormat('yyyy-MM-dd HH:mm:ss')
+              .format(DateTime.now()).toString(),
           location:GeoPoint(
               orderModel.fromlocation.latitude,
               orderModel.fromlocation.longitude)
@@ -411,14 +412,16 @@ else {
       senderId: senderId, type_message: 'image');
       messageText.textMessage=imagurl.toString();
       messageText.type_message='image';
-      messageText.timeMessage=DateTime.now().toString();
+      messageText.timeMessage=DateFormat('yyyy-MM-dd HH:mm:ss')
+          .format(DateTime.now()) .toString();
       await FirebaseServices('orders').ref.doc(id_order)
           .collection('chat')
           .add(messageText.toSnapchot());
     }
 
    message.senderId=senderId;
-   message.timeMessage=DateTime.now().toString();
+   message.timeMessage=DateFormat('yyyy-MM-dd HH:mm:ss')
+       .format(DateTime.now()) .toString();
    await FirebaseServices('orders').ref.doc(id_order)
        .collection('chat').doc()
        .set(message.toSnapchot());
@@ -462,7 +465,8 @@ else {
     MessageText messageText =MessageText(
         senderId: idSender, type_message: 'text');
     messageText.textMessage=state_message;
-    messageText.timeMessage=DateTime.now().toString();
+    messageText.timeMessage=DateFormat('yyyy-MM-dd HH:mm:ss')
+        .format(DateTime.now()).toString();
     sendMessage(messageText, idOrder);
 
   }

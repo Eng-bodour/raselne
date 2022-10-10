@@ -3,6 +3,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,8 @@ import 'package:raselne/logic/repositories/users/user_repo.dart';
 import '../../../data_layer/model/facebook_model.dart';
 import '../../../data_layer/webServices/firebase.dart';
 import '../../../routes/routes.dart';
-
+import 'dart:io';
+import 'package:raselne/services/imageservice.dart';
 class user_firebase extends UserRepository{
   FirebaseAuth auth = FirebaseAuth.instance;// auth.currentUser!.uid.toString();
   User? get userProfiloe => auth.currentUser;
@@ -310,6 +312,23 @@ class user_firebase extends UserRepository{
     }
     return false;
   }
+
+  @override
+  Future<String> setImageProfileUser(String id_doc, String path_old,File? fileimage)async {
+    // TODO: implement setImageProfileUser
+    String imagurl='';
+    if(fileimage!=null) {
+      imagurl = await image_service().uploadImageToFirebase(fileimage,'imageUser');//imageUser
+     if(path_old!='')
+      await  FirebaseStorage.instance.refFromURL(path_old).delete();
+      FirebaseServices firestore =
+      FirebaseServices("users"); //.collection(nameCollecton);
+       await firestore.ref.doc(id_doc).update({'imageuser':imagurl});
+    }
+    return imagurl;
+    // body.addAll({'IdStore':ref.id});
+  }
+
 
 
 }

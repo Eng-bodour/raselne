@@ -32,7 +32,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
   static late final LatLng location_init;
   final Completer<GoogleMapController> _controller = Completer();
   final Set<Marker> _markers = {};
-  static late const  CameraPosition _inialCameraPosition = const CameraPosition(
+  static late    CameraPosition _inialCameraPosition = const CameraPosition(
       target: LatLng(33.55, 36.28), // widget.order.toLocation,
       zoom: 10);
   LatLng currentLocation = _inialCameraPosition.target;

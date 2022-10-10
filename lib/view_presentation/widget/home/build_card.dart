@@ -96,11 +96,12 @@ class BuildCard extends StatelessWidget {
       // padding: const EdgeInsets.all(8),
       padding: EdgeInsets.symmetric(
           vertical: MediaQuery.of(context).size.height * 0.02,
-          horizontal: MediaQuery.of(context).size.width * 0.02),
+          horizontal:MediaQuery.of(context).size.width * 0.02
+      ),
       child: InkWell(
         onTap: ontap,
         child: Container(
-          width: 150,
+          width: 50,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(

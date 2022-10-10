@@ -10,12 +10,13 @@ import 'package:raselne/data_layer/model/user_model.dart';
 import 'package:raselne/data_layer/webServices/firebase.dart';
 
 import 'package:raselne/routes/routes.dart';
-
+import 'dart:io';
 import '../repositories/users/user_repo.dart';
 
 class AuthProvider_vm extends ChangeNotifier {
   bool isVisibilty = false;
   bool isloading = false;
+  bool isloadingSwitch = false;
   bool isCheckBox = false;
   // var displayUserName = ''.obs;
   // var displayUserPhoto = ''.obs;
@@ -46,7 +47,15 @@ class AuthProvider_vm extends ChangeNotifier {
   notifyListeners();
    return currentuser;
   }
-  Future<double> check_Copoun(String copoun) async {
+  Future<void> setImageProfileUser( File? fileimage) async {
+    isloading=true;
+    notifyListeners();
+  currentuser.imageuser=  await  userRepository.setImageProfileUser(currentuser.docId.toString(), currentuser.imageuser.toString(), fileimage);
+    isloading=false;
+    notifyListeners();
+
+  }
+    Future<double> check_Copoun(String copoun) async {
     isloading=true;
     notifyListeners();
     double res= await userRepository.check_Copoun(currentuser.docId, copoun);
@@ -73,13 +82,13 @@ class AuthProvider_vm extends ChangeNotifier {
   }
 
   Future<void> switch_type() async {
-    isloading=true;
+    isloadingSwitch=true;
     notifyListeners();
     await userRepository.switch_type(
        currentuser.docId.toString(),
        currentuser.type=='user'?'captain':'user');
     currentuser.type=='user'?'captain':'user';
-    isloading=false;
+    isloadingSwitch=false;
     notifyListeners();
   }
 

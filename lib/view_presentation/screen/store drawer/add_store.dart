@@ -45,13 +45,14 @@ class _AddStoreState extends State<AddStore> {
   final TextEditingController nameStoreController = TextEditingController();
   final TextEditingController descStoreController = TextEditingController();
   final TextEditingController stateStoreController = TextEditingController();
+  final TextEditingController offerController = TextEditingController();
 
   // final TextEditingController typeStoreController = TextEditingController();
 
   final TextEditingController mobileController = TextEditingController();
 
   final TextEditingController locationController = TextEditingController();
-  late File? file;
+  late File? file=null;
   ImagePicker imagePicker = ImagePicker();
 
   // final controllerStore = Get.put(AddStoreController());
@@ -66,7 +67,17 @@ class _AddStoreState extends State<AddStore> {
         '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
     return Address;
   }
+  @override void dispose() {
+    // TODO: implement dispose
 
+    offerController.dispose();
+    controller.dispose();
+    nameStoreController.dispose();
+    descStoreController.dispose();
+    stateStoreController.dispose();
+    mobileController.dispose();
+    super.dispose();
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -135,9 +146,9 @@ class _AddStoreState extends State<AddStore> {
                         controller: nameStoreController,
                         obscureText: false,
                         validator: (value) {
-                          if (value.toString().length <= 3) {
+                          if (value.toString().trim().isEmpty) {
                             //   print(controllerStore.isUsedName);
-                            return 'Enter valid name';
+                            return 'Enter name';
                           } else {
                             //   print('false is');
                             return null;
@@ -164,9 +175,9 @@ class _AddStoreState extends State<AddStore> {
                         controller: descStoreController,
                         obscureText: false,
                         validator: (value) {
-                          if (value.toString().length <= 3) {
+                          if (value.toString().trim().isEmpty) {
                             //   print(controllerStore.isUsedName);
-                            return 'Enter valid name';
+                            return 'Enter  name';
                           } else {
                             //   print('false is');
                             return null;
@@ -348,12 +359,12 @@ class _AddStoreState extends State<AddStore> {
                           underLine: TextDecoration.none),
                       AuthTextFromField(
                         read: false,
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.text,
                         controller: stateStoreController,
                         obscureText: false,
                         validator: (value) {
                           if (value.toString().length == 9) {
-                            return 'Enter valid number';
+                            return 'Enter valid name';
                           } else {
                             return null;
                           }
@@ -365,6 +376,23 @@ class _AddStoreState extends State<AddStore> {
                       SizedBox(
                         height: size.height * 0.02,
                       ),
+                      AuthTextFromField(
+                        read: false,
+                        keyboardType: TextInputType.numberWithOptions(decimal: true),
+                        controller: offerController,
+                        obscureText: false,
+                        validator: (value) {
+
+                        },
+                        prefixIcon: const Text(''),
+                        suffixIcon: const Text(""),
+                        hintText: 'عرض توصيل  ',
+                      ),
+
+                      SizedBox(
+                        height: size.height * 0.02,
+                      ),
+
                       TextUtils(
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.bold,
@@ -377,29 +405,31 @@ class _AddStoreState extends State<AddStore> {
                         controller: locationController,
                         obscureText: false,
                         validator: (value) {
-                          if (value.toString().length <= 1) {
-                            return 'Enter valid name';
-                          } else {
-                            return null;
-                          }
+                          // if (value.toString().length <= 1) {
+                          //   return 'Enter valid name';
+                          // } else {
+                          //   return null;
+                          // }
                         },
                         prefixIcon: const Text(""),
                         suffixIcon: IconButton(
                             onPressed: () {
-                              showModalBottomSheet<dynamic>(
-                                  backgroundColor: Colors.grey.shade200,
-                                  //  backgroundColor: Colors.transparent,
-                                  elevation: 0,
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    topRight: Radius.circular(20),
-                                  )),
-                                  context: context,
-                                  isScrollControlled: true,
-                                  builder: ((context) => location_store()));
+                              // showModalBottomSheet<dynamic>(
+                              //     backgroundColor: Colors.grey.shade200,
+                              //     //  backgroundColor: Colors.transparent,
+                              //     elevation: 0,
+                              //     shape: const RoundedRectangleBorder(
+                              //         borderRadius: BorderRadius.only(
+                              //       topLeft: Radius.circular(20),
+                              //       topRight: Radius.circular(20),
+                              //     )),
+                              //     context: context,
+                              //     isScrollControlled: true,
+                              //     builder: ((context) => location_store()));
                               // setlocation
                               //  location=Provider.of<StoreProvider_vm>(context)
+                              Get.to( location_store());
+
                             },
                             icon: const Icon(Icons.location_pin)),
                         hintText:
@@ -553,44 +583,84 @@ class _AddStoreState extends State<AddStore> {
                                     colorText: Colors.white,
                                   );
                                 } else {
-                                  StoreModel store = StoreModel(
-                                      nameStore:
+
+                                  if(widget.type=='add')
+                                    {
+                                      StoreModel store = StoreModel(
+                                          nameStore:
                                           nameStoreController.text.toString(),
-                                      typeStore: widget
-                                          .typeStore, //selectedTypes.toString(),
-                                      mobileStore:
+                                          typeStore: widget
+                                              .typeStore, //selectedTypes.toString(),
+                                          mobileStore:
                                           mobileController.text.toString(),
-                                      location: Provider.of<StoreProvider_vm>(
+                                          location: Provider.of<StoreProvider_vm>(
                                               context,
                                               listen: false)
-                                          .location,
-                                      offer_value: '',
-                                      rating: '1',
-                                      imageStore: widget.type == 'edit'
-                                          ? widget.storemodel!.imageStore
-                                              .toString()
-                                          : '',
-                                      itemstore: [],
-                                      IdStore:
-                                          widget.storemodel!.IdStore.toString(),
-                                      descStore:
+                                              .location,
+                                          offer_value: offerController.text.toString(),
+                                          rating: '1.0',
+                                          imageStore:'',
+                                          itemstore: [],
+                                          IdStore:
+                                          '',
+                                          descStore:
                                           descStoreController.text.toString(),
-                                      idowner: Provider.of<AuthProvider_vm>(
+                                          idowner: Provider.of<AuthProvider_vm>(
                                               context,
                                               listen: false)
-                                          .currentuser
-                                          .uid
-                                          .toString(),
-                                      isVisible: false,
-                                      stateStore:
+                                              .currentuser
+                                              .uid
+                                              .toString(),
+                                          isVisible: false,
+                                          stateStore:
                                           stateStoreController.text.toString());
 
-                                  await addStoreProvider.SaveStore(
-                                      fileimage: file,
-                                      // nameCollecton: 'store',
-                                      storeModel: store.toSnapchot(),
-                                      type: widget.type);
-                                  Get.back();
+                                      await addStoreProvider.SaveStore(
+                                          fileimage: file,
+                                          // nameCollecton: 'store',
+                                          storeModel: store.toSnapchot(),
+                                          type: widget.type);
+                                      Get.back();
+                                    }else{
+                                    StoreModel store = StoreModel(
+                                        nameStore:
+                                        nameStoreController.text.toString(),
+                                        typeStore: widget
+                                            .typeStore, //selectedTypes.toString(),
+                                        mobileStore:
+                                        mobileController.text.toString(),
+                                        location: Provider.of<StoreProvider_vm>(
+                                            context,
+                                            listen: false)
+                                            .location,
+                                        offer_value: offerController.text.toString(),
+                                        rating: '1.0',
+                                        imageStore: widget.type == 'edit'
+                                            ? widget.storemodel!.imageStore
+                                            .toString()
+                                            : '',
+                                        itemstore: [],
+                                        IdStore:
+                                        widget.storemodel!.IdStore.toString(),
+                                        descStore:
+                                        descStoreController.text.toString(),
+                                        idowner: Provider.of<AuthProvider_vm>(
+                                            context,
+                                            listen: false)
+                                            .currentuser
+                                            .uid
+                                            .toString(),
+                                        isVisible: false,
+                                        stateStore:
+                                        stateStoreController.text.toString());
+
+                                    await addStoreProvider.SaveStore(
+                                        fileimage: file,
+                                        // nameCollecton: 'store',
+                                        storeModel: store.toSnapchot(),
+                                        type: widget.type);
+                                    Get.back();
+                                  }
                                 }
                               }
                             },
@@ -718,6 +788,9 @@ class _AddStoreState extends State<AddStore> {
     // Provider.of<user_vm_provider>(context, listen: false).currentUser!.path =
     //     pickedFile!.path;
 
-    // Navigator.of(context).pop();
+    Navigator.of(context).pop();
+    setState(() {
+
+    });
   }
 }

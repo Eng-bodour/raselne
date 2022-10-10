@@ -190,7 +190,7 @@ class _AddCategoryState extends State<AddCategory> {
                         controller: priceController,
                         obscureText: false,
                         validator: (value) {
-                          if (value.toString().length == 9) {
+                          if (value.toString().length == 11) {
                             return 'Enter valid number';
                           } else {
                             return null;
@@ -347,7 +347,8 @@ class _AddCategoryState extends State<AddCategory> {
                                           price: priceController.text.toString(),
                                           description: descriptionController.text
                                               .toString());
-                                      item.IdItemStore=widget.itemstore!.IdItemStore;
+                                      item.IdItemStore=widget.type=='edit'?
+                                      widget.itemstore!.IdItemStore:'';
                                       await
                                       addStoreProvider.SaveStoreItem(
                                           fileimage: file,
@@ -362,7 +363,9 @@ class _AddCategoryState extends State<AddCategory> {
                                   }
                                 },
                                 text: 'حفظ معلومات الصنف'),
-                         widget.type=='edit'?
+                            widget.type=='edit'?  SizedBox(height: 5,)
+                                :Container(),
+                            widget.type=='edit'?
                          AuthButton(
                                 onPressed: () async {
                                   Get.defaultDialog(
@@ -541,6 +544,10 @@ class _AddCategoryState extends State<AddCategory> {
     // Provider.of<user_vm_provider>(context, listen: false).currentUser!.path =
     //     pickedFile!.path;
 
-    // Navigator.of(context).pop();
+     Navigator.of(context).pop();
+
+     setState(() {
+
+     });
   }
 }

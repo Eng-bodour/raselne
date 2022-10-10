@@ -40,6 +40,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        // extendBody: true,
         appBar: AppBar(
           title: const Text('الطلبات'),
           backgroundColor: mainColor,
@@ -49,66 +50,58 @@ class _OrdersScreenState extends State<OrdersScreen> {
         backgroundColor: Colors.grey.shade200,
         body: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
-                child: Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: size.width * 0.03),
-                        child: TextUtils(
-                            fontSize: size.width * 0.05,
-                            fontWeight: FontWeight.bold,
-                            text: 'جميع الطلبات',
-                            color: Colors.black54,
-                            underLine: TextDecoration.none),
-                      ),
-                     // Consumer<order_vm>(
-                     //     builder: (context, value, child) {
-                     // return value.isloading==true?
-                     // Center(
-                     //   child: CircularProgressIndicator()
-                     // ): value.mylist_order.length==0?
-                     // Center(
-                     //   child: Text('no order'),
-                     // ) :
-                      FutureBuilder(
-                          future: Provider.of<order_vm>(context,listen: false)
-                              .get_myorder(),
-                          builder: (BuildContext context, AsyncSnapshot<List<OrderModel> > snapshot) {
-                            if (snapshot.hasError) {
-                              return Text('something went wrong' +
-                                  snapshot.error.toString());
-                            }
-                            if (!snapshot.hasData) {
-                              return Text("Loading");
-                            }
-                            return Column(
-                       children: [
-                         ListView.separated(
-                           shrinkWrap: true,
-                           controller: ScrollController(),
-                           scrollDirection: Axis.vertical,
-                           itemCount: snapshot.data!.length,
-                           itemBuilder: (context, index) {
-                             return buildCardOrders(
-                                 orderModel: snapshot.data![index],
-                                 size: size);
-                           },
-                           separatorBuilder: (context, index) =>
-                               SizedBox(height: size.height * 0.02),
-                         )
-                       ],
-                     );
+                padding:
+                    EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                child: TextUtils(
+                    fontSize: size.width * 0.05,
+                    fontWeight: FontWeight.bold,
+                    text: 'جميع الطلبات',
+                    color: Colors.black54,
+                    underLine: TextDecoration.none),
+              ),
+             // Consumer<order_vm>(
+             //     builder: (context, value, child) {
+             // return value.isloading==true?
+             // Center(
+             //   child: CircularProgressIndicator()
+             // ): value.mylist_order.length==0?
+             // Center(
+             //   child: Text('no order'),
+             // ) :
+              FutureBuilder(
+                  future: Provider.of<order_vm>(context,listen: false)
+                      .get_myorder(),
+                  builder: (BuildContext context, AsyncSnapshot<List<OrderModel> > snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('something went wrong' +
+                          snapshot.error.toString());
+                    }
+                    if (!snapshot.hasData) {
+                      return Text("Loading");
+                    }
+                    return Column(
+                      children: [
+                        ListView.separated(
+                          shrinkWrap: true,
+                          controller: ScrollController(),
+                          scrollDirection: Axis.vertical,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            return
+                              buildCardOrders(
+                                orderModel: snapshot.data![index],
+                                size: size);
+                          },
+                          separatorBuilder: (context, index) =>
+                              SizedBox(height: size.height * 0.02),
+                        ),
+                      ],
+                    );
    // }),
   }),
-                    ],
-                  ),
-                ),
-              ),
             ],
           ),
         ),
