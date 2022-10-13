@@ -245,7 +245,8 @@ class StoreFirebase extends StoreRepository {
         imagurl = await image_service().uploadImageToFirebase(fileimage,'imageItemStore');
         body.addAll({'image':imagurl});
       }
-      DocumentReference ref= await FirebaseFirestore.instance.collection('store').doc(idStore)
+      DocumentReference ref= await FirebaseFirestore.instance
+          .collection('store').doc(idStore)
           .collection('items_store').add(body);
       // FirebaseServices firestore =
       // FirebaseServices("store"); //.collection(nameCollecton);

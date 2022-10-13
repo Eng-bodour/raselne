@@ -35,6 +35,7 @@ class UserModel {
   String email='';
   String mobile='';
   String? balance='';
+  String? token='';
   String? eradat='';
  late List<Rate> rating=[];
  late double rataing=0.0;
@@ -55,7 +56,7 @@ class UserModel {
     // required this.docId,
     required this.email,
     required this.mobile,
-    required this.type,
+    required this.type,this.token,
      this.num_travel,  this.type_car,this.imageuser,
     this.eradat,this.balance,this.copoun,
      this.Id_number, required this.dateCreated,  this.num_car, required double rataing,
@@ -69,6 +70,8 @@ class UserModel {
       uid: json['uid'],
       location: null,
       type:json['type']==null?'user':json['type'],
+      token:json['token']==null? null:json['token'],
+
       imageuser:json['imageuser']==null?'':json['imageuser'],
       num_travel: json["num_travel"] == null ? 0 : json["num_travel"],
       type_car: json["type_car"] == null ? '' : json["type_car"],
@@ -162,6 +165,7 @@ class UserModel {
         "num_car":num_car,
         "balance":balance,
         "eradat":eradat,
+        "token":token,
         "location":GeoPoint(location!.latitude,location!.longitude),
       };
 // _data['products'] =

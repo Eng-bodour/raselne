@@ -3,6 +3,8 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -24,6 +26,7 @@ class user_firebase extends UserRepository{
   var googleSignIn = GoogleSignIn();
   var isSignedIn = false;
   FaceBookModel? faceBookModel;
+  String? token;//=await FirebaseMessaging.instance.getToken() ;
 
   @override
   Future<String> creatuser(String name, String email, String password)async {
@@ -36,8 +39,8 @@ class user_firebase extends UserRepository{
       auth.currentUser!.updateDisplayName(name);
     });
     //to add applecation user and uid
-
-   await FirebaseServices("users").userSetUp(name,email);
+      token=await FirebaseMessaging.instance.getToken() ;
+   await FirebaseServices("users").userSetUp(name,email,token.toString());
 
     message='done';
     } on FirebaseAuthException catch (error) {
@@ -75,8 +78,10 @@ class user_firebase extends UserRepository{
       // displayUserEmail.value = faceBookModel!.email!;
       // displayUserName.value = faceBookModel!.name!;
 
+      token=await FirebaseMessaging.instance.getToken() ;
       await FirebaseServices("users").userSetUp
-        (faceBookModel!.name.toString(),faceBookModel!.email.toString()
+        (faceBookModel!.name.toString(),faceBookModel!.email.toString(),
+          token.toString()
           // faceBookModel!.id.toString()
       );
 
@@ -102,11 +107,12 @@ class user_firebase extends UserRepository{
 
       await auth.signInWithCredential(credential);
 
-
+      token=await FirebaseMessaging.instance.getToken() ;
      await FirebaseServices("users")
          .userSetUp(
          googleUser.displayName.toString(),
          googleUser.email.toString(),
+         token.toString()
          // googleUser.id
      );
 

@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +10,7 @@ import 'package:raselne/logic/controller/order_vm.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/screen/orders_screen.dart';
 
+import '../../logic/notify_vm.dart';
 import 'custom_new_order.dart';
 
 class MainScreen extends StatefulWidget {
@@ -27,6 +29,40 @@ class _MainScreenState extends State<MainScreen> {
     // FirebaseServices.name;
     // FirebaseServices().getNameuser();
     super.initState();
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage? message) {
+      if (message != null) {
+        print("in init getInitialMessage");
+        //Provider.of<notifyvm>(context,listen: false).addcounter();
+        // String typeNotify= message.data['Typenotify'];
+        // String data_notify= message.data['Typenotify'];
+        // route_notifyto(typeNotify,context,message.data,null);
+      }
+    });
+    //FirebaseMessaging.onBackgroundMessage.call(message);
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      // try{
+      // print('Got a message whilst in the foreground!');
+      // print('Message data: ${message.data['idclient']}');
+
+      if (message.notification != null) {
+        print('Message also contained a notification: ${message.notification}');
+      }
+      //Provider.of<notifyvm>(context,listen: false).getcounter();
+      //if(message.data['data'])
+      Provider.of<notifyvm>(context,listen: false).addcounter();
+      // } catch(e){}
+      //add notify to listnotify
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      print('onMessageOpenedApp');
+      Provider.of<notifyvm>(context,listen: false).addcounter();
+      // Provider.of<notifyvm>(context,listen: false).getcounter();
+      // String typeNotify= event.data['Typenotify'];
+      // route_notifyto(typeNotify,context,event.data,null);
+    });
+
   }
 
   @override
@@ -36,7 +72,8 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       backgroundColor: Colors.white, //context.theme.backgroundColor,
       floatingActionButton:
-      Provider.of<AuthProvider_vm>(context, listen: true).currentuser.type=='user'?
+      Provider.of<AuthProvider_vm>(context, listen: true)
+          .currentuser.type=='user'?
       Padding(
         padding: const EdgeInsets.only(top: 20),
         child: SizedBox(

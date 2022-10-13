@@ -19,7 +19,7 @@ class FirebaseServices {
     ref= _firestore.collection(namePath);
   }
 
-   Future<void> userSetUp(String dispalyName,String email)//,String uid)
+   Future<void> userSetUp(String dispalyName,String email,String token)//,String uid)
    async {
     //CollectionReference users = _firestore.collection('users');
      LocationData _myLocation=await LocationService().getLocation();
@@ -33,7 +33,7 @@ class FirebaseServices {
         dateCreated:  DateFormat('yyyy-MM-dd HH:mm:ss')
             .format(DateTime.now()) ,
         type: 'user',
-
+        token: token,
         rataing: 0.0,
         num_travel: 0,
         type_car: '',num_car: '',Id_number: '',

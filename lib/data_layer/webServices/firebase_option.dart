@@ -34,18 +34,18 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBjUVlpV0bayJewO_xYitxo_V67eyyM5es',
-    appId: '1:1059711331727:android:06cae3d27ff4a60b1eeffa',
-    messagingSenderId: '1059711331727',
-    projectId: 'smart-crm-31e3c"',
+    apiKey: 'AIzaSyAq8f4RU1a0qR-l2ybz8qkv29YjZqw04QA',
+    appId: '1:192334408426:android:883e0f098345b716608593',
+    messagingSenderId: '192334408426',
+    projectId: "raselne-301d1",
     //databaseURL: 'https://react-native-firebase-testing.firebaseio.com',
-    storageBucket: 'smart-crm-31e3c.appspot.com',
+    storageBucket: "raselne-301d1.appspot.com",
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBjUVlpV0bayJewO_xYitxo_V67eyyM5es',
     appId: '1:448618578101:ios:0b11ed8263232715ac3efc',
-    messagingSenderId: '1059711331727',
+    messagingSenderId: '192334408426',
     projectId: 'smart-crm-31e3c',
     databaseURL: 'https://react-native-firebase-testing.firebaseio.com',
     storageBucket: 'smart-crm-31e3c.appspot.com',
