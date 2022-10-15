@@ -39,8 +39,8 @@ class user_firebase extends UserRepository{
       auth.currentUser!.updateDisplayName(name);
     });
     //to add applecation user and uid
-      token=await FirebaseMessaging.instance.getToken() ;
-   await FirebaseServices("users").userSetUp(name,email,token.toString());
+    token=await FirebaseMessaging.instance.getToken() ;
+    await FirebaseServices("users").userSetUp(name,email,token.toString());
 
     message='done';
     } on FirebaseAuthException catch (error) {
@@ -134,6 +134,7 @@ class user_firebase extends UserRepository{
 
       isSignedIn = true;
       message='done';
+      updateToken();
     } on FirebaseAuthException catch (error) {
       String title = error.code.replaceAll(RegExp('-'), ' ').capitalize!;
 
@@ -160,7 +161,12 @@ class user_firebase extends UserRepository{
     return message;
     //throw UnimplementedError();
   }
-
+  @override
+  Future<void> updateToken()async{
+    UserModel us=await getuser();
+    FirebaseFirestore.instance
+       .collection('users').doc(us.docId).update({'token':token});
+  }
   @override
   Future<String> resetPassword(String email)
     // TODO: implement resetPassword
@@ -219,7 +225,8 @@ class user_firebase extends UserRepository{
   @override
   Future<UserModel> getuser()async {
     // TODO: implement getuser
-   print('auth.currentUser!.uid.toString() '+auth.currentUser!.uid.toString());
+
+    print('auth.currentUser!.uid.toString() '+auth.currentUser!.uid.toString());
     return await FirebaseFirestore.instance
         .collection('users')
         .where('uid', isEqualTo:

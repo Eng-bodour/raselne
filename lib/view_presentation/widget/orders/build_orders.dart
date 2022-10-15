@@ -174,7 +174,8 @@ class buildCardOrders extends StatelessWidget {
                       case 'open':
                         // Provider.of<AuthProvider_vm>(context,listen: false)
                         // .currentuser.type=='user'?
-                        Navigator.of(context).push(MaterialPageRoute(
+                        Navigator.of(context).push(
+                            MaterialPageRoute(
                             builder: (context) =>
                                 ShowOffers(orderModel: orderModel)));
                         // Navigator.of(context).push(

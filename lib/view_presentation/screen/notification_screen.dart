@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../logic/notify_vm.dart';
+import '../../logic/controller/notify_vm.dart';
 import '../widget/cardnotify.dart';
 
 class NotificationScreen extends StatefulWidget {

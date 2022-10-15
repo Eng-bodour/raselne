@@ -2,7 +2,7 @@
 
 
 import 'package:raselne/data_layer/model/notifyModel.dart';
-import 'package:raselne/logic/notify_vm.dart';
+import 'package:raselne/logic/controller/notify_vm.dart';
 
 import 'notify_repo.dart';
 

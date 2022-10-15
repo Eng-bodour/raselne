@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../data_layer/model/notifyModel.dart';
+import '../../utilis/global_method.dart';
 
 class cardnotify extends StatelessWidget {
   cardnotify({Key? key, required this.itemNotify}) : super(key: key);
@@ -35,11 +36,9 @@ class cardnotify extends StatelessWidget {
         child: InkWell(
           onTap: () {
             // ApproveRequest,Transfer,Late,ApproveDone,ApproveRefuse,InvoiceDeleted
-            // route_notifyto(
-            //     itemNotify.typeNotify,context,
-            //     null,
-            //     itemNotify.data
-            // );
+            route_notifyto(
+                itemNotify.typeNotify,itemNotify.data
+            );
           },
           child: Container(
             decoration: BoxDecoration(

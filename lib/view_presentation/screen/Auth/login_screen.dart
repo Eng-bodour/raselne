@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:raselne/logic/controller/auth_controller.dart';
 import 'package:raselne/routes/routes.dart';
@@ -236,6 +237,7 @@ class LoginScreen extends StatelessWidget {
                             if(authProvider.message=='done') {
                                authBox!.write("auth", true);
                                await authProvider.isAuthuser();
+
                                Get.offNamed(Routes.mainScreen);
 
                             }

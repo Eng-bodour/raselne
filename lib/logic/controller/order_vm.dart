@@ -74,6 +74,10 @@ Stream<List<OrderModel>> get_orders() async* {
   yield* orderRepository.getAllorders();
   notifyListeners();
 }
+Future<void> get_orderbyId(String id) async {
+ order= await orderRepository.getOrderById(id);
+  notifyListeners();
+}
 
  Stream<OrderModel> get_offer(String id_order) async* {
   //ليظهر العرض من المندوب للمستخدم ليتم قبوله او رفضه
@@ -99,7 +103,7 @@ prepareOrder(StoreModel storeModel) {
      titleStore: storeModel.nameStore,
      // toLocation: currentuser.location,
      storeModel: storeModel, isopen: false,
-   ispause: false, isdone_deilvery: false,
+     ispause: false, isdone_deilvery: false,
      id_store: storeModel.IdStore.toString(),
        DateTimeorder: null, state: 'create', type_order: 'طلب من متجر', );
      notifyListeners();

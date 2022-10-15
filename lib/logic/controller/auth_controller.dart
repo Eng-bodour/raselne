@@ -28,14 +28,15 @@ class AuthProvider_vm extends ChangeNotifier {
   AuthProvider_vm({required this.userRepository});
 
   Future<UserModel> isAuthuser()async{
-  isloading=true;
-  notifyListeners();
+  // isloading=true;
+  // notifyListeners();
   bool isauth= await  userRepository.isAuthuser();
 
   if(isauth)
   {
     currentuser= await userRepository.getuser();
-    isloading=false;
+
+    // isloading=false;
     notifyListeners();
   }
    else
@@ -43,7 +44,7 @@ class AuthProvider_vm extends ChangeNotifier {
       location: LatLng(14,50),
          uid:null, name: 'name',
       email: 'email', mobile: 'mobile', dateCreated: '', type: '', rataing: 0.0);
-  isloading=false;
+  // isloading=false;
   notifyListeners();
    return currentuser;
   }
@@ -147,8 +148,11 @@ class AuthProvider_vm extends ChangeNotifier {
     required String email,
     required String password,
   }) async {
+   isloading=true;
+   notifyListeners();
     message=await userRepository.login(email, password);
-  notifyListeners();
+   isloading=false;
+   notifyListeners();
   }
 
   Future<void> googleSinUpApp() async{

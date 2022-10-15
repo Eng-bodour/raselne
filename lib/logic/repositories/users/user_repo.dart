@@ -18,5 +18,5 @@ abstract class UserRepository{
   Future<String> setImageProfileUser(String id_doc,String path_old,File? fileimage);
   Future<double> check_Copoun(String id_doc,String copoun);
   Future<bool> save_Copoun(String id_doc,String copoun);
-
+  Future<void> updateToken();
 }

@@ -18,7 +18,8 @@ import 'package:raselne/view_presentation/screen/welcome_screen.dart';
 import 'data_layer/model/user_model.dart';
 import 'data_layer/webServices/firebase_option.dart';
 import 'logic/controller/auth_controller.dart';
-import 'logic/notify_vm.dart';
+import 'logic/controller/notify_vm.dart';
+import 'logic/repositories/notify/notify_firebase.dart';
 import 'logic/repositories/store/store_firebase.dart';
 import 'logic/repositories/users/user_firebase.dart';
 
@@ -73,7 +74,7 @@ void main() async {
       update: (ctx,value,prev)=>prev!..setvalue(value.currentuser),
     ),
     ChangeNotifierProxyProvider<AuthProvider_vm,notifyvm>(
-      create: (_)=> notifyvm(),
+      create: (_)=> notifyvm(notifyRepository: notify_firebase()),
       update: (ctx,value,prev)=>prev!..setvalue(value.currentuser),
     ),
   ], child:  MyApp()));

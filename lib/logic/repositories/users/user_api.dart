@@ -82,4 +82,10 @@ class user_api extends UserRepository{
     throw UnimplementedError();
   }
 
+  @override
+  Future<void> updateToken() {
+    // TODO: implement updateToken
+    throw UnimplementedError();
+  }
+
 }

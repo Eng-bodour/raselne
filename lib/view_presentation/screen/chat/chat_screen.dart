@@ -6,15 +6,19 @@ import 'package:raselne/data_layer/model/messages_model.dart';
 import 'package:raselne/data_layer/model/orderModel.dart';
 
 import 'package:raselne/data_layer/model/user_model.dart';
+import 'package:raselne/logic/controller/notify_vm.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/screen_driver/driver_rating.dart';
 
+import '../../../data_layer/model/notifyModel.dart';
 import '../../../logic/controller/auth_controller.dart';
 import '../../../logic/controller/order_vm.dart';
 import '../../widget/text_utilis.dart';
 import '../../widget/widget_location_map.dart';
 import '../invoiceImage.dart';
 import 'invoicechat.dart';
+import 'package:intl/intl.dart';
+
 
 class ChatScreen extends StatefulWidget {
   // ignore: use_key_in_widget_constructors
@@ -28,6 +32,10 @@ class _ChatScreenState extends State<ChatScreen> {
   TextEditingController messagecontrol = TextEditingController();
   String textmessage = '';
   late UserModel user;
+  String title='';
+  String valuetoken='';
+  List<String> arratoken=[];
+
 
   _buildMessage(MessageText message, bool isMe, Size size) {
     final Container msg = Container(
@@ -161,7 +169,20 @@ class _ChatScreenState extends State<ChatScreen> {
     // TODO: implement initState
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       user = Provider.of<AuthProvider_vm>(context, listen: false).currentuser;
+      if(widget.orderModel.from_user!='')
       Provider.of<order_vm>(context, listen: false).order = widget.orderModel;
+     else{
+       await Provider.of<order_vm>(context, listen: false)
+           .get_orderbyId(widget.orderModel.id_order);
+       widget.orderModel= Provider.of<order_vm>(context, listen: false).order ;
+
+      }
+      title=Provider.of<order_vm>(context, listen: false)
+          .order.id_order;
+     await Provider.of<order_vm>(context,listen: false)
+          .getusercaptain(Provider.of<order_vm>(context, listen: false).order.from_user)
+          .then((value) =>valuetoken= value.token!);
+      arratoken.add(valuetoken);
     });
   }
 
@@ -194,11 +215,10 @@ class _ChatScreenState extends State<ChatScreen> {
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: ModalProgressHUD(
-          inAsyncCall: Provider.of<order_vm>(context, listen: true).isloading,
+          inAsyncCall: Provider.of<order_vm>(context, listen: true)
+              .isloading,
           child: Column(
             children: <Widget>[
-
-
                  Expanded(
                    flex: 3,
                    child: Container(
@@ -211,11 +231,11 @@ class _ChatScreenState extends State<ChatScreen> {
                      ),
                      child: ClipRRect(
                        borderRadius: const BorderRadius.only(
-                         topLeft: Radius.circular(30.0),
+                         topLeft:  Radius.circular(30.0),
                          topRight: Radius.circular(30.0),
                        ),
                        child: StreamBuilder(
-                         stream: Provider.of<order_vm>(context, listen: false)
+                         stream: Provider.of<order_vm>(context, listen: true)
                              .getchat(widget.orderModel.id_order),
                          builder: (BuildContext context,
                              AsyncSnapshot<List<MessageText>> snapshot) {
@@ -356,9 +376,29 @@ class _ChatScreenState extends State<ChatScreen> {
                                               .order,
                                         ),
                                     fullscreenDialog: true));
+                            String message='تم اصدار فاتورة ';
+
+
+                            Map<String,dynamic> body =
+                            NotificationModel(
+                              toUser: Provider.of<order_vm>(context, listen: false)
+                                  .order.from_user,
+                              typeNotify: 'order', fromUser: user.uid.toString(),
+                              fromNameuser: '', message: message, isread: '0',
+                              data: title, tonameuser: '', idNotify: '',
+                              dateNotify: DateFormat('yyyy-MM-dd HH:mm:ss')
+                                  .format(DateTime.now()) .toString(),
+                            ).toJson();
+
+                            Provider.of<notifyvm>(context,listen: false)
+                                .SendNotification(body, title, message, arratoken);
+                            Provider.of<notifyvm>(context,listen: false)
+                                .addNotification(body);
+
                             break;
                           case 'done invoice':
                             // return 'استلمت الطلب';
+
                             Provider.of<order_vm>(context, listen: false)
                                 .update_state(
                                     Provider.of<order_vm>(context,
@@ -366,6 +406,25 @@ class _ChatScreenState extends State<ChatScreen> {
                                         .order
                                         .id_order,
                                     'done recive');
+                            String message='لقد تم استلام طلبك من المندوب';
+                            // String title='';
+
+                            Map<String,dynamic> body =
+                            NotificationModel(
+                              toUser: Provider.of<order_vm>(context, listen: false)
+                                  .order.from_user,
+                              typeNotify: 'order', fromUser: user.uid.toString(),
+                              fromNameuser: '', message: message, isread: '0',
+                              data: title, tonameuser: '', idNotify: '',
+                              dateNotify: DateFormat('yyyy-MM-dd HH:mm:ss')
+                                  .format(DateTime.now()) .toString(),
+                            ).toJson();
+
+                            Provider.of<notifyvm>(context,listen: false)
+                                .SendNotification(body, title, message, arratoken);
+                            Provider.of<notifyvm>(context,listen: false)
+                                .addNotification(body);
+
                             break;
                           case 'done recive':
                             // return 'وصلت لموقع العميل';
@@ -376,6 +435,24 @@ class _ChatScreenState extends State<ChatScreen> {
                                         .order
                                         .id_order,
                                     'done arrive');
+                            String message='المندوب وصل لموقع العميل';
+                            // String title='';
+
+                            Map<String,dynamic> body =
+                            NotificationModel(
+                                toUser: Provider.of<order_vm>(context, listen: false).order.from_user,
+                                typeNotify: 'order', fromUser: user.uid.toString(),
+                                fromNameuser: '', message: message, isread: '0',
+                                data: title, tonameuser: '', idNotify: '',
+                                dateNotify: DateFormat('yyyy-MM-dd HH:mm:ss')
+                                    .format(DateTime.now()) .toString(),
+                            ).toJson();
+
+                            Provider.of<notifyvm>(context,listen: false)
+                            .SendNotification(body, title, message, arratoken);
+                            Provider.of<notifyvm>(context,listen: false)
+                                .addNotification(body);
+
                             break;
                           case 'done arrive':
                             // return 'تم التسليم';
@@ -388,6 +465,24 @@ class _ChatScreenState extends State<ChatScreen> {
                                 double.parse( Provider.of<order_vm>(context, listen: false)
                                 .order.price_deilvery_captain)
                             );
+                            String message='تم تسليم الطلب ';
+                            // String title='';
+
+                            Map<String,dynamic> body =
+                            NotificationModel(
+                              toUser: Provider.of<order_vm>(context, listen: false).order.from_user,
+                              typeNotify: 'order', fromUser: user.uid.toString(),
+                              fromNameuser: '', message: message, isread: '0',
+                              data: title, tonameuser: '', idNotify: '',
+                              dateNotify: DateFormat('yyyy-MM-dd HH:mm:ss')
+                                  .format(DateTime.now()) .toString(),
+                            ).toJson();
+
+                            Provider.of<notifyvm>(context,listen: false)
+                                .SendNotification(body, title, message, arratoken);
+                            Provider.of<notifyvm>(context,listen: false)
+                                .addNotification(body);
+
                             break;
                           case 'done':
                             // return 'تم التسليم';

@@ -10,7 +10,7 @@ import 'package:raselne/logic/controller/order_vm.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/screen/orders_screen.dart';
 
-import '../../logic/notify_vm.dart';
+import '../../logic/controller/notify_vm.dart';
 import 'custom_new_order.dart';
 
 class MainScreen extends StatefulWidget {

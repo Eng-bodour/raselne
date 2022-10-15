@@ -41,6 +41,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
   @override
   void dispose() {
     // TODO: implement dispose
+
     super.dispose();
   }
 
@@ -74,432 +75,434 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return ModalProgressHUD(
-      inAsyncCall: Provider.of<order_vm>(context, listen: true).isloading,
-      child: Directionality(
-        textDirection: TextDirection.rtl,
-        child: Container(
-            height: size.height * 0.9,
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(
-              vertical: size.height * 0.01,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: size.width * 0.06,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: greyColor.withOpacity(0.2),
-                            radius: size.width * 0.05,
-                            child: Icon(
-                              Icons.shopping_bag_rounded,
-                              color: Colors.lightBlue.withOpacity(0.9),
-                              size: size.width * 0.09,
-                            ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TextUtils(
-                                  fontSize: size.width * 0.04,
-                                  fontWeight: FontWeight.bold,
-                                  text: widget.order.titleStore,
-                                  color: Colors.black54,
-                                  underLine: TextDecoration.none),
-                              TextUtils(
-                                  fontSize: size.width * 0.04,
-                                  fontWeight: FontWeight.bold,
-                                  text: widget.order.id_order.substring(0, 6),
-                                  color: Colors.black54,
-                                  underLine: TextDecoration.none),
-                            ],
-                          ),
-                        ],
-                      ),
-                      CircleAvatar(
-                          backgroundColor: greyColor.withOpacity(0.6),
-                          radius: size.width * 0.05,
-                          child: IconButton(
-                              onPressed: () {
-                                Get.back();
-                              },
-                              icon: Icon(
-                                Icons.close,
-                                size: size.width * 0.05,
-                                color: Colors.white,
-                              ))),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: size.height * 0.01,
-                ),
-                Container(
-                  height: size.height * 0.1,
-                  decoration: BoxDecoration(color: mainColor.withOpacity(0.2)),
-                  child: Padding(
+    return Scaffold(
+      body: ModalProgressHUD(
+        inAsyncCall: Provider.of<order_vm>(context, listen: true).isloading,
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Container(
+              height: size.height * 0.9,
+              width: double.infinity,
+              margin: EdgeInsets.symmetric(
+                vertical: size.height * 0.01,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: size.width * 0.06,
                     ),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
-                          Icons.person,
-                          color: mainColor,
-                          size: size.width * 0.1,
-                        ),
-                        TextUtils(
-                            fontSize: size.width * 0.04,
-                            fontWeight: FontWeight.bold,
-                            text: Provider.of<AuthProvider_vm>(context,
-                                    listen: true)
-                                .currentuser
-                                .name
-                                .toString(),
-                            //widget.order.from_user.toString(),//'Sa**b',
-                            color: Colors.black45,
-                            underLine: TextDecoration.none),
-                        SizedBox(width: size.width * 0.02),
-                        Icon(
-                          Icons.star,
-                          color: mainColor,
-                          size: size.width * 0.05,
-                        ),
-                        SizedBox(width: size.width * 0.01),
-                        TextUtils(
-                            fontSize: size.width * 0.04,
-                            fontWeight: FontWeight.bold,
-                            text: Provider.of<AuthProvider_vm>(context,
-                                    listen: true)
-                                .currentuser
-                                .rataing
-                                .toString(),
-                            color: Colors.black45,
-                            underLine: TextDecoration.none),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: size.width * 0.06,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextUtils(
-                          fontSize: size.width * 0.04,
-                          fontWeight: FontWeight.bold,
-                          text: 'infoOrder',
-                          color: Colors.black45,
-                          underLine: TextDecoration.none),
-                      //SizedBox(width: size.width * 0.02),
-                      TextButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.info,
-                            color: Colors.black45,
-                          ),
-                          label: const Text(
-                            'تبليغ',
-                            style: TextStyle(color: Colors.black45),
-                          ))
-                    ],
-                  ),
-                ) // Container(
-
-                ,
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: size.width * 0.06,
-                  ),
-                  child: Text(
-                    widget.order.content_order.toString(),
-                  ),
-                ),
-                Container(
-                  height: size.height * 0.3,
-                  decoration: const BoxDecoration(color: mainColor),
-                  child: Scaffold(
-                    body: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        GoogleMap(
-                          initialCameraPosition: CameraPosition(
-                              target: LatLng(widget.order.toLocation.latitude,
-                                  widget.order.toLocation.longitude)),
-                          mapType: MapType.normal,
-                          onMapCreated: (GoogleMapController controller) async {
-                            String style = await DefaultAssetBundle.of(context)
-                                .loadString('assets/map_style.json');
-                            //customize your map style at: https://mapstyle.withgoogle.com/
-                            controller.setMapStyle(style);
-                            _controller.complete(controller);
-                          },
-                          onCameraMove: (CameraPosition newPos) {
-                            setState(() {
-                              currentLocation = newPos.target;
-                            });
-                          },
-                          markers: _markers,
-                          polylines: _polylines,
-                        ),
-                        SizedBox(
-                          width: 40,
-                          height: 40,
-                          child: Image.asset('assets/images/location_icon.png'),
-                        ),
-                      ],
-                    ),
-                    floatingActionButton: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [
-                        // FloatingActionButton(
-                        //   onPressed: () => _drawPolyline(
-                        //       LatLng(38.52900208591146, -98.54919254779816), currentLocation),
-                        //   child: Icon(Icons.settings_ethernet_rounded),
-                        // ),
-                        // FloatingActionButton(
-                        //   onPressed: () => _setMarker(currentLocation),
-                        //   child: Icon(Icons.location_on),
-                        // ),
-                        // FloatingActionButton(
-                        //   onPressed: () => getMyLocation(),
-                        //   child: Icon(Icons.gps_fixed),
-                        // ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: size.width * 0.06,
-                      vertical: size.height * 0.01),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
                           children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.business_outlined,
-                                  color: mainColor,
-                                  size: size.width * 0.08,
-                                ),
-                                TextUtils(
-                                    fontSize: size.width * 0.04,
-                                    fontWeight: FontWeight.bold,
-                                    text: widget.order.distance_me_recive,
-                                    color: Colors.black87,
-                                    underLine: TextDecoration.none),
-                              ],
-                            ),
-                            TextUtils(
-                                fontSize: size.width * 0.04,
-                                fontWeight: FontWeight.bold,
-                                text: 'موقع الاستلام',
-                                color: Colors.black45,
-                                underLine: TextDecoration.none),
-                            TextUtils(
-                                fontSize: size.width * 0.03,
-                                fontWeight: FontWeight.bold,
-                                text: 'اللوكاشن المحدد من الخريطة',
-                                color: Colors.black45,
-                                underLine: TextDecoration.none),
-                          ]),
-                      //      const Text('____'),
-                      SizedBox(
-                        width: size.width * 0.2,
-                      ),
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.home,
-                                  color: mainColor,
-                                  size: size.width * 0.08,
-                                ),
-                                SizedBox(
-                                  width: size.width * 0.01,
-                                ),
-                                TextUtils(
-                                    fontSize: size.width * 0.04,
-                                    fontWeight: FontWeight.bold,
-                                    text: widget.order.distance_recive_deilvery,
-                                    color: Colors.black87,
-                                    underLine: TextDecoration.none),
-                              ],
-                            ),
-                            TextUtils(
-                                fontSize: size.width * 0.04,
-                                fontWeight: FontWeight.bold,
-                                text: 'موقع التسليم',
-                                color: Colors.black45,
-                                underLine: TextDecoration.none),
-                            TextUtils(
-                                fontSize: size.width * 0.03,
-                                fontWeight: FontWeight.bold,
-                                text: 'اللوكاشن المحدد من الخريطة',
-                                color: Colors.black45,
-                                underLine: TextDecoration.none),
-                          ]),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: size.height * 0.1,
-                  decoration: const BoxDecoration(color: mainColor),
-                  child: Column(
-                    children: [
-                      TextUtils(
-                          fontSize: size.width * 0.04,
-                          fontWeight: FontWeight.bold,
-                          text: 'تأكيد العرض',
-                          color: Colors.white,
-                          underLine: TextDecoration.none),
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: size.width * 0.06),
-                        child: Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // Expanded(
-                            //   child:
-                            //    TextField(
-                            //     controller: valueController,
-                            //     decoration: InputDecoration(
-                            //       fillColor: Colors.white,
-                            //       hintText: 'عرض السعر',
-                            //       hintStyle: TextStyle(
-                            //         color: Colors.black45,
-                            //         fontSize: size.width * 0.03,
-                            //         fontWeight: FontWeight.w500,
-                            //       ),
-                            //       filled: true,
-                            //       enabledBorder: OutlineInputBorder(
-                            //         borderSide:
-                            //             const BorderSide(color: mainColor),
-                            //         borderRadius: BorderRadius.circular(10),
-                            //       ),
-                            //       focusedBorder: OutlineInputBorder(
-                            //         borderSide:
-                            //             const BorderSide(color: mainColor),
-                            //         borderRadius: BorderRadius.circular(10),
-                            //       ),
-                            //       errorBorder: OutlineInputBorder(
-                            //         borderSide:
-                            //             const BorderSide(color: mainColor),
-                            //         borderRadius: BorderRadius.circular(10),
-                            //       ),
-                            //       focusedErrorBorder: OutlineInputBorder(
-                            //         borderSide:
-                            //             const BorderSide(color: mainColor),
-                            //         borderRadius: BorderRadius.circular(10),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: size.width * 0.1),
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  print('sddsdsdvfvvvvbbb');
-                                  await Provider.of<order_vm>(context,
-                                          listen: false)
-                                      .update_order(
-                                    widget.order.id_order,
-                                    widget.order.distance_recive_deilvery,
-                                    widget.order.price_deilvery_captain,
-                                    //  user.uid.toString()
-                                  );
-                                  ///////////////////////////////////////////
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              waiting_aprrove_order(
-                                                orderModel: widget.order,
-                                              )));
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  elevation: 0,
-                                  primary: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        size.width * 0.03),
-                                  ), //Get.isDarkMode ? pinkClr : mainColor,
-                                  minimumSize:
-                                      Size(size.height * 0.3, size.width * 0.1),
-                                ),
-                                child: TextUtils(
-                                  color: mainColor,
-                                  text: widget.order.price_deilvery_captain +
-                                      ' تأكيد ', // '20ر.س',
-                                  fontSize: size.width * 0.05,
-                                  fontWeight: FontWeight.bold,
-                                  underLine: TextDecoration.none,
-                                ),
-                                // child:
-                                // TextUtils(
-                                //   color: mainColor,
-                                //   text: widget.order.price_deilvery_captain +
-                                //       ' ر.س ', // '20ر.س',
-                                //   fontSize: size.width * 0.05,
-                                //   fontWeight: FontWeight.bold,
-                                //   underLine: TextDecoration.none,
-                                // ),
+                            CircleAvatar(
+                              backgroundColor: greyColor.withOpacity(0.2),
+                              radius: size.width * 0.05,
+                              child: Icon(
+                                Icons.shopping_bag_rounded,
+                                color: Colors.lightBlue.withOpacity(0.9),
+                                size: size.width * 0.09,
                               ),
                             ),
-                            // SizedBox(width: size.width * 0.02),
-                            // ElevatedButton(
-                            //     onPressed: () {},
-                            //     style: ElevatedButton.styleFrom(
-                            //       elevation: 0,
-                            //       primary: greyColor.withOpacity(0.5),
-                            //       shape: RoundedRectangleBorder(
-                            //         borderRadius:
-                            //         BorderRadius.circular(size.width * 0.03),
-                            //       ), //Get.isDarkMode ? pinkClr : mainColor,
-                            //       minimumSize:
-                            //       Size(size.height * 0.1, size.width * 0.1),
-                            //     ),
-                            //     child: Row(
-                            //       children: [
-                            //         TextUtils(
-                            //           color: Colors.white,
-                            //           text: 'غير',
-                            //           fontSize: size.width * 0.05,
-                            //           fontWeight: FontWeight.bold,
-                            //           underLine: TextDecoration.none,
-                            //         ),
-                            //         const Icon(
-                            //           Icons.arrow_forward_ios_rounded,
-                            //           color: Colors.white,
-                            //         ),
-                            //       ],
-                            //     )),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextUtils(
+                                    fontSize: size.width * 0.04,
+                                    fontWeight: FontWeight.bold,
+                                    text: widget.order.titleStore,
+                                    color: Colors.black54,
+                                    underLine: TextDecoration.none),
+                                TextUtils(
+                                    fontSize: size.width * 0.04,
+                                    fontWeight: FontWeight.bold,
+                                    text: widget.order.id_order.substring(0, 6),
+                                    color: Colors.black54,
+                                    underLine: TextDecoration.none),
+                              ],
+                            ),
                           ],
                         ),
-                      )
-                    ],
+                        CircleAvatar(
+                            backgroundColor: greyColor.withOpacity(0.6),
+                            radius: size.width * 0.05,
+                            child: IconButton(
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                icon: Icon(
+                                  Icons.close,
+                                  size: size.width * 0.05,
+                                  color: Colors.white,
+                                ))),
+                      ],
+                    ),
                   ),
-                )
-              ],
-            )),
+                  SizedBox(
+                    height: size.height * 0.01,
+                  ),
+                  Container(
+                    height: size.height * 0.1,
+                    decoration: BoxDecoration(color: mainColor.withOpacity(0.2)),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: size.width * 0.06,
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.person,
+                            color: mainColor,
+                            size: size.width * 0.1,
+                          ),
+                          TextUtils(
+                              fontSize: size.width * 0.04,
+                              fontWeight: FontWeight.bold,
+                              text: Provider.of<AuthProvider_vm>(context,
+                                      listen: true)
+                                  .currentuser
+                                  .name
+                                  .toString(),
+                              //widget.order.from_user.toString(),//'Sa**b',
+                              color: Colors.black45,
+                              underLine: TextDecoration.none),
+                          SizedBox(width: size.width * 0.02),
+                          Icon(
+                            Icons.star,
+                            color: mainColor,
+                            size: size.width * 0.05,
+                          ),
+                          SizedBox(width: size.width * 0.01),
+                          TextUtils(
+                              fontSize: size.width * 0.04,
+                              fontWeight: FontWeight.bold,
+                              text: Provider.of<AuthProvider_vm>(context,
+                                      listen: true)
+                                  .currentuser
+                                  .rataing
+                                  .toString(),
+                              color: Colors.black45,
+                              underLine: TextDecoration.none),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: size.width * 0.06,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextUtils(
+                            fontSize: size.width * 0.04,
+                            fontWeight: FontWeight.bold,
+                            text: 'infoOrder',
+                            color: Colors.black45,
+                            underLine: TextDecoration.none),
+                        //SizedBox(width: size.width * 0.02),
+                        TextButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.info,
+                              color: Colors.black45,
+                            ),
+                            label: const Text(
+                              'تبليغ',
+                              style: TextStyle(color: Colors.black45),
+                            ))
+                      ],
+                    ),
+                  ) // Container(
+
+                  ,
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: size.width * 0.06,
+                    ),
+                    child: Text(
+                      widget.order.content_order.toString(),
+                    ),
+                  ),
+                  Container(
+                    height: size.height * 0.3,
+                    decoration: const BoxDecoration(color: mainColor),
+                    child: Scaffold(
+                      body: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          GoogleMap(
+                            initialCameraPosition: CameraPosition(
+                                target: LatLng(widget.order.toLocation.latitude,
+                                    widget.order.toLocation.longitude)),
+                            mapType: MapType.normal,
+                            onMapCreated: (GoogleMapController controller) async {
+                              String style = await DefaultAssetBundle.of(context)
+                                  .loadString('assets/map_style.json');
+                              //customize your map style at: https://mapstyle.withgoogle.com/
+                              controller.setMapStyle(style);
+                              _controller.complete(controller);
+                            },
+                            onCameraMove: (CameraPosition newPos) {
+                              setState(() {
+                                currentLocation = newPos.target;
+                              });
+                            },
+                            markers: _markers,
+                            polylines: _polylines,
+                          ),
+                          SizedBox(
+                            width: 40,
+                            height: 40,
+                            child: Image.asset('assets/images/location_icon.png'),
+                          ),
+                        ],
+                      ),
+                      floatingActionButton: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: const [
+                          // FloatingActionButton(
+                          //   onPressed: () => _drawPolyline(
+                          //       LatLng(38.52900208591146, -98.54919254779816), currentLocation),
+                          //   child: Icon(Icons.settings_ethernet_rounded),
+                          // ),
+                          // FloatingActionButton(
+                          //   onPressed: () => _setMarker(currentLocation),
+                          //   child: Icon(Icons.location_on),
+                          // ),
+                          // FloatingActionButton(
+                          //   onPressed: () => getMyLocation(),
+                          //   child: Icon(Icons.gps_fixed),
+                          // ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: size.width * 0.06,
+                        vertical: size.height * 0.01),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.business_outlined,
+                                    color: mainColor,
+                                    size: size.width * 0.08,
+                                  ),
+                                  TextUtils(
+                                      fontSize: size.width * 0.04,
+                                      fontWeight: FontWeight.bold,
+                                      text: widget.order.distance_me_recive,
+                                      color: Colors.black87,
+                                      underLine: TextDecoration.none),
+                                ],
+                              ),
+                              TextUtils(
+                                  fontSize: size.width * 0.04,
+                                  fontWeight: FontWeight.bold,
+                                  text: 'موقع الاستلام',
+                                  color: Colors.black45,
+                                  underLine: TextDecoration.none),
+                              TextUtils(
+                                  fontSize: size.width * 0.03,
+                                  fontWeight: FontWeight.bold,
+                                  text: 'اللوكاشن المحدد من الخريطة',
+                                  color: Colors.black45,
+                                  underLine: TextDecoration.none),
+                            ]),
+                        //      const Text('____'),
+                        SizedBox(
+                          width: size.width * 0.2,
+                        ),
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.home,
+                                    color: mainColor,
+                                    size: size.width * 0.08,
+                                  ),
+                                  SizedBox(
+                                    width: size.width * 0.01,
+                                  ),
+                                  TextUtils(
+                                      fontSize: size.width * 0.04,
+                                      fontWeight: FontWeight.bold,
+                                      text: widget.order.distance_recive_deilvery,
+                                      color: Colors.black87,
+                                      underLine: TextDecoration.none),
+                                ],
+                              ),
+                              TextUtils(
+                                  fontSize: size.width * 0.04,
+                                  fontWeight: FontWeight.bold,
+                                  text: 'موقع التسليم',
+                                  color: Colors.black45,
+                                  underLine: TextDecoration.none),
+                              TextUtils(
+                                  fontSize: size.width * 0.03,
+                                  fontWeight: FontWeight.bold,
+                                  text: 'اللوكاشن المحدد من الخريطة',
+                                  color: Colors.black45,
+                                  underLine: TextDecoration.none),
+                            ]),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: size.height * 0.1,
+                    decoration: const BoxDecoration(color: mainColor),
+                    child: Column(
+                      children: [
+                        TextUtils(
+                            fontSize: size.width * 0.04,
+                            fontWeight: FontWeight.bold,
+                            text: 'تأكيد العرض',
+                            color: Colors.white,
+                            underLine: TextDecoration.none),
+                        Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: size.width * 0.06),
+                          child: Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // Expanded(
+                              //   child:
+                              //    TextField(
+                              //     controller: valueController,
+                              //     decoration: InputDecoration(
+                              //       fillColor: Colors.white,
+                              //       hintText: 'عرض السعر',
+                              //       hintStyle: TextStyle(
+                              //         color: Colors.black45,
+                              //         fontSize: size.width * 0.03,
+                              //         fontWeight: FontWeight.w500,
+                              //       ),
+                              //       filled: true,
+                              //       enabledBorder: OutlineInputBorder(
+                              //         borderSide:
+                              //             const BorderSide(color: mainColor),
+                              //         borderRadius: BorderRadius.circular(10),
+                              //       ),
+                              //       focusedBorder: OutlineInputBorder(
+                              //         borderSide:
+                              //             const BorderSide(color: mainColor),
+                              //         borderRadius: BorderRadius.circular(10),
+                              //       ),
+                              //       errorBorder: OutlineInputBorder(
+                              //         borderSide:
+                              //             const BorderSide(color: mainColor),
+                              //         borderRadius: BorderRadius.circular(10),
+                              //       ),
+                              //       focusedErrorBorder: OutlineInputBorder(
+                              //         borderSide:
+                              //             const BorderSide(color: mainColor),
+                              //         borderRadius: BorderRadius.circular(10),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: size.width * 0.1),
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    print('sddsdsdvfvvvvbbb');
+                                    await Provider.of<order_vm>(context,
+                                            listen: false)
+                                        .update_order(
+                                      widget.order.id_order,
+                                      widget.order.distance_recive_deilvery,
+                                      widget.order.price_deilvery_captain,
+                                      //  user.uid.toString()
+                                    );
+                                    ///////////////////////////////////////////
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                waiting_aprrove_order(
+                                                  orderModel: widget.order,
+                                                )));
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    primary: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          size.width * 0.03),
+                                    ), //Get.isDarkMode ? pinkClr : mainColor,
+                                    minimumSize:
+                                        Size(size.height * 0.3, size.width * 0.1),
+                                  ),
+                                  child: TextUtils(
+                                    color: mainColor,
+                                    text: widget.order.price_deilvery_captain +
+                                        ' تأكيد ', // '20ر.س',
+                                    fontSize: size.width * 0.05,
+                                    fontWeight: FontWeight.bold,
+                                    underLine: TextDecoration.none,
+                                  ),
+                                  // child:
+                                  // TextUtils(
+                                  //   color: mainColor,
+                                  //   text: widget.order.price_deilvery_captain +
+                                  //       ' ر.س ', // '20ر.س',
+                                  //   fontSize: size.width * 0.05,
+                                  //   fontWeight: FontWeight.bold,
+                                  //   underLine: TextDecoration.none,
+                                  // ),
+                                ),
+                              ),
+                              // SizedBox(width: size.width * 0.02),
+                              // ElevatedButton(
+                              //     onPressed: () {},
+                              //     style: ElevatedButton.styleFrom(
+                              //       elevation: 0,
+                              //       primary: greyColor.withOpacity(0.5),
+                              //       shape: RoundedRectangleBorder(
+                              //         borderRadius:
+                              //         BorderRadius.circular(size.width * 0.03),
+                              //       ), //Get.isDarkMode ? pinkClr : mainColor,
+                              //       minimumSize:
+                              //       Size(size.height * 0.1, size.width * 0.1),
+                              //     ),
+                              //     child: Row(
+                              //       children: [
+                              //         TextUtils(
+                              //           color: Colors.white,
+                              //           text: 'غير',
+                              //           fontSize: size.width * 0.05,
+                              //           fontWeight: FontWeight.bold,
+                              //           underLine: TextDecoration.none,
+                              //         ),
+                              //         const Icon(
+                              //           Icons.arrow_forward_ios_rounded,
+                              //           color: Colors.white,
+                              //         ),
+                              //       ],
+                              //     )),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              )),
+        ),
       ),
     );
   }

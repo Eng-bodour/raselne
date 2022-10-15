@@ -206,22 +206,25 @@ class _card_deilveryState extends State<card_deilvery> {
                       // Get.to(bottomsheet_offer(
                       //   order: widget.order,
                       // ));
-                      showModalBottomSheet<dynamic>(
-                        backgroundColor: Colors.grey.shade200,
-                        //  backgroundColor: Colors.transparent,
-                        elevation: 0,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                        )),
-                        context: context,
-                        isScrollControlled: true,
-                        builder: ((context) => bottomsheet_offer(
-                              order: widget.order,
-                            )),
-                        // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
-                      );
+                      // showModalBottomSheet<dynamic>(
+                      //   backgroundColor: Colors.grey.shade200,
+                      //   //  backgroundColor: Colors.transparent,
+                      //   elevation: 0,
+                      //   shape: const RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.only(
+                      //     topLeft: Radius.circular(20),
+                      //     topRight: Radius.circular(20),
+                      //   )),
+                      //   context: context,
+                      //   isScrollControlled: true,
+                      //   builder: ((context) => bottomsheet_offer(
+                      //         order: widget.order,
+                      //       )),
+                      //   // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
+                      // );
+                      Get.to(bottomsheet_offer(
+                        order: widget.order,
+                      ));
                     },
                     child: Container(
                       width: size.width * 0.4,

@@ -1,12 +1,14 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:raselne/logic/repositories/notify/notify_repo.dart';
-import '../data_layer/model/notifyModel.dart';
-import '../data_layer/model/user_model.dart';
-import '../data_layer/webServices/fcm.dart';
+import '../../data_layer/model/notifyModel.dart';
+import '../../data_layer/model/user_model.dart';
+import '../../data_layer/webServices/fcm.dart';
 
 class notifyvm extends ChangeNotifier {
   late NotifyRepository notifyRepository;
+
+  notifyvm({required this.notifyRepository});
   List<NotificationModel> listnotify=[];
   int countnotify=0;
 
@@ -43,7 +45,8 @@ class notifyvm extends ChangeNotifier {
 
   Future<void> getNotification() async {
     List<dynamic> data =[];
-    listnotify=await notifyRepository.getnotify(usercurrent!.uid.toString());
+    listnotify=await notifyRepository
+        .getnotify(usercurrent!.uid.toString());
     // data=await Api()
     //     .get(url:url+ 'notification/getnotifybyIdUser.php?to_user=${usercurrent!.idUser}');
     // List<NotificationModel> list=[];
@@ -111,10 +114,14 @@ class notifyvm extends ChangeNotifier {
     return res;
 
   }
-  Future<void> addNotification( Map<String,dynamic> body,String title,String message,List<String> arratoken) async {
 
-    FCM().sendnotification(body, title, message, arratoken);
-    await notifyRepository.addNotify(body);
+  Future<void> SendNotification( Map<String,dynamic> body,String title,
+      String message,List<String> arratoken) async {
+      FCM().sendnotification(body, title, message, arratoken);
+  }
+
+  Future<void> addNotification( Map<String,dynamic> body) async {
+    notifyRepository.addNotify(body);
     // String result = await Api()
     //     .post( url:url+"notification/insertNotification.php",
     //     body: body);

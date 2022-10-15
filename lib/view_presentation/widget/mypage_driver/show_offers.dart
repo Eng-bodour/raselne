@@ -45,7 +45,8 @@ print('dicount '+orderModel.discount.toString());
                     }
                     return
                       FutureBuilder(
-                        future: Provider.of<order_vm>(context,listen: false).getusercaptain(
+                        future: Provider.of<order_vm>(context,listen: false)
+                            .getusercaptain(
                             snapshot_order.data!.captain_user.toString()),
                         builder: (BuildContext context,
                             AsyncSnapshot<UserModel> snapshot_user) {

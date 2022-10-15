@@ -20,8 +20,9 @@ class notify_firebase extends NotifyRepository{
   Future<List<NotificationModel>> getnotify(String uid) async{
     // TODO: implement getnotify
 
-   return await FirebaseFirestore.instance.collection('notification')
-    .where('toUser',isEqualTo: uid).get()
+   return await FirebaseFirestore.instance
+       .collection('notification')
+    .where('to_user',isEqualTo: uid).get()
         .then((value) => value.docs.map((e) =>
     NotificationModel.fromJson(
         e.data())).toList());

@@ -50,8 +50,18 @@ class order_firebase extends OrderRepository{
   @override
   Future<OrderModel> getOrderById(String id) {
     // TODO: implement getOrderById
+    return
+      FirebaseServices("orders").ref
+      .doc(id)
+          .get(
+        // includeMetadataChanges: true
+      )
+          .then((doc) =>
+          OrderModel.fromSnapshot(
+          doc.data() as Map<String, dynamic>,doc.id)
 
-    throw UnimplementedError();
+         );
+
   }
 
   @override

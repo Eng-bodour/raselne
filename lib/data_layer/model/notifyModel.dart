@@ -36,17 +36,17 @@ class NotificationModel {
   }
 
   Map<String, dynamic> toJson()=> {
-   // final _data = <String, dynamic>{};
-    'id_notify' : idNotify,
-    // _data['message'] = message;
-    // _data['from_user'] = fromUser;
-    // _data['to_user'] = toUser;
-    // _data['type_notify'] = typeNotify;
-    // _data['isread'] = isread;
-    // _data['tonameuser'] = tonameuser;
-    // _data['fromNameuser'] = fromNameuser;
-    // _data['data'] = data;
-    // _data['dateNotify'] = dateNotify;
-  //  return _data;
+    // final _data = <String, dynamic>{};
+     'id_notify': idNotify,
+    'message': message,
+    'from_user': fromUser,
+    'to_user': toUser,
+    'type_notify': typeNotify,
+    'isread': isread,
+    'tonameuser': tonameuser,
+    'fromNameuser': fromNameuser,
+    'data':data,
+    'dateNotify': dateNotify,
+   // return _data;
   };
 }
