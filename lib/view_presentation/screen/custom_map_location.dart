@@ -11,6 +11,7 @@ class custom_map_location extends StatefulWidget {
   custom_map_location({required this.from,required this.to, Key? key}) : super(key: key);
   LatLng from,to;
 
+
   @override
   _custom_map_locationState createState() => _custom_map_locationState();
 }
@@ -18,6 +19,7 @@ class custom_map_location extends StatefulWidget {
 class _custom_map_locationState extends State<custom_map_location> {
   Set<Polyline> _polylines = {};
   // late UserModel user;
+  List<LatLng> polylineCoordinates = [];
 
   static late final LatLng  location_init;
   Completer<GoogleMapController> _controller=Completer();
@@ -96,12 +98,13 @@ class _custom_map_locationState extends State<custom_map_location> {
   }
 
   Future<void> _drawPolyline(LatLng from, LatLng to) async {
-    Polyline polyline = await PolylineService().drawPolyline(from, to);
+   // Polyline polyline = await PolylineService().drawPolyline(from, to);
+    polylineCoordinates = await PolylineService().drawPolyline(from, to);
 
-    _polylines.add(polyline);
-
-    _setMarker(from);
-    _setMarker(to);
+    // _polylines.add(polyline);
+    //
+    // _setMarker(from);
+    // _setMarker(to);
 
     setState(() {});
   }

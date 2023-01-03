@@ -111,7 +111,7 @@ class MyApp extends StatelessWidget {
                   title: 'Raselne',
                   //home: WelcomeScreen(),
                   initialRoute: snapshot.data?.uid !=null
-                      ? AppRoutes.mainScreen
+                      ? AppRoutes.OrdertrackingPage1
                       : AppRoutes.welcome,
                   getPages: AppRoutes.routes,
                 );

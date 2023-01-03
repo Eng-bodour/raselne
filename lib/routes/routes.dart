@@ -16,6 +16,8 @@ import 'package:raselne/view_presentation/screen/store%20drawer/add_store.dart';
 
 import 'package:raselne/view_presentation/screen/welcome_screen.dart';
 
+import '../logic/orderTrackingPage.dart';
+
 class AppRoutes {
   //initialRoute
 
@@ -23,6 +25,7 @@ class AppRoutes {
   //static const homeScreen = Routes.homeScreen;
   static const mainScreen = Routes.mainScreen;
   static const signup = Routes.signUpScreen;
+  static const OrdertrackingPage1 = Routes.OrdertrackingPage;
 
   //getPages
 
@@ -30,6 +33,10 @@ class AppRoutes {
     GetPage(
       name: Routes.welcomeScreen,
       page: () => const WelcomeScreen(),
+    ),
+    GetPage(
+      name: Routes.OrdertrackingPage,
+      page: () =>   OrdertrackingPage(),
     ),
     GetPage(
       name: Routes.loginScreen,
@@ -92,4 +99,5 @@ class Routes {
   static const newOrderScreen = '/newOrderScreen';
   static const addStore = '/addStore';
   static const addCategory = '/addCategory';
+  static const OrdertrackingPage = '/OrdertrackingPage';
 }

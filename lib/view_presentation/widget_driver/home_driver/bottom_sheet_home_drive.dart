@@ -27,6 +27,7 @@ class bottomsheet_offer extends StatefulWidget {
 
 class _bottomsheet_offerState extends State<bottomsheet_offer> {
   final Set<Polyline> _polylines = {};
+  List<LatLng> polylineCoordinates = [];
   // late UserModel user;
 
   static late final LatLng location_init;
@@ -253,7 +254,13 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                               });
                             },
                             markers: _markers,
-                            polylines: _polylines,
+                             polylines: _polylines,
+                            // polylines: {
+                            //   Polyline(
+                            //     polylineId: PolylineId("route"),
+                            //     points: polylineCoordinates,
+                            //   )
+                            // },
                           ),
                           SizedBox(
                             width: 40,
@@ -508,12 +515,13 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
   }
 
   Future<void> _drawPolyline(LatLng from, LatLng to) async {
-    Polyline polyline = await PolylineService().drawPolyline(from, to);
+    // Polyline polyline = await PolylineService().drawPolyline(from, to);
+    polylineCoordinates = await PolylineService().drawPolyline(from, to);
 
-    _polylines.add(polyline);
-
-    _setMarker(from);
-    _setMarker(to);
+    // _polylines.add(polyline);
+    //
+    // _setMarker(from);
+    // _setMarker(to);
 
     setState(() {});
   }
