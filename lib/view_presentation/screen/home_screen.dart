@@ -42,7 +42,7 @@ class HomeScreen extends StatelessWidget {
             title: TextUtils(
               fontSize: f26,
               fontWeight: FontWeight.bold,
-              text: 'Raselne',
+              text: 'السريع',
               color: Colors.white,
               underLine: TextDecoration.none,
             )),

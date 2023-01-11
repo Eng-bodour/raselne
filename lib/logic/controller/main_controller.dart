@@ -10,6 +10,7 @@ import '../../data_layer/model/user_model.dart';
 import '../../view_presentation/screen_driver/home_driver_screen.dart';
 import '../../view_presentation/screen_driver/my_page_driver/mypage_driver_screen.dart';
 import '../../view_presentation/screen_driver/orders_driver_screen.dart';
+import '../orderTrackingPage.dart';
 
 class MainProvider extends ChangeNotifier {
   int currentIndex = 3;
@@ -39,18 +40,22 @@ class MainProvider extends ChangeNotifier {
   }
 
   var tabs = [
+
     MyPageDriverScreen(),
-    // MyPageUserScreen(),
+
     const NotificationScreen(),
     const OrdersScreen(),
     HomeScreen(),
   ];
 
   var tabscaptain = [
+
     MyPageDriverScreen(),
     const NotificationScreen(),
     OrdersDriverScreen(),
-    const HomeDriverScreen(),
+    OrdertrackingPage(idorder: '3A30MVhcYVvLm9DmMPPS'),
+
+    // const HomeDriverScreen(),
   ];
 
   var title = [

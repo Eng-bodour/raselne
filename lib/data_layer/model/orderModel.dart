@@ -31,6 +31,7 @@ String distance_recive_deilvery='';
 late String from_user='';
 late String? captain_user='';
 late LatLng fromlocation;
+late LatLng? trackingLocation;
 late String Addressdfromlocation='';
 late LatLng toLocation=LatLng(30,20);
 late String AddresstoLocation='';
@@ -82,6 +83,11 @@ Map<String, dynamic> toSnapchot() => {
   "fromlocation":GeoPoint(
       fromlocation.latitude,
       fromlocation.longitude) ,//fromlocation,
+
+  "trackingLocation":GeoPoint(
+      trackingLocation!.latitude,
+      trackingLocation!.longitude) ,
+
   "is_arrive": is_arrive,
   "isdone_recive": isdone_recive,
   "isdone_deilvery": isdone_deilvery,
@@ -101,9 +107,8 @@ Map<String, dynamic> toSnapchot() => {
      OrderModel order= OrderModel(
      total:doc["total"],
        // fromlocation:doc["total"],
-
      price_deilvery:doc["price_deilvery"],
-       type_order:doc["type_order"],
+     type_order:doc["type_order"],
      captain_user:doc["captain_user"],
      content_order:doc["content_order"],
      from_user:doc["from_user"],
@@ -131,6 +136,8 @@ Map<String, dynamic> toSnapchot() => {
   order.isapprove=doc['isapprove'];
    GeoPoint gloacationfrom=doc["fromlocation"];
    order.fromlocation=LatLng(gloacationfrom.latitude,gloacationfrom.longitude);
+   GeoPoint? gloacationtrack=doc["trackingLocation"]==null?null:doc["trackingLocation"];
+   order.trackingLocation=gloacationtrack==null?null:LatLng(gloacationtrack!.latitude,gloacationtrack!.longitude);
    gloacationfrom=doc["toLocation"];
    order.toLocation=LatLng(gloacationfrom.latitude,gloacationfrom.longitude);
        print('content : '+order.content_order);

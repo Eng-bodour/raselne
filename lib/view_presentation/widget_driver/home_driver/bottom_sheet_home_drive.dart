@@ -515,10 +515,10 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
   }
 
   Future<void> _drawPolyline(LatLng from, LatLng to) async {
-    // Polyline polyline = await PolylineService().drawPolyline(from, to);
-    polylineCoordinates = await PolylineService().drawPolyline(from, to);
+     Polyline polyline = await PolylineService().drawPolyline2(from, to);
+    //polylineCoordinates = await PolylineService().drawPolyline(from, to);
 
-    // _polylines.add(polyline);
+   _polylines.add(polyline);
     //
     // _setMarker(from);
     // _setMarker(to);

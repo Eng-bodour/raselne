@@ -70,7 +70,7 @@ class _map_locationState extends State<map_location> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                         widget.type=='الاستلام'? 'موقع الاستلام ':'موقع التوصيل',
+                          widget.type=='الاستلام'? 'موقع الاستلام ':'موقع التوصيل',
                           style: TextStyle(
                               fontSize: size.width * 0.045,
                               fontWeight: FontWeight.bold,
@@ -313,12 +313,13 @@ class _map_locationState extends State<map_location> {
                   child: ElevatedButton(
                     onPressed: () async {
                      widget.type=='الاستلام'?
-                     await Provider.of<order_vm>(context, listen: false)
+                         await Provider.of<order_vm>(context, listen: false)
                           .addlocation(currentLocation, Address, addDetails.text,widget.type)
                      :   await Provider.of<order_vm>(context, listen: false)
-                         .addlocation(currentLocation, Address, addDetails.text,widget.type);
+                          .addlocation(currentLocation, Address, addDetails.text,widget.type);
                       Navigator.pop(context);
                     },
+
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
                       primary: mainColor,

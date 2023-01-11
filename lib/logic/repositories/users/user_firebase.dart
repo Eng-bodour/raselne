@@ -164,6 +164,8 @@ class user_firebase extends UserRepository{
   @override
   Future<void> updateToken()async{
     UserModel us=await getuser();
+    token=await FirebaseMessaging.instance.getToken() ;
+
     FirebaseFirestore.instance
        .collection('users').doc(us.docId).update({'token':token});
   }

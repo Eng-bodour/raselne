@@ -36,7 +36,7 @@ class AppRoutes {
     ),
     GetPage(
       name: Routes.OrdertrackingPage,
-      page: () =>   OrdertrackingPage(),
+      page: () =>   OrdertrackingPage(idorder: '',),
     ),
     GetPage(
       name: Routes.loginScreen,

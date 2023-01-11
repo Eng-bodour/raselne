@@ -222,8 +222,9 @@ class _card_deilveryState extends State<card_deilvery> {
                       //       )),
                       //   // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
                       // );
-                      Get.to(bottomsheet_offer(
-                        order: widget.order,
+                      Get.to(
+                          bottomsheet_offer(
+                          order: widget.order,
                       ));
                     },
                     child: Container(

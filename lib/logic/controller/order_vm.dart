@@ -61,8 +61,12 @@ addlocation(LatLng location,String Address,
 if(type=='الاستلام')
   order.fromlocation=location;
 else
+{
   order.toLocation=location;//التوصيل
+  order.trackingLocation=location;//التوصيل
 
+
+}
   order.AddresstoLocation=Address;
   order.detailAddress=detailAddress;
   notifyListeners();
