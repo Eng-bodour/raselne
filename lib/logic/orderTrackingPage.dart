@@ -25,11 +25,11 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
   Completer<GoogleMapController> _controller = Completer();
   late GoogleMapController mapController;
   BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarker;
-  BitmapDescriptor destinationIcon = BitmapDescriptor.defaultMarkerWithHue(10);
+  BitmapDescriptor destinationIcon = BitmapDescriptor.defaultMarkerWithHue(20);
   BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
-  static const LatLng sourceLocation = LatLng(36.23082766919465, 37.167082987725735);
-  static const LatLng destination = LatLng(36.430827821, 37.167082987622);
-  static const LatLng mylocation = LatLng(36.3360211,37.167082987725735);
+  static const LatLng sourceLocation = LatLng(36.230087, 37.137082987725735);
+  static const LatLng destination =    LatLng(36.236267, 37.1149617);
+  static const LatLng mylocation =     LatLng(36.3360211,37.167082987725735);
   LocationData? currentlocation; //=LatLng(37.33429383, -122.06600055);
   List<LatLng> polylineCoordinates = [];
   Set<Polyline> _polylines = Set<Polyline>();
@@ -58,7 +58,8 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       currentlocation=  await LocationService().getLocation();
 
-      if (Provider.of<AuthProvider_vm>(context,listen: false).currentuser.type=='captain')
+      if (Provider.of<AuthProvider_vm>(context,listen: false)
+          .currentuser.type=='captain')
       getCurrentLocation();
       // setCustomMarkerIcon();
       _drawPolyline(sourceLocation, destination);
@@ -79,6 +80,8 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
         StreamBuilder(
             stream:  tracking_firebase().getlocationTracking(widget.idorder),
             builder: (context, AsyncSnapshot<GeoPoint> snapshot) {
+        print('-----------------snapshot.data!.latitude!------------------------- ');
+        print(snapshot.data!.latitude!);
               _animateCamera(
                   LatLng(snapshot.data!.latitude!,snapshot.data!.longitude!)
                   );
@@ -86,7 +89,11 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
                   ? Center(
                       child: Text('lo'),
                     )
-                  : GoogleMap(
+                  :
+              snapshot.hasData==false?
+              Center(
+                child: Text('lonn nnnn'),
+              ) :GoogleMap(
                       initialCameraPosition: CameraPosition(
                         zoom: 13.5,
                         target: sourceLocation,
@@ -117,8 +124,9 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
                         LatLng(snapshot.data!.latitude!,snapshot.data!.longitude!)),
 
                         Marker(
-                            markerId: MarkerId("source"),
+                            markerId: MarkerId("source",),
                             icon: sourceIcon,
+
                             position: sourceLocation),
                         Marker(
                             markerId: MarkerId("destination"),
@@ -237,7 +245,8 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
                   LatLng(newLoc!.latitude!, newLoc!.longitude!))
           ));
 
-       setState(() {});
+       setState( () {} );
+
     });
 
   }
@@ -282,7 +291,7 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
   _setLocation() async {
 
       //final loc.LocationData _locationResult = await location.getLocation();
-
+       print('set locationnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn');
       GeoPoint locs = GeoPoint(currentlocation!.latitude!,currentlocation!.longitude!);
          // LatLng(_locationResult.latitude!, _locationResult.longitude!);
       await tracking_firebase().setlocationTracking(locs,widget.idorder);

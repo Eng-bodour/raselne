@@ -45,7 +45,9 @@ class MainProvider extends ChangeNotifier {
 
     const NotificationScreen(),
     const OrdersScreen(),
-    HomeScreen(),
+    // HomeScreen(),
+    OrdertrackingPage(idorder: '3A30MVhcYVvLm9DmMPPS'),
+
   ];
 
   var tabscaptain = [

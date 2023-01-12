@@ -25,8 +25,8 @@ class tracking_firebase extends TrackingRepository{
   return
     //(
      FirebaseFirestore.instance.collection('orders')
-        .snapshots().map((event) => event.docs
-        .singleWhere((element) => element.id ==idorder)['trackingLocation']);
+        .snapshots().map((event) =>  event.docs
+        .singleWhere((element)   =>  element.id ==idorder)['trackingLocation']);
     // as GeoPoint;
   //)
         // as GeoPoint;
