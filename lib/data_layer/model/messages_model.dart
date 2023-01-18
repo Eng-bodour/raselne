@@ -3,8 +3,8 @@ import 'package:raselne/data_layer/model/user_model.dart';
 
 class MessageText {
   final UserModel? sender;
-  late  String senderId;
-  late String? timeMessage; // Would usually be type DateTime or Firebase Timestamp in production apps
+  late  String  senderId;
+  late  String? timeMessage; // Would usually be type DateTime or Firebase Timestamp in production apps
   late  String? textMessage;
    bool? isLiked;
    bool? unread;

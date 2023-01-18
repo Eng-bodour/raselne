@@ -39,10 +39,16 @@ class buildCardOrders extends StatelessWidget {
                     Row(
                       children: [
                         Container(
-                          decoration: const BoxDecoration(
+                          decoration:
+                    orderModel.isopen == true?
+                    const BoxDecoration(
+
+                        color: Colors.green)
+                        : const BoxDecoration(
                               shape: BoxShape.circle, color: Colors.red),
+
                           child: Icon(
-                            Icons.close,
+                            orderModel.isopen == true?Icons.check:  Icons.close,
                             color: Colors.white,
                             size: size.width * 0.04,
                           ),
@@ -54,7 +60,8 @@ class buildCardOrders extends StatelessWidget {
                             fontSize: size.width * 0.04,
                             fontWeight: FontWeight.normal,
                             text: getstate_order(orderModel.state), //'ملغى',
-                            color: Colors.red,
+                            color:orderModel.isopen == true?
+                            Colors.green: Colors.red,
                             underLine: TextDecoration.none)
                       ],
                     ),
@@ -154,6 +161,8 @@ class buildCardOrders extends StatelessWidget {
                       ],
                     ),
                   ),
+                  orderModel.distance_me_recive==''?
+                  Container():
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: size.width * 0.05),
@@ -223,7 +232,9 @@ class buildCardOrders extends StatelessWidget {
                     padding:
                         EdgeInsets.symmetric(horizontal: size.width * 0.25),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+
                         orderModel.isopen == true
                             ? Text('متابعة',
                                 style: TextStyle(
@@ -233,16 +244,16 @@ class buildCardOrders extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: size.width * 0.045,
                                 )),
-                        SizedBox(
-                          width: size.width * 0.02,
-                        ),
-                        orderModel.isopen == true
-                            ? const Icon(
-                                Icons.arrow_back_rounded,
-                              )
-                            : const Icon(
-                                Icons.refresh_outlined,
-                              ),
+                        // SizedBox(
+                        //   width: size.width * 0.02,
+                        // ),
+                        // orderModel.isopen == true
+                        //     ? const Icon(
+                        //         Icons.arrow_back_rounded,
+                        //       )
+                        //     : const Icon(
+                        //         Icons.refresh_outlined,
+                        //       ),
                       ],
                     ),
                   ))

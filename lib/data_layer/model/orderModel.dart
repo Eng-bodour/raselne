@@ -43,6 +43,7 @@ String? DateTimeorder=null;
 bool is_arrive=false;//t
 List<DetailOrder> detailorderList=[];//
 String titleStore='';
+String addressImage='';
 String content_order='';// محتويات المنتج الذي طلبه العميل
 StoreModel? storeModel;
 String state='';
@@ -76,7 +77,6 @@ Map<String, dynamic> toSnapchot() => {
   "distance_recive_deilvery": distance_recive_deilvery,
   "price_deilvery_captain": price_deilvery_captain,
   "type_order": type_order,
-
   // "content_order": content_order,
   "state":state,
   "from_user": from_user,
@@ -100,18 +100,19 @@ Map<String, dynamic> toSnapchot() => {
   "idStore":id_store,
   "DateTimeorder":DateTimeorder,
   "discount":discount,
-
+  "detailAddress":detailAddress,
+  "detailorder":detailorder,
 };
  factory OrderModel.fromSnapshot(Map<String,dynamic> doc,String id) {
 
      OrderModel order= OrderModel(
      total:doc["total"],
-       // fromlocation:doc["total"],
      price_deilvery:doc["price_deilvery"],
      type_order:doc["type_order"],
      captain_user:doc["captain_user"],
      content_order:doc["content_order"],
      from_user:doc["from_user"],
+
        // fromlocation:LatLng(gloacationfrom.latitude,gloacationfrom.longitude),
        //LatLng(doc["fromlocation"]
        //:GeoPoint(toLocation.latitude,toLocation.longitude) ,//fromlocation,
@@ -133,6 +134,9 @@ Map<String, dynamic> toSnapchot() => {
      // order.user_captain=
      //calcDistance(List<LatLng> polylineCoordinates)
   order.isstart=doc['isstart']==null?false:doc['isstart'];
+     order.detailAddress=doc["detailAddress"]==null?'':doc["detailAddress"];
+   order.detailorder=doc["detailorder"]==null?'':doc["detailorder"];
+   order.type_pay=doc["type_pay"]==null?'':doc["type_pay"];
   order.isapprove=doc['isapprove'];
    GeoPoint gloacationfrom=doc["fromlocation"];
    order.fromlocation=LatLng(gloacationfrom.latitude,gloacationfrom.longitude);

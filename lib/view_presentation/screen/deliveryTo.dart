@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:raselne/view_presentation/widget/specific%20store/location_receive_bottomsheet.dart';
+import 'package:raselne/view_presentation/widget/specific%20store/map_location.dart';
 
 class DeliveryToScreen extends StatelessWidget {
   const DeliveryToScreen({Key? key}) : super(key: key);

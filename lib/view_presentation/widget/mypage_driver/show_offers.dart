@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -20,6 +21,7 @@ class ShowOffers extends StatelessWidget {
 print('dicount '+orderModel.discount.toString());
     var size = MediaQuery.of(context).size;
     return SafeArea(
+
       child:  ModalProgressHUD(
         inAsyncCall: Provider.of<order_vm>(context,listen: true).isloading,
         child: Directionality(
@@ -41,7 +43,18 @@ print('dicount '+orderModel.discount.toString());
                           snapshot_order.error.toString());
                     }
                     if (! snapshot_order.hasData) {
-                      return Text("Loading");
+                      return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            // crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset('assets/images/delvery.png'),
+//delvery
+                              Text("بانتظار قبول طلبك..."
+                              ,style: TextStyle(fontWeight: FontWeight.w600)),
+                            ],
+                          )
+                      );
                     }
                     return
                       FutureBuilder(
@@ -353,7 +366,7 @@ print('dicount '+orderModel.discount.toString());
                 ),
               ),
             ),
-            backgroundColor: greyColor,
+            // backgroundColor: greyColor,
           ),
         ),
       ),

@@ -327,8 +327,11 @@ else {
   Future<List<OrderModel>> getAllorderUser(String id_user) {
     // TODO: implement getAllorderUser
     return
-      FirebaseServices("orders").ref.where(
-        'from_user', isEqualTo: id_user,).get()
+      FirebaseServices("orders").ref
+          //.orderBy('DateTimeorder',descending: true)
+          .where(
+          'from_user', isEqualTo: id_user,)
+          .get()
           .then((snap) => snap.docs
           .map((doc) =>
           OrderModel.fromSnapshot( doc.data(),doc.id )).toList()

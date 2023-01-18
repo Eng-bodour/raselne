@@ -13,6 +13,7 @@ import 'package:raselne/view_presentation/screen_driver/driver_rating.dart';
 import '../../../data_layer/model/notifyModel.dart';
 import '../../../logic/controller/auth_controller.dart';
 import '../../../logic/controller/order_vm.dart';
+import '../../../logic/orderTrackingPage.dart';
 import '../../widget/text_utilis.dart';
 import '../../widget/widget_location_map.dart';
 import '../invoiceImage.dart';
@@ -171,11 +172,10 @@ class _ChatScreenState extends State<ChatScreen> {
       user = Provider.of<AuthProvider_vm>(context, listen: false).currentuser;
       if(widget.orderModel.from_user!='')
       Provider.of<order_vm>(context, listen: false).order = widget.orderModel;
-     else{
+     else {
        await Provider.of<order_vm>(context, listen: false)
            .get_orderbyId(widget.orderModel.id_order);
        widget.orderModel= Provider.of<order_vm>(context, listen: false).order ;
-
       }
       title=Provider.of<order_vm>(context, listen: false)
           .order.id_order;
@@ -219,6 +219,27 @@ class _ChatScreenState extends State<ChatScreen> {
               .isloading,
           child: Column(
             children: <Widget>[
+                 Row(
+                   children: [
+                     IconButton(
+                       color: Colors.white,
+                         onPressed: ()
+    {
+              Navigator.push(context,
+                  MaterialPageRoute(
+                      builder: (context)=>
+                      OrdertrackingPage(
+                      idorder:Provider.of<order_vm>(context, listen: false)
+                          .order.id_order
+                              //orderModel
+                      // '3A30MVhcYVvLm9DmMPPS'
+                      )
+                  ));
+
+
+    },        icon: Icon(Icons.add_location_rounded))
+                   ],
+                 ),
                  Expanded(
                    flex: 3,
                    child: Container(

@@ -13,6 +13,7 @@ import 'package:raselne/logic/repositories/tracking/tracking_firebase.dart';
 import '../services/location_services.dart';
 import '../services/polyline_service.dart';
 import 'controller/auth_controller.dart';
+import 'controller/order_vm.dart';
 
 class OrdertrackingPage extends StatefulWidget {
   OrdertrackingPage({required this.idorder, Key? key}) : super(key: key);
@@ -27,10 +28,10 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
   BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor destinationIcon = BitmapDescriptor.defaultMarkerWithHue(20);
   BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
-  static const LatLng sourceLocation = LatLng(36.230087, 37.137082987725735);
-  static const LatLng destination =    LatLng(36.236267, 37.1149617);
-  static const LatLng mylocation =     LatLng(36.3360211,37.167082987725735);
-  LocationData? currentlocation; //=LatLng(37.33429383, -122.06600055);
+    LatLng sourceLocation = LatLng(36.230087, 37.137082987725735);
+    LatLng destination =    LatLng(36.236267, 37.1149617);
+    LatLng mylocation =     LatLng(36.3360211,37.167082987725735);
+  LocationData? currentlocation=null; //=LatLng(37.33429383, -122.06600055);
   List<LatLng> polylineCoordinates = [];
   Set<Polyline> _polylines = Set<Polyline>();
   final loc.Location location = loc.Location();
@@ -57,7 +58,10 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
     print(';nbnnbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       currentlocation=  await LocationService().getLocation();
-
+     sourceLocation=Provider.of<order_vm>(context, listen: false)
+         .order.fromlocation;
+     destination=Provider.of<order_vm>(context, listen: false)
+         .order.toLocation;
       if (Provider.of<AuthProvider_vm>(context,listen: false)
           .currentuser.type=='captain')
       getCurrentLocation();
@@ -77,19 +81,26 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
     return Scaffold(
         body:
        Provider.of<AuthProvider_vm>(context).currentuser.type=='user'?
-        StreamBuilder(
+       mylocation == null
+           ? Center(
+         child: Text('lo'),
+       )
+           :  StreamBuilder(
             stream:  tracking_firebase().getlocationTracking(widget.idorder),
             builder: (context, AsyncSnapshot<GeoPoint> snapshot) {
+
         print('-----------------snapshot.data!.latitude!------------------------- ');
-        print(snapshot.data!.latitude!);
-              _animateCamera(
+        // print(snapshot.data!.latitude!);
+        if(snapshot.hasData==true)
+        _animateCamera(
                   LatLng(snapshot.data!.latitude!,snapshot.data!.longitude!)
                   );
-              return mylocation == null
-                  ? Center(
-                      child: Text('lo'),
-                    )
-                  :
+              return
+                // mylocation == null
+                //   ? Center(
+                //       child: Text('lo'),
+                //     )
+                //   :
               snapshot.hasData==false?
               Center(
                 child: Text('lonn nnnn'),

@@ -45,8 +45,8 @@ class MainProvider extends ChangeNotifier {
 
     const NotificationScreen(),
     const OrdersScreen(),
-    // HomeScreen(),
-    OrdertrackingPage(idorder: '3A30MVhcYVvLm9DmMPPS'),
+    HomeScreen(),
+    //OrdertrackingPage(idorder: '3A30MVhcYVvLm9DmMPPS'),
 
   ];
 
@@ -55,9 +55,9 @@ class MainProvider extends ChangeNotifier {
     MyPageDriverScreen(),
     const NotificationScreen(),
     OrdersDriverScreen(),
-    OrdertrackingPage(idorder: '3A30MVhcYVvLm9DmMPPS'),
+    // OrdertrackingPage(idorder: '3A30MVhcYVvLm9DmMPPS'),
 
-    // const HomeDriverScreen(),
+     const HomeDriverScreen(),
   ];
 
   var title = [

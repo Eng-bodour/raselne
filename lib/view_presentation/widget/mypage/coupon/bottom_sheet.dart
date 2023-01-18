@@ -148,8 +148,11 @@ Widget bottomSheet(BuildContext context, TextEditingController coupon,String typ
             InkWell(
               onTap: ()async {
                   if(type=='check'){
-                    double val= await Provider.of<AuthProvider_vm>(context,listen: false)
+                    double val= await Provider.of<AuthProvider_vm>(
+                        context,
+                        listen: false)
                         .check_Copoun(coupon.text.toString());
+
                Provider.of<order_vm>(context,listen: false)
                     .setvalue_dicount(val);
                if(val==0.0) {
