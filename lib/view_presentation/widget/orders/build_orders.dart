@@ -77,6 +77,25 @@ class buildCardOrders extends StatelessWidget {
               const Divider(
                 thickness: 1,
               ),
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Row(
+                  children: [
+                    TextUtils(
+                        fontSize: size.width * 0.04,
+                        fontWeight: FontWeight.normal,
+                        text: 'رقم الطلب : ', // 'سنة',
+                        color: Colors.black54,
+                        underLine: TextDecoration.none),
+                    TextUtils(
+                        fontSize: size.width * 0.04,
+                        fontWeight: FontWeight.normal,
+                        text: orderModel.id_order.substring(0, 8).toString(), // 'سنة',
+                        color: Colors.black54,
+                        underLine: TextDecoration.none)
+                  ],
+                ),
+              ),
               Row(
                 children: [
                   CircleAvatar(
@@ -161,7 +180,7 @@ class buildCardOrders extends StatelessWidget {
                       ],
                     ),
                   ),
-                  orderModel.distance_me_recive==''?
+                  orderModel.distance_recive_deilvery==''?
                   Container():
                   Padding(
                     padding:
@@ -169,7 +188,7 @@ class buildCardOrders extends StatelessWidget {
                     child: TextUtils(
                         fontSize: size.width * 0.04,
                         fontWeight: FontWeight.normal,
-                        text: 'كم ${orderModel.distance_me_recive}',
+                        text: 'كم ${orderModel.distance_recive_deilvery}',
                         color: Colors.black54,
                         underLine: TextDecoration.none),
                   ),

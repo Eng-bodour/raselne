@@ -256,7 +256,7 @@ class _ChatScreenState extends State<ChatScreen> {
                          topRight: Radius.circular(30.0),
                        ),
                        child: StreamBuilder(
-                         stream: Provider.of<order_vm>(context, listen: true)
+                         stream: Provider.of<order_vm>(context, listen: false)
                              .getchat(widget.orderModel.id_order),
                          builder: (BuildContext context,
                              AsyncSnapshot<List<MessageText>> snapshot) {
@@ -267,103 +267,112 @@ class _ChatScreenState extends State<ChatScreen> {
                            if (!snapshot.hasData) {
                              return const Text("Loading");
                            }
-                           return ListView.builder(
-                             //to reverse message
-                             //   reverse: true,
-                             padding: EdgeInsets.only(top: size.height * 0.02),
-                             itemCount: snapshot.data!.length,
-                             itemBuilder: (BuildContext context, int index) {
-                               // final MessageText message = messages[index];
-                               bool isMe =
-                                   snapshot.data![index].senderId == user.uid;
-                               return snapshot.data![index].type_message ==
-                                   'text'
-                                   ? _buildMessage(
-                                   snapshot.data![index], isMe, size)
-                                   : snapshot.data![index].type_message == 'map'
-                                   ? mapLocationMessage(
-                                 message: snapshot.data![index] ,
-                                 size: size,
-                               )
-                                   : snapshot.data![index].type_message ==
-                                   'image'
-                                   ? Container(
-                                 margin: EdgeInsets.only(
-                                   top: size.height * 0.01,
-                                   left: size.width * 0.03,
-                                   bottom: size.height * 0.01,
-                                 ),
-                                 padding: EdgeInsets.symmetric(
-                                     horizontal: size.width * 0.06,
-                                     vertical: size.height * 0.03),
-                                 width: size.width * 0.75,
-                                 decoration:
-                                 BoxDecoration(
-                                   color: isMe
-                                       ? greyColor.withOpacity(0.1)
-                                       : mainColor
-                                       .withOpacity(0.3),
-                                   borderRadius: isMe
-                                       ? BorderRadius.only(
-                                     topLeft:
-                                     Radius.circular(
-                                         size.width *
-                                             0.1),
-                                     topRight:
-                                     Radius.circular(
-                                         size.width *
-                                             0.02),
-                                     bottomLeft:
-                                     Radius.circular(
-                                         size.width *
-                                             0.02),
-                                     bottomRight:
-                                     Radius.circular(
-                                         size.width *
-                                             0.1),
-                                   )
-                                       : BorderRadius.only(
-                                     topRight:
-                                     Radius.circular(
-                                         size.width *
-                                             0.1),
-                                     topLeft:
-                                     Radius.circular(
-                                         size.width *
-                                             0.02),
-                                     bottomRight:
-                                     Radius.circular(
-                                         size.width *
-                                             0.02),
-                                     bottomLeft:
-                                     Radius.circular(
-                                         size.width *
-                                             0.1),
+                           return SingleChildScrollView(
+                             reverse: true,
+                             //   physics: const NeverScrollableScrollPhysics(),
+
+                           child: ListView.builder(
+                               // physics: const  AlwaysScrollableScrollPhysics(),
+                             shrinkWrap: true,
+                             physics: NeverScrollableScrollPhysics(),
+                               // shrinkWrap: true,
+                               //to reverse message
+                               //   reverse: true,
+                               padding: EdgeInsets.only(top: size.height * 0.02),
+                               itemCount: snapshot.data!.length,
+                               itemBuilder: (BuildContext context, int index) {
+                                 // final MessageText message = messages[index];
+                                 bool isMe =
+                                     snapshot.data![index].senderId == user.uid;
+                                 return snapshot.data![index].type_message ==
+                                     'text'
+                                     ? _buildMessage(
+                                     snapshot.data![index], isMe, size)
+                                     : snapshot.data![index].type_message == 'map'
+                                     ? mapLocationMessage(
+                                   message: snapshot.data![index] ,
+                                   size: size,
+                                 )
+                                     : snapshot.data![index].type_message ==
+                                     'image'
+                                     ? Container(
+                                   margin: EdgeInsets.only(
+                                     top: size.height * 0.01,
+                                     left: size.width * 0.03,
+                                     bottom: size.height * 0.01,
                                    ),
-                                 ),
-                                 child:
-                                 CachedNetworkImage(
-                                   imageUrl: snapshot
-                                       .data![index].textMessage
-                                       .toString(),
-                                   placeholder: (context, url) =>
-                                   const CircularProgressIndicator(),
-                                   errorWidget:
-                                       (context, url, error) =>
-                                   const Icon(Icons.error),
-                                 ),
-                                 // Image.network(
-                                 //     snapshot.data![index].textMessage.toString(),
-                                 //   width: 30,
-                                 //   height: 35,
-                                 // )
-                               )
-                                   : invoice_chat(
-                                 size: size,
-                                 messageText:
-                                 snapshot.data![index],
-                               ); //invoice
-                             },
+                                   padding: EdgeInsets.symmetric(
+                                       horizontal: size.width * 0.06,
+                                       vertical: size.height * 0.03),
+                                   width: size.width * 0.75,
+                                   decoration:
+                                   BoxDecoration(
+                                     color: isMe
+                                         ? greyColor.withOpacity(0.1)
+                                         : mainColor
+                                         .withOpacity(0.3),
+                                     borderRadius: isMe
+                                         ? BorderRadius.only(
+                                       topLeft:
+                                       Radius.circular(
+                                           size.width *
+                                               0.1),
+                                       topRight:
+                                       Radius.circular(
+                                           size.width *
+                                               0.02),
+                                       bottomLeft:
+                                       Radius.circular(
+                                           size.width *
+                                               0.02),
+                                       bottomRight:
+                                       Radius.circular(
+                                           size.width *
+                                               0.1),
+                                     )
+                                         : BorderRadius.only(
+                                       topRight:
+                                       Radius.circular(
+                                           size.width *
+                                               0.1),
+                                       topLeft:
+                                       Radius.circular(
+                                           size.width *
+                                               0.02),
+                                       bottomRight:
+                                       Radius.circular(
+                                           size.width *
+                                               0.02),
+                                       bottomLeft:
+                                       Radius.circular(
+                                           size.width *
+                                               0.1),
+                                     ),
+                                   ),
+                                   child:
+                                   CachedNetworkImage(
+                                     imageUrl: snapshot
+                                         .data![index].textMessage
+                                         .toString(),
+                                     placeholder: (context, url) =>
+                                     const CircularProgressIndicator(),
+                                     errorWidget:
+                                         (context, url, error) =>
+                                     const Icon(Icons.error),
+                                   ),
+                                   // Image.network(
+                                   //     snapshot.data![index].textMessage.toString(),
+                                   //   width: 30,
+                                   //   height: 35,
+                                   // )
+                                 )
+                                     : invoice_chat(
+                                   size: size,
+                                   messageText:
+                                   snapshot.data![index],
+                                 ); //invoice
+                               },
+                             ),
                            );
                          },
                        ),
@@ -535,8 +544,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       },
                       child: Container(
                         width: size.width * 1,
-                        height: size.height * 0.1,
-                        decoration: const BoxDecoration(color: greyColor),
+                        height: size.height * 0.08,
+                        decoration: const BoxDecoration(color: mainColor),
                         child: Center(
                             child: TextUtils(
                                 fontSize: size.width * 0.05,

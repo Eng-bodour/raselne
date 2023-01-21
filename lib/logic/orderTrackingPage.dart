@@ -48,8 +48,11 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
 //     zoom: 19.151926040649414);
 
   void setCustomMarkerIcon() {
-    BitmapDescriptor.fromAssetImage(ImageConfiguration.empty, "assetName")
-        .then((value) => sourceIcon = value);
+    BitmapDescriptor.fromAssetImage(
+        // ImageConfiguration.empty,
+       const ImageConfiguration(size: Size(10, 10)),
+        "assets/images/delvery.png")
+        .then((value) => currentLocationIcon = value);
   }
 
   @override
@@ -59,13 +62,13 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       currentlocation=  await LocationService().getLocation();
      sourceLocation=Provider.of<order_vm>(context, listen: false)
-         .order.fromlocation;
+         .order.fromlocation!;
      destination=Provider.of<order_vm>(context, listen: false)
-         .order.toLocation;
+         .order.toLocation!;
       if (Provider.of<AuthProvider_vm>(context,listen: false)
           .currentuser.type=='captain')
       getCurrentLocation();
-      // setCustomMarkerIcon();
+        setCustomMarkerIcon();
       _drawPolyline(sourceLocation, destination);
       // getMyLocation();
     });
@@ -132,7 +135,8 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
                             position:
               //mylocation
               //),
-                        LatLng(snapshot.data!.latitude!,snapshot.data!.longitude!)),
+                        LatLng(snapshot.data!.latitude!,
+                            snapshot.data!.longitude!)),
 
                         Marker(
                             markerId: MarkerId("source",),
@@ -256,8 +260,12 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
                   LatLng(newLoc!.latitude!, newLoc!.longitude!))
           ));
 
-       setState( () {} );
-
+       // setState( () {} );//
+/*
+This error happens if you call setState() on a State object for a widget that no longer appears in the widget tree (e.g., whose parent widget no longer includes the widget in its build). This error can occur when code calls setState() from a timer or an animation callback.
+E/flutter (20288): The preferred solution is to cancel the timer or stop listening to the animation in the dispose() callback. Another solution is to check the "mounted" property of this object before calling setState() to ensure the object is still in the tree.
+E/flutter (20288): This error might indicate a memory leak if setState() is being called because another object is retaining a reference to this State object after it has been removed from the tree. To avoid memory leaks, consider breaking the reference to this object during dispose().
+ */
     });
 
   }

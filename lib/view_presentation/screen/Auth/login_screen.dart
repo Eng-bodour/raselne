@@ -331,7 +331,7 @@ class LoginScreen extends StatelessWidget {
                                  colorText: Colors.white,
                                );
                              }
-                              },
+                           },
                               child: Image.asset(
                                 "assets/images/google.png",
                                 color: Colors.amber,

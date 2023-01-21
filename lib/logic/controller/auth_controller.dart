@@ -27,7 +27,11 @@ class AuthProvider_vm extends ChangeNotifier {
   UserRepository userRepository;
   AuthProvider_vm({required this.userRepository});
 
-  Future<UserModel> isAuthuser()async{
+  void updatelocation(LatLng loc) {
+    currentuser.location=loc;
+    notifyListeners();
+  }
+  Future<UserModel> isAuthuser() async {
   // isloading=true;
   // notifyListeners();
   bool isauth= await  userRepository.isAuthuser();
@@ -43,9 +47,10 @@ class AuthProvider_vm extends ChangeNotifier {
      return UserModel(
       location: LatLng(14,50),
          uid:null, name: 'name',
-      email: 'email', mobile: 'mobile', dateCreated: '', type: '', rataing: 0.0);
+         email: 'email', mobile: 'mobile', dateCreated: '',
+         type: '', rataing: 0.0);
   // isloading=false;
-  notifyListeners();
+   notifyListeners();
    return currentuser;
   }
   Future<void> setImageProfileUser( File? fileimage) async {
@@ -76,7 +81,7 @@ class AuthProvider_vm extends ChangeNotifier {
 
   Future<void> getuser_vm() async {
     currentuser=await userRepository.getuser();
-     currentuser.rataing=UserModel.getrate(currentuser.rating);
+    currentuser.rataing=UserModel.getrate(currentuser.rating);
     print('xxx '+currentuser.uid.toString());
     print('rating  '+currentuser.rataing.toString());
     notifyListeners();

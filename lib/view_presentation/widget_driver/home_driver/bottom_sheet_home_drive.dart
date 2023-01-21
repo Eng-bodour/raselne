@@ -38,7 +38,10 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
       zoom: 10);
   LatLng currentLocation = _inialCameraPosition.target;
   TextEditingController valueController = TextEditingController();
-  BitmapDescriptor? _locationIcon;
+  late BitmapDescriptor  _locationIcon=  BitmapDescriptor.defaultMarker;
+
+  late BitmapDescriptor  _mylocationIcon = BitmapDescriptor.defaultMarker;
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -62,14 +65,14 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
     super.initState();
   }
 
-  Future<void> _animateCamera(LatLng _location) async {
+  Future<void> _animateCamera(LatLng? _location) async {
     final GoogleMapController controller = await _controller.future;
     CameraPosition _cameraPosition = CameraPosition(
-      target: _location,
+      target: _location==null?LatLng(2, 32):_location,
       zoom: 13.00,
     );
     print(
-        "animating camera to (lat: ${_location.latitude}, long: ${_location.longitude}");
+        "animating camera to (lat: ${_location!.latitude}, long: ${_location!.longitude}");
     controller.animateCamera(CameraUpdate.newCameraPosition(_cameraPosition));
   }
 
@@ -82,16 +85,17 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: Container(
-              height: size.height * 0.9,
+              // height: size.height * 0.9,
               width: double.infinity,
               margin: EdgeInsets.symmetric(
-                vertical: size.height * 0.01,
+                vertical: size.height * 0.02,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(
+                      vertical: size.height*0.02,
                       horizontal: size.width * 0.06,
                     ),
                     child: Row(
@@ -143,11 +147,11 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: size.height * 0.01,
-                  ),
+                  // SizedBox(
+                  //   height: size.height * 0.01,
+                  // ),
                   Container(
-                    height: size.height * 0.1,
+                    // height: size.height * 0.1,
                     decoration: BoxDecoration(color: mainColor.withOpacity(0.2)),
                     child: Padding(
                       padding: EdgeInsets.symmetric(
@@ -230,7 +234,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                     ),
                   ),
                   Container(
-                    height: size.height * 0.3,
+                    height: size.height * 0.4,
                     decoration: const BoxDecoration(color: mainColor),
                     child: Scaffold(
                       body: Stack(
@@ -238,8 +242,8 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                         children: [
                           GoogleMap(
                             initialCameraPosition: CameraPosition(
-                                target: LatLng(widget.order.toLocation.latitude,
-                                    widget.order.toLocation.longitude)),
+                                target: LatLng(widget.order.fromlocation!.latitude,
+                                    widget.order.fromlocation!.longitude)),
                             mapType: MapType.normal,
                             onMapCreated: (GoogleMapController controller) async {
                               String style = await DefaultAssetBundle.of(context)
@@ -253,7 +257,26 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                                 currentLocation = newPos.target;
                               });
                             },
-                            markers: _markers,
+                            markers:{
+
+                              Marker(
+                                  markerId: MarkerId("source",),
+                                  // icon: _locationIcon,
+
+                                  position: widget.order.fromlocation!),
+                              // Marker(
+                              //     markerId: MarkerId("my",),
+                              //     icon: _mylocationIcon,
+                              //
+                              //     position: Provider.of<AuthProvider_vm>(context, listen: true)
+                              //         .currentuser.location!),
+                              Marker(
+
+                                  markerId: MarkerId("destination"),
+                                  // icon: _locationIcon,
+
+                                  position: widget.order.toLocation!),
+                            },
                              polylines: _polylines,
                             // polylines: {
                             //   Polyline(
@@ -262,11 +285,11 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                             //   )
                             // },
                           ),
-                          SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: Image.asset('assets/images/location_icon.png'),
-                          ),
+                          // SizedBox(
+                          //   width: 40,
+                          //   height: 40,
+                          //   child: Image.asset('assets/images/location_icon.png'),
+                          // ),
                         ],
                       ),
                       floatingActionButton: Column(
@@ -309,7 +332,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                                   TextUtils(
                                       fontSize: size.width * 0.04,
                                       fontWeight: FontWeight.bold,
-                                      text: widget.order.distance_me_recive,
+                                      text: widget.order.distance_recive_deilvery,
                                       color: Colors.black87,
                                       underLine: TextDecoration.none),
                                 ],
@@ -347,7 +370,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                                   TextUtils(
                                       fontSize: size.width * 0.04,
                                       fontWeight: FontWeight.bold,
-                                      text: widget.order.distance_recive_deilvery,
+                                      text: widget.order.distance_me_recive,
                                       color: Colors.black87,
                                       underLine: TextDecoration.none),
                                 ],
@@ -369,16 +392,17 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                     ),
                   ),
                   Container(
-                    height: size.height * 0.1,
+                    height: size.height * 0.07,
                     decoration: const BoxDecoration(color: mainColor),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextUtils(
-                            fontSize: size.width * 0.04,
-                            fontWeight: FontWeight.bold,
-                            text: 'تأكيد العرض',
-                            color: Colors.white,
-                            underLine: TextDecoration.none),
+                        // TextUtils(
+                        //     fontSize: size.width * 0.04,
+                        //     fontWeight: FontWeight.bold,
+                        //     text: 'تأكيد العرض',
+                        //     color: Colors.white,
+                        //     underLine: TextDecoration.none),
                         Padding(
                           padding:
                               EdgeInsets.symmetric(horizontal: size.width * 0.06),
@@ -430,6 +454,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                                     await Provider.of<order_vm>(context,
                                             listen: false)
                                         .update_order(
+
                                       widget.order.id_order,
                                       widget.order.distance_recive_deilvery,
                                       widget.order.price_deilvery_captain,
@@ -457,7 +482,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                                   child: TextUtils(
                                     color: mainColor,
                                     text: widget.order.price_deilvery_captain +
-                                        ' تأكيد ', // '20ر.س',
+                                        'تأكيد العرض', // '20ر.س',
                                     fontSize: size.width * 0.05,
                                     fontWeight: FontWeight.bold,
                                     underLine: TextDecoration.none,
@@ -514,23 +539,24 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
     );
   }
 
-  Future<void> _drawPolyline(LatLng from, LatLng to) async {
+  Future<void> _drawPolyline(LatLng? from, LatLng? to) async {
      Polyline polyline = await PolylineService().drawPolyline2(from, to);
     //polylineCoordinates = await PolylineService().drawPolyline(from, to);
 
    _polylines.add(polyline);
     //
-    // _setMarker(from);
-    // _setMarker(to);
+    // _setMarker(from,_locationIcon);
+    // _setMarker(to,_locationIcon);
+    // _setMarker(to,);
 
     setState(() {});
   }
 
-  void _setMarker(LatLng _location) {
+  void _setMarker(LatLng? _location,BitmapDescriptor bitmapicon) {
     Marker newMarker = Marker(
       markerId: MarkerId(_location.toString()),
-      icon: BitmapDescriptor.defaultMarker,
-      // icon: _locationIcon,
+      // icon: BitmapDescriptor.defaultMarker,
+       icon: bitmapicon,
       position: currentLocation,
       infoWindow: InfoWindow(
           title: "Title",
@@ -539,15 +565,24 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
     _markers.clear();
     _markers.add(newMarker);
     // GetAddressFromLatLong(currentLocation);
-    setState(() {});
+    // setState(() {});
   }
 
   Future<void> _buildMarkerFromAssets() async {
-    if (_locationIcon == null) {
+    // if (_locationIcon == null) {
       _locationIcon = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(48, 48)),
+          ImageConfiguration.empty,
+          // const ImageConfiguration(size: Size(0.05, 0.02)),
           'assets/images/location_icon.png');
-      setState(() {});
-    }
+      // setState(() {});
+    // }
+    // if (_mylocationIcon == null) {
+      _mylocationIcon = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(0.01, 0.01)),
+          'assets/images/delvery.png');
+      // setState(() {});
+    // }
+
+
   }
 }

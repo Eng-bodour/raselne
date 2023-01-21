@@ -3,6 +3,7 @@
 
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:raselne/data_layer/model/messages_model.dart';
@@ -19,8 +20,9 @@ late OrderModel order;
 List<OrderModel> mylist_order=[];
 List<OrderModel> mylist_orderCaptain=[];
 List<MessageText> ChatOrder=[];
-
+String price_deilvery_captain='0';
 OrderRepository orderRepository;
+
 order_vm({required this.orderRepository});
 
 late UserModel currentuser;
@@ -40,7 +42,8 @@ setvalue(UserModel val){
   notifyListeners();
  }
  void setvaluePriceCaptain(String val) {
-  order.price_deilvery_captain=val;
+   order.price_deilvery_captain=val;
+   price_deilvery_captain=val;
   notifyListeners();
  }
  void change_pay(String pay){
@@ -59,16 +62,19 @@ addlocation(LatLng location,String Address,
     String detailAddress,String type
     ){
 if(type=='الاستلام')
-  order.fromlocation=location;
+{  order.fromlocation=location;
+   order.Addressdfromlocation=Address;
+order.detailAddressfrom=detailAddress;
+
+}
 else
 {
   order.toLocation=location;//التوصيل
   order.trackingLocation=location;//التوصيل
-
-
-}
   order.AddresstoLocation=Address;
-  order.detailAddress=detailAddress;
+  order.detailAddressTo=detailAddress;
+}
+
   notifyListeners();
 }
 Future<UserModel> getusercaptain(String uidcaptain)async{
@@ -208,7 +214,9 @@ Future<List<OrderModel>> get_myorderCaptain()async{
        id_order,
        currentuser.uid.toString(),
        distance_recive_deilvery,
-       price_deilvery_captain);
+      price_deilvery_captain,
+     GeoPoint(currentuser.location!.latitude ,currentuser.location!.longitude)
+   );
    isloading=false;
   notifyListeners();
  }

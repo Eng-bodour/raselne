@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:raselne/data_layer/model/messages_model.dart';
 import 'package:raselne/data_layer/model/orderModel.dart';
 import 'package:raselne/data_layer/model/user_model.dart';
@@ -35,7 +36,11 @@ class order_api extends OrderRepository {
   }
 
   @override
-  Future<void> update_order(String idOrder,String idcaptain,String distance_recive_deilvery,String price_deilvery_captain) {
+  Future<void> update_order(String idOrder,String idcaptain,
+      String distance_recive_deilvery,
+      String price_deilvery_captain,
+      GeoPoint trackingloc
+      ) {
     // TODO: implement update_order
     throw UnimplementedError();
   }

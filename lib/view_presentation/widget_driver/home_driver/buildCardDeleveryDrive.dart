@@ -52,16 +52,16 @@ class _card_deilveryState extends State<card_deilvery> {
 
   @override
   Widget build(BuildContext context) {
-    widget.order.distance_me_recive = PolylineService().calcDistance([
-      LatLng(user.location!.latitude, user.location!.longitude),
-      LatLng(widget.order.fromlocation.latitude,
-          widget.order.fromlocation.longitude)
-    ]);
     widget.order.distance_recive_deilvery = PolylineService().calcDistance([
-      LatLng(widget.order.fromlocation.latitude,
-          widget.order.fromlocation.longitude),
+      LatLng(user.location!.latitude, user.location!.longitude),
+      LatLng(widget.order.fromlocation!.latitude,
+          widget.order.fromlocation!.longitude)
+    ]);
+    widget.order.distance_me_recive = PolylineService().calcDistance([
+      LatLng(widget.order.fromlocation!.latitude,
+          widget.order.fromlocation!.longitude),
       LatLng(
-          widget.order.toLocation.latitude, widget.order.toLocation.longitude)
+          widget.order.toLocation!.latitude, widget.order.toLocation!.longitude)
     ]);
     print(widget.order.distance_me_recive);
     print(widget.order.distance_recive_deilvery);
@@ -104,7 +104,7 @@ class _card_deilveryState extends State<card_deilvery> {
                         fontSize: size.width * 0.03,
                         fontWeight: FontWeight.bold,
                         text: widget.order.id_order
-                            .substring(0, 6), //'#123349599',
+                            .substring(0, 8), //'#123349599',
                         color: Colors.black54,
                         underLine: TextDecoration.none),
                   ],
@@ -148,7 +148,7 @@ class _card_deilveryState extends State<card_deilvery> {
                       fontSize: size.width * 0.04,
                       fontWeight: FontWeight.bold,
                       text: widget.order
-                          .distance_me_recive, // '--   3.55 كم   --',//distance_me_recive
+                          .distance_recive_deilvery, // '--   3.55 كم   --',//distance_me_recive
                       color: Colors.black45,
                       underLine: TextDecoration.none),
                   Column(
@@ -170,7 +170,7 @@ class _card_deilveryState extends State<card_deilvery> {
                       fontSize: size.width * 0.04,
                       fontWeight: FontWeight.bold,
                       text: widget.order
-                          .distance_recive_deilvery, // '--   13 كم   --',//distance_recive_deilvery
+                          .distance_me_recive, // '--   13 كم   --',//distance_recive_deilvery
                       color: Colors.black45,
                       underLine: TextDecoration.none),
                   Column(
@@ -200,7 +200,8 @@ class _card_deilveryState extends State<card_deilvery> {
                 children: [
                   InkWell(
                     onTap: () {
-                      // Provider.of<order_vm>(context,listen: false).setvaluePriceCaptain(valueController.text);
+                      // Provider.of<order_vm>(context,listen: false)
+                      // .setvaluePriceCaptain(valueController.text);
                       widget.order.price_deilvery_captain =
                           valueController.text;
                       // Get.to(bottomsheet_offer(

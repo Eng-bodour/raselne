@@ -162,8 +162,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                               ),
                               Expanded(
                                 child: Container(
-                                  margin:
-                                  EdgeInsets.only(right: size.width * 0.06),
+                                  // margin: EdgeInsets.only(right: size.width * 0.06),
                                   child: TextUtils(
                                       fontSize: size.width * 0.03,
                                       fontWeight: FontWeight.bold,

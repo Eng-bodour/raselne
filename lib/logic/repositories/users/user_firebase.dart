@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:location/location.dart';
 import 'package:raselne/data_layer/model/user_model.dart';
 import 'package:raselne/logic/repositories/users/user_repo.dart';
 
@@ -20,6 +21,8 @@ import '../../../data_layer/webServices/firebase.dart';
 import '../../../routes/routes.dart';
 import 'dart:io';
 import 'package:raselne/services/imageservice.dart';
+
+import '../../../services/location_services.dart';
 class user_firebase extends UserRepository{
   FirebaseAuth auth = FirebaseAuth.instance;// auth.currentUser!.uid.toString();
   User? get userProfiloe => auth.currentUser;
@@ -138,7 +141,6 @@ class user_firebase extends UserRepository{
     } on FirebaseAuthException catch (error) {
       String title = error.code.replaceAll(RegExp('-'), ' ').capitalize!;
 
-
       if (error.code == 'user-not-found') {
         message =
         ' Account does not exists for that $email.. Create your account by signing up..';
@@ -162,12 +164,17 @@ class user_firebase extends UserRepository{
     //throw UnimplementedError();
   }
   @override
-  Future<void> updateToken()async{
+  Future<void> updateToken() async{
     UserModel us=await getuser();
     token=await FirebaseMessaging.instance.getToken() ;
-
+    LocationData _myLocation=await LocationService().getLocation();
+    GeoPoint g=GeoPoint(_myLocation.latitude!, _myLocation.longitude!);
     FirebaseFirestore.instance
-       .collection('users').doc(us.docId).update({'token':token});
+       .collection('users').doc(us.docId).update({
+      'token':token,
+      'location':g,
+
+       });
   }
   @override
   Future<String> resetPassword(String email)

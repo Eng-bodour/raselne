@@ -213,7 +213,9 @@ class order_firebase extends OrderRepository{
  }
 
   @override
- Future<void> update_order(String idOrder,String idcaptain,String distance_recive_deilvery,String price_deilvery_captain)async {
+ Future<void> update_order(String idOrder,String idcaptain,
+      String distance_recive_deilvery,
+      String price_deilvery_captain,GeoPoint trackingloc)async {
 //عندما المندوب يقدم على الطلب
     // TODO: implement update_order
    await FirebaseServices("orders").ref
@@ -224,6 +226,8 @@ class order_firebase extends OrderRepository{
        'price_deilvery_captain':price_deilvery_captain,
        'price_deilvery':price_deilvery_captain,
        'captain_user':idcaptain,
+       'trackingLocation':trackingloc,
+
     })
         .then((value) => print("User Updated"))
         .catchError((error) => print("Failed to update user: $error"));
@@ -276,20 +280,20 @@ class order_firebase extends OrderRepository{
 else {
       MessageText message=
       MessageText(senderId: orderModel.from_user, type_message: 'map',
-          textMessage:' مكان الاستلام '+orderModel.detailAddress,
+          textMessage:' مكان الاستلام '+orderModel.detailAddressfrom.toString(),
           timeMessage: DateFormat('yyyy-MM-dd HH:mm:ss')
               .format(DateTime.now()).toString(),
           location:GeoPoint(
-              orderModel.fromlocation.latitude,
-              orderModel.fromlocation.longitude)
+              orderModel.fromlocation!.latitude,
+              orderModel.fromlocation!.longitude)
       );
       message=
           MessageText(senderId: orderModel.from_user, type_message: 'map',
-              textMessage:' مكان التسليم '+orderModel.detailAddress,
+              textMessage:' مكان التسليم '+orderModel.detailAddressTo.toString(),
               timeMessage: DateTime.now().toString(),
               location:GeoPoint(
-                  orderModel.toLocation.latitude,
-                  orderModel.toLocation.longitude)
+                  orderModel.toLocation!.latitude,
+                  orderModel.toLocation!.longitude)
           );
       await
       FirebaseServices('orders').ref.doc(orderModel.id_order)
@@ -453,15 +457,30 @@ else {
 
    }
   else
-    await
+    {
+      if (state=='done arrive')
+        await
         FirebaseServices("orders").ref
         .doc(idOrder)
         .update({
         'state':state,
+        'endorder':
+          //DateTime.now().toString(),
+          DateFormat('yyyy-MM-dd hh:mm:ss')
+              .format(DateTime.now()),
     })
         .then((value) => print("state order Updated"))
         .catchError((error) => print("Failed to update user: $error"));
+ else  await
+      FirebaseServices("orders").ref
+          .doc(idOrder)
+          .update({
+        'state':state,
 
+      })
+          .then((value) => print("state order Updated"))
+          .catchError((error) => print("Failed to update user: $error"));
+  }
     String state_message='';
     switch( state) {
       case 'done recive':

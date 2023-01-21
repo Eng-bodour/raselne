@@ -158,11 +158,29 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                   ],
                 ))));
   }
-
+  late DateTime  datanext;
+  late DateTime  datanext2;
   Widget buildMyDelevery({required OrderModel orderModel, required Size size}) {
-    // DateTime datanext=DateTime.now();//orderModel.startorder;
-    // DateTime datanext2=DateTime.now();//orderModel.endorder;
-    // datanext2.difference(datanext1).inMinutes;
+    if(orderModel.startorder !=null && orderModel.endorder !=null)
+    {
+      datanext=
+    DateTime(
+      orderModel.startorder!.year,
+      orderModel.startorder!.month,
+      orderModel.startorder!.day,
+      orderModel.startorder!.hour,
+      orderModel.startorder!.minute,
+      orderModel.startorder!.second,
+    ) ;
+      datanext2=DateTime(
+        orderModel.endorder!.year,
+        orderModel.endorder!.month,
+        orderModel.endorder!.day,
+        orderModel.endorder!.hour,
+        orderModel.endorder!.minute,
+        orderModel.endorder!.second,
+    ) ;
+  }
     // int peroidtime= int.parse(peroid.value_config);
     // datanext=Jiffy().add(days: peroidtime).dateTime;
     // Jiffy().diff(input);
@@ -224,11 +242,11 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: size.width * 0.03,
-          vertical: size.width * 0.01,
+          // vertical: size.height * 0.01,
         ),
         child: Card(
           child: SizedBox(
-            height: size.height * 0.25,
+            // height: size.height * 0.25,
             child: Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: size.width * 0.02, vertical: size.height * 0.02),
@@ -304,7 +322,9 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                           TextUtils(
                               fontSize: size.width * 0.035,
                               fontWeight: FontWeight.bold,
-                              text: 'تم التوصيل ساعات ', //'${Firebase.name}',
+                              text:
+
+                              ' تم التوصيل  ${ datanext2.difference(datanext).inHours} ساعة  ', //'${Firebase.name}',
                               color: Colors.black38,
                               underLine: TextDecoration.none),
                         ],
@@ -336,7 +356,7 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                         onTap: () {},
                         child: Container(
                           width: size.width * 0.4,
-                          height: size.height * 0.03,
+                          height: size.height * 0.04,
                           decoration: BoxDecoration(
                               color:
                               orderModel.isopen==true?
@@ -349,13 +369,13 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                             child:
                             orderModel.isopen==true?
                             TextUtils(
-                              color: Colors.black,
+                              color: Colors.white,
                               text: 'متابعة',
                               fontSize: size.width * 0.03,
                               fontWeight: FontWeight.bold,
                               underLine: TextDecoration.none,
                             ):TextUtils(
-                              color: Colors.black,
+                              color: Colors.white,
                               text: 'تم التوصيل',
                               fontSize: size.width * 0.03,
                               fontWeight: FontWeight.bold,

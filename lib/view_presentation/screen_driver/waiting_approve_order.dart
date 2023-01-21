@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
+import 'package:raselne/utilis/theme.dart';
 
 import '../../data_layer/model/orderModel.dart';
 import '../../data_layer/model/user_model.dart';
@@ -49,19 +50,44 @@ class waiting_aprrove_order extends StatelessWidget {
                     height: size.width * 0.7,
                     child: ListView(
                     children: [
-                      Center(child: Text('has data')),
+                      snapshot.data!.isapprove==true&&
+                          snapshot.data!.ispause==true?
+                      Container():Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            // crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset('assets/images/delvery.png'),
+//delvery
+                              Text("بانتظار قبول عرضك..."
+                                  ,style: TextStyle(fontWeight: FontWeight.w600)),
+                            ],
+                          )
+                      ),
                      snapshot.data!.isapprove==true&&
                      snapshot.data!.ispause==true?
                       Center(child:
-                      RaisedButton(
-                        child: Text('تم قبولك اضغط هنا..'),
-                onPressed: ()  {
-                          Get.to( ChatScreen(orderModel: snapshot.data!,) );
-                //    Navigator.push(context,
-                //    MaterialPageRoute(builder: (context)=>
-                //    ChatScreen(orderModel: orderModel,)));
-              },
-              ),
+              Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+              Image.asset('assets/images/delvery.png'),
+              //delvery
+                RaisedButton(
+                   color: mainColor,
+                  child: Text('تم قبولك اضغط هنا..'
+                  ,style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: ()  {
+                    Get.to( ChatScreen(orderModel: snapshot.data!,) );
+                    //    Navigator.push(context,
+                    //    MaterialPageRoute(builder: (context)=>
+                    //    ChatScreen(orderModel: orderModel,)));
+                  },
+                ),
+              ],
+              )
+
                       )
                      : snapshot.data!.isapprove==false&&
                        snapshot.data!.ispause==false?

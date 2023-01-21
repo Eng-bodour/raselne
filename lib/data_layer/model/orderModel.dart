@@ -23,17 +23,18 @@ bool isdone_recive=false;//هل تم الاستلام
 bool isopen=false;//هل الطلب مازال مفتوح او متاح للمندوبين
 bool ispause=false;//ألطلب مفتوح ولكن قيد التفاوض مع المندوب
 bool isapprove=false;
-String detailAddress='';
+String? detailAddressTo='';
+String? detailAddressfrom='';
 String detailorder='';
 String type_pay='';//نوع الدفع
 String distance_me_recive='';
 String distance_recive_deilvery='';
 late String from_user='';
 late String? captain_user='';
-late LatLng fromlocation;
+late LatLng? fromlocation=null;
 late LatLng? trackingLocation;
 late String Addressdfromlocation='';
-late LatLng toLocation=LatLng(30,20);
+late LatLng? toLocation=null;
 late String AddresstoLocation='';
 String price_deilvery='0';
 String price_deilvery_captain='0';//السعر الذي قام بوضعه المندوب
@@ -51,8 +52,8 @@ String type_order='';
 bool isclose=false;
 bool isstart=false;
 bool iscancel=false;//ملغى
-DateTime? startorder;
-DateTime? endorder;
+DateTime? startorder=null;
+DateTime? endorder=null;
 double discount=0.0;
 OrderModel({required this.total,required this.id_store,
   required this.captain_user,required this.content_order,
@@ -66,6 +67,8 @@ OrderModel({required this.total,required this.id_store,
   required this.ispause,
   required this.price_deilvery,
  required this.titleStore,
+  this.detailAddressTo,
+  this.detailAddressfrom,
   this.storeModel,required this.state,
   required this.DateTimeorder,
   //required this.toLocation
@@ -81,8 +84,8 @@ Map<String, dynamic> toSnapchot() => {
   "state":state,
   "from_user": from_user,
   "fromlocation":GeoPoint(
-      fromlocation.latitude,
-      fromlocation.longitude) ,//fromlocation,
+      fromlocation!.latitude,
+      fromlocation!.longitude) ,//fromlocation,
 
   "trackingLocation":GeoPoint(
       trackingLocation!.latitude,
@@ -96,11 +99,12 @@ Map<String, dynamic> toSnapchot() => {
   "ispause":ispause,
   "price_deilvery":price_deilvery,
   "titleStore":titleStore,
-  "toLocation":GeoPoint(toLocation.latitude,toLocation.longitude) ,
+  "toLocation":GeoPoint(toLocation!.latitude,toLocation!.longitude) ,
   "idStore":id_store,
   "DateTimeorder":DateTimeorder,
   "discount":discount,
-  "detailAddress":detailAddress,
+  "detailAddress":detailAddressTo,
+  "detailAddressfrom":detailAddressfrom,
   "detailorder":detailorder,
 };
  factory OrderModel.fromSnapshot(Map<String,dynamic> doc,String id) {
@@ -112,6 +116,8 @@ Map<String, dynamic> toSnapchot() => {
      captain_user:doc["captain_user"],
      content_order:doc["content_order"],
      from_user:doc["from_user"],
+       detailAddressfrom:doc["detailAddressfrom"],
+       detailAddressTo:doc["detailAddress"],
 
        // fromlocation:LatLng(gloacationfrom.latitude,gloacationfrom.longitude),
        //LatLng(doc["fromlocation"]
@@ -134,7 +140,7 @@ Map<String, dynamic> toSnapchot() => {
      // order.user_captain=
      //calcDistance(List<LatLng> polylineCoordinates)
   order.isstart=doc['isstart']==null?false:doc['isstart'];
-     order.detailAddress=doc["detailAddress"]==null?'':doc["detailAddress"];
+     order.detailAddressTo=doc["detailAddress"]==null?'':doc["detailAddress"];
    order.detailorder=doc["detailorder"]==null?'':doc["detailorder"];
    order.type_pay=doc["type_pay"]==null?'':doc["type_pay"];
   order.isapprove=doc['isapprove'];
@@ -147,6 +153,11 @@ Map<String, dynamic> toSnapchot() => {
        print('content : '+order.content_order);
      order.discount=doc['discount']==null?0.0:
      double.parse( doc['discount'].toString());
+     order.startorder=doc['startorder']==null?null:
+    DateTime.parse( doc['startorder']);
+
+     order.endorder=doc['endorder']==null?null:
+    DateTime.parse(doc['endorder']) ;
      //order.distance_me_recive ='4.3';
      // order.distance_me_recive = PolylineService().calcDistance([
      //   LatLng(user.location!.latitude, user.location!.longitude),

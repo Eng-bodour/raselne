@@ -83,7 +83,7 @@ print('dicount '+orderModel.discount.toString());
                               Container(
                                 height: size.height * 0.4,
                                 decoration: BoxDecoration(
-                                    color: Colors.white,
+                                    color: Colors.white ,
                                     borderRadius:
                                         BorderRadius.circular(size.width * 0.09)),
                                 child: Column(
@@ -274,6 +274,7 @@ print('dicount '+orderModel.discount.toString());
                                     Padding(
                                       padding: EdgeInsets.symmetric(
                                         horizontal: size.width * 0.04,
+                                        vertical: size.height*0.02
                                       ),
                                       child: Row(
                                         mainAxisAlignment:
@@ -355,7 +356,19 @@ print('dicount '+orderModel.discount.toString());
                                               )),
                                         ],
                                       ),
-                                    )
+                                    ),
+
+                             Container(
+                             width: size.width,
+                             height: size.height * 0.01,
+                             decoration: BoxDecoration(
+                               color: mainColor,
+                               borderRadius: BorderRadius.only(
+                                   bottomLeft: Radius.circular(
+                                       size.width * 0.07),
+                                   bottomRight: Radius.circular(
+                                       size.width * 0.07)),
+                             )),
                                   ],
                                 ),
                               )
@@ -366,7 +379,7 @@ print('dicount '+orderModel.discount.toString());
                 ),
               ),
             ),
-            // backgroundColor: greyColor,
+             // backgroundColor: greyColor,
           ),
         ),
       ),

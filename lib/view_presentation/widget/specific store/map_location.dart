@@ -42,8 +42,9 @@ class _map_locationState extends State<map_location> {
   TextEditingController addDetails = TextEditingController();
   @override
   void initState() {
-    _buildMarkerFromAssets();
     getMyLocation();
+    _buildMarkerFromAssets();
+
     // _drawPolyline();
     super.initState();
   }
@@ -481,11 +482,33 @@ class _map_locationState extends State<map_location> {
   }
 
   Future<void> getMyLocation() async {
+    print('**********************-----------************************');
+    // print(    Provider.of<order_vm>(context, listen: true)
+    //     .order.toLocation.toString());
+    // print(    Provider.of<order_vm>(context, listen: true)
+    //     .order.fromlocation.toString());
+    // if(widget.type=='الاستلام'&&
+    //     Provider.of<order_vm>(context, listen: true)
+    //         .order.fromlocation!=null)
+    //   _animateCamera(LatLng( Provider.of<order_vm>(context, listen: true)
+    //       .order.fromlocation!.latitude!,
+    //       Provider.of<order_vm>(context, listen: true)
+    //       .order.fromlocation!.longitude!));
+    // else   if(widget.type=='التوصيل'&&
+    //     Provider.of<order_vm>(context, listen: true)
+    //         .order.toLocation!=null)
+    //   _animateCamera(LatLng( Provider.of<order_vm>(context, listen: true)
+    //       .order.toLocation!.latitude!,
+    //       Provider.of<order_vm>(context, listen: true)
+    //           .order.toLocation!.longitude!));
+    // else {
+      print('in else location ********************');
     LocationData _myLocation = await LocationService().getLocation();
     _animateCamera(LatLng(_myLocation.latitude!, _myLocation.longitude!));
     GetAddressFromLatLong(
         LatLng(_myLocation.latitude!, _myLocation.longitude!));
-  }
+   //  }
+}
 
   Future<void> _animateCamera(LatLng _location) async {
     final GoogleMapController controller = await _controller.future;

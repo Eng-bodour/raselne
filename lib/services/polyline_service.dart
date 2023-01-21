@@ -26,14 +26,14 @@ class PolylineService {
       //   polylineId: PolylineId("polyline_id ${result.points.length}"),
       //   color: Colors.blue,
       //   points: polylineCoordinates);
-  }  Future<Polyline> drawPolyline2(LatLng from, LatLng to) async {
+  }  Future<Polyline> drawPolyline2(LatLng? from, LatLng? to) async {
     List<LatLng> polylineCoordinates = [];
 
     PolylinePoints polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
         apiKey,
-        PointLatLng(from.latitude, from.longitude),
-        PointLatLng(to.latitude, to.longitude));
+        PointLatLng(from!.latitude, from.longitude),
+        PointLatLng(to!.latitude, to!.longitude));
     // if(result.points.isNotEmpty){
     result.points.forEach((PointLatLng point) {
       polylineCoordinates.add(LatLng(point.latitude, point.longitude));

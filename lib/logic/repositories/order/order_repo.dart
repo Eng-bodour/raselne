@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:raselne/data_layer/model/messages_model.dart';
 import 'package:raselne/data_layer/model/orderModel.dart';
 
@@ -15,7 +16,10 @@ abstract class OrderRepository {
   Future<String> AddOrder(Map<String,dynamic> body);
   Stream<OrderModel> check_approve_order(String idOrder,String idcaptain);
   Stream<List<MessageText>> getChatOrder(String id_order);
-  Future<void> update_order( String idOrder,String idcaptain,String distance_recive_deilvery,String price_deilvery_captain);
+  Future<void> update_order( String idOrder,String idcaptain,
+      String distance_recive_deilvery,String price_deilvery_captain,
+      GeoPoint trackingloc
+      );
   Future<void> update_state( String idOrder,String state,String idSender);
   Future<void> done_order( String idOrder,String state,String idSender,int numtravel,String balance,String eradat,String docIdUser);
   Future<void> approve_order_or_not( OrderModel orderModel,bool isopen);

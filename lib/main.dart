@@ -108,7 +108,7 @@ class MyApp extends StatelessWidget {
               return
                 GetMaterialApp(
                   debugShowCheckedModeBanner: false,
-                  title: 'Raselne',
+                  title: 'السريع',
                   //home: WelcomeScreen(),
                   initialRoute: snapshot.data?.uid !=null
                       ? AppRoutes.mainScreen
