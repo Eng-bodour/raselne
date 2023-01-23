@@ -12,6 +12,7 @@ abstract class StoreRepository {
   Future<Itemstore> AddStoreItem(File? fileimage,
       Map<String,dynamic> body,String TypeOperation,String idStore);
   Future<void> deleteStoreItem( Map<String,dynamic> body,String idStore);
+  Future<void> rate_store(String value, String idstore,String id_currentUser);
 
 }
 

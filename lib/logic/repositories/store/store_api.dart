@@ -42,6 +42,12 @@ class StoreAPI extends StoreRepository {
     throw UnimplementedError();
   }
 
+  @override
+  Future<void> rate_store(String value, String idstore, String id_currentUser) {
+    // TODO: implement rate_store
+    throw UnimplementedError();
+  }
+
 
 
 }

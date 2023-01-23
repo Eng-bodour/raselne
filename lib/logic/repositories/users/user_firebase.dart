@@ -164,7 +164,18 @@ class user_firebase extends UserRepository{
     //throw UnimplementedError();
   }
   @override
-  Future<void> updateToken() async{
+  updateLocation(String docId,GeoPoint location) async {
+
+  FirebaseFirestore.instance
+      .collection('users')
+      .doc(docId)
+   .update({
+  //'token':token,
+  'location':location,
+
+});}
+  @override
+  Future<void> updateToken() async {
     UserModel us=await getuser();
     token=await FirebaseMessaging.instance.getToken() ;
     LocationData _myLocation=await LocationService().getLocation();
@@ -176,6 +187,7 @@ class user_firebase extends UserRepository{
 
        });
   }
+
   @override
   Future<String> resetPassword(String email)
     // TODO: implement resetPassword

@@ -335,7 +335,7 @@ else {
           //.orderBy('DateTimeorder',descending: true)
           .where(
           'from_user', isEqualTo: id_user,)
-          .get()
+          .get(  GetOptions(source: Source.server))
           .then((snap) => snap.docs
           .map((doc) =>
           OrderModel.fromSnapshot( doc.data(),doc.id )).toList()

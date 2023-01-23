@@ -1,6 +1,7 @@
 
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:raselne/data_layer/model/user_model.dart';
 import 'dart:io';
 abstract class UserRepository{
@@ -19,4 +20,5 @@ abstract class UserRepository{
   Future<double> check_Copoun(String id_doc,String copoun);
   Future<bool> save_Copoun(String id_doc,String copoun);
   Future<void> updateToken();
+  Future<void> updateLocation(String docId,GeoPoint location);
 }

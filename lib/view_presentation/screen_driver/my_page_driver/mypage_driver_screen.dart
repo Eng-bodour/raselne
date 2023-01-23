@@ -77,9 +77,7 @@ class _MyPageDriverScreenState extends State<MyPageDriverScreen> {
                       .switch_type();
                   Navigator.of(context, rootNavigator: true)
                       .pop(true);
-                  setState(() {
-
-                  });
+                  setState(() {});
                   // dismisses only the dialog and returns true
                 },
                 child: Text('نعم'),

@@ -72,8 +72,11 @@ class _StoreListBuildState extends State<StoreListBuild> {
                                               .toString(),
                                           titestore:
                                               value.liststore[index].nameStore,
+
                                           // itemstore: value.liststore[index].itemstore,
-                                          index: index));
+                                          index: index, storeModel:
+                                      value
+                                          .liststore[index],));
                                     },
                                     child: Container(
                                       width: size.width * 0.4,
@@ -128,7 +131,7 @@ class _StoreListBuildState extends State<StoreListBuild> {
                                                       size: size,
                                                       rate: value
                                                           .liststore[index]
-                                                          .rating
+                                                          .rataing
                                                           .toString(),
                                                       distance: ""),
                                                   //value.liststore[index].location.toString()),

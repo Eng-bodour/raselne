@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -5,13 +6,16 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:group_button/group_button.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
+import 'package:raselne/data_layer/model/store_model.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/screen/chat/chat_screen.dart';
 import 'package:raselne/view_presentation/screen_driver/waiting_approve_order.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
+import '../../constatnt.dart';
 import '../../data_layer/model/orderModel.dart';
 import '../../logic/controller/order_vm.dart';
+import '../../logic/controller/store/store_controller.dart';
 import '../screen/orders_screen.dart';
 import '../widget/mypage_driver/show_offers.dart';
 import '../widget/orders/build_orders.dart';
@@ -26,6 +30,16 @@ class OrdersDriverScreen extends StatefulWidget {
 class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
   int selected = 0;
 
+  @override void initState() {
+    // TODO: implement initState
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+     //  if( Provider.of<StoreProvider_vm>(context).liststore.isEmpty)
+     // await Provider.of<StoreProvider_vm>(context)
+     //     .getstores('');
+    });
+
+      super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -160,10 +174,14 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
   }
   late DateTime  datanext;
   late DateTime  datanext2;
+  late StoreModel? storeModel;
   Widget buildMyDelevery({required OrderModel orderModel, required Size size}) {
+
+  storeModel= Provider.of<StoreProvider_vm>(context)
+      .getstoremodel(orderModel.id_store);
     if(orderModel.startorder !=null && orderModel.endorder !=null)
     {
-      datanext=
+    datanext=
     DateTime(
       orderModel.startorder!.year,
       orderModel.startorder!.month,
@@ -180,17 +198,21 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
         orderModel.endorder!.minute,
         orderModel.endorder!.second,
     ) ;
-  }
-    // int peroidtime= int.parse(peroid.value_config);
-    // datanext=Jiffy().add(days: peroidtime).dateTime;
-    // Jiffy().diff(input);
+      //
+      // timestamp1 = strtotime($date1);
+      // timestamp2 = strtotime($date2);
+      // hour = abs($timestamp2 - $timestamp1)/(60*60);
+      // int peroidtime= int.parse(peroid.value_config);
+      // datanext=Jiffy().diff(input)//.add(days: peroidtime).dateTime;
+
+    }
+
     // print(datanext.toString());
     // $timestamp1 = strtotime($date1);
     // $timestamp2 = strtotime($date2);
     // $hour = abs($timestamp2 - $timestamp1)/(60*60);
     // $hour=Round($hour);
-    //
-    //
+
     return InkWell(
       onTap: () {
         switch (orderModel.state) {
@@ -259,6 +281,35 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                     children: [
                       Row(
                         children: [
+                          storeModel!=null?
+                          storeModel!.imageStore!=''?
+                          //orderModel.i.imageuser !=''?
+                          CircleAvatar(
+                            radius: 30,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: CachedNetworkImage(
+                                width: 200,
+                                height: 200,
+                                fit: BoxFit.fill,
+                                imageUrl: storeModel!.imageStore.toString(),
+                                placeholder: (context, url) =>
+                                const CircularProgressIndicator(),
+                                errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                              ),
+                            ),
+                          )
+                              :
+                          CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: size.width * 0.08,
+                            child: Icon(
+                              Icons.person,
+                              color: Colors.lightBlue.withOpacity(0.9),
+                              size: size.width * 0.15,
+                            ),
+                          ):
                           CircleAvatar(
                             backgroundColor: greyColor,
                             radius: size.width * 0.05,
@@ -277,7 +328,7 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                               TextUtils(
                                   fontSize: size.width * 0.04,
                                   fontWeight: FontWeight.bold,
-                                  text:orderModel.titleStore,
+                                  text:orderModel.titleStore.isEmpty?private_order:orderModel.titleStore,
                                       // 'صيدلية مستشفى الحبيب', //'${Firebase.name}',
                                   color: Colors.black54,
                                   underLine: TextDecoration.none),
@@ -295,7 +346,7 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                       TextUtils(
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.normal,
-                          text: orderModel.id_order.substring(0,6),//'#123456777',
+                          text: orderModel.id_order.substring(0,8),//'#123456777',
                           color: Colors.black54,
                           underLine: TextDecoration.none)
                     ],
@@ -324,7 +375,8 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                               fontWeight: FontWeight.bold,
                               text:
 
-                              ' تم التوصيل  ${ datanext2.difference(datanext).inHours} ساعة  ', //'${Firebase.name}',
+                              //' تم التوصيل  ${  (Jiffy(datanext2).diff(datanext).hours.inHours/60).round()} ساعة  ', //'${Firebase.name}',
+                             ' تم التوصيل   ${ ((datanext2.difference(datanext).inMinutes/60).hours.toString().substring(0,4))} ساعة  ', //'${Firebase.name}',
                               color: Colors.black38,
                               underLine: TextDecoration.none),
                         ],

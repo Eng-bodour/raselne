@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -114,7 +115,26 @@ print('dicount '+orderModel.discount.toString());
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          CircleAvatar(
+                                          snapshot_user.data!.imageuser!=''?
+                                        CircleAvatar(
+                                          radius: 30,
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(50),
+                                            child: CachedNetworkImage(
+                                              width: 200,
+                                              height: 200,
+                                              fit: BoxFit.fill,
+                                              imageUrl:
+                                              snapshot_user.data!.imageuser
+                                                  .toString(),
+                                              placeholder: (context, url) =>
+                                              const CircularProgressIndicator(),
+                                              errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
+                                            ),
+                                          ),
+                                        )
+                                            : CircleAvatar(
                                             backgroundColor: greyColor,
                                             radius: size.width * 0.055,
                                             child: Icon(

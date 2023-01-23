@@ -24,12 +24,13 @@ import 'package:get/get.dart';
 
 class SpecificStoreScreen extends StatelessWidget {
   final int index;
-  SpecificStoreScreen({required this.idstore, required this.titestore, required this.index, Key? key})
+  SpecificStoreScreen({required this.storeModel, required this.idstore, required this.titestore, required this.index, Key? key})
       : super(key: key);
   late List<Itemstore> itemstore;
   String titestore;
   String idstore;
   late UserModel user;
+  StoreModel storeModel;
 
   Widget buildSliverAppBar({required Size size}) {
     return SliverAppBar(
@@ -168,7 +169,7 @@ class SpecificStoreScreen extends StatelessWidget {
                         Padding(
                           padding:
                               EdgeInsets.symmetric(horizontal: width * 0.05),
-                          child: FirstContainerWedgit(size: size),
+                          child: FirstContainerWedgit(size: size, storeModel: storeModel,),
                         ),
                         Divider(
                           thickness: 2,

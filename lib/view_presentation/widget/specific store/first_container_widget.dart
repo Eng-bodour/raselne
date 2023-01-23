@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:raselne/data_layer/model/orderModel.dart';
+import 'package:raselne/data_layer/model/store_model.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
+import '../../../logic/controller/auth_controller.dart';
+import '../../../logic/controller/store/StoreRating.dart';
+import '../../../services/polyline_service.dart';
+import '../../screen_driver/driver_rating.dart';
+
 class FirstContainerWedgit extends StatelessWidget {
   final Size size;
-
-  const FirstContainerWedgit({required this.size, Key? key}) : super(key: key);
+ StoreModel storeModel;
+   FirstContainerWedgit({required this.storeModel, required this.size, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,37 +24,64 @@ class FirstContainerWedgit extends StatelessWidget {
       children: [
         Column(
           children: [
-            Row(
-              children: [
-                Icon(
-                  Icons.star,
-                  color: mainColor,
-                  size: width * 0.05,
-                ),
-                TextUtils(
-                    fontSize: width * 0.05,
-                    fontWeight: FontWeight.normal,
-                    text: '4.3',
-                    color: greyColor,
-                    underLine: TextDecoration.none)
-              ],
+            InkWell(
+              onTap: () {
+                showModalBottomSheet<dynamic>(
+                  backgroundColor: Colors.grey.shade200,
+                  //  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      )),
+                  context: context,
+                  isScrollControlled: true,
+                  builder: ((context) =>
+                      StoreRating(
+                       storeModel: storeModel,
+                      )),
+                  // builder: ((context) => bottomSheetWithChoiseMealAdditions(context)),
+                );
+              },
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.star,
+                    color: mainColor,
+                    size: width * 0.05,
+                  ),
+                  TextUtils(
+                      fontSize: width * 0.05,
+                      fontWeight: FontWeight.normal,
+                      text: storeModel!.rataing.toString(),
+                      color: greyColor,
+                      underLine: TextDecoration.none)
+                ],
+              ),
             ),
-            Row(
-              children: [
-                TextUtils(
-                    fontSize: width * 0.03,
-                    fontWeight: FontWeight.normal,
-                    text: 'مشاركات',
-                    color: greyColor,
-                    underLine: TextDecoration.none),
+            // Row(
+            //   children: [
+            //     TextUtils(
+            //         fontSize: width * 0.03,
+            //         fontWeight: FontWeight.normal,
+            //         text: 'مشاركات',
+            //         color: greyColor,
+            //         underLine: TextDecoration.none),
+            //     TextUtils(
+            //         fontSize: width * 0.034,
+            //         fontWeight: FontWeight.normal,
+            //         text: '19.8K',
+            //         color: greyColor,
+            //         underLine: TextDecoration.none),
+            //   ],
+            // )
                 TextUtils(
                     fontSize: width * 0.034,
                     fontWeight: FontWeight.normal,
-                    text: '19.8K',
+                    text: 'تقييم',
                     color: greyColor,
                     underLine: TextDecoration.none),
-              ],
-            )
           ],
         ),
         SizedBox(
@@ -62,7 +98,7 @@ class FirstContainerWedgit extends StatelessWidget {
               TextUtils(
                   fontSize: width * 0.05,
                   fontWeight: FontWeight.normal,
-                  text: 'مفتوح',
+                  text:storeModel.stateStore.toString(), //'مفتوح',
                   color: greyColor,
                   underLine: TextDecoration.none)
             ],
@@ -84,7 +120,7 @@ class FirstContainerWedgit extends StatelessWidget {
                   TextUtils(
                       fontSize: width * 0.04,
                       fontWeight: FontWeight.normal,
-                      text: 'الفرع',
+                      text: 'المتر',
                       color: greyColor,
                       underLine: TextDecoration.none)
                 ],
@@ -100,7 +136,14 @@ class FirstContainerWedgit extends StatelessWidget {
                   TextUtils(
                       fontSize: width * 0.03,
                       fontWeight: FontWeight.normal,
-                      text: '2.60  كم ',
+                      text: '${PolylineService().calcDistance([
+                        LatLng(Provider.of<AuthProvider_vm>(context).currentuser.
+                        location!.latitude,
+                            Provider.of<AuthProvider_vm>(context).currentuser.
+                        location!.longitude),
+                        LatLng(storeModel.location!.latitude,
+                           storeModel.location!.longitude)
+                      ])}  كم ',
                       color: greyColor,
                       underLine: TextDecoration.none),
                 ],

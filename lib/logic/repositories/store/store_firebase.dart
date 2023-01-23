@@ -277,4 +277,30 @@ class StoreFirebase extends StoreRepository {
     await FirebaseFirestore.instance.collection('store').doc(idStore)
         .collection('items_store').doc(body['IdItemStore']).delete();
   }
+
+  @override
+  Future<void> rate_store(String value, String idstore, String id_currentUser) async{
+    // TODO: implement rate_store
+    List<Map<String, String>> myData = [
+      {
+        'id_user': id_currentUser,
+        'value_rate': value
+      },
+      // {'question': 'How much?', 'answer': 'five dollars'},
+    ];
+    // String doc='';
+    // await  FirebaseServices("store").ref.where(
+    //   'uid', isEqualTo: idstore,).get().then(
+    //         (value) =>
+    //     doc= value.docs[0].id
+    // );
+    await FirebaseFirestore.instance
+        .collection('store').doc(idstore).update({
+      'rate': myData
+      // .doc('users/$doc')
+      // .update({'rate': myData});
+      // throw UnimplementedError();
+    });
+
+  }
 }

@@ -21,6 +21,15 @@ class StoreProvider_vm extends ChangeNotifier {
     address_store=address;
     notifyListeners();
   }
+  StoreModel? getstoremodel(String id) {
+    if(liststore.isEmpty ) storeRepository.getAllStores();
+    if(liststore.isNotEmpty&&id!='')
+    return liststore.firstWhere((element) => element.IdStore==id
+    ,orElse: null
+    );
+    else return null;
+
+  }
  Future<void> SaveStore({File? fileimage, required Map<String, dynamic> storeModel,
     required String type})
   async {
@@ -104,15 +113,25 @@ print('IdItemStore '+IdItemStore);
  Future<void> getstores(String type) async {
    isloading=true;
    notifyListeners();
-    liststore=await storeRepository.getAllStores();
+   liststore=await storeRepository.getAllStores();
    print('type  '+type);
    for(int i=0;i<liststore.length-1;i++){
      print('typeStore  '+liststore[i].typeStore);
+     if(type!='')
      if(liststore[i].typeStore==type)
        liststore[i].isVisible=true;
    }
 
    isloading=false;
+    notifyListeners();
+  }
+  Future<void> rateStore(String value,String idstore,String iduser) async {
+
+    isloading=true;
+    notifyListeners();
+    await storeRepository.rate_store( value, idstore, iduser);
+
+    isloading=false;
     notifyListeners();
   }
   Future<void> getstoresbyOwner(String idowner, String typeStore) async {

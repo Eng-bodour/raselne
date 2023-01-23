@@ -96,7 +96,7 @@ Size size;
                   // rating: rate,
                   //to do
                   rating: //2.5,
-               Provider.of<AuthProvider_vm>(context)
+                  Provider.of<AuthProvider_vm>(context)
                 .currentuser.rataing,
                   itemBuilder: (context, index) => Icon(
                     Icons.star,

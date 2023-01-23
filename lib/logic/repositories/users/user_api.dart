@@ -1,5 +1,6 @@
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:raselne/data_layer/model/user_model.dart';
 import 'package:raselne/logic/repositories/users/user_repo.dart';
 import 'dart:io';
@@ -85,6 +86,12 @@ class user_api extends UserRepository{
   @override
   Future<void> updateToken() {
     // TODO: implement updateToken
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> updateLocation(String docId,GeoPoint location) {
+    // TODO: implement updateLocation
     throw UnimplementedError();
   }
 

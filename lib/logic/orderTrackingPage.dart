@@ -51,10 +51,15 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
     BitmapDescriptor.fromAssetImage(
         // ImageConfiguration.empty,
        const ImageConfiguration(size: Size(10, 10)),
-        "assets/images/delvery.png")
+       // "assets/images/motorbike1.png")
+        "assets/images/delivery_transparent.png")
         .then((value) => currentLocationIcon = value);
   }
+ @override void dispose() {
+    // TODO: implement dispose
 
+    super.dispose();
+  }
   @override
   initState() {
 
@@ -108,7 +113,8 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
               Center(
                 child: Text('lonn nnnn'),
               ) :GoogleMap(
-                      initialCameraPosition: CameraPosition(
+
+                initialCameraPosition: CameraPosition(
                         zoom: 13.5,
                         target: sourceLocation,
                         // LatLng(currentlocation!.latitude!,currentlocation!.longitude!) ,

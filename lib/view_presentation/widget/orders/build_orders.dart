@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +8,9 @@ import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/screen/chat/chat_screen.dart';
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
+import '../../../constatnt.dart';
+import '../../../data_layer/model/store_model.dart';
+import '../../../logic/controller/store/store_controller.dart';
 import '../../../utilis/global_method.dart';
 import '../../screen_driver/waiting_approve_order.dart';
 import '../mypage_driver/show_offers.dart';
@@ -16,8 +20,11 @@ class buildCardOrders extends StatelessWidget {
       : super(key: key);
   OrderModel orderModel;
   Size size;
+  late StoreModel? storeModel;
   @override
   Widget build(BuildContext context) {
+    storeModel= Provider.of<StoreProvider_vm>(context)
+        .getstoremodel(orderModel.id_store);
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: size.width * 0.03,
@@ -98,7 +105,34 @@ class buildCardOrders extends StatelessWidget {
               ),
               Row(
                 children: [
+                  storeModel!=null?
+
+                  storeModel!.imageStore==''?
                   CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: size.width * 0.08,
+                    child: Icon(
+                      Icons.person,
+                      color: Colors.lightBlue.withOpacity(0.9),
+                      size: size.width * 0.06,
+                    ),
+                  ):
+                  CircleAvatar(
+                  radius: 30,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: CachedNetworkImage(
+                      width: 200,
+                      height: 200,
+                      fit: BoxFit.fill,
+                      imageUrl:  storeModel!.imageStore.toString(),
+                      placeholder: (context, url) =>
+                      const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                      const Icon(Icons.error),
+                    ),
+                  ),
+                ): CircleAvatar(
                     backgroundColor: Colors.white,
                     radius: size.width * 0.08,
                     child: Icon(
@@ -114,32 +148,35 @@ class buildCardOrders extends StatelessWidget {
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.bold,
                           text: orderModel
-                              .titleStore, //'اسم المطعم', //'${Firebase.name}',
+                              .titleStore==''? private_order: orderModel
+                          .titleStore, //'اسم المطعم', //'${Firebase.name}',
                           color: Colors.black54,
                           underLine: TextDecoration.none),
-                      Row(
+                    storeModel!=null?
+                    Row(
                         children: [
                           RatingBarIndicator(
                             // rating: rate,
                             //to do
-                            rating: 5,
+                            rating: //2.5,
+                            storeModel!.rataing,
                             itemBuilder: (context, index) => Icon(
                               Icons.star,
                               color: Colors.orange.withOpacity(0.4),
                             ),
                             itemCount: 5,
                             itemPadding: const EdgeInsets.only(left: 4),
-                            itemSize: size.width * 0.03,
+                            itemSize: 20.0,
                             direction: Axis.horizontal,
                           ),
                           TextUtils(
                               fontSize: size.width * 0.02,
                               fontWeight: FontWeight.normal,
-                              text: '4.6',
+                              text: storeModel!.rataing.toString(),
                               color: Colors.black54,
                               underLine: TextDecoration.none)
                         ],
-                      ),
+                      ):Container(),
                     ],
                   )
                 ],

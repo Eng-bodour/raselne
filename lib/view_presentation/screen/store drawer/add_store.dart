@@ -598,7 +598,7 @@ class _AddStoreState extends State<AddStore> {
                                               listen: false)
                                               .location,
                                           offer_value: offerController.text.toString(),
-                                          rating: '1.0',
+                                          // rating: '1.0',
                                           imageStore:'',
                                           itemstore: [],
                                           IdStore:
@@ -613,7 +613,7 @@ class _AddStoreState extends State<AddStore> {
                                               .toString(),
                                           isVisible: false,
                                           stateStore:
-                                          stateStoreController.text.toString());
+                                          stateStoreController.text.toString(), rating: []);
 
                                       await addStoreProvider.SaveStore(
                                           fileimage: file,
@@ -634,7 +634,7 @@ class _AddStoreState extends State<AddStore> {
                                             listen: false)
                                             .location,
                                         offer_value: offerController.text.toString(),
-                                        rating: '1.0',
+                                        // rating: '1.0',
                                         imageStore: widget.type == 'edit'
                                             ? widget.storemodel!.imageStore
                                             .toString()
@@ -652,7 +652,8 @@ class _AddStoreState extends State<AddStore> {
                                             .toString(),
                                         isVisible: false,
                                         stateStore:
-                                        stateStoreController.text.toString());
+                                        stateStoreController.text.toString(),
+                                        rating: []);
 
                                     await addStoreProvider.SaveStore(
                                         fileimage: file,

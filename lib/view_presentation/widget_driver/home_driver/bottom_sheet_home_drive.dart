@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -12,9 +13,12 @@ import 'package:raselne/view_presentation/screen_driver/waiting_approve_order.da
 
 import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
+import '../../../constatnt.dart';
+import '../../../data_layer/model/store_model.dart';
 import '../../../data_layer/model/user_model.dart';
 import '../../../logic/controller/auth_controller.dart';
 import '../../../logic/controller/order_vm.dart';
+import '../../../logic/controller/store/store_controller.dart';
 import '../../../services/polyline_service.dart';
 
 class bottomsheet_offer extends StatefulWidget {
@@ -61,7 +65,13 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
     // user= Provider.of<AuthProvider_vm>(context,listen: false).currentuser;
     _animateCamera(widget.order.fromlocation);
     _buildMarkerFromAssets();
-    _drawPolyline(widget.order.fromlocation, widget.order.toLocation);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if( Provider.of<StoreProvider_vm>(context).liststore.isEmpty)
+        await Provider.of<StoreProvider_vm>(context)
+            .getstores('');
+      _drawPolyline(widget.order.fromlocation, widget.order.toLocation);
+
+    });
     super.initState();
   }
 
@@ -75,9 +85,11 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
         "animating camera to (lat: ${_location!.latitude}, long: ${_location!.longitude}");
     controller.animateCamera(CameraUpdate.newCameraPosition(_cameraPosition));
   }
-
+  late StoreModel? storeModel;
   @override
   Widget build(BuildContext context) {
+    storeModel= Provider.of<StoreProvider_vm>(context)
+        .getstoremodel(widget.order.id_store);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: ModalProgressHUD(
@@ -104,7 +116,33 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                       children: [
                         Row(
                           children: [
-                            CircleAvatar(
+                            storeModel!=null?
+                           storeModel!.imageStore==''?
+                           CircleAvatar(
+                              backgroundColor: greyColor.withOpacity(0.2),
+                              radius: size.width * 0.05,
+                              child: Icon(
+                                Icons.shopping_bag_rounded,
+                                color: Colors.lightBlue.withOpacity(0.9),
+                                size: size.width * 0.09,
+                              ),
+                            ):
+                           CircleAvatar(
+                             radius: 30,
+                             child: ClipRRect(
+                               borderRadius: BorderRadius.circular(50),
+                               child: CachedNetworkImage(
+                                 width: 200,
+                                 height: 200,
+                                 fit: BoxFit.fill,
+                                 imageUrl: storeModel!.imageStore.toString(),
+                                 placeholder: (context, url) =>
+                                 const CircularProgressIndicator(),
+                                 errorWidget: (context, url, error) =>
+                                 const Icon(Icons.error),
+                               ),
+                             ),
+                           ): CircleAvatar(
                               backgroundColor: greyColor.withOpacity(0.2),
                               radius: size.width * 0.05,
                               child: Icon(
@@ -119,7 +157,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                                 TextUtils(
                                     fontSize: size.width * 0.04,
                                     fontWeight: FontWeight.bold,
-                                    text: widget.order.titleStore,
+                                    text: widget.order.titleStore==''?private_order: widget.order.titleStore,
                                     color: Colors.black54,
                                     underLine: TextDecoration.none),
                                 TextUtils(
@@ -159,7 +197,27 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                       ),
                       child: Row(
                         children: [
-                          Icon(
+                          Provider.of<AuthProvider_vm>(context,
+                              listen: true)
+                              .currentuser.imageuser!=''?  CircleAvatar(
+                        radius: 30,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: CachedNetworkImage(
+                            width: 200,
+                            height: 200,
+                            fit: BoxFit.fill,
+                            imageUrl:   Provider.of<AuthProvider_vm>(context,
+                                listen: true)
+                                .currentuser.imageuser.toString(),
+                            placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                          ),
+                        ),
+                      )
+                         : Icon(
                             Icons.person,
                             color: mainColor,
                             size: size.width * 0.1,

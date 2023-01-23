@@ -29,6 +29,7 @@ class NewOrderScreen extends StatefulWidget {
 class _NewOrderScreenState extends State<NewOrderScreen> {
   final TextEditingController notesController = TextEditingController();
   final TextEditingController couponController = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   late OrderModel orderModel;
   bool isAddNote = false;
@@ -48,6 +49,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
     orderModel = Provider.of<order_vm>(context, listen: true).order;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -495,7 +497,10 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
       bottomSheet: BottomAppBar(
         child: InkWell(
           onTap: () async {
-            Provider.of<order_vm>(context, listen: false).order.detailorder =
+          if(  Provider.of<order_vm>(context, listen: false).order!.toLocation!=null&&
+              Provider.of<order_vm>(context, listen: false).order!.type_pay!=''
+          )
+          {    Provider.of<order_vm>(context, listen: false).order.detailorder =
                 notesController.text;
             Provider.of<order_vm>(context, listen: false).order.DateTimeorder =
                 DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now());
@@ -503,7 +508,11 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
             await Provider.of<order_vm>(context, listen: false).addOrder();
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => ShowOffers(orderModel: orderModel)));
-          },
+          }
+          else     _scaffoldKey.currentState!.showSnackBar(
+              SnackBar(content: Text('من فضلك املأ البيانات '))
+          );
+            },
           child: Container(
             width: size.width * 1,
             height: size.height * 0.08,

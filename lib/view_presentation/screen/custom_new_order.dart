@@ -25,6 +25,8 @@ class Custom_order extends StatefulWidget {
 class _Custom_orderState extends State<Custom_order> {
   final TextEditingController notesController = TextEditingController();
   final TextEditingController detailorderController = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   late OrderModel orderModel;
   bool isAddNote = false;
   @override void dispose() {
@@ -38,6 +40,7 @@ class _Custom_orderState extends State<Custom_order> {
     orderModel = Provider.of<order_vm>(context, listen: true).order;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -492,6 +495,9 @@ class _Custom_orderState extends State<Custom_order> {
           onTap: () async {
             if(detailorderController.text.isNotEmpty&&
                 Provider.of<order_vm>(context, listen: false)
+                    .order!.type_pay!=''
+&&
+            Provider.of<order_vm>(context, listen: false)
                     .order.toLocation!=null&&
                 Provider.of<order_vm>(context, listen: false)
                     .order.fromlocation!=null){
@@ -506,6 +512,10 @@ class _Custom_orderState extends State<Custom_order> {
                 MaterialPageRoute(
                 builder: (context) => ShowOffers(orderModel: orderModel)));
             }
+            else
+              _scaffoldKey.currentState!.showSnackBar(
+                SnackBar(content: Text('من فضلك املأ البيانات '))
+            );
             // else Get.showSnackbar(
             //     GetSnackBar(
             //       message: 'من فضلك ',

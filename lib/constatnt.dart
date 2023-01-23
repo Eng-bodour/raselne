@@ -84,3 +84,4 @@ final List<String> additionMeal = [
   'أضف المزيد من المقبلات ',
 ];
 const String apiKey = "AIzaSyAq8f4RU1a0qR-l2ybz8qkv29YjZqw04QA";
+const String private_order = "طلب عام";

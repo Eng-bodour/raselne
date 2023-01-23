@@ -527,7 +527,8 @@ class _ChatScreenState extends State<ChatScreen> {
                               )),
                               context: context,
                               isScrollControlled: true,
-                              builder: ((context) => DriverRating(
+                              builder: ((context) =>
+                                  DriverRating(
                                     typeUser: user.type,
                                     iduser: user.type == 'captain'
                                         ? widget.orderModel.from_user.toString()
