@@ -169,7 +169,9 @@ class SpecificStoreScreen extends StatelessWidget {
                         Padding(
                           padding:
                               EdgeInsets.symmetric(horizontal: width * 0.05),
-                          child: FirstContainerWedgit(size: size, storeModel: storeModel,),
+                          child: FirstContainerWedgit(
+                            size: size,
+                            storeModel: storeModel,),
                         ),
                         Divider(
                           thickness: 2,

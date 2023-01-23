@@ -74,8 +74,7 @@ class _StoreListBuildState extends State<StoreListBuild> {
                                               value.liststore[index].nameStore,
 
                                           // itemstore: value.liststore[index].itemstore,
-                                          index: index, storeModel:
-                                      value
+                                          index: index, storeModel: value
                                           .liststore[index],));
                                     },
                                     child: Container(

@@ -177,7 +177,7 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
   late StoreModel? storeModel;
   Widget buildMyDelevery({required OrderModel orderModel, required Size size}) {
 
-  storeModel= Provider.of<StoreProvider_vm>(context)
+  storeModel= Provider.of<StoreProvider_vm>(context,listen: true)
       .getstoremodel(orderModel.id_store);
     if(orderModel.startorder !=null && orderModel.endorder !=null)
     {

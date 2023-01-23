@@ -203,12 +203,12 @@ class _StoreRatingState extends State<StoreRating> {
                           //       )
                           //     ]),
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: size.width * 0.08,
-                          ),
-                          child: showFeildText(),
-                        ),
+                        // Padding(
+                        //   padding: EdgeInsets.symmetric(
+                        //     horizontal: size.width * 0.08,
+                        //   ),
+                        //   child: showFeildText(),
+                        // ),
                         Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: size.width * 0.06,

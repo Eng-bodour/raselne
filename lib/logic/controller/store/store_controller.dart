@@ -122,7 +122,7 @@ print('IdItemStore '+IdItemStore);
        liststore[i].isVisible=true;
    }
 
-   isloading=false;
+    isloading=false;
     notifyListeners();
   }
   Future<void> rateStore(String value,String idstore,String iduser) async {

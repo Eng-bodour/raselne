@@ -23,7 +23,7 @@ class buildCardOrders extends StatelessWidget {
   late StoreModel? storeModel;
   @override
   Widget build(BuildContext context) {
-    storeModel= Provider.of<StoreProvider_vm>(context)
+    storeModel= Provider.of<StoreProvider_vm>(context,listen: true)
         .getstoremodel(orderModel.id_store);
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -104,7 +104,9 @@ class buildCardOrders extends StatelessWidget {
                 ),
               ),
               Row(
+                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
                   storeModel!=null?
 
                   storeModel!.imageStore==''?
@@ -118,12 +120,12 @@ class buildCardOrders extends StatelessWidget {
                     ),
                   ):
                   CircleAvatar(
-                  radius: 30,
+                  radius: 23,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(50),
                     child: CachedNetworkImage(
-                      width: 200,
-                      height: 200,
+                      width: 100,
+                      height: 100,
                       fit: BoxFit.fill,
                       imageUrl:  storeModel!.imageStore.toString(),
                       placeholder: (context, url) =>
