@@ -52,16 +52,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: size.width * 0.03),
-                child: TextUtils(
-                    fontSize: size.width * 0.05,
-                    fontWeight: FontWeight.bold,
-                    text: 'جميع الطلبات',
-                    color: Colors.black54,
-                    underLine: TextDecoration.none),
-              ),
+
              // Consumer<order_vm>(
              //     builder: (context, value, child) {
              // return value.isloading==true?
@@ -84,6 +75,16 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     }
                     return Column(
                       children: [
+                        Padding(
+                          padding:
+                          EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                          child: TextUtils(
+                              fontSize: size.width * 0.05,
+                              fontWeight: FontWeight.bold,
+                              text: '    جميع الطلبات ${snapshot.data!.length}  ',
+                              color: Colors.black54,
+                              underLine: TextDecoration.none),
+                        ),
                         ListView.separated(
                           shrinkWrap: true,
                           controller: ScrollController(),

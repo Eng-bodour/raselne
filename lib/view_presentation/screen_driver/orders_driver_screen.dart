@@ -139,6 +139,7 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                           if (!snapshot.hasData) {
                             return Text("Loading");
                           }
+                          //'طلباتي
                           return Column(
                             children: [
                               ListView.separated(
@@ -177,7 +178,7 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
   late StoreModel? storeModel;
   Widget buildMyDelevery({required OrderModel orderModel, required Size size}) {
 
-  storeModel= Provider.of<StoreProvider_vm>(context,listen: true)
+    Provider.of<StoreProvider_vm>(context,listen: true)
       .getstoremodel(orderModel.id_store);
     if(orderModel.startorder !=null && orderModel.endorder !=null)
     {
@@ -215,51 +216,7 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
 
     return InkWell(
       onTap: () {
-        switch (orderModel.state) {
-          case 'open':
-          // Provider.of<AuthProvider_vm>(context,listen: false)
-          // .currentuser.type=='user'?
-            Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (context)=>
-                        waiting_aprrove_order(orderModel: orderModel)
-                ));
-
-            break;
-          case 'approve':
-          // return 'مفتوح';
-            Get.to(ChatScreen(orderModel: orderModel));
-
-            break;
-          case 'done invoice':
-          // return 'مفتوح';
-            Get.to(ChatScreen(orderModel: orderModel));
-
-            break;
-          case 'done recive':
-          // return 'مفتوح';
-            Get.to(ChatScreen(orderModel: orderModel));
-
-            break;
-          case 'done arrive':
-          // return 'مفتوح';
-            Get.to(ChatScreen(orderModel: orderModel));
-
-            break;
-          case 'done':
-            Get.to(ChatScreen(orderModel: orderModel));
-          // return 'مفتوح';
-          //   Navigator.of(context).push(
-          //       MaterialPageRoute(
-          //           builder: (context)=>
-          //               ChatScreen(orderModel: orderModel)
-          //       )) ;
-            break;
-            // case 'done rate':
-            // Get.to(ChatScreen(orderModel: orderModel));
-            // break;
-
-        }
+       //
       },
       child: Padding(
         padding: EdgeInsets.symmetric(
@@ -271,7 +228,9 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
             // height: size.height * 0.25,
             child: Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: size.width * 0.02, vertical: size.height * 0.02),
+                  horizontal: size.width * 0.02,
+                  vertical: size.height * 0.01
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -281,8 +240,9 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                     children: [
                       Row(
                         children: [
-                          storeModel!=null?
-                          storeModel!.imageStore!=''?
+                          Provider.of<StoreProvider_vm>(context,listen: true)
+                              .currentStore!=null?
+                          Provider.of<StoreProvider_vm>(context,listen: true).currentStore!.imageStore!=''?
                           //orderModel.i.imageuser !=''?
                           CircleAvatar(
                             radius: 30,
@@ -292,7 +252,8 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                                 width: 200,
                                 height: 200,
                                 fit: BoxFit.fill,
-                                imageUrl: storeModel!.imageStore.toString(),
+                                imageUrl: Provider.of<StoreProvider_vm>(context,listen: true)
+                                    .currentStore!.imageStore.toString(),
                                 placeholder: (context, url) =>
                                 const CircularProgressIndicator(),
                                 errorWidget: (context, url, error) =>
@@ -402,45 +363,97 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                   ),
                   SizedBox(height: size.height * 0.02),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          switch (orderModel.state) {
+                            case 'open':
+                            // Provider.of<AuthProvider_vm>(context,listen: false)
+                            // .currentuser.type=='user'?
+                              Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context)=>
+                                          waiting_aprrove_order(orderModel: orderModel)
+                                  ));
+
+                              break;
+                            case 'approve':
+                            // return 'مفتوح';
+                              Get.to(ChatScreen(orderModel: orderModel));
+
+                              break;
+                            case 'done invoice':
+                            // return 'مفتوح';
+                              Get.to(ChatScreen(orderModel: orderModel));
+
+                              break;
+                            case 'done recive':
+                            // return 'مفتوح';
+                              Get.to(ChatScreen(orderModel: orderModel));
+
+                              break;
+                            case 'done arrive':
+                            // return 'مفتوح';
+                              Get.to(ChatScreen(orderModel: orderModel));
+
+                              break;
+                            case 'done':
+                              Get.to(ChatScreen(orderModel: orderModel));
+                              // return 'مفتوح';
+                              //   Navigator.of(context).push(
+                              //       MaterialPageRoute(
+                              //           builder: (context)=>
+                              //               ChatScreen(orderModel: orderModel)
+                              //       )) ;
+                              break;
+                          // case 'done rate':
+                          // Get.to(ChatScreen(orderModel: orderModel));
+                          // break;
+
+                          }
+                        },
                         child: Container(
-                          width: size.width * 0.4,
-                          height: size.height * 0.04,
+                          width: size.width * 0.8,
+                          height: size.height * 0.05,
                           decoration: BoxDecoration(
                               color:
                               orderModel.isopen==true?
-                              Colors.amber
-
-                              :Colors.yellow,
+                              mainColor:mainColor,
                               borderRadius:
-                                  BorderRadius.circular(size.width * 0.1)),
-                          child: Center(
-                            child:
-                            orderModel.isopen==true?
-                            TextUtils(
-                              color: Colors.white,
-                              text: 'متابعة',
-                              fontSize: size.width * 0.03,
-                              fontWeight: FontWeight.bold,
-                              underLine: TextDecoration.none,
-                            ):TextUtils(
-                              color: Colors.white,
-                              text: 'تم التوصيل',
-                              fontSize: size.width * 0.03,
-                              fontWeight: FontWeight.bold,
-                              underLine: TextDecoration.none,
-                            ),
+                                  BorderRadius.circular(size.width * 0.05)
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(
+                                child:
+                                orderModel.isopen==true?
+                                TextUtils(
+                                  color: Colors.white,
+                                  text: 'متابعة',
+                                  fontSize: size.width * 0.04,
+                                  fontWeight: FontWeight.bold,
+                                  underLine: TextDecoration.none,
+                                ):TextUtils(
+                                  color: Colors.white,
+                                  text: 'تم التوصيل',
+                                  fontSize: size.width * 0.04,
+                                  fontWeight: FontWeight.bold,
+                                  underLine: TextDecoration.none,
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.white,
+                                size: size.width * 0.03,
+                              )
+                            ],
                           ),
                         ),
                       ),
-                      Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        color: Colors.black26,
-                        size: size.width * 0.03,
-                      )
+
                     ],
                   )
                 ],

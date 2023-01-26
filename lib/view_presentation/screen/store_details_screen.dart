@@ -74,7 +74,7 @@ class StoreDetailsScreen extends StatelessWidget {
                 ),
                 //for  tow lines its ListView
                 StoreListBuild(
-                  type: titleStore,
+                  type: titleStore, search: '',
                 )
               ],
             ),

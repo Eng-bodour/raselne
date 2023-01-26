@@ -24,7 +24,7 @@ class OrdertrackingPage extends StatefulWidget {
 
 class OrdertrackingPageState extends State<OrdertrackingPage> {
   Completer<GoogleMapController> _controller = Completer();
-  late GoogleMapController mapController;
+  // late GoogleMapController mapController;
   BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor destinationIcon = BitmapDescriptor.defaultMarkerWithHue(20);
   BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
@@ -57,6 +57,7 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
   }
  @override void dispose() {
     // TODO: implement dispose
+   // mapController.dispose();
 
     super.dispose();
   }
@@ -174,13 +175,19 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
            zoom: 13.5,
            target:  LatLng(currentlocation!.latitude!,currentlocation!.longitude!) ,
          ),
-
+        buildingsEnabled: true,
+         compassEnabled: true,
+         // indoorViewEnabled: true,
+         // myLocationEnabled: true,
+         // myLocationButtonEnabled: true,
+         scrollGesturesEnabled: true,
+         zoomGesturesEnabled: true,
          mapType: MapType.normal,
          onMapCreated: (GoogleMapController controller) async {
-           String style = await DefaultAssetBundle.of(context)
-               .loadString('assets/map_style.json');
-           //customize your map style at: https://mapstyle.withgoogle.com/
-           controller.setMapStyle(style);
+           // String style = await DefaultAssetBundle.of(context)
+           //     .loadString('assets/map_style.json');
+           // //customize your map style at: https://mapstyle.withgoogle.com/
+           // controller.setMapStyle(style);
            _controller.complete(controller);
            _drawPolyline(sourceLocation, destination);
          },
@@ -277,7 +284,8 @@ E/flutter (20288): This error might indicate a memory leak if setState() is bein
   }
 
   Future<void> _drawPolyline(LatLng from, LatLng to) async {
-    Polyline polyline = await PolylineService().drawPolyline2(from, to);
+    Polyline polyline = await PolylineService()
+        .drawPolyline2(from, to);
 
     //polylineCoordinates = await PolylineService().drawPolyline(from, to);
     // mapController.addPolyline(PolylineOptions(

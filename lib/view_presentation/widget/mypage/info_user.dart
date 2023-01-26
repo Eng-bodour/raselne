@@ -56,7 +56,8 @@ Size size;
                     width: 200,
                      height: 200,
                     fit: BoxFit.fill,
-                    imageUrl:  Provider.of<AuthProvider_vm>(context,listen: true).currentuser.imageuser
+                    imageUrl:  Provider.of<AuthProvider_vm>(context,listen: true)
+                        .currentuser.imageuser
                         .toString(),
                     placeholder: (context, url) =>
                     const CircularProgressIndicator(),
@@ -96,8 +97,8 @@ Size size;
                   // rating: rate,
                   //to do
                   rating: //2.5,
-                  Provider.of<AuthProvider_vm>(context)
-                .currentuser.rataing,
+                  Provider.of<AuthProvider_vm>(context,listen: true)
+                 .currentuser.rataing,
                   itemBuilder: (context, index) => Icon(
                     Icons.star,
                     color: Colors.orange.withOpacity(0.4),

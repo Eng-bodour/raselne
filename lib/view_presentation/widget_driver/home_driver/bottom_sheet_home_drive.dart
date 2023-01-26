@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -70,7 +71,8 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
         await Provider.of<StoreProvider_vm>(context)
             .getstores('');
       _drawPolyline(widget.order.fromlocation, widget.order.toLocation);
-
+      Provider.of<StoreProvider_vm>(context,listen: false)
+          .getstoremodel(widget.order.id_store);
     });
     super.initState();
   }
@@ -85,11 +87,10 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
         "animating camera to (lat: ${_location!.latitude}, long: ${_location!.longitude}");
     controller.animateCamera(CameraUpdate.newCameraPosition(_cameraPosition));
   }
-  late StoreModel? storeModel;
+  // late StoreModel? storeModel;
   @override
   Widget build(BuildContext context) {
-    storeModel= Provider.of<StoreProvider_vm>(context)
-        .getstoremodel(widget.order.id_store);
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: ModalProgressHUD(
@@ -116,8 +117,10 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                       children: [
                         Row(
                           children: [
-                            storeModel!=null?
-                           storeModel!.imageStore==''?
+                            Provider.of<StoreProvider_vm>(context,listen: true)
+                                .currentStore!=null?
+                            Provider.of<StoreProvider_vm>(context,listen: true)
+                            .currentStore!.imageStore==''?
                            CircleAvatar(
                               backgroundColor: greyColor.withOpacity(0.2),
                               radius: size.width * 0.05,
@@ -135,7 +138,8 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                                  width: 200,
                                  height: 200,
                                  fit: BoxFit.fill,
-                                 imageUrl: storeModel!.imageStore.toString(),
+                                 imageUrl: Provider.of<StoreProvider_vm>(context,listen: true)
+                                     .currentStore!.imageStore.toString(),
                                  placeholder: (context, url) =>
                                  const CircularProgressIndicator(),
                                  errorWidget: (context, url, error) =>
@@ -192,15 +196,16 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                     // height: size.height * 0.1,
                     decoration: BoxDecoration(color: mainColor.withOpacity(0.2)),
                     child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: size.width * 0.06,
-                      ),
+                      padding: EdgeInsets.all(5),
+                      // padding: EdgeInsets.symmetric(
+                      //   horizontal: size.width * 0.06,
+                      // ),
                       child: Row(
                         children: [
                           Provider.of<AuthProvider_vm>(context,
                               listen: true)
                               .currentuser.imageuser!=''?  CircleAvatar(
-                        radius: 30,
+                        radius: 20,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(50),
                           child: CachedNetworkImage(
@@ -222,6 +227,8 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                             color: mainColor,
                             size: size.width * 0.1,
                           ),
+                          SizedBox(width: size.width * 0.02),
+
                           TextUtils(
                               fontSize: size.width * 0.04,
                               fontWeight: FontWeight.bold,
@@ -540,7 +547,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                                   child: TextUtils(
                                     color: mainColor,
                                     text: widget.order.price_deilvery_captain +
-                                        'تأكيد العرض', // '20ر.س',
+                                        '  تأكيد العرض', // '20ر.س',
                                     fontSize: size.width * 0.05,
                                     fontWeight: FontWeight.bold,
                                     underLine: TextDecoration.none,

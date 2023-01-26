@@ -14,7 +14,10 @@ class PolylineService {
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
         apiKey,
         PointLatLng(from.latitude, from.longitude),
-        PointLatLng(to.latitude, to.longitude));
+        PointLatLng(to.latitude, to.longitude),
+        travelMode: TravelMode.driving
+
+    );
     if(result.points.isNotEmpty){
     result.points.forEach((PointLatLng point) {
       polylineCoordinates.add(LatLng(point.latitude, point.longitude));
@@ -32,8 +35,13 @@ class PolylineService {
     PolylinePoints polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
         apiKey,
+
         PointLatLng(from!.latitude, from.longitude),
-        PointLatLng(to!.latitude, to!.longitude));
+        PointLatLng(to!.latitude, to!.longitude),
+      travelMode: TravelMode.driving
+
+    );
+
     // if(result.points.isNotEmpty){
     result.points.forEach((PointLatLng point) {
       polylineCoordinates.add(LatLng(point.latitude, point.longitude));

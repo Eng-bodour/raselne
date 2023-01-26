@@ -21,6 +21,7 @@ import 'package:raselne/view_presentation/widget_driver/mypage_driver/account_ba
 import 'package:raselne/view_presentation/widget_driver/mypage_driver/calculate_drive.dart';
 import 'package:raselne/view_presentation/widget_driver/mypage_driver/mode_user.dart';
 import 'package:raselne/view_presentation/widget_driver/mypage_driver/show_info_drive.dart';
+import 'package:restart_app/restart_app.dart';
 
 class MyPageDriverScreen extends StatefulWidget {
   MyPageDriverScreen({Key? key}) : super(key: key);
@@ -102,7 +103,7 @@ class _MyPageDriverScreenState extends State<MyPageDriverScreen> {
       ),
       body:  ModalProgressHUD(
         inAsyncCall:
-        Provider.of<AuthProvider_vm>(context)
+        Provider.of<AuthProvider_vm>(context,listen: true)
             .isloading,
         child: SingleChildScrollView(
           child: Directionality(
@@ -180,7 +181,8 @@ class _MyPageDriverScreenState extends State<MyPageDriverScreen> {
                                 context: context,
                                 builder: (context) {
                                   return ModalProgressHUD(
-                                    inAsyncCall: Provider.of<AuthProvider_vm>(context,listen: true).isloadingSwitch,
+                                    inAsyncCall: Provider.of<AuthProvider_vm>
+                                      (context,listen: true).isloadingSwitch,
                                     child: AlertDialog(
                                       titlePadding: const EdgeInsets.fromLTRB(
                                           24.0, 1.0, 24.0, 10.0),
@@ -214,9 +216,13 @@ class _MyPageDriverScreenState extends State<MyPageDriverScreen> {
                                                     .switch_type();
                                                 Navigator.of(context, rootNavigator: true)
                                                     .pop(true);
-                                                setState(() {
-
-                                                });
+                                                // setState(() {
+                                                //
+                                                // });
+                                               // context.findAncestorStateOfType<_RestartWidgetState>().restartApp();
+                                               Restart.restartApp(
+                                               //    webOrigin: '[your main route]'
+                                               );
                                             // dismisses only the dialog and returns true
                                           },
                                           child: Text('نعم'),
@@ -327,7 +333,7 @@ class _MyPageDriverScreenState extends State<MyPageDriverScreen> {
                       bool: false,
                       size: size,
                       title: 'ملاحظات المستخدمين ',
-                      subtitle: '6',
+                      subtitle: '',
                       icon: const Icon(Icons.notes_outlined,
                           color: Colors.black26)),
                   user.type == 'user'

@@ -206,7 +206,8 @@ class order_firebase extends OrderRepository{
         .ref.where('uid',isEqualTo: uidcaptain).limit(1).get()
         .then((value) {
           return UserModel.fromJson(
-         value.docs.map((e) => e.data()).first,  value.docs.map((e) => e.id).first);
+         value.docs.map((e) => e.data()).first,
+              value.docs.map((e) => e.id).first);
         });
       print('us ${us.name}');
       return us;

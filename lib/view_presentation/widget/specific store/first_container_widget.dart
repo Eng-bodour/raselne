@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -8,19 +9,25 @@ import 'package:raselne/view_presentation/widget/text_utilis.dart';
 
 import '../../../logic/controller/auth_controller.dart';
 import '../../../logic/controller/store/StoreRating.dart';
+import '../../../logic/controller/store/store_controller.dart';
 import '../../../services/polyline_service.dart';
 import '../../screen_driver/driver_rating.dart';
 
 class FirstContainerWedgit extends StatelessWidget {
   final Size size;
  StoreModel storeModel;
-   FirstContainerWedgit({required this.storeModel, required this.size, Key? key}) : super(key: key);
+ int index;
+   FirstContainerWedgit({
+     required this.index,
+     required this.storeModel,
+     required this.size, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var width = size.width;
 
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Column(
           children: [
@@ -32,7 +39,7 @@ class FirstContainerWedgit extends StatelessWidget {
                   elevation: 0,
                   shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
+                        topLeft:  Radius.circular(20),
                         topRight: Radius.circular(20),
                       )),
                   context: context,
@@ -54,7 +61,8 @@ class FirstContainerWedgit extends StatelessWidget {
                   TextUtils(
                       fontSize: width * 0.05,
                       fontWeight: FontWeight.normal,
-                      text: storeModel!.rataing.toString(),
+                      text: Provider.of<StoreProvider_vm>(context, listen: true)
+                          .liststore[index].rataing.toString(),
                       color: greyColor,
                       underLine: TextDecoration.none)
                 ],
@@ -84,9 +92,9 @@ class FirstContainerWedgit extends StatelessWidget {
                     underLine: TextDecoration.none),
           ],
         ),
-        SizedBox(
-          width: width * 0.16,
-        ),
+        // SizedBox(
+        //   width: width * 0.16,
+        // ),
         Container(
           child: Row(
             children: [
@@ -104,9 +112,9 @@ class FirstContainerWedgit extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
-          width: width * 0.16,
-        ),
+        // SizedBox(
+        //   width: width * 0.16,
+        // ),
         Container(
           child: Column(
             children: [
@@ -120,7 +128,7 @@ class FirstContainerWedgit extends StatelessWidget {
                   TextUtils(
                       fontSize: width * 0.04,
                       fontWeight: FontWeight.normal,
-                      text: 'المتر',
+                      text: 'المتجر',
                       color: greyColor,
                       underLine: TextDecoration.none)
                 ],

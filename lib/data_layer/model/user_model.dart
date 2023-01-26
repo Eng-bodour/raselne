@@ -20,6 +20,7 @@ import 'package:location/location.dart';
        Rate(
      value_rate:double.parse( json["value_rate"].toString()),
      id_user:   json["id_user"],
+
    );
 
    Map<String, dynamic> toJson() => {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:raselne/utilis/theme.dart';
 
 import '../../logic/controller/notify_vm.dart';
 import '../widget/cardnotify.dart';
@@ -24,8 +25,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
         appBar: AppBar(
-      title: const Text('Notification'),
+          backgroundColor: mainColor,
+
+          title: const Text('التنبيهات'),
+      titleTextStyle: TextStyle(color: Colors.white,fontSize: 20),
       centerTitle: true,
     ),
     body:  Directionality(

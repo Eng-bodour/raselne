@@ -16,20 +16,28 @@ class StoreProvider_vm extends ChangeNotifier {
   StoreProvider_vm({required this.storeRepository});
 
   List<StoreModel> liststore =[];
+  late StoreModel? currentStore=null;
   void setlocation(LatLng? loc,String address) {
     location=loc!;
     address_store=address;
     notifyListeners();
   }
-  StoreModel? getstoremodel(String id) {
-    if(liststore.isEmpty ) storeRepository.getAllStores();
-    if(liststore.isNotEmpty&&id!='')
-    return liststore.firstWhere((element) => element.IdStore==id
-    ,orElse: null
-    );
-    else return null;
 
+  Future<void> getstoremodel(String id) async {
+    if(liststore.isEmpty )
+     await storeRepository.getAllStores();
+    //notifyListeners();
+    if(liststore.isNotEmpty  )
+      currentStore= liststore.firstWhere((element) =>
+      element.IdStore==id
+      //,orElse: null
+    );
+    print(id);
+    // else currentStore= null;
+    //
+    notifyListeners();
   }
+
  Future<void> SaveStore({File? fileimage, required Map<String, dynamic> storeModel,
     required String type})
   async {
@@ -46,6 +54,26 @@ class StoreProvider_vm extends ChangeNotifier {
     isloading=false;
     notifyListeners();
   }
+
+  Future<void> getstorefilter(String nameStore) async {
+    isloading=true;
+    notifyListeners();
+    // liststore=await storeRepository.searchStore(nameStore);
+    if(liststore.isEmpty)
+    liststore=await storeRepository.getAllStores();
+    else   for(int i=0;i<liststore.length-1;i++){
+          if( liststore[i].isVisible==false)
+          liststore[i].isVisible=true;
+    }
+    liststore.where((element) =>
+         element.nameStore.contains(nameStore)
+         // .startsWith(nameStore.substring(0,nameStore.length-1)
+
+    );
+    isloading=false;
+    notifyListeners();
+  }
+
  Future<void> SaveStoreItem({File? fileimage, required Map<String, dynamic> itemStore,
     required String idStore,
     required String type})
@@ -78,12 +106,12 @@ class StoreProvider_vm extends ChangeNotifier {
 
   }
 
-  item_to_order(String IdItemStore ) {
+ void item_to_order(String IdItemStore ) {
     // int index = liststore.indexWhere(
     //         (element) =>
     // element.itemstore.indexWhere((item) => item.IdItemStore==IdItemStore));
     //
-print('IdItemStore '+IdItemStore);
+    print('IdItemStore '+IdItemStore);
     for(int i=0;i<liststore.length;i++) {
 
       liststore[i].itemstore.forEach((element) {
@@ -116,7 +144,7 @@ print('IdItemStore '+IdItemStore);
    liststore=await storeRepository.getAllStores();
    print('type  '+type);
    for(int i=0;i<liststore.length-1;i++){
-     print('typeStore  '+liststore[i].typeStore);
+     print('typeStore  '+ liststore[i].typeStore);
      if(type!='')
      if(liststore[i].typeStore==type)
        liststore[i].isVisible=true;
@@ -137,7 +165,7 @@ print('IdItemStore '+IdItemStore);
   Future<void> getstoresbyOwner(String idowner, String typeStore) async {
    isloading=true;
    notifyListeners();
-    liststore=await storeRepository.getStoreById(idowner, typeStore);
+   liststore=await storeRepository.getStoreById(idowner, typeStore);
    // print('type  '+typeStore);
    // for(int i=0;i<liststore.length-1;i++){
    //   print('typeStore  '+liststore[i].typeStore);
@@ -145,7 +173,7 @@ print('IdItemStore '+IdItemStore);
    //     liststore[i].isVisible=true;
    // }
 
-    isloading=false;
-    notifyListeners();
+   isloading=false;
+   notifyListeners();
   }
 }

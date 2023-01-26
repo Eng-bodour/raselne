@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../services/searchStoreDelegate.dart';
+
 class SearchFormText extends StatelessWidget {
   const SearchFormText({Key? key}) : super(key: key);
 
@@ -10,6 +12,11 @@ class SearchFormText extends StatelessWidget {
       cursorColor: Colors.black,
       keyboardType: TextInputType.text,
       onChanged: (searchName) {
+       // showSearch(context: context, delegate: searchStore());
+        // controller.addSearchToList(searchName);
+      },
+      onTap: (){
+        showSearch(context: context, delegate: searchStore());
         // controller.addSearchToList(searchName);
       },
       decoration: InputDecoration(
@@ -24,6 +31,7 @@ class SearchFormText extends StatelessWidget {
             //     ?
             IconButton(
           onPressed: () {
+
             //  controller.clearSearch();
           },
           icon: const Icon(

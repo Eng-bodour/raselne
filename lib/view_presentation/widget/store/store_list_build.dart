@@ -11,8 +11,9 @@ import '../../screen/store drawer/add_store.dart';
 import '../text_utilis.dart';
 
 class StoreListBuild extends StatefulWidget {
-  StoreListBuild({required this.type, Key? key}) : super(key: key);
+  StoreListBuild({required this.search, required this.type, Key? key}) : super(key: key);
   String type;
+  String search='';
   @override
   State<StoreListBuild> createState() => _StoreListBuildState();
 }
@@ -22,7 +23,9 @@ class _StoreListBuildState extends State<StoreListBuild> {
 
   @override
   void initState() {
+
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      if(widget.type!='') {
       Provider.of<AuthProvider_vm>(context, listen: false).currentuser.type ==
               'user'
           ? await Provider.of<StoreProvider_vm>(context, listen: false)
@@ -30,11 +33,17 @@ class _StoreListBuildState extends State<StoreListBuild> {
           : await Provider.of<StoreProvider_vm>(context, listen: false)
               .getstoresbyOwner(
                   //store by owner
-                  Provider.of<AuthProvider_vm>(context, listen: false)
+                  Provider.of<AuthProvider_vm>(context,  listen: false)
                       .currentuser
                       .uid
                       .toString(),
                   widget.type);
+      }
+      else {
+
+        await Provider.of<StoreProvider_vm>(context, listen: false)
+            .getstorefilter(widget.search);
+      }
     });
     super.initState();
   }
@@ -74,7 +83,8 @@ class _StoreListBuildState extends State<StoreListBuild> {
                                               value.liststore[index].nameStore,
 
                                           // itemstore: value.liststore[index].itemstore,
-                                          index: index, storeModel: value
+                                          index: index,
+                                          storeModel: value
                                           .liststore[index],));
                                     },
                                     child: Container(

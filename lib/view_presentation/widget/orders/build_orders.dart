@@ -15,31 +15,48 @@ import '../../../utilis/global_method.dart';
 import '../../screen_driver/waiting_approve_order.dart';
 import '../mypage_driver/show_offers.dart';
 
-class buildCardOrders extends StatelessWidget {
+class buildCardOrders extends StatefulWidget {
   buildCardOrders({required this.orderModel, required this.size, Key? key})
       : super(key: key);
   OrderModel orderModel;
   Size size;
-  late StoreModel? storeModel;
+
+  @override
+  State<buildCardOrders> createState() => _buildCardOrdersState();
+}
+
+class _buildCardOrdersState extends State<buildCardOrders> {
+  // late StoreModel? storeModel;
+  @override
+  void initState() {
+    // TODO: implement initState
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+
+     await Provider.of<StoreProvider_vm>(context,listen: false)
+          .getstoremodel(widget.orderModel.id_store);
+
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    storeModel= Provider.of<StoreProvider_vm>(context,listen: true)
-        .getstoremodel(orderModel.id_store);
+
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: size.width * 0.03,
-        vertical: size.width * 0.01,
+        horizontal: widget.size.width * 0.03,
+        vertical: widget.size.width * 0.01,
       ),
       child: Card(
         child: SizedBox(
-          height: size.height * 0.35,
+          height: widget.size.height * 0.35,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: size.width * 0.04,
-                    vertical: size.height * 0.01),
+                    horizontal: widget.size.width * 0.04,
+                    vertical: widget.size.height * 0.01),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -47,7 +64,7 @@ class buildCardOrders extends StatelessWidget {
                       children: [
                         Container(
                           decoration:
-                    orderModel.isopen == true?
+                    widget.orderModel.isopen == true?
                     const BoxDecoration(
 
                         color: Colors.green)
@@ -55,27 +72,27 @@ class buildCardOrders extends StatelessWidget {
                               shape: BoxShape.circle, color: Colors.red),
 
                           child: Icon(
-                            orderModel.isopen == true?Icons.check:  Icons.close,
+                            widget.orderModel.isopen == true?Icons.check:  Icons.close,
                             color: Colors.white,
-                            size: size.width * 0.04,
+                            size: widget.size.width * 0.04,
                           ),
                         ),
                         SizedBox(
-                          width: size.width * 0.01,
+                          width: widget.size.width * 0.01,
                         ),
                         TextUtils(
-                            fontSize: size.width * 0.04,
+                            fontSize: widget.size.width * 0.04,
                             fontWeight: FontWeight.normal,
-                            text: getstate_order(orderModel.state), //'ملغى',
-                            color:orderModel.isopen == true?
+                            text: getstate_order(widget.orderModel.state), //'ملغى',
+                            color:widget.orderModel.isopen == true?
                             Colors.green: Colors.red,
                             underLine: TextDecoration.none)
                       ],
                     ),
                     TextUtils(
-                        fontSize: size.width * 0.04,
+                        fontSize: widget.size.width * 0.04,
                         fontWeight: FontWeight.normal,
-                        text: orderModel.DateTimeorder.toString(), // 'سنة',
+                        text: widget.orderModel.DateTimeorder.toString(), // 'سنة',
                         color: Colors.black54,
                         underLine: TextDecoration.none)
                   ],
@@ -89,15 +106,16 @@ class buildCardOrders extends StatelessWidget {
                 child: Row(
                   children: [
                     TextUtils(
-                        fontSize: size.width * 0.04,
+                        fontSize: widget.size.width * 0.04,
                         fontWeight: FontWeight.normal,
                         text: 'رقم الطلب : ', // 'سنة',
                         color: Colors.black54,
                         underLine: TextDecoration.none),
                     TextUtils(
-                        fontSize: size.width * 0.04,
+                        fontSize: widget.size.width * 0.04,
                         fontWeight: FontWeight.normal,
-                        text: orderModel.id_order.substring(0, 8).toString(), // 'سنة',
+                        text: widget.orderModel.id_order
+                            .substring(0, 8).toString(), // 'سنة',
                         color: Colors.black54,
                         underLine: TextDecoration.none)
                   ],
@@ -107,16 +125,18 @@ class buildCardOrders extends StatelessWidget {
                 // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
 
-                  storeModel!=null?
+                  Provider.of<StoreProvider_vm>(context,listen: true)
+                      .currentStore!=null?
 
-                  storeModel!.imageStore==''?
+                  Provider.of<StoreProvider_vm>(context,listen: true)
+                  .currentStore!.imageStore==''?
                   CircleAvatar(
                     backgroundColor: Colors.white,
-                    radius: size.width * 0.08,
+                    radius: widget.size.width * 0.08,
                     child: Icon(
                       Icons.person,
                       color: Colors.lightBlue.withOpacity(0.9),
-                      size: size.width * 0.06,
+                      size: widget.size.width * 0.06,
                     ),
                   ):
                   CircleAvatar(
@@ -127,7 +147,8 @@ class buildCardOrders extends StatelessWidget {
                       width: 100,
                       height: 100,
                       fit: BoxFit.fill,
-                      imageUrl:  storeModel!.imageStore.toString(),
+                      imageUrl:  Provider.of<StoreProvider_vm>(context,listen: true)
+                          .currentStore!.imageStore.toString(),
                       placeholder: (context, url) =>
                       const CircularProgressIndicator(),
                       errorWidget: (context, url, error) =>
@@ -136,32 +157,38 @@ class buildCardOrders extends StatelessWidget {
                   ),
                 ): CircleAvatar(
                     backgroundColor: Colors.white,
-                    radius: size.width * 0.08,
+                    radius: widget.size.width * 0.08,
                     child: Icon(
                       Icons.person,
                       color: Colors.lightBlue.withOpacity(0.9),
-                      size: size.width * 0.06,
+                      size: widget.size.width * 0.06,
                     ),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextUtils(
-                          fontSize: size.width * 0.04,
+                          fontSize: widget.size.width * 0.04,
                           fontWeight: FontWeight.bold,
-                          text: orderModel
-                              .titleStore==''? private_order: orderModel
-                          .titleStore, //'اسم المطعم', //'${Firebase.name}',
+                          text: widget.orderModel
+                              .titleStore==''?
+                           private_order:
+                          Provider.of<StoreProvider_vm>(context,listen: true)
+                              .currentStore!.nameStore,
+                           // widget.orderModel.titleStore,
+                          //'اسم المطعم', //'${Firebase.name}',
                           color: Colors.black54,
                           underLine: TextDecoration.none),
-                    storeModel!=null?
+                      Provider.of<StoreProvider_vm>(context,listen: true)
+                          .currentStore!=null?
                     Row(
                         children: [
                           RatingBarIndicator(
                             // rating: rate,
                             //to do
                             rating: //2.5,
-                            storeModel!.rataing,
+                            Provider.of<StoreProvider_vm>(context,listen: true)
+                                .currentStore!.rataing,
                             itemBuilder: (context, index) => Icon(
                               Icons.star,
                               color: Colors.orange.withOpacity(0.4),
@@ -172,9 +199,10 @@ class buildCardOrders extends StatelessWidget {
                             direction: Axis.horizontal,
                           ),
                           TextUtils(
-                              fontSize: size.width * 0.02,
+                              fontSize: widget.size.width * 0.02,
                               fontWeight: FontWeight.normal,
-                              text: storeModel!.rataing.toString(),
+                              text: Provider.of<StoreProvider_vm>(context,listen: true)
+                                  .currentStore!.rataing.toString(),
                               color: Colors.black54,
                               underLine: TextDecoration.none)
                         ],
@@ -185,12 +213,12 @@ class buildCardOrders extends StatelessWidget {
               ),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                  padding: EdgeInsets.symmetric(horizontal: widget.size.width * 0.05),
                   child: TextUtils(
-                      fontSize: size.width * 0.04,
+                      fontSize: widget.size.width * 0.04,
                       fontWeight: FontWeight.normal,
                       text: //'وصف الطلب',
-                          orderModel.content_order, //
+                          widget.orderModel.content_order, //
                       color: Colors.black54,
                       underLine: TextDecoration.none),
                 ),
@@ -200,34 +228,34 @@ class buildCardOrders extends StatelessWidget {
                 children: [
                   Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                        EdgeInsets.symmetric(horizontal: widget.size.width * 0.05),
                     child: Row(
                       children: [
                         TextUtils(
-                            fontSize: size.width * 0.04,
+                            fontSize: widget.size.width * 0.04,
                             fontWeight: FontWeight.normal,
                             text: 'المجموع',
                             color: Colors.black54,
                             underLine: TextDecoration.none),
-                        SizedBox(width: size.width * 0.02),
+                        SizedBox(width: widget.size.width * 0.02),
                         TextUtils(
-                            fontSize: size.width * 0.04,
+                            fontSize: widget.size.width * 0.04,
                             fontWeight: FontWeight.normal,
-                            text: '${orderModel.total.toString()} رس',
+                            text: '${widget.orderModel.total.toString()} رس',
                             color: mainColor,
                             underLine: TextDecoration.none),
                       ],
                     ),
                   ),
-                  orderModel.distance_recive_deilvery==''?
+                  widget.orderModel.distance_recive_deilvery==''?
                   Container():
                   Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                        EdgeInsets.symmetric(horizontal: widget.size.width * 0.05),
                     child: TextUtils(
-                        fontSize: size.width * 0.04,
+                        fontSize: widget.size.width * 0.04,
                         fontWeight: FontWeight.normal,
-                        text: 'كم ${orderModel.distance_recive_deilvery}',
+                        text: 'كم ${widget.orderModel.distance_recive_deilvery}',
                         color: Colors.black54,
                         underLine: TextDecoration.none),
                   ),
@@ -237,14 +265,14 @@ class buildCardOrders extends StatelessWidget {
                   onPressed: () {
                     // if(orderModel.isopen)
 
-                    switch (orderModel.state) {
+                    switch (widget.orderModel.state) {
                       case 'open':
                         // Provider.of<AuthProvider_vm>(context,listen: false)
                         // .currentuser.type=='user'?
                         Navigator.of(context).push(
                             MaterialPageRoute(
                             builder: (context) =>
-                                ShowOffers(orderModel: orderModel)));
+                                ShowOffers(orderModel: widget.orderModel)));
                         // Navigator.of(context).push(
                         //     MaterialPageRoute(
                         //         builder: (context)=>
@@ -255,31 +283,31 @@ class buildCardOrders extends StatelessWidget {
                         // return 'مفتوح';
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) =>
-                                ChatScreen(orderModel: orderModel)));
+                                ChatScreen(orderModel: widget.orderModel)));
                         break;
                       case 'done invoice':
                         // return 'مفتوح';
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) =>
-                                ChatScreen(orderModel: orderModel)));
+                                ChatScreen(orderModel: widget.orderModel)));
                         break;
                       case 'done recive':
                         // return 'مفتوح';
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) =>
-                                ChatScreen(orderModel: orderModel)));
+                                ChatScreen(orderModel: widget.orderModel)));
                         break;
                       case 'done arrive':
                         // return 'مفتوح';
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) =>
-                                ChatScreen(orderModel: orderModel)));
+                                ChatScreen(orderModel: widget.orderModel)));
                         break;
                       case 'done':
                         // return 'مفتوح';
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) =>
-                                ChatScreen(orderModel: orderModel)));
+                                ChatScreen(orderModel: widget.orderModel)));
                         break;
                     }
                   },
@@ -288,19 +316,19 @@ class buildCardOrders extends StatelessWidget {
                       backgroundColor: MaterialStateProperty.all(mainColor)),
                   child: Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.25),
+                        EdgeInsets.symmetric(horizontal: widget.size.width * 0.25),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
 
-                        orderModel.isopen == true
+                        widget.orderModel.isopen == true
                             ? Text('متابعة',
                                 style: TextStyle(
-                                  fontSize: size.width * 0.045,
+                                  fontSize: widget.size.width * 0.045,
                                 ))
                             : Text('إعادة الطلب',
                                 style: TextStyle(
-                                  fontSize: size.width * 0.045,
+                                  fontSize: widget.size.width * 0.045,
                                 )),
                         // SizedBox(
                         //   width: size.width * 0.02,

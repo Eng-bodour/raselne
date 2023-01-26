@@ -48,6 +48,12 @@ class StoreAPI extends StoreRepository {
     throw UnimplementedError();
   }
 
+  @override
+  Future<List<StoreModel>> searchStore(String nameStore) {
+    // TODO: implement searchStore
+    throw UnimplementedError();
+  }
+
 
 
 }
