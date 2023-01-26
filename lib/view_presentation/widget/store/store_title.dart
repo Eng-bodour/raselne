@@ -28,17 +28,17 @@ class StoreTitle extends StatelessWidget {
         ),
         Row(
           children: [
-            CircleAvatar(
-              radius: size.width * 0.05,
-              backgroundColor: mainColor,
-              child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.folder,
-                    size: 20,
-                    color: Colors.white,
-                  )),
-            ),
+            // CircleAvatar(
+            //   radius: size.width * 0.05,
+            //   backgroundColor: mainColor,
+            //   child: IconButton(
+            //       onPressed: () {},
+            //       icon: const Icon(
+            //         Icons.folder,
+            //         size: 20,
+            //         color: Colors.white,
+            //       )),
+            // ),
             // TextButton(
             //     onPressed: () {},
             //     child: Container(

@@ -1,12 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:raselne/logic/controller/auth_controller.dart';
 import 'package:raselne/logic/controller/store/store_controller.dart';
 import 'package:raselne/utilis/theme.dart';
 import 'package:raselne/view_presentation/screen/specific_store_screen.dart';
 
+import '../../../services/polyline_service.dart';
 import '../../screen/store drawer/add_store.dart';
 import '../text_utilis.dart';
 
@@ -40,9 +42,16 @@ class _StoreListBuildState extends State<StoreListBuild> {
                   widget.type);
       }
       else {
-
+      if(Provider.of<AuthProvider_vm>(context, listen: false)
+          .currentuser.type =='user')
         await Provider.of<StoreProvider_vm>(context, listen: false)
-            .getstorefilter(widget.search);
+            .getstorefilter(widget.search,'');
+      else     await Provider.of<StoreProvider_vm>(context, listen: false)
+          .getstorefilter(widget.search,
+          Provider.of<AuthProvider_vm>(context,  listen: false)
+          .currentuser
+          .uid
+          .toString());
       }
     });
     super.initState();
@@ -142,7 +151,15 @@ class _StoreListBuildState extends State<StoreListBuild> {
                                                           .liststore[index]
                                                           .rataing
                                                           .toString(),
-                                                      distance: ""),
+                                                      distance: PolylineService().calcDistance([
+                                                        LatLng(value
+                                                            .liststore[index].location!.latitude,
+                                                            value
+                                                                .liststore[index].location!.longitude),
+                                                        LatLng(
+                                                           Provider.of<AuthProvider_vm>(context,listen: true).currentuser.location!.latitude,
+                                                            Provider.of<AuthProvider_vm>(context,listen: true).currentuser.location!.longitude)
+                                                      ])),
                                                   //value.liststore[index].location.toString()),
                                                   Provider.of<AuthProvider_vm>(
                                                                   context,

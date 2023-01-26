@@ -32,16 +32,14 @@ class _buildCardOrdersState extends State<buildCardOrders> {
     // TODO: implement initState
     WidgetsBinding.instance.addPostFrameCallback((_) async {
 
-     await Provider.of<StoreProvider_vm>(context,listen: false)
-          .getstoremodel(widget.orderModel.id_store);
-
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
+    Provider.of<StoreProvider_vm>(context,listen: true)
+        .getstoremodel(widget.orderModel.id_store);
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: widget.size.width * 0.03,

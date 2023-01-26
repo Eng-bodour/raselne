@@ -110,6 +110,16 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                           }
                           return Column(
                             children: [
+                              Padding(
+                                padding:
+                                EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                                child: TextUtils(
+                                    fontSize: size.width * 0.05,
+                                    fontWeight: FontWeight.bold,
+                                    text: '     طلبات التوصيل ${snapshot.data!.length}  ',
+                                    color: Colors.black54,
+                                    underLine: TextDecoration.none),
+                              ),
                               ListView.separated(
                                 shrinkWrap: true,
                                 controller: ScrollController(),
@@ -142,6 +152,16 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                           //'طلباتي
                           return Column(
                             children: [
+                              Padding(
+                                padding:
+                                EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                                child: TextUtils(
+                                    fontSize: size.width * 0.05,
+                                    fontWeight: FontWeight.bold,
+                                    text: '     طلباتي ${snapshot.data!.length}  ',
+                                    color: Colors.black54,
+                                    underLine: TextDecoration.none),
+                              ),
                               ListView.separated(
                                 shrinkWrap: true,
                                 controller: ScrollController(),
@@ -242,7 +262,8 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
                         children: [
                           Provider.of<StoreProvider_vm>(context,listen: true)
                               .currentStore!=null?
-                          Provider.of<StoreProvider_vm>(context,listen: true).currentStore!.imageStore!=''?
+                          Provider.of<StoreProvider_vm>(context,listen: true)
+                              .currentStore!.imageStore!=''?
                           //orderModel.i.imageuser !=''?
                           CircleAvatar(
                             radius: 30,

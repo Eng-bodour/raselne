@@ -305,13 +305,15 @@ class StoreFirebase extends StoreRepository {
   }
 
   @override
-  Future<List<StoreModel>> searchStore(String nameStore)async {
+  Future<List<StoreModel>> searchStore(String idowner )async {
     // TODO: implement searchStore
     List<StoreModel> liststore = [];
     List<StoreModel> liststoreNew = [];
     StoreModel storeModel, tempstore;
     List<Itemstore> itemstore = [];
-    await   FirebaseServices("store").searchDocuments(nameStore, '')
+    await FirebaseServices("store").ref
+        .where('idowner',isEqualTo: idowner)
+        .get()
         .then((value) =>
         value.docs.forEach(
                 (doc) async {
@@ -352,10 +354,11 @@ class StoreFirebase extends StoreRepository {
                       IdStore: storeModel.IdStore,
                       itemstore: storeModel.itemstore,
                       idowner: storeModel.idowner,
-                      isVisible: false,
+                      isVisible: true,
                       stateStore: storeModel.stateStore,
                       location: storeModel.location,
                       imageStore: storeModel.imageStore
+
                   )
               );
             }));

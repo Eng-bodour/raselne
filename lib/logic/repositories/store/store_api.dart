@@ -49,7 +49,7 @@ class StoreAPI extends StoreRepository {
   }
 
   @override
-  Future<List<StoreModel>> searchStore(String nameStore) {
+  Future<List<StoreModel>> searchStore(String idowner ) {
     // TODO: implement searchStore
     throw UnimplementedError();
   }

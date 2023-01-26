@@ -28,11 +28,13 @@ class StoreProvider_vm extends ChangeNotifier {
      await storeRepository.getAllStores();
     //notifyListeners();
     if(liststore.isNotEmpty  )
-      currentStore= liststore.firstWhere((element) =>
-      element.IdStore==id
+      for(int i=0;i<liststore.length;i++)
+        if(liststore[i].IdStore==id)
+          currentStore=liststore[i];
+      // currentStore= liststore.firstWhere((element) =>element.IdStore==id
       //,orElse: null
-    );
-    print(id);
+    //);
+    print('id '+id.toString());
     // else currentStore= null;
     //
     notifyListeners();
@@ -55,13 +57,19 @@ class StoreProvider_vm extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getstorefilter(String nameStore) async {
+  Future<void> getstorefilter(String nameStore,String idowner) async {
     isloading=true;
     notifyListeners();
     // liststore=await storeRepository.searchStore(nameStore);
-    if(liststore.isEmpty)
-    liststore=await storeRepository.getAllStores();
-    else   for(int i=0;i<liststore.length-1;i++){
+    if(liststore.isEmpty ) {
+      if(idowner=='')
+        liststore=await storeRepository.getAllStores();
+      else
+        liststore=await storeRepository.searchStore(idowner);
+
+    }
+    else
+      for(int i=0;i<liststore.length-1;i++){
           if( liststore[i].isVisible==false)
           liststore[i].isVisible=true;
     }

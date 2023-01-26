@@ -13,7 +13,7 @@ abstract class StoreRepository {
       Map<String,dynamic> body,String TypeOperation,String idStore);
   Future<void> deleteStoreItem( Map<String,dynamic> body,String idStore);
   Future<void> rate_store(String value, String idstore,String id_currentUser);
-  Future<List<StoreModel>> searchStore(String nameStore);
+  Future<List<StoreModel>> searchStore(String idowner);
 
 }
 

@@ -63,7 +63,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
              //   child: Text('no order'),
              // ) :
               FutureBuilder(
-                  future: Provider.of<order_vm>(context,listen: false)
+                  future: Provider.of<order_vm>(context,listen: true)
                       .get_myorder(),
                   builder: (BuildContext context, AsyncSnapshot<List<OrderModel> > snapshot) {
                     if (snapshot.hasError) {
