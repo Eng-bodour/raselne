@@ -23,6 +23,8 @@ import 'package:raselne/view_presentation/widget_driver/mypage_driver/mode_user.
 import 'package:raselne/view_presentation/widget_driver/mypage_driver/show_info_drive.dart';
 import 'package:restart_app/restart_app.dart';
 
+import '../../screen/my_page/setting_screen.dart';
+
 class MyPageDriverScreen extends StatefulWidget {
   MyPageDriverScreen({Key? key}) : super(key: key);
 
@@ -385,9 +387,9 @@ class _MyPageDriverScreenState extends State<MyPageDriverScreen> {
                       : Container(),
                   info(
                       ontap: () {
-                        // Get.to(SettingScreen(
-                        //   title: 'إعدادات',
-                        // ));
+                        Get.to(SettingScreen(
+                          title: 'إعدادات',
+                        ));
                       },
                       context: context,
                       bool: false,

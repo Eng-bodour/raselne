@@ -95,4 +95,10 @@ class user_api extends UserRepository{
     throw UnimplementedError();
   }
 
+  @override
+  Future<void> updateuser(String id_doc,String name, String email, String mobile) {
+    // TODO: implement updateuser
+    throw UnimplementedError();
+  }
+
 }

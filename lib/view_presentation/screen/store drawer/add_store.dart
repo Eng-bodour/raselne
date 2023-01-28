@@ -113,7 +113,8 @@ class _AddStoreState extends State<AddStore> {
       ),
       body: ModalProgressHUD(
         inAsyncCall:
-            Provider.of<StoreProvider_vm>(context, listen: true).isloading,
+            Provider.of<StoreProvider_vm>(context, listen: true)
+                .isloading,
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           controller: controller,

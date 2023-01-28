@@ -99,7 +99,10 @@ class MyApp extends StatelessWidget {
               return MaterialApp(
                 home: Scaffold(
                   body: Center(
-                    child: Text('Loading....'),
+                    //Fast-deliveryscooter.png
+                    child: Image.asset('assets/images/Fast-deliveryscooter.png'),
+
+                    // Text('Loading....'),
                   ),
                 ),
               );

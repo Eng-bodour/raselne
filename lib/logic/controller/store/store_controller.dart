@@ -29,8 +29,11 @@ class StoreProvider_vm extends ChangeNotifier {
     //notifyListeners();
     if(liststore.isNotEmpty  )
       for(int i=0;i<liststore.length;i++)
+      {
+        liststore[i].rataing=StoreModel.getrate( liststore[i].rating);
         if(liststore[i].IdStore==id)
           currentStore=liststore[i];
+      }
       // currentStore= liststore.firstWhere((element) =>element.IdStore==id
       //,orElse: null
     //);
@@ -150,8 +153,10 @@ class StoreProvider_vm extends ChangeNotifier {
    isloading=true;
    notifyListeners();
    liststore=await storeRepository.getAllStores();
+
    print('type  '+type);
    for(int i=0;i<liststore.length-1;i++){
+     liststore[i].rataing=StoreModel.getrate( liststore[i].rating);
      print('typeStore  '+ liststore[i].typeStore);
      if(type!='')
      if(liststore[i].typeStore==type)
@@ -180,7 +185,10 @@ class StoreProvider_vm extends ChangeNotifier {
    //   if(liststore[i].typeStore==typeStore)
    //     liststore[i].isVisible=true;
    // }
+   for(int i=0;i<liststore.length-1;i++){
+     liststore[i].rataing=StoreModel.getrate( liststore[i].rating);
 
+   }
    isloading=false;
    notifyListeners();
   }

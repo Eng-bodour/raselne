@@ -67,8 +67,8 @@ class StoreModel {
     store.rating= doc["rate"] == null ? [] :
 
     store.getproud(doc['rate']);
-    store.rataing=getrate(store.rating);
-    print('(store.rataing in fromsnapshot '+store.rataing.toString());
+    // store.rataing=getrate(store.rating);
+    // print('(store.rataing in fromsnapshot '+store.rataing.toString());
     GeoPoint gloacationfrom=doc["location"];
     store.location=LatLng(
         gloacationfrom.latitude,

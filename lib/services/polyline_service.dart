@@ -21,6 +21,8 @@ class PolylineService {
     if(result.points.isNotEmpty){
     result.points.forEach((PointLatLng point) {
       polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      print('polylineCoordinates.length');
+      print(polylineCoordinates.length);
     });
     }
     // calcDistance(polylineCoordinates);
@@ -36,16 +38,26 @@ class PolylineService {
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
         apiKey,
 
-        PointLatLng(from!.latitude, from.longitude),
-        PointLatLng(to!.latitude, to!.longitude),
+        PointLatLng(42.7477863, -71.1699932),
+        PointLatLng(42.6871386, -71.2143403),
+        // PointLatLng(from!.latitude, from.longitude),
+        // PointLatLng(to!.latitude, to!.longitude),
       travelMode: TravelMode.driving
 
     );
 
     // if(result.points.isNotEmpty){
+    print(
+      'result '
+    );
+    print(result.status.toString());
+    print(' errormessage ' +result.errorMessage.toString());
     result.points.forEach((PointLatLng point) {
       polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      print('polylineCoordinates.length');
+      print(polylineCoordinates.length);
     });
+
     //}
     // calcDistance(polylineCoordinates);
     return
@@ -69,7 +81,7 @@ class PolylineService {
       );
     }
 
-    print("distance = ${totalDistance.toStringAsFixed(2)} km");
+    // print("distance = ${totalDistance.toStringAsFixed(2)} km");
     return totalDistance.toStringAsFixed(2);
   }
 

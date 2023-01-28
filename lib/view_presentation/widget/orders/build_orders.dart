@@ -119,95 +119,98 @@ class _buildCardOrdersState extends State<buildCardOrders> {
                   ],
                 ),
               ),
-              Row(
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Row(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
 
-                  Provider.of<StoreProvider_vm>(context,listen: true)
-                      .currentStore!=null?
+                    Provider.of<StoreProvider_vm>(context,listen: true)
+                        .currentStore!=null?
 
-                  Provider.of<StoreProvider_vm>(context,listen: true)
-                  .currentStore!.imageStore==''?
-                  CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: widget.size.width * 0.08,
-                    child: Icon(
-                      Icons.person,
-                      color: Colors.lightBlue.withOpacity(0.9),
-                      size: widget.size.width * 0.06,
+                    Provider.of<StoreProvider_vm>(context,listen: true)
+                    .currentStore!.imageStore==''?
+                    CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: widget.size.width * 0.08,
+                      child: Icon(
+                        Icons.person,
+                        color: Colors.lightBlue.withOpacity(0.9),
+                        size: widget.size.width * 0.06,
+                      ),
+                    ):
+                    CircleAvatar(
+                    radius: 23,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: CachedNetworkImage(
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.fill,
+                        imageUrl:  Provider.of<StoreProvider_vm>(context,listen: true)
+                            .currentStore!.imageStore.toString(),
+                        placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                      ),
                     ),
-                  ):
-                  CircleAvatar(
-                  radius: 23,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: CachedNetworkImage(
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.fill,
-                      imageUrl:  Provider.of<StoreProvider_vm>(context,listen: true)
-                          .currentStore!.imageStore.toString(),
-                      placeholder: (context, url) =>
-                      const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) =>
-                      const Icon(Icons.error),
+                  ): CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: widget.size.width * 0.08,
+                      child: Icon(
+                        Icons.person,
+                        color: Colors.lightBlue.withOpacity(0.9),
+                        size: widget.size.width * 0.06,
+                      ),
                     ),
-                  ),
-                ): CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: widget.size.width * 0.08,
-                    child: Icon(
-                      Icons.person,
-                      color: Colors.lightBlue.withOpacity(0.9),
-                      size: widget.size.width * 0.06,
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextUtils(
-                          fontSize: widget.size.width * 0.04,
-                          fontWeight: FontWeight.bold,
-                          text: widget.orderModel
-                              .titleStore==''?
-                           private_order:
-                          Provider.of<StoreProvider_vm>(context,listen: true)
-                              .currentStore!.nameStore,
-                           // widget.orderModel.titleStore,
-                          //'اسم المطعم', //'${Firebase.name}',
-                          color: Colors.black54,
-                          underLine: TextDecoration.none),
-                      Provider.of<StoreProvider_vm>(context,listen: true)
-                          .currentStore!=null?
-                    Row(
-                        children: [
-                          RatingBarIndicator(
-                            // rating: rate,
-                            //to do
-                            rating: //2.5,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextUtils(
+                            fontSize: widget.size.width * 0.04,
+                            fontWeight: FontWeight.bold,
+                            text: widget.orderModel
+                                .titleStore==''?
+                             private_order:
                             Provider.of<StoreProvider_vm>(context,listen: true)
-                                .currentStore!.rataing,
-                            itemBuilder: (context, index) => Icon(
-                              Icons.star,
-                              color: Colors.orange.withOpacity(0.4),
+                                .currentStore!.nameStore,
+                             // widget.orderModel.titleStore,
+                            //'اسم المطعم', //'${Firebase.name}',
+                            color: Colors.black54,
+                            underLine: TextDecoration.none),
+                        Provider.of<StoreProvider_vm>(context,listen: true)
+                            .currentStore!=null?
+                      Row(
+                          children: [
+                            RatingBarIndicator(
+                              // rating: rate,
+                              //to do
+                              rating: //2.5,
+                              Provider.of<StoreProvider_vm>(context,listen: true)
+                                  .currentStore!.rataing,
+                              itemBuilder: (context, index) => Icon(
+                                Icons.star,
+                                color: Colors.orange.withOpacity(0.4),
+                              ),
+                              itemCount: 5,
+                              itemPadding: const EdgeInsets.only(left: 4),
+                              itemSize: 20.0,
+                              direction: Axis.horizontal,
                             ),
-                            itemCount: 5,
-                            itemPadding: const EdgeInsets.only(left: 4),
-                            itemSize: 20.0,
-                            direction: Axis.horizontal,
-                          ),
-                          TextUtils(
-                              fontSize: widget.size.width * 0.02,
-                              fontWeight: FontWeight.normal,
-                              text: Provider.of<StoreProvider_vm>(context,listen: true)
-                                  .currentStore!.rataing.toString(),
-                              color: Colors.black54,
-                              underLine: TextDecoration.none)
-                        ],
-                      ):Container(),
-                    ],
-                  )
-                ],
+                            TextUtils(
+                                fontSize: widget.size.width * 0.02,
+                                fontWeight: FontWeight.normal,
+                                text: Provider.of<StoreProvider_vm>(context,listen: true)
+                                    .currentStore!.rataing.toString(),
+                                color: Colors.black54,
+                                underLine: TextDecoration.none)
+                          ],
+                        ):Container(),
+                      ],
+                    )
+                  ],
+                ),
               ),
               Expanded(
                 child: Padding(

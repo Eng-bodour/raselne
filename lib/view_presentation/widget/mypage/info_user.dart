@@ -217,4 +217,5 @@ Size size;
      Navigator.of(context).pop();
     if(file !=null) Provider.of<AuthProvider_vm>(context, listen: false).setImageProfileUser(file);
    }
+
 }

@@ -52,7 +52,8 @@ class _card_deilveryState extends State<card_deilvery> {
 
   @override
   Widget build(BuildContext context) {
-    widget.order.distance_recive_deilvery = PolylineService().calcDistance([
+    widget.order.distance_recive_deilvery =
+        PolylineService().calcDistance([
       LatLng(user.location!.latitude, user.location!.longitude),
       LatLng(widget.order.fromlocation!.latitude,
           widget.order.fromlocation!.longitude)

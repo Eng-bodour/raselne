@@ -105,7 +105,14 @@ class AuthProvider_vm extends ChangeNotifier {
     isloadingSwitch=false;
     notifyListeners();
   }
-
+  Future<void> update_user(  String name, String email, String mobile) async {
+    isloading=true;
+    notifyListeners();
+    await userRepository.updateuser(
+        currentuser.docId,name,email,mobile);
+    isloading=false;
+    notifyListeners();
+  }
   @override
   void onInit()async {
   print('xxxxx');

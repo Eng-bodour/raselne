@@ -363,6 +363,17 @@ class user_firebase extends UserRepository{
     // body.addAll({'IdStore':ref.id});
   }
 
+  @override
+  Future<void> updateuser(String id_doc,  String name, String email, String mobile) async{
+    // TODO: implement updateuser
+    await FirebaseFirestore.instance
+        .collection('users').doc(id_doc).update({
+      'name':name,
+      'mobile':mobile,
+      'email':email,
+    });
+  }
+
 
 
 }

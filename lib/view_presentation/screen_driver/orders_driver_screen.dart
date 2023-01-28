@@ -37,7 +37,7 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
      // await Provider.of<StoreProvider_vm>(context)
      //     .getstores('');
     });
-
+print('initstate OrdersDriverScreen');
       super.initState();
   }
   @override
@@ -198,8 +198,8 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
   late StoreModel? storeModel;
   Widget buildMyDelevery({required OrderModel orderModel, required Size size}) {
 
-    Provider.of<StoreProvider_vm>(context,listen: true)
-      .getstoremodel(orderModel.id_store);
+    // Provider.of<StoreProvider_vm>(context,listen: true)
+    //   .getstoremodel(orderModel.id_store);
     if(orderModel.startorder !=null && orderModel.endorder !=null)
     {
     datanext=

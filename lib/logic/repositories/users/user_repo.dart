@@ -21,4 +21,6 @@ abstract class UserRepository{
   Future<bool> save_Copoun(String id_doc,String copoun);
   Future<void> updateToken();
   Future<void> updateLocation(String docId,GeoPoint location);
+  Future<void> updateuser(String id_doc,String name,String email,String mobile);
+
 }

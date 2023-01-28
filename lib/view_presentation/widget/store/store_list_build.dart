@@ -324,7 +324,7 @@ Widget buildSpace(
               TextUtils(
                   fontSize: f12,
                   fontWeight: FontWeight.normal,
-                  text: distance.toString(), //'0.58 كم',
+                  text:' كم '+ distance.toString(), //'0.58 كم',
                   color: greyColor,
                   underLine: TextDecoration.none)
             ],

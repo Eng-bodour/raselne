@@ -32,6 +32,7 @@ class bottomsheet_offer extends StatefulWidget {
 
 class _bottomsheet_offerState extends State<bottomsheet_offer> {
   final Set<Polyline> _polylines = {};
+  late Polyline polyline11;
   List<LatLng> polylineCoordinates = [];
   // late UserModel user;
 
@@ -67,8 +68,8 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
     _animateCamera(widget.order.fromlocation);
     _buildMarkerFromAssets();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if( Provider.of<StoreProvider_vm>(context).liststore.isEmpty)
-        await Provider.of<StoreProvider_vm>(context)
+      if( Provider.of<StoreProvider_vm>(context,listen: false).liststore.isEmpty)
+        await Provider.of<StoreProvider_vm>(context,listen: false)
             .getstores('');
       _drawPolyline(widget.order.fromlocation, widget.order.toLocation);
       Provider.of<StoreProvider_vm>(context,listen: false)
@@ -76,12 +77,20 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
     });
     super.initState();
   }
-
+    Polyline _kpoly=Polyline(
+      polylineId: PolylineId("polyline_id"),
+      color: Colors.blue,
+      points:[
+        LatLng(36.230087, 37.137082987725735),
+        LatLng(36.236267, 37.1149617)
+      ]
+  );
   Future<void> _animateCamera(LatLng? _location) async {
     final GoogleMapController controller = await _controller.future;
     CameraPosition _cameraPosition = CameraPosition(
-      target: _location==null?LatLng(2, 32):_location,
+      target: _location==null?LatLng(2, 32):LatLng(42.6871386, -71.2143403),
       zoom: 13.00,
+      bearing: 30,
     );
     print(
         "animating camera to (lat: ${_location!.latitude}, long: ${_location!.longitude}");
@@ -155,6 +164,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                                 size: size.width * 0.09,
                               ),
                             ),
+                            SizedBox(width: 3,),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -342,13 +352,15 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
 
                                   position: widget.order.toLocation!),
                             },
-                             polylines: _polylines,
-                            // polylines: {
+                             //polylines: _polylines,
+                              polylines: {
+                                polyline11
+                                //_kpoly
                             //   Polyline(
                             //     polylineId: PolylineId("route"),
                             //     points: polylineCoordinates,
                             //   )
-                            // },
+                             },
                           ),
                           // SizedBox(
                           //   width: 40,
@@ -613,8 +625,8 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
     // _setMarker(from,_locationIcon);
     // _setMarker(to,_locationIcon);
     // _setMarker(to,);
-
-    setState(() {});
+     polyline11=polyline;
+     setState(() {});
   }
 
   void _setMarker(LatLng? _location,BitmapDescriptor bitmapicon) {
