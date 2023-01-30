@@ -171,11 +171,13 @@ class _ChatScreenState extends State<ChatScreen> {
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       user = Provider.of<AuthProvider_vm>(context, listen: false).currentuser;
       if(widget.orderModel.from_user!='')
-      Provider.of<order_vm>(context, listen: false).order = widget.orderModel;
+      Provider.of<order_vm>(context, listen: false).order
+      = widget.orderModel;
      else {
        await Provider.of<order_vm>(context, listen: false)
            .get_orderbyId(widget.orderModel.id_order);
-       widget.orderModel= Provider.of<order_vm>(context, listen: false).order ;
+       widget.orderModel= Provider.of<order_vm>(context, listen: false)
+           .order ;
       }
       title=Provider.of<order_vm>(context, listen: false)
           .order.id_order;
@@ -219,7 +221,15 @@ class _ChatScreenState extends State<ChatScreen> {
               .isloading,
           child: Column(
             children: <Widget>[
-                 Row(
+              Provider.of<order_vm>(context, listen: true)
+                  .order
+                  .state=='done arrive'|| Provider.of<order_vm>(context, listen: true)
+                  .order
+                  .state=='done rate'|| Provider.of<order_vm>(context, listen: true)
+              .order
+              .state=='done'?
+              Container():
+              Row(
                    children: [
                      IconButton(
                        color: Colors.white,

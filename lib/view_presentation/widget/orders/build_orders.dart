@@ -16,10 +16,11 @@ import '../../screen_driver/waiting_approve_order.dart';
 import '../mypage_driver/show_offers.dart';
 
 class buildCardOrders extends StatefulWidget {
-  buildCardOrders({required this.orderModel, required this.size, Key? key})
+  buildCardOrders({required this.indexStore, required this.orderModel, required this.size, Key? key})
       : super(key: key);
   OrderModel orderModel;
   Size size;
+  int indexStore;
 
   @override
   State<buildCardOrders> createState() => _buildCardOrdersState();
@@ -38,8 +39,8 @@ class _buildCardOrdersState extends State<buildCardOrders> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<StoreProvider_vm>(context,listen: true)
-        .getstoremodel(widget.orderModel.id_store);
+    // Provider.of<StoreProvider_vm>(context,listen: true)
+    //     .getstoremodel(widget.orderModel.id_store);
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: widget.size.width * 0.03,
@@ -100,7 +101,7 @@ class _buildCardOrdersState extends State<buildCardOrders> {
                 thickness: 1,
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 8.0),
+                padding: const EdgeInsets.only(right: 8.0,left: 8.0),
                 child: Row(
                   children: [
                     TextUtils(
@@ -120,16 +121,15 @@ class _buildCardOrdersState extends State<buildCardOrders> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 8.0),
+                padding: const EdgeInsets.only(right: 8.0,left: 8.0),
                 child: Row(
                   // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    Provider.of<StoreProvider_vm>(context,listen: true)
-                        .currentStore!=null?
+                   widget.indexStore!=-1?
 
                     Provider.of<StoreProvider_vm>(context,listen: true)
-                    .currentStore!.imageStore==''?
+                    .liststore[widget.indexStore].imageStore==''?
                     CircleAvatar(
                       backgroundColor: Colors.white,
                       radius: widget.size.width * 0.08,
@@ -147,8 +147,8 @@ class _buildCardOrdersState extends State<buildCardOrders> {
                         width: 100,
                         height: 100,
                         fit: BoxFit.fill,
-                        imageUrl:  Provider.of<StoreProvider_vm>(context,listen: true)
-                            .currentStore!.imageStore.toString(),
+                        imageUrl:   Provider.of<StoreProvider_vm>(context,listen: true)
+                            .liststore[widget.indexStore].imageStore.toString(),
                         placeholder: (context, url) =>
                         const CircularProgressIndicator(),
                         errorWidget: (context, url, error) =>
@@ -164,6 +164,7 @@ class _buildCardOrdersState extends State<buildCardOrders> {
                         size: widget.size.width * 0.06,
                       ),
                     ),
+                   SizedBox(width:4 ,),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -173,14 +174,12 @@ class _buildCardOrdersState extends State<buildCardOrders> {
                             text: widget.orderModel
                                 .titleStore==''?
                              private_order:
-                            Provider.of<StoreProvider_vm>(context,listen: true)
-                                .currentStore!.nameStore,
+                            widget.orderModel.titleStore,
                              // widget.orderModel.titleStore,
                             //'اسم المطعم', //'${Firebase.name}',
                             color: Colors.black54,
                             underLine: TextDecoration.none),
-                        Provider.of<StoreProvider_vm>(context,listen: true)
-                            .currentStore!=null?
+                        widget.indexStore!=-1?
                       Row(
                           children: [
                             RatingBarIndicator(
@@ -188,7 +187,7 @@ class _buildCardOrdersState extends State<buildCardOrders> {
                               //to do
                               rating: //2.5,
                               Provider.of<StoreProvider_vm>(context,listen: true)
-                                  .currentStore!.rataing,
+                                  .liststore[widget.indexStore].rataing,
                               itemBuilder: (context, index) => Icon(
                                 Icons.star,
                                 color: Colors.orange.withOpacity(0.4),
@@ -202,7 +201,7 @@ class _buildCardOrdersState extends State<buildCardOrders> {
                                 fontSize: widget.size.width * 0.02,
                                 fontWeight: FontWeight.normal,
                                 text: Provider.of<StoreProvider_vm>(context,listen: true)
-                                    .currentStore!.rataing.toString(),
+                                    .liststore[widget.indexStore].rataing.toString(),
                                 color: Colors.black54,
                                 underLine: TextDecoration.none)
                           ],

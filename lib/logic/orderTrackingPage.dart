@@ -58,9 +58,12 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
  @override void dispose() {
     // TODO: implement dispose
    // mapController.dispose();
-
+   // Provider.of<order_vm>(context, listen: false)
+   //     .order
+   //     .state=='done arrive'
     super.dispose();
   }
+
   @override
   initState() {
 

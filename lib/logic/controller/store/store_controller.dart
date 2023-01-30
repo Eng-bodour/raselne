@@ -16,13 +16,17 @@ class StoreProvider_vm extends ChangeNotifier {
   StoreProvider_vm({required this.storeRepository});
 
   List<StoreModel> liststore =[];
-  late StoreModel? currentStore=null;
+  // late StoreModel? currentStore=null;
   void setlocation(LatLng? loc,String address) {
     location=loc!;
     address_store=address;
     notifyListeners();
   }
-
+  int getindexStore(String id) {
+    int index=-1;
+    index= liststore.indexWhere((element) => element.IdStore==id);
+    return index;
+  }
   Future<void> getstoremodel(String id) async {
     if(liststore.isEmpty )
      await storeRepository.getAllStores();
@@ -31,8 +35,8 @@ class StoreProvider_vm extends ChangeNotifier {
       for(int i=0;i<liststore.length;i++)
       {
         liststore[i].rataing=StoreModel.getrate( liststore[i].rating);
-        if(liststore[i].IdStore==id)
-          currentStore=liststore[i];
+        // if(liststore[i].IdStore==id)
+        //   currentStore=liststore[i];
       }
       // currentStore= liststore.firstWhere((element) =>element.IdStore==id
       //,orElse: null
@@ -40,7 +44,7 @@ class StoreProvider_vm extends ChangeNotifier {
     print('id '+id.toString());
     // else currentStore= null;
     //
-    notifyListeners();
+      notifyListeners();
   }
 
  Future<void> SaveStore({File? fileimage, required Map<String, dynamic> storeModel,

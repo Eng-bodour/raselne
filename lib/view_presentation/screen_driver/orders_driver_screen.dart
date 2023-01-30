@@ -19,6 +19,7 @@ import '../../logic/controller/store/store_controller.dart';
 import '../screen/orders_screen.dart';
 import '../widget/mypage_driver/show_offers.dart';
 import '../widget/orders/build_orders.dart';
+import 'mydelivery.dart';
 
 class OrdersDriverScreen extends StatefulWidget {
    OrdersDriverScreen({Key? key}) : super(key: key);
@@ -34,8 +35,8 @@ class _OrdersDriverScreenState extends State<OrdersDriverScreen> {
     // TODO: implement initState
     WidgetsBinding.instance.addPostFrameCallback((_) async {
      //  if( Provider.of<StoreProvider_vm>(context).liststore.isEmpty)
-     // await Provider.of<StoreProvider_vm>(context)
-     //     .getstores('');
+     await Provider.of<StoreProvider_vm>(context,listen: false)
+         .getstores('');
     });
 print('initstate OrdersDriverScreen');
       super.initState();
@@ -126,9 +127,18 @@ print('initstate OrdersDriverScreen');
                                 scrollDirection: Axis.vertical,
                                 itemCount: snapshot.data!.length,
                                 itemBuilder: (context, index) {
+                                  int indexStore=
+                                  Provider.of<StoreProvider_vm>(context,listen: true)
+                                      .getindexStore(snapshot.data![index].id_store);
+                                  print('indexStore');
+                                  print('indexStore');
+                                  print('indexStore**************');
+                                  print(indexStore);
                                   return buildMyDelevery(// buildCardOrders(size: size, orderModel: null,);
                                       orderModel: snapshot.data![index],
-                                      size: size);
+                                      size: size,
+                                      indexStore:indexStore
+                                  );
                                 },
                                 separatorBuilder: (context, index) =>
                                     SizedBox(height: size.height * 0.02),
@@ -167,10 +177,16 @@ print('initstate OrdersDriverScreen');
                                 controller: ScrollController(),
                                 scrollDirection: Axis.vertical,
                                 itemCount: snapshot.data!.length,
-                                itemBuilder: (context, index) {
+                                itemBuilder: (context, index)  {
+
+                                  int indexStore=
+                                  Provider.of<StoreProvider_vm>(context,listen: true)
+                                      .getindexStore(snapshot.data![index].id_store);
                                   return buildCardOrders(// buildCardOrders(size: size, orderModel: null,);
                                       orderModel: snapshot.data![index],
-                                      size: size);
+                                      size: size,
+                                      indexStore:indexStore
+                                  );
                                 },
                                 separatorBuilder: (context, index) =>
                                     SizedBox(height: size.height * 0.02),
@@ -193,298 +209,298 @@ print('initstate OrdersDriverScreen');
                   ],
                 ))));
   }
-  late DateTime  datanext;
-  late DateTime  datanext2;
-  late StoreModel? storeModel;
-  Widget buildMyDelevery({required OrderModel orderModel, required Size size}) {
-
-    // Provider.of<StoreProvider_vm>(context,listen: true)
-    //   .getstoremodel(orderModel.id_store);
-    if(orderModel.startorder !=null && orderModel.endorder !=null)
-    {
-    datanext=
-    DateTime(
-      orderModel.startorder!.year,
-      orderModel.startorder!.month,
-      orderModel.startorder!.day,
-      orderModel.startorder!.hour,
-      orderModel.startorder!.minute,
-      orderModel.startorder!.second,
-    ) ;
-      datanext2=DateTime(
-        orderModel.endorder!.year,
-        orderModel.endorder!.month,
-        orderModel.endorder!.day,
-        orderModel.endorder!.hour,
-        orderModel.endorder!.minute,
-        orderModel.endorder!.second,
-    ) ;
-      //
-      // timestamp1 = strtotime($date1);
-      // timestamp2 = strtotime($date2);
-      // hour = abs($timestamp2 - $timestamp1)/(60*60);
-      // int peroidtime= int.parse(peroid.value_config);
-      // datanext=Jiffy().diff(input)//.add(days: peroidtime).dateTime;
-
-    }
-
-    // print(datanext.toString());
-    // $timestamp1 = strtotime($date1);
-    // $timestamp2 = strtotime($date2);
-    // $hour = abs($timestamp2 - $timestamp1)/(60*60);
-    // $hour=Round($hour);
-
-    return InkWell(
-      onTap: () {
-       //
-      },
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: size.width * 0.03,
-          // vertical: size.height * 0.01,
-        ),
-        child: Card(
-          child: SizedBox(
-            // height: size.height * 0.25,
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: size.width * 0.02,
-                  vertical: size.height * 0.01
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Provider.of<StoreProvider_vm>(context,listen: true)
-                              .currentStore!=null?
-                          Provider.of<StoreProvider_vm>(context,listen: true)
-                              .currentStore!.imageStore!=''?
-                          //orderModel.i.imageuser !=''?
-                          CircleAvatar(
-                            radius: 30,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(50),
-                              child: CachedNetworkImage(
-                                width: 200,
-                                height: 200,
-                                fit: BoxFit.fill,
-                                imageUrl: Provider.of<StoreProvider_vm>(context,listen: true)
-                                    .currentStore!.imageStore.toString(),
-                                placeholder: (context, url) =>
-                                const CircularProgressIndicator(),
-                                errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
-                              ),
-                            ),
-                          )
-                              :
-                          CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: size.width * 0.08,
-                            child: Icon(
-                              Icons.person,
-                              color: Colors.lightBlue.withOpacity(0.9),
-                              size: size.width * 0.15,
-                            ),
-                          ):
-                          CircleAvatar(
-                            backgroundColor: greyColor,
-                            radius: size.width * 0.05,
-                            child: Icon(
-                              Icons.person,
-                              color: Colors.lightBlue.withOpacity(0.9),
-                              size: size.width * 0.06,
-                            ),
-                          ),
-                          SizedBox(
-                            width: size.width * 0.03,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TextUtils(
-                                  fontSize: size.width * 0.04,
-                                  fontWeight: FontWeight.bold,
-                                  text:orderModel.titleStore.isEmpty?private_order:orderModel.titleStore,
-                                      // 'صيدلية مستشفى الحبيب', //'${Firebase.name}',
-                                  color: Colors.black54,
-                                  underLine: TextDecoration.none),
-                              TextUtils(
-                                  fontSize: size.width * 0.03,
-                                  fontWeight: FontWeight.bold,
-                                  text:orderModel.content_order,
-                                      // 'وصفة من الصيدلية', //'${Firebase.name}',
-                                  color: Colors.black38,
-                                  underLine: TextDecoration.none),
-                            ],
-                          ),
-                        ],
-                      ),
-                      TextUtils(
-                          fontSize: size.width * 0.04,
-                          fontWeight: FontWeight.normal,
-                          text: orderModel.id_order.substring(0,8),//'#123456777',
-                          color: Colors.black54,
-                          underLine: TextDecoration.none)
-                    ],
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.access_time_rounded,
-                            color: Colors.black38,
-                            size: size.width * 0.04,
-                          ),
-                          SizedBox(width: size.width * 0.01),
-                          orderModel.isopen==true?
-                          TextUtils(
-                              fontSize: size.width * 0.035,
-                              fontWeight: FontWeight.bold,
-                              text: ' جاري التوصيل ...', //'${Firebase.name}',
-                              color: Colors.black38,
-                              underLine: TextDecoration.none):
-                          TextUtils(
-                              fontSize: size.width * 0.035,
-                              fontWeight: FontWeight.bold,
-                              text:
-
-                              //' تم التوصيل  ${  (Jiffy(datanext2).diff(datanext).hours.inHours/60).round()} ساعة  ', //'${Firebase.name}',
-                             ' تم التوصيل   ${ ((datanext2.difference(datanext).inMinutes/60).hours.toString().substring(0,4))} ساعة  ', //'${Firebase.name}',
-                              color: Colors.black38,
-                              underLine: TextDecoration.none),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.price_change,
-                            color: Colors.black38,
-                            size: size.width * 0.04,
-                          ),
-                          SizedBox(width: size.width * 0.01),
-                          TextUtils(
-                              fontSize: size.width * 0.035,
-                              fontWeight: FontWeight.bold,
-                              text: orderModel.price_deilvery_captain,
-                                  // 'سعر التوصيل 35.75 رس', //'${Firebase.name}',
-                              color: Colors.black38,
-                              underLine: TextDecoration.none),
-                        ],
-                      )
-                    ],
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          switch (orderModel.state) {
-                            case 'open':
-                            // Provider.of<AuthProvider_vm>(context,listen: false)
-                            // .currentuser.type=='user'?
-                              Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context)=>
-                                          waiting_aprrove_order(orderModel: orderModel)
-                                  ));
-
-                              break;
-                            case 'approve':
-                            // return 'مفتوح';
-                              Get.to(ChatScreen(orderModel: orderModel));
-
-                              break;
-                            case 'done invoice':
-                            // return 'مفتوح';
-                              Get.to(ChatScreen(orderModel: orderModel));
-
-                              break;
-                            case 'done recive':
-                            // return 'مفتوح';
-                              Get.to(ChatScreen(orderModel: orderModel));
-
-                              break;
-                            case 'done arrive':
-                            // return 'مفتوح';
-                              Get.to(ChatScreen(orderModel: orderModel));
-
-                              break;
-                            case 'done':
-                              Get.to(ChatScreen(orderModel: orderModel));
-                              // return 'مفتوح';
-                              //   Navigator.of(context).push(
-                              //       MaterialPageRoute(
-                              //           builder: (context)=>
-                              //               ChatScreen(orderModel: orderModel)
-                              //       )) ;
-                              break;
-                          // case 'done rate':
-                          // Get.to(ChatScreen(orderModel: orderModel));
-                          // break;
-
-                          }
-                        },
-                        child: Container(
-                          width: size.width * 0.8,
-                          height: size.height * 0.05,
-                          decoration: BoxDecoration(
-                              color:
-                              orderModel.isopen==true?
-                              mainColor:mainColor,
-                              borderRadius:
-                                  BorderRadius.circular(size.width * 0.05)
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Center(
-                                child:
-                                orderModel.isopen==true?
-                                TextUtils(
-                                  color: Colors.white,
-                                  text: 'متابعة',
-                                  fontSize: size.width * 0.04,
-                                  fontWeight: FontWeight.bold,
-                                  underLine: TextDecoration.none,
-                                ):TextUtils(
-                                  color: Colors.white,
-                                  text: 'تم التوصيل',
-                                  fontSize: size.width * 0.04,
-                                  fontWeight: FontWeight.bold,
-                                  underLine: TextDecoration.none,
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                color: Colors.white,
-                                size: size.width * 0.03,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  // late DateTime  datanext;
+  // late DateTime  datanext2;
+  // late StoreModel? storeModel;
+  // Widget buildMyDelevery({required OrderModel orderModel, required Size size}) {
+  //
+  //   // Provider.of<StoreProvider_vm>(context,listen: true)
+  //   //   .getstoremodel(orderModel.id_store);
+  //   if(orderModel.startorder !=null && orderModel.endorder !=null)
+  //   {
+  //   datanext=
+  //   DateTime(
+  //     orderModel.startorder!.year,
+  //     orderModel.startorder!.month,
+  //     orderModel.startorder!.day,
+  //     orderModel.startorder!.hour,
+  //     orderModel.startorder!.minute,
+  //     orderModel.startorder!.second,
+  //   ) ;
+  //     datanext2=DateTime(
+  //       orderModel.endorder!.year,
+  //       orderModel.endorder!.month,
+  //       orderModel.endorder!.day,
+  //       orderModel.endorder!.hour,
+  //       orderModel.endorder!.minute,
+  //       orderModel.endorder!.second,
+  //   ) ;
+  //     //
+  //     // timestamp1 = strtotime($date1);
+  //     // timestamp2 = strtotime($date2);
+  //     // hour = abs($timestamp2 - $timestamp1)/(60*60);
+  //     // int peroidtime= int.parse(peroid.value_config);
+  //     // datanext=Jiffy().diff(input)//.add(days: peroidtime).dateTime;
+  //
+  //   }
+  //
+  //   // print(datanext.toString());
+  //   // $timestamp1 = strtotime($date1);
+  //   // $timestamp2 = strtotime($date2);
+  //   // $hour = abs($timestamp2 - $timestamp1)/(60*60);
+  //   // $hour=Round($hour);
+  //
+  //   return InkWell(
+  //     onTap: () {
+  //      //
+  //     },
+  //     child: Padding(
+  //       padding: EdgeInsets.symmetric(
+  //         horizontal: size.width * 0.03,
+  //         // vertical: size.height * 0.01,
+  //       ),
+  //       child: Card(
+  //         child: SizedBox(
+  //           // height: size.height * 0.25,
+  //           child: Padding(
+  //             padding: EdgeInsets.symmetric(
+  //                 horizontal: size.width * 0.02,
+  //                 vertical: size.height * 0.01
+  //             ),
+  //             child: Column(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 Row(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                   crossAxisAlignment: CrossAxisAlignment.start,
+  //                   children: [
+  //                     Row(
+  //                       children: [
+  //                         Provider.of<StoreProvider_vm>(context,listen: true)
+  //                             .currentStore!=null?
+  //                         Provider.of<StoreProvider_vm>(context,listen: true)
+  //                             .currentStore!.imageStore!=''?
+  //                         //orderModel.i.imageuser !=''?
+  //                         CircleAvatar(
+  //                           radius: 30,
+  //                           child: ClipRRect(
+  //                             borderRadius: BorderRadius.circular(50),
+  //                             child: CachedNetworkImage(
+  //                               width: 200,
+  //                               height: 200,
+  //                               fit: BoxFit.fill,
+  //                               imageUrl: Provider.of<StoreProvider_vm>(context,listen: true)
+  //                                   .currentStore!.imageStore.toString(),
+  //                               placeholder: (context, url) =>
+  //                               const CircularProgressIndicator(),
+  //                               errorWidget: (context, url, error) =>
+  //                               const Icon(Icons.error),
+  //                             ),
+  //                           ),
+  //                         )
+  //                             :
+  //                         CircleAvatar(
+  //                           backgroundColor: Colors.white,
+  //                           radius: size.width * 0.08,
+  //                           child: Icon(
+  //                             Icons.person,
+  //                             color: Colors.lightBlue.withOpacity(0.9),
+  //                             size: size.width * 0.15,
+  //                           ),
+  //                         ):
+  //                         CircleAvatar(
+  //                           backgroundColor: greyColor,
+  //                           radius: size.width * 0.05,
+  //                           child: Icon(
+  //                             Icons.person,
+  //                             color: Colors.lightBlue.withOpacity(0.9),
+  //                             size: size.width * 0.06,
+  //                           ),
+  //                         ),
+  //                         SizedBox(
+  //                           width: size.width * 0.03,
+  //                         ),
+  //                         Column(
+  //                           crossAxisAlignment: CrossAxisAlignment.start,
+  //                           children: [
+  //                             TextUtils(
+  //                                 fontSize: size.width * 0.04,
+  //                                 fontWeight: FontWeight.bold,
+  //                                 text:orderModel.titleStore.isEmpty?private_order:orderModel.titleStore,
+  //                                     // 'صيدلية مستشفى الحبيب', //'${Firebase.name}',
+  //                                 color: Colors.black54,
+  //                                 underLine: TextDecoration.none),
+  //                             TextUtils(
+  //                                 fontSize: size.width * 0.03,
+  //                                 fontWeight: FontWeight.bold,
+  //                                 text:orderModel.content_order,
+  //                                     // 'وصفة من الصيدلية', //'${Firebase.name}',
+  //                                 color: Colors.black38,
+  //                                 underLine: TextDecoration.none),
+  //                           ],
+  //                         ),
+  //                       ],
+  //                     ),
+  //                     TextUtils(
+  //                         fontSize: size.width * 0.04,
+  //                         fontWeight: FontWeight.normal,
+  //                         text: orderModel.id_order.substring(0,8),//'#123456777',
+  //                         color: Colors.black54,
+  //                         underLine: TextDecoration.none)
+  //                   ],
+  //                 ),
+  //                 SizedBox(height: size.height * 0.02),
+  //                 Row(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                   children: [
+  //                     Row(
+  //                       children: [
+  //                         Icon(
+  //                           Icons.access_time_rounded,
+  //                           color: Colors.black38,
+  //                           size: size.width * 0.04,
+  //                         ),
+  //                         SizedBox(width: size.width * 0.01),
+  //                         orderModel.isopen==true?
+  //                         TextUtils(
+  //                             fontSize: size.width * 0.035,
+  //                             fontWeight: FontWeight.bold,
+  //                             text: ' جاري التوصيل ...', //'${Firebase.name}',
+  //                             color: Colors.black38,
+  //                             underLine: TextDecoration.none):
+  //                         TextUtils(
+  //                             fontSize: size.width * 0.035,
+  //                             fontWeight: FontWeight.bold,
+  //                             text:
+  //
+  //                             //' تم التوصيل  ${  (Jiffy(datanext2).diff(datanext).hours.inHours/60).round()} ساعة  ', //'${Firebase.name}',
+  //                            ' تم التوصيل   ${ ((datanext2.difference(datanext).inMinutes/60).hours.toString().substring(0,4))} ساعة  ', //'${Firebase.name}',
+  //                             color: Colors.black38,
+  //                             underLine: TextDecoration.none),
+  //                       ],
+  //                     ),
+  //                     Row(
+  //                       children: [
+  //                         Icon(
+  //                           Icons.price_change,
+  //                           color: Colors.black38,
+  //                           size: size.width * 0.04,
+  //                         ),
+  //                         SizedBox(width: size.width * 0.01),
+  //                         TextUtils(
+  //                             fontSize: size.width * 0.035,
+  //                             fontWeight: FontWeight.bold,
+  //                             text: orderModel.price_deilvery_captain,
+  //                                 // 'سعر التوصيل 35.75 رس', //'${Firebase.name}',
+  //                             color: Colors.black38,
+  //                             underLine: TextDecoration.none),
+  //                       ],
+  //                     )
+  //                   ],
+  //                 ),
+  //                 SizedBox(height: size.height * 0.02),
+  //                 Row(
+  //                   mainAxisAlignment: MainAxisAlignment.center,
+  //                   children: [
+  //                     InkWell(
+  //                       onTap: () {
+  //                         switch (orderModel.state) {
+  //                           case 'open':
+  //                           // Provider.of<AuthProvider_vm>(context,listen: false)
+  //                           // .currentuser.type=='user'?
+  //                             Navigator.of(context).push(
+  //                                 MaterialPageRoute(
+  //                                     builder: (context)=>
+  //                                         waiting_aprrove_order(orderModel: orderModel)
+  //                                 ));
+  //
+  //                             break;
+  //                           case 'approve':
+  //                           // return 'مفتوح';
+  //                             Get.to(ChatScreen(orderModel: orderModel));
+  //
+  //                             break;
+  //                           case 'done invoice':
+  //                           // return 'مفتوح';
+  //                             Get.to(ChatScreen(orderModel: orderModel));
+  //
+  //                             break;
+  //                           case 'done recive':
+  //                           // return 'مفتوح';
+  //                             Get.to(ChatScreen(orderModel: orderModel));
+  //
+  //                             break;
+  //                           case 'done arrive':
+  //                           // return 'مفتوح';
+  //                             Get.to(ChatScreen(orderModel: orderModel));
+  //
+  //                             break;
+  //                           case 'done':
+  //                             Get.to(ChatScreen(orderModel: orderModel));
+  //                             // return 'مفتوح';
+  //                             //   Navigator.of(context).push(
+  //                             //       MaterialPageRoute(
+  //                             //           builder: (context)=>
+  //                             //               ChatScreen(orderModel: orderModel)
+  //                             //       )) ;
+  //                             break;
+  //                         // case 'done rate':
+  //                         // Get.to(ChatScreen(orderModel: orderModel));
+  //                         // break;
+  //
+  //                         }
+  //                       },
+  //                       child: Container(
+  //                         width: size.width * 0.8,
+  //                         height: size.height * 0.05,
+  //                         decoration: BoxDecoration(
+  //                             color:
+  //                             orderModel.isopen==true?
+  //                             mainColor:mainColor,
+  //                             borderRadius:
+  //                                 BorderRadius.circular(size.width * 0.05)
+  //                         ),
+  //                         child: Row(
+  //                           mainAxisAlignment: MainAxisAlignment.center,
+  //                           children: [
+  //                             Center(
+  //                               child:
+  //                               orderModel.isopen==true?
+  //                               TextUtils(
+  //                                 color: Colors.white,
+  //                                 text: 'متابعة',
+  //                                 fontSize: size.width * 0.04,
+  //                                 fontWeight: FontWeight.bold,
+  //                                 underLine: TextDecoration.none,
+  //                               ):TextUtils(
+  //                                 color: Colors.white,
+  //                                 text: 'تم التوصيل',
+  //                                 fontSize: size.width * 0.04,
+  //                                 fontWeight: FontWeight.bold,
+  //                                 underLine: TextDecoration.none,
+  //                               ),
+  //                             ),
+  //                             SizedBox(width: 10),
+  //                             Icon(
+  //                               Icons.arrow_forward_ios_rounded,
+  //                               color: Colors.white,
+  //                               size: size.width * 0.03,
+  //                             )
+  //                           ],
+  //                         ),
+  //                       ),
+  //                     ),
+  //
+  //                   ],
+  //                 )
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   // Widget buildMyOrders({required Size size}) {
   //   return Padding(

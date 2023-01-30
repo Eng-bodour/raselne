@@ -35,7 +35,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
   late Polyline polyline11;
   List<LatLng> polylineCoordinates = [];
   // late UserModel user;
-
+  int indexStore=-1;
   static late final LatLng location_init;
   final Completer<GoogleMapController> _controller = Completer();
   final Set<Marker> _markers = {};
@@ -72,8 +72,8 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
         await Provider.of<StoreProvider_vm>(context,listen: false)
             .getstores('');
       _drawPolyline(widget.order.fromlocation, widget.order.toLocation);
-      Provider.of<StoreProvider_vm>(context,listen: false)
-          .getstoremodel(widget.order.id_store);
+      indexStore=  Provider.of<StoreProvider_vm>(context,listen: false)
+          .getindexStore(widget.order.id_store);
     });
     super.initState();
   }
@@ -82,13 +82,14 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
       color: Colors.blue,
       points:[
         LatLng(36.230087, 37.137082987725735),
-        LatLng(36.236267, 37.1149617)
+        LatLng(36.236267, 37.1149617),
+        LatLng(36.235267, 37.1158617),
       ]
   );
   Future<void> _animateCamera(LatLng? _location) async {
     final GoogleMapController controller = await _controller.future;
     CameraPosition _cameraPosition = CameraPosition(
-      target: _location==null?LatLng(2, 32):LatLng(42.6871386, -71.2143403),
+      target: _location==null?LatLng(2, 32):_location,
       zoom: 13.00,
       bearing: 30,
     );
@@ -126,10 +127,9 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                       children: [
                         Row(
                           children: [
+                            indexStore!=-1?
                             Provider.of<StoreProvider_vm>(context,listen: true)
-                                .currentStore!=null?
-                            Provider.of<StoreProvider_vm>(context,listen: true)
-                            .currentStore!.imageStore==''?
+                            .liststore[indexStore].imageStore==''?
                            CircleAvatar(
                               backgroundColor: greyColor.withOpacity(0.2),
                               radius: size.width * 0.05,
@@ -140,7 +140,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                               ),
                             ):
                            CircleAvatar(
-                             radius: 30,
+                             radius:size.width * 0.06,
                              child: ClipRRect(
                                borderRadius: BorderRadius.circular(50),
                                child: CachedNetworkImage(
@@ -148,7 +148,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                                  height: 200,
                                  fit: BoxFit.fill,
                                  imageUrl: Provider.of<StoreProvider_vm>(context,listen: true)
-                                     .currentStore!.imageStore.toString(),
+                                     .liststore[indexStore].imageStore.toString(),
                                  placeholder: (context, url) =>
                                  const CircularProgressIndicator(),
                                  errorWidget: (context, url, error) =>
@@ -352,15 +352,15 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
 
                                   position: widget.order.toLocation!),
                             },
-                             //polylines: _polylines,
-                              polylines: {
-                                polyline11
-                                //_kpoly
+                             polylines: _polylines,
+                             //  polylines: {
+                             //    polyline11
+                               //_kpoly
                             //   Polyline(
                             //     polylineId: PolylineId("route"),
                             //     points: polylineCoordinates,
                             //   )
-                             },
+                           //  },
                           ),
                           // SizedBox(
                           //   width: 40,
@@ -621,12 +621,14 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
     //polylineCoordinates = await PolylineService().drawPolyline(from, to);
 
    _polylines.add(polyline);
-    //
+
     // _setMarker(from,_locationIcon);
     // _setMarker(to,_locationIcon);
     // _setMarker(to,);
-     polyline11=polyline;
+
+     // polyline11=polyline;
      setState(() {});
+
   }
 
   void _setMarker(LatLng? _location,BitmapDescriptor bitmapicon) {

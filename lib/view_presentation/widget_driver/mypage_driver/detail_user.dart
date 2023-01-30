@@ -57,136 +57,140 @@ class _detail_info_userState extends State<detail_info_user> {
             Provider.of<AuthProvider_vm>(context, listen: true).isloading,
         child: Form(
           key: fromKey,
-          child: Column(
-            children: [
-              Provider.of<AuthProvider_vm>(context,listen: true).currentuser.imageuser !=''?
-              CircleAvatar(
-                radius: 30,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: CachedNetworkImage(
-                    width: 400,
-                    height: 400,
-                    fit: BoxFit.fill,
-                    imageUrl:  Provider.of<AuthProvider_vm>(context,listen: true)
-                        .currentuser.imageuser
-                        .toString(),
-                    placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
-                    errorWidget: (context, url, error) =>
-                    const Icon(Icons.error),
+          child: Padding(
+            padding:  EdgeInsets.only(top:size.height*0.4),
+            child: Column(
+
+              children: [
+                Provider.of<AuthProvider_vm>(context,listen: true).currentuser.imageuser !=''?
+                CircleAvatar(
+                  radius: 30,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: CachedNetworkImage(
+                      width: 400,
+                      height: 400,
+                      fit: BoxFit.fill,
+                      imageUrl:  Provider.of<AuthProvider_vm>(context,listen: true)
+                          .currentuser.imageuser
+                          .toString(),
+                      placeholder: (context, url) =>
+                      const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                      const Icon(Icons.error),
+                    ),
+                  ),
+                )
+                    :
+                CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: size.width * 0.08,
+                  child: Icon(
+                    Icons.person,
+                    color: Colors.lightBlue.withOpacity(0.9),
+                    size: size.width * 0.15,
                   ),
                 ),
-              )
-                  :
-              CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: size.width * 0.08,
-                child: Icon(
-                  Icons.person,
-                  color: Colors.lightBlue.withOpacity(0.9),
-                  size: size.width * 0.15,
+                SizedBox(
+                  height: size.height * 0.02,
                 ),
-              ),
-              SizedBox(
-                height: size.height * 0.02,
-              ),
-              TextUtils(
-                  fontSize: size.width * 0.04,
-                  fontWeight: FontWeight.bold,
-                  text: 'الاسم',
-                  color: greyColor,
-                  underLine: TextDecoration.none),
-              AuthTextFromField(
-                read: false,
-                keyboardType: TextInputType.text,
-                controller: nameController,
-                obscureText: false,
-                validator: (value) {
-                  if (value.toString().trim().isEmpty) {
-                    //   print(controllerStore.isUsedName);
-                    return 'Enter  name';
-                  } else {
-                    //   print('false is');
-                    return null;
-                  }
-                },
-                prefixIcon: const Text(''),
-                suffixIcon: const Text(""),
-                hintText: 'الاسم ',
-              ),
-              SizedBox(
-                height: size.height * 0.02,
-              ),
-              TextUtils(
-                  fontSize: size.width * 0.04,
-                  fontWeight: FontWeight.bold,
-                  text: 'الموبايل',
-                  color: greyColor,
-                  underLine: TextDecoration.none),
-              AuthTextFromField(
-                read: false,
-                keyboardType: TextInputType.text,
-                controller: mobileController,
-                obscureText: false,
-                validator: (value) {
-                  if (value.toString().trim().isEmpty) {
-                    //   print(controllerStore.isUsedName);
-                    return 'Enter  name';
-                  } else {
-                    //   print('false is');
-                    return null;
-                  }
-                },
-                prefixIcon: const Text(''),
-                suffixIcon: const Text(""),
-                hintText: 'الموبايل ',
-              ),
-              SizedBox(
-                height: size.height * 0.02,
-              ),
-              TextUtils(
-                  fontSize: size.width * 0.04,
-                  fontWeight: FontWeight.bold,
-                  text: 'الايميل',
-                  color: greyColor,
-                  underLine: TextDecoration.none),
-              AuthTextFromField(
-                read: false,
-                keyboardType: TextInputType.text,
-                controller: emailController,
-                obscureText: false,
-                validator: (value) {
-                  if (value.toString().trim().isEmpty) {
-                    //   print(controllerStore.isUsedName);
-                    return 'Enter  name';
-                  } else {
-                    //   print('false is');
-                    return null;
-                  }
-                },
-                prefixIcon: const Text(''),
-                suffixIcon: const Text(""),
-                hintText: 'الايميل ',
-              ),
-              SizedBox(
-                height: size.height * 0.02,
-              ),
-              Center(
-                child: AuthButton(
-                    onPressed: () async {
-                      if (fromKey.currentState!.validate()) {
-                        await Provider.of<AuthProvider_vm>(context,
-                                listen: false)
-                            .update_user(nameController.text,
-                                emailController.text, mobileController.text);
+                TextUtils(
+                    fontSize: size.width * 0.04,
+                    fontWeight: FontWeight.bold,
+                    text: 'الاسم',
+                    color: greyColor,
+                    underLine: TextDecoration.none),
+                AuthTextFromField(
+                  read: false,
+                  keyboardType: TextInputType.text,
+                  controller: nameController,
+                  obscureText: false,
+                  validator: (value) {
+                    if (value.toString().trim().isEmpty) {
+                      //   print(controllerStore.isUsedName);
+                      return 'Enter  name';
+                    } else {
+                      //   print('false is');
+                      return null;
+                    }
+                  },
+                  prefixIcon: const Text(''),
+                  suffixIcon: const Text(""),
+                  hintText: 'الاسم ',
+                ),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                TextUtils(
+                    fontSize: size.width * 0.04,
+                    fontWeight: FontWeight.bold,
+                    text: 'الموبايل',
+                    color: greyColor,
+                    underLine: TextDecoration.none),
+                AuthTextFromField(
+                  read: false,
+                  keyboardType: TextInputType.text,
+                  controller: mobileController,
+                  obscureText: false,
+                  validator: (value) {
+                    if (value.toString().trim().isEmpty) {
+                      //   print(controllerStore.isUsedName);
+                      return 'Enter  name';
+                    } else {
+                      //   print('false is');
+                      return null;
+                    }
+                  },
+                  prefixIcon: const Text(''),
+                  suffixIcon: const Text(""),
+                  hintText: 'الموبايل ',
+                ),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                TextUtils(
+                    fontSize: size.width * 0.04,
+                    fontWeight: FontWeight.bold,
+                    text: 'الايميل',
+                    color: greyColor,
+                    underLine: TextDecoration.none),
+                AuthTextFromField(
+                  read: false,
+                  keyboardType: TextInputType.text,
+                  controller: emailController,
+                  obscureText: false,
+                  validator: (value) {
+                    if (value.toString().trim().isEmpty) {
+                      //   print(controllerStore.isUsedName);
+                      return 'Enter  name';
+                    } else {
+                      //   print('false is');
+                      return null;
+                    }
+                  },
+                  prefixIcon: const Text(''),
+                  suffixIcon: const Text(""),
+                  hintText: 'الايميل ',
+                ),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                Center(
+                  child: AuthButton(
+                      onPressed: () async {
+                        if (fromKey.currentState!.validate()) {
+                          await Provider.of<AuthProvider_vm>(context,
+                                  listen: false)
+                              .update_user(nameController.text,
+                                  emailController.text, mobileController.text);
 
-                        Get.back();
-                      }
-                    },
-                    text: 'حفظ'),
-              )
-            ],
+                          Get.back();
+                        }
+                      },
+                      text: 'حفظ'),
+                )
+              ],
+            ),
           ),
         ),
       ),

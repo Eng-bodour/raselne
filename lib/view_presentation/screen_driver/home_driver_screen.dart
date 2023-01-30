@@ -62,7 +62,7 @@ class _HomeDriverScreenState extends State<HomeDriverScreen> {
                  return Text('something went wrong'+snapshot.error.toString());
                }
                if(!snapshot.hasData){
-                 return Text("Loading");
+                 return Center(child: Text("Loading"));
                }
                 return
 

@@ -44,7 +44,6 @@ class order_firebase extends OrderRepository{
              doc.data(),doc.id))
          .toList()
      );
-
   }
 
   @override
