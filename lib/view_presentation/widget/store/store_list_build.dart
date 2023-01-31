@@ -319,9 +319,9 @@ Widget buildSpace(
                 color: greyColor,
                 size: f12,
               ),
-              SizedBox(
-                width: size.width * 0.02,
-              ),
+              // SizedBox(
+              //   width: size.width * 0.02,
+              // ),
               TextUtils(
                   fontSize: f12,
                   fontWeight: FontWeight.normal,

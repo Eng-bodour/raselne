@@ -161,7 +161,9 @@ class SpecificStoreScreen extends StatelessWidget {
               delegate: SliverChildListDelegate(
                 [
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: height * 0.02),
+                    padding: EdgeInsets.symmetric(
+                        vertical: height * 0.02)
+                    ,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,7 +218,8 @@ class SpecificStoreScreen extends StatelessWidget {
                                 Container(
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
-                                        horizontal: size.width * 0.03),
+                                     horizontal: size.width * 0.03
+                                    ),
                                     child: InkWell(
                                       onTap: () {
                                         if(Provider.of<AuthProvider_vm>
@@ -236,8 +239,10 @@ class SpecificStoreScreen extends StatelessWidget {
                                                 //
                                                 bottomsheet(
                                                   orderitem: DetailOrder(
+                                                      element.image,
                                                       element,
                                                       element.price,
+
                                                       1),
                                                 )));
                                        else {
@@ -371,6 +376,7 @@ class SpecificStoreScreen extends StatelessWidget {
                                                             bottomsheet(
                                                               orderitem:
                                                                   DetailOrder(
+                                                                     element.image,
                                                                       element,
                                                                       element
                                                                           .price,

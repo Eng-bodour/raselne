@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -74,103 +75,153 @@ class _Statebottomsheet extends State<bottomsheet> {
                   ],
                 ),
               ),
+              widget.orderitem.image==''?
+              CircleAvatar(
+                backgroundColor: Colors.white,
+                radius:  size.width * 0.08,
+                child: Icon(
+                  Icons.work,
+                  color: Colors.lightBlue.withOpacity(0.9),
+                  size: size.width * 0.06,
+                ),
+              ):
+              // CircleAvatar(
+              //    // radius: 30,
+              //   child: ClipRRect(
+              //      // borderRadius: BorderRadius.circular(5),
+              //     child:
+              //     CachedNetworkImage(
+              //       width: 500,
+              //       height: 500,
+              //       fit: BoxFit.fill,
+              //       imageUrl:  widget.orderitem.image.toString(),
+              //       placeholder: (context, url) =>
+              //       const CircularProgressIndicator(),
+              //       errorWidget: (context, url, error) =>
+              //       const Icon(Icons.error),
+              //     ),
+              //   ),
+              // ),
               Container(
                 height: size.height * 0.26,
                 width: size.width,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/services/sweet.png"),
-                      fit: BoxFit.cover),
-                ),
+                child: CachedNetworkImage(
+                  // width: 500,
+                  // height: 500,
+                  fit: BoxFit.fill,
+                  imageUrl:  widget.orderitem.image.toString(),
+                  placeholder: (context, url) =>
+                  const CircularProgressIndicator(),
+                  errorWidget: (context, url, error) =>
+                  const Icon(Icons.error),
+                ) ,
+                // decoration: const BoxDecoration(
+                //
+                //   image: DecorationImage(
+                //       image: AssetImage("assets/services/sweet.png"),
+                //       fit: BoxFit.cover),
+                // ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: size.width * 0.24,
-                    vertical: size.height * 0.04),
-                child: Row(
-                  children: [
-                    // IconButton(
-                    //     onPressed: () {},
-                    //     icon: const Icon(Icons.add, color: Colors.black45)),
-                    IconButton(
-                        onPressed: () {
-                          // String id= Provider.of<order_vm>(context,listen:false )
-                          //     .list_itemorder[index].item.IdItemStore;
-                          //
-                          // Provider.of<order_vm>(context,listen:false ).add_quaintity(id);
-                          setState(() {
-                            widget.orderitem.quaintity++;
-                            widget.orderitem.total_item = (widget
-                                        .orderitem.quaintity *
-                                    double.parse(widget.orderitem.item.price))
-                                .toString();
-                          });
-                        },
-                        icon: Container(
-                          child: const Icon(
-                            Icons.add,
-                            color: Colors.black45,
-                          ),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black),
-                              borderRadius: BorderRadius.circular(20)),
-                        )),
-                    SizedBox(
-                      width: size.width * 0.05,
-                    ),
-                    Column(
-                      children: [
-                        TextUtils(
-                            fontSize: size.width * 0.06,
-                            fontWeight: FontWeight.bold,
-                            //Provider.of<order_vm>(context,listen:true ).list_itemorder[index]
-                            text: widget.orderitem.quaintity.toString(),
-                            //Provider.of<order_vm>(context,listen: true).list_itemorder[index].quaintity.toString(),
-                            color: Colors.blueAccent.shade100,
-                            underLine: TextDecoration.none),
-                        SizedBox(
-                          height: size.height * 0.01,
-                        ),
-                        TextUtils(
-                            fontSize: size.width * 0.03,
-                            fontWeight: FontWeight.bold,
-                            text: widget.orderitem.total_item.toString(),
-                            //Provider.of<order_vm>(context,listen: true).list_itemorder[index].total_item.toString(),  //'22.00 SAR',
-                            color: Colors.black45,
-                            underLine: TextDecoration.none),
-                      ],
-                    ),
-                    SizedBox(
-                      width: size.width * 0.05,
-                    ),
-                    // IconButton(
-                    //     onPressed: () {},
-                    //     icon: const Icon(Icons.minimize, color: Colors.black45)),
-                    IconButton(
-                        onPressed: () {
-                          // String id= Provider.of<order_vm>(context,listen:false ).list_itemorder[index]
-                          //     .item.IdItemStore;
-                          // Provider.of<order_vm>(context,listen:false ).remove_quaintity(id);
-                          setState(() {
-                            if (widget.orderitem.quaintity - 1 >= 1) {
-                              widget.orderitem.quaintity--;
+              SizedBox(
+                height: size.height * 0.05,
+              ),
+              Center(
+                child:
+                Padding(
+                  padding: EdgeInsets.only(
+                     // left: size.width * 0.27,
+                     right: size.width * 0.27,
+
+                      // vertical: size.height * 0.04
+                  ),
+                  child: Row(
+                    children: [
+                      // IconButton(
+                      //     onPressed: () {},
+                      //     icon: const Icon(Icons.add, color: Colors.black45)),
+                      IconButton(
+                          onPressed: () {
+                            // String id= Provider.of<order_vm>(context,listen:false )
+                            //     .list_itemorder[index].item.IdItemStore;
+                            //
+                            // Provider.of<order_vm>(context,listen:false ).add_quaintity(id);
+                            setState(() {
+                              widget.orderitem.quaintity++;
                               widget.orderitem.total_item = (widget
                                           .orderitem.quaintity *
                                       double.parse(widget.orderitem.item.price))
                                   .toString();
-                            }
-                          });
-                        },
-                        icon: Container(
-                          // margin: const EdgeInsets.only(bottom: 2),
-                          child: const Icon(Icons.remove, color: Colors.red),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            shape: BoxShape.circle,
+                            });
+                          },
+                          icon: Container(
+                            child: const Icon(
+                              Icons.add,
+                              color: Colors.black45,
+                            ),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(20)),
+                          )),
+                      SizedBox(
+                        width: size.width * 0.05,
+                      ),
+                      Column(
+                        children: [
+                          TextUtils(
+                              fontSize: size.width * 0.06,
+                              fontWeight: FontWeight.bold,
+                              //Provider.of<order_vm>(context,listen:true ).list_itemorder[index]
+                              text: widget.orderitem.quaintity.toString(),
+                              //Provider.of<order_vm>(context,listen: true).list_itemorder[index].quaintity.toString(),
+                              color: Colors.blueAccent.shade100,
+                              underLine: TextDecoration.none),
+                          SizedBox(
+                            height: size.height * 0.01,
                           ),
-                        )),
-                  ],
+                          TextUtils(
+                              fontSize: size.width * 0.03,
+                              fontWeight: FontWeight.bold,
+                              text: widget.orderitem.total_item.toString(),
+                              //Provider.of<order_vm>(context,listen: true).list_itemorder[index].total_item.toString(),  //'22.00 SAR',
+                              color: Colors.black45,
+                              underLine: TextDecoration.none),
+                        ],
+                      ),
+                      SizedBox(
+                        width: size.width * 0.05,
+                      ),
+                      // IconButton(
+                      //     onPressed: () {},
+                      //     icon: const Icon(Icons.minimize, color: Colors.black45)),
+                      IconButton(
+                          onPressed: () {
+                            // String id= Provider.of<order_vm>(context,listen:false ).list_itemorder[index]
+                            //     .item.IdItemStore;
+                            // Provider.of<order_vm>(context,listen:false ).remove_quaintity(id);
+                            setState(() {
+                              if (widget.orderitem.quaintity - 1 >= 1) {
+                                widget.orderitem.quaintity--;
+                                widget.orderitem.total_item = (widget
+                                            .orderitem.quaintity *
+                                        double.parse(widget.orderitem.item.price))
+                                    .toString();
+                              }
+                            });
+                          },
+                          icon: Container(
+                            // margin: const EdgeInsets.only(bottom: 2),
+                            child: const Icon(Icons.remove, color: Colors.red),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black),
+                              shape: BoxShape.circle,
+                            ),
+                          )),
+                    ],
+                  ),
                 ),
+              ),
+              SizedBox(
+                height: size.height * 0.05,
               ),
               Container(
                 width: size.width * 0.9,

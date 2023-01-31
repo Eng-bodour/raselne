@@ -499,6 +499,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
           onTap: () async {
           if(  Provider.of<order_vm>(context, listen: false).order!.toLocation!=null&&
               Provider.of<order_vm>(context, listen: false).order!.type_pay!=''
+          &&Provider.of<order_vm>(context, listen: false).list_itemorder.length!=0
           )
           {    Provider.of<order_vm>(context, listen: false).order.detailorder =
                 notesController.text;
@@ -516,7 +517,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
           child: Container(
             width: size.width * 1,
             height: size.height * 0.08,
-            decoration: const BoxDecoration(color: greyColor),
+            decoration: const BoxDecoration(color: mainColor),
             child: Center(
                 child: TextUtils(
                     fontSize: size.width * 0.05,

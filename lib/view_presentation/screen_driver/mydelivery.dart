@@ -19,14 +19,16 @@ class buildMyDelevery extends StatefulWidget {
   int indexStore;
    late DateTime  datanext;
    late DateTime  datanext2;
-  @override
+
+   @override
   _buildMyDeleveryState createState() => _buildMyDeleveryState();
 }
 
 class _buildMyDeleveryState extends State<buildMyDelevery> {
   @override
   Widget build(BuildContext context) {
-
+    print('build indexStore build indexStore build indexStore ');
+    print(widget.indexStore);
     // Provider.of<StoreProvider_vm>(context,listen: true)
     //   .getstoremodel(widget.orderModel.id_store);
     if(widget.orderModel.startorder !=null && widget.orderModel.endorder !=null)

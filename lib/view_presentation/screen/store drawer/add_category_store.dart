@@ -64,7 +64,7 @@ class _AddCategoryState extends State<AddCategory> {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Category store'),
+        title: const Text('حفظ/حذف بيانات الصنف'),
         centerTitle: true,
         backgroundColor: mainColor,
         elevation: 0,
@@ -254,63 +254,65 @@ class _AddCategoryState extends State<AddCategory> {
                             icon: const Icon(Icons.image)),
                         hintText: 'الصورة',
                       ),
-                      SizedBox(
-                        height: size.height * 0.1,
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(
-                          top: size.height * 0.01,
-                          left: size.width * 0.03,
-                          bottom: size.height * 0.01,
+                      // SizedBox(
+                      //   height: size.height * 0.1,
+                      // ),
+                      Center(
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            top: size.height * 0.01,
+                            left: size.width * 0.03,
+                            bottom: size.height * 0.01,
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: size.width * 0.06,
+                              vertical: size.height * 0.03),
+                          width: size.width * 0.75,
+                          // decoration:
+                          // BoxDecoration(
+                          //     color:
+                          //
+                          //     mainColor
+                          //         .withOpacity(0.3),
+                          //     borderRadius:  BorderRadius.only(
+                          //       topLeft:
+                          //       Radius.circular(
+                          //           size.width *
+                          //               0.1),
+                          //       topRight:
+                          //       Radius.circular(
+                          //           size.width *
+                          //               0.02),
+                          //       bottomLeft:
+                          //       Radius.circular(
+                          //           size.width *
+                          //               0.02),
+                          //       bottomRight:
+                          //       Radius.circular(
+                          //           size.width *
+                          //               0.1),
+                          //     )
+                          //
+                          // ),
+                          child:
+                          file==null?
+                          widget.type=='edit'?
+                          CachedNetworkImage(
+                            imageUrl: widget.itemstore!.image.toString() ,
+                            placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                            errorWidget:
+                                (context, url, error) =>
+                            const Icon(Icons.error),
+                          )
+                              :Container():
+                          Image.file(file!,fit: BoxFit.contain),
+
                         ),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: size.width * 0.06,
-                            vertical: size.height * 0.03),
-                        width: size.width * 0.75,
-                        decoration:
-                        BoxDecoration(
-                            color:
-
-                            mainColor
-                                .withOpacity(0.3),
-                            borderRadius:  BorderRadius.only(
-                              topLeft:
-                              Radius.circular(
-                                  size.width *
-                                      0.1),
-                              topRight:
-                              Radius.circular(
-                                  size.width *
-                                      0.02),
-                              bottomLeft:
-                              Radius.circular(
-                                  size.width *
-                                      0.02),
-                              bottomRight:
-                              Radius.circular(
-                                  size.width *
-                                      0.1),
-                            )
-
-                        ),
-                        child:
-                        file==null?
-                        widget.type=='edit'?
-                        CachedNetworkImage(
-                          imageUrl: widget.itemstore!.image.toString() ,
-                          placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                          errorWidget:
-                              (context, url, error) =>
-                          const Icon(Icons.error),
-                        )
-                            :Container():
-                        Image.file(file!,fit: BoxFit.contain),
-
                       ),
                      //deleteItemStore
                       Center(
-                        child:Column(
+                        child:Row(
                           children: [
                             AuthButton(
                                 onPressed: () async{
@@ -363,8 +365,9 @@ class _AddCategoryState extends State<AddCategory> {
                                   }
                                 },
                                 text: 'حفظ معلومات الصنف'),
-                            widget.type=='edit'?  SizedBox(height: 5,)
+                            widget.type=='edit'?  SizedBox(width: 5,)
                                 :Container(),
+
                             widget.type=='edit'?
                          AuthButton(
                                 onPressed: () async {
@@ -447,7 +450,9 @@ class _AddCategoryState extends State<AddCategory> {
                         //       text: 'Add Store');
                         // }),
                       ),
-
+                      SizedBox(
+                        height: size.height * 0.02,
+                      ),
                     ],
                   ),
                 ),

@@ -221,12 +221,9 @@ class _ChatScreenState extends State<ChatScreen> {
               .isloading,
           child: Column(
             children: <Widget>[
-              Provider.of<order_vm>(context, listen: true)
-                  .order
-                  .state=='done arrive'|| Provider.of<order_vm>(context, listen: true)
-                  .order
-                  .state=='done rate'|| Provider.of<order_vm>(context, listen: true)
-              .order
+              widget.orderModel
+                  .state=='done arrive'|| widget.orderModel
+                  .state=='done rate'|| widget.orderModel
               .state=='done'?
               Container():
               Row(

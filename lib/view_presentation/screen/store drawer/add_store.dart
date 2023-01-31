@@ -106,7 +106,7 @@ class _AddStoreState extends State<AddStore> {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Store'),
+        title: const Text('حفظ بيانات المتجر '),
         centerTitle: true,
         backgroundColor: mainColor,
         elevation: 0,
@@ -492,63 +492,65 @@ class _AddStoreState extends State<AddStore> {
                       const SizedBox(
                         height: 6, //size.height * 0.1,
                       ),
-                      Container(
-                        margin: EdgeInsets.only(
-                          // top: size.height * 0.01,
-                          left: size.width * 0.03,
-                          bottom: size.height * 0.01,
-                        ),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: size.width * 0.06,
-                            vertical: size.height * 0.03),
-                        width: size.width * 0.75,
-                        decoration: BoxDecoration(
-                          color:
-                              // isMe
-                              //     ? greyColor.withOpacity(0.1)
-                              //     :
-                              mainColor.withOpacity(0.3),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(20)),
-                          // BorderRadius.only(
-                          //   topLeft:
-                          //   Radius.circular(
-                          //       size.width *
-                          //           0.1),
-                          //   topRight:
-                          //   Radius.circular(
-                          //       size.width *
-                          //           0.02),
-                          //   bottomLeft:
-                          //   Radius.circular(
-                          //       size.width *
-                          //           0.02),
-                          //   bottomRight:
-                          //   Radius.circular(
-                          //       size.width *
-                          //           0.1),
+                      Center(
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            // top: size.height * 0.01,
+                            left: size.width * 0.03,
+                            bottom: size.height * 0.01,
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: size.width * 0.06,
+                              vertical: size.height * 0.03),
+                          width: size.width * 0.75,
+                          // decoration: BoxDecoration(
+                          //   color:
+                          //       // isMe
+                          //       //     ? greyColor.withOpacity(0.1)
+                          //       //     :
+                          //       mainColor.withOpacity(0.3),
+                          //   borderRadius:
+                          //       const BorderRadius.all(Radius.circular(20)),
+                          //   // BorderRadius.only(
+                          //   //   topLeft:
+                          //   //   Radius.circular(
+                          //   //       size.width *
+                          //   //           0.1),
+                          //   //   topRight:
+                          //   //   Radius.circular(
+                          //   //       size.width *
+                          //   //           0.02),
+                          //   //   bottomLeft:
+                          //   //   Radius.circular(
+                          //   //       size.width *
+                          //   //           0.02),
+                          //   //   bottomRight:
+                          //   //   Radius.circular(
+                          //   //       size.width *
+                          //   //           0.1),
+                          //   // )
+                          // ),
+                          child: file == null
+                              ? widget.type == 'edit'
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(45),
+                                      child: CachedNetworkImage(
+                                        imageUrl: widget.storemodel!.imageStore
+                                            .toString(),
+                                        placeholder: (context, url) =>
+                                            const CircularProgressIndicator(),
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error),
+                                      ),
+                                    )
+                                  : Container()
+                              : Image.file(file!, fit: BoxFit.contain),
+                          // Image.network(
+                          //     snapshot.data![index].textMessage.toString(),
+                          //   width: 30,
+                          //   height: 35,
                           // )
                         ),
-                        child: file == null
-                            ? widget.type == 'edit'
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(45),
-                                    child: CachedNetworkImage(
-                                      imageUrl: widget.storemodel!.imageStore
-                                          .toString(),
-                                      placeholder: (context, url) =>
-                                          const CircularProgressIndicator(),
-                                      errorWidget: (context, url, error) =>
-                                          const Icon(Icons.error),
-                                    ),
-                                  )
-                                : Container()
-                            : Image.file(file!, fit: BoxFit.contain),
-                        // Image.network(
-                        //     snapshot.data![index].textMessage.toString(),
-                        //   width: 30,
-                        //   height: 35,
-                        // )
                       ),
                       // TextButton(
                       //   onPressed: () async {
@@ -666,7 +668,9 @@ class _AddStoreState extends State<AddStore> {
                                 }
                               }
                             },
-                            text: 'Save data Store'),
+                            text: 'حفظ '),
+
+
                         // GetBuilder<AddStoreController>(builder: (_) {
                         //   return AuthButton(
                         //       onPressed: () {
@@ -692,6 +696,9 @@ class _AddStoreState extends State<AddStore> {
                         //       },
                         //       text: 'Add Store');
                         // }),
+                      ),
+                      SizedBox(
+                        height: size.height * 0.02,
                       ),
                     ],
                   ),

@@ -40,10 +40,10 @@ class StoreProvider_vm extends ChangeNotifier {
       }
       // currentStore= liststore.firstWhere((element) =>element.IdStore==id
       //,orElse: null
-    //);
-    print('id '+id.toString());
-    // else currentStore= null;
-    //
+      //);
+      print('id '+id.toString());
+      // else currentStore= null;
+
       notifyListeners();
   }
 
