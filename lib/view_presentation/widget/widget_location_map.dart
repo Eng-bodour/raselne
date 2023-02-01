@@ -11,9 +11,10 @@ import '../../utilis/theme.dart';
 import '../screen/custom_map_location.dart';
 
 class mapLocationMessage extends StatefulWidget {
-   mapLocationMessage({required this.message, required  this.size,Key? key}) : super(key: key);
+   mapLocationMessage({required this.type, required this.message, required  this.size,Key? key}) : super(key: key);
    Size size;
    MessageText message;
+   String type;
 
   @override
   State<mapLocationMessage> createState() => _mapLocationMessageState();
@@ -26,6 +27,10 @@ class _mapLocationMessageState extends State<mapLocationMessage> {
   Uint8List? imageBytes;
   @override
   void initState()   {
+    // if(widget.type=='map s')
+      //استلام
+
+
     // TODO: implement initState
     //
     // WidgetsBinding.instance.addPostFrameCallback((_)async{
@@ -81,7 +86,8 @@ class _mapLocationMessageState extends State<mapLocationMessage> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: widget.size.width * 0.02),
                 child: Text(
-                  'التوصيل إلى',
+                  widget.type=='map t'?
+                  'التوصيل إلى':'الاستلام من ',
                   style: TextStyle(
                       fontSize: widget.size.width * 0.04, color: Colors.black45),
                 ),
@@ -155,6 +161,7 @@ class _mapLocationMessageState extends State<mapLocationMessage> {
                      Navigator.push(context, MaterialPageRoute(
                          builder: (context)=>
                              custom_map_location(
+                              type: widget.type,
                          from: LatLng(widget.message.location!.latitude,
                              widget.message.location!.longitude),
                          to: LatLng(widget.message.location!.latitude,

@@ -279,18 +279,19 @@ class order_firebase extends OrderRepository{
     });
 else {
       MessageText message=
-      MessageText(senderId: orderModel.from_user, type_message: 'map',
+      MessageText(senderId: orderModel.from_user, type_message: 'map s',
           textMessage:' مكان الاستلام '+orderModel.detailAddressfrom.toString(),
-          timeMessage: DateFormat('yyyy-MM-dd HH:mm:ss')
+          timeMessage: DateFormat('yyyy-MM-dd hh:mm:ss')
               .format(DateTime.now()).toString(),
           location:GeoPoint(
               orderModel.fromlocation!.latitude,
               orderModel.fromlocation!.longitude)
       );
       message=
-          MessageText(senderId: orderModel.from_user, type_message: 'map',
+          MessageText(senderId: orderModel.from_user, type_message: 'map t',
               textMessage:' مكان التسليم '+orderModel.detailAddressTo.toString(),
-              timeMessage: DateTime.now().toString(),
+              timeMessage:DateFormat('yyyy-MM-dd hh:mm:ss')
+                  .format(DateTime.now()).toString(),
               location:GeoPoint(
                   orderModel.toLocation!.latitude,
                   orderModel.toLocation!.longitude)
@@ -429,7 +430,7 @@ else {
       senderId: senderId, type_message: 'image');
       messageText.textMessage=imagurl.toString();
       messageText.type_message='image';
-      messageText.timeMessage=DateFormat('yyyy-MM-dd HH:mm:ss')
+      messageText.timeMessage=DateFormat('yyyy-MM-dd hh:mm:ss')
           .format(DateTime.now()) .toString();
       await FirebaseServices('orders').ref.doc(id_order)
           .collection('chat')
@@ -437,7 +438,7 @@ else {
     }
 
    message.senderId=senderId;
-   message.timeMessage=DateFormat('yyyy-MM-dd HH:mm:ss')
+   message.timeMessage=DateFormat('yyyy-MM-dd hh:mm:ss')
        .format(DateTime.now()) .toString();
    await FirebaseServices('orders').ref.doc(id_order)
        .collection('chat').doc()
@@ -497,7 +498,7 @@ else {
     MessageText messageText =MessageText(
         senderId: idSender, type_message: 'text');
     messageText.textMessage=state_message;
-    messageText.timeMessage=DateFormat('yyyy-MM-dd HH:mm:ss')
+    messageText.timeMessage=DateFormat('yyyy-MM-dd hh:mm:ss')
         .format(DateTime.now()).toString();
     sendMessage(messageText, idOrder);
 
@@ -527,7 +528,7 @@ else {
       'isopen':false,
       'isdone_deilvery':true,
       'endorder':
-      DateFormat('yyyy-MM-dd HH:mm:ss')
+      DateFormat('yyyy-MM-dd hh:mm:ss')
       .format(DateTime.now())
       //DateTime.now().toString(),
     })

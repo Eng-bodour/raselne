@@ -58,6 +58,7 @@ Stream<List<MessageText>> getchat(String id_order )async*{
 Future<void> sendMessage(MessageText message,id_order)async{
  await orderRepository.sendMessage(message, id_order);
 }
+
 addlocation(LatLng location,String Address,
     String detailAddress,String type
     ){

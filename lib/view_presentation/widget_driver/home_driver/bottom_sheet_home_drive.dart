@@ -336,7 +336,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
 
                               Marker(
                                   markerId: MarkerId("source",),
-                                  // icon: _locationIcon,
+                                   icon: _locationIcon,
 
                                   position: widget.order.fromlocation!),
                               // Marker(
@@ -348,7 +348,7 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
                               Marker(
 
                                   markerId: MarkerId("destination"),
-                                  // icon: _locationIcon,
+                                  icon: _mylocationIcon,
 
                                   position: widget.order.toLocation!),
                             },
@@ -652,13 +652,15 @@ class _bottomsheet_offerState extends State<bottomsheet_offer> {
       _locationIcon = await BitmapDescriptor.fromAssetImage(
           ImageConfiguration.empty,
           // const ImageConfiguration(size: Size(0.05, 0.02)),
-          'assets/images/location_icon.png');
+          'assets/images/store-design.png');
       // setState(() {});
     // }
     // if (_mylocationIcon == null) {
       _mylocationIcon = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(0.01, 0.01)),
-          'assets/images/delvery.png');
+          ImageConfiguration.empty,
+
+          // const ImageConfiguration(size: Size(0.01, 0.01)),
+          'assets/images/gps-design.png');
       // setState(() {});
     // }
 

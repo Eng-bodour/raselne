@@ -8,9 +8,9 @@ import '../../data_layer/model/orderModel.dart';
 import '../../services/polyline_service.dart';
 
 class custom_map_location extends StatefulWidget {
-  custom_map_location({required this.from,required this.to, Key? key}) : super(key: key);
+  custom_map_location({required this.type, required this.from,required this.to, Key? key}) : super(key: key);
   LatLng from,to;
-
+  String type;
 
   @override
   _custom_map_locationState createState() => _custom_map_locationState();
@@ -31,7 +31,7 @@ class _custom_map_locationState extends State<custom_map_location> {
   // );
   late LatLng currentLocation;//=widget.to;//_inialCameraPosition.target;
 
-  BitmapDescriptor? _locationIcon;
+  BitmapDescriptor _locationIcon= BitmapDescriptor.defaultMarker;
 
   @override void initState() {
     // TODO: implement initState
@@ -43,21 +43,22 @@ class _custom_map_locationState extends State<custom_map_location> {
     // );\
     // user= Provider.of<AuthProvider_vm>(context,listen: false).currentuser;
     _buildMarkerFromAssets();
-    _animateCamera(widget.from);
+    _setMarker(widget.type=='map s'?widget.from:widget.to);
+    _animateCamera( );
 
     _drawPolyline(widget.from, widget.to);
     super.initState();
   }
 
-  Future<void> _animateCamera(LatLng _location, ) async {
+  Future<void> _animateCamera(  ) async {
      final GoogleMapController
     controller = await _controller.future;
     CameraPosition _cameraPosition = CameraPosition(
-      target: _location,
+      target:widget.type=='map s'?widget.from:widget.to,
       zoom: 13.00,
     );
-    print(
-        "animating camera to (lat: ${_location.latitude}, long: ${_location.longitude}");
+    // print(
+    //     "animating camera to (lat: ${_location.latitude}, long: ${_location.longitude}");
     controller.animateCamera(CameraUpdate.newCameraPosition(_cameraPosition));
     // _inialCameraPosition=_cameraPosition;
 
@@ -73,8 +74,11 @@ class _custom_map_locationState extends State<custom_map_location> {
       initialCameraPosition:
       CameraPosition(
           target:
-          LatLng(widget.to.latitude,
-              widget.to.longitude)),
+              widget.type=='map t'?
+              LatLng(widget.to.latitude,
+              widget.to.longitude):
+              LatLng(widget.from.latitude,
+                  widget.from.longitude)),
 
       mapType: MapType.normal,
       onMapCreated: (GoogleMapController controller) async {
@@ -89,7 +93,12 @@ class _custom_map_locationState extends State<custom_map_location> {
           currentLocation=newPos.target;
         });
       },
-      markers: _markers,
+      markers:    {
+        Marker(
+          markerId: MarkerId("source"),
+          icon: _locationIcon,
+          position: widget.from),
+      },
       polylines: _polylines,
   ),
 ],
@@ -113,10 +122,10 @@ class _custom_map_locationState extends State<custom_map_location> {
       markerId: MarkerId(_location.toString()),
       icon: BitmapDescriptor.defaultMarker,
       // icon: _locationIcon,
-      position: currentLocation,
+      position: _location,
       infoWindow: InfoWindow(
           title: "Title",
-          snippet: "${currentLocation.latitude}, ${currentLocation.longitude}"),
+          snippet: "${_location.latitude}, ${_location.longitude}"),
     );
     _markers.clear();
     _markers.add(newMarker);
@@ -124,11 +133,14 @@ class _custom_map_locationState extends State<custom_map_location> {
     setState(() {});
   }
   Future<void> _buildMarkerFromAssets() async {
-    if (_locationIcon == null) {
+
       _locationIcon = await BitmapDescriptor.fromAssetImage(
           ImageConfiguration(size: Size(48, 48)),
-          'assets/images/location_icon.png');
+        widget.type=='map t'
+        ?  'assets/images/gps-design.png'
+        : 'assets/images/store-design.png'
+      );
       setState(() {});
-    }
+
   }
 }

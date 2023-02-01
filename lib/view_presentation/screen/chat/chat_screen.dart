@@ -151,7 +151,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   MessageText(
                       senderId: user.uid.toString(),
                       textMessage: textmessage,
-                      timeMessage: DateTime.now().toString(),
+                      timeMessage:DateFormat('yyyy-MM-dd hh:mm:ss')
+                          .format(DateTime.now()) .toString(),
                       type_message: 'text'),
                   widget.orderModel.id_order);
               setState(() {
@@ -293,12 +294,13 @@ class _ChatScreenState extends State<ChatScreen> {
                                      snapshot.data![index].senderId == user.uid;
                                  return snapshot.data![index].type_message ==
                                      'text'
-                                     ? _buildMessage(
-                                     snapshot.data![index], isMe, size)
-                                     : snapshot.data![index].type_message == 'map'
+                                     ? _buildMessage(snapshot.data![index], isMe, size)
+                                     :
+                                     snapshot.data![index].type_message.contains('map')// == 'map s'
+                                         // || snapshot.data![index].type_message == 'map t'
                                      ? mapLocationMessage(
                                    message: snapshot.data![index] ,
-                                   size: size,
+                                   size: size, type:snapshot.data![index].type_message,
                                  )
                                      : snapshot.data![index].type_message ==
                                      'image'

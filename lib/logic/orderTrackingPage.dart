@@ -49,11 +49,27 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
 
   void setCustomMarkerIcon() {
     BitmapDescriptor.fromAssetImage(
-        // ImageConfiguration.empty,
-       const ImageConfiguration(size: Size(10, 10)),
+        ImageConfiguration.empty,
+      // const ImageConfiguration(size: Size(1, 1)),
        // "assets/images/motorbike1.png")
-        "assets/images/delivery_transparent.png")
+        "assets/images/car-location2.png")
         .then((value) => currentLocationIcon = value);
+
+    BitmapDescriptor.fromAssetImage(
+        ImageConfiguration.empty,
+       // const ImageConfiguration(size: Size(10, 10)),
+       // "assets/images/motorbike1.png")
+        "assets/images/gps-design.png")
+        .then((value) => destinationIcon = value);
+
+    BitmapDescriptor.fromAssetImage(
+        ImageConfiguration.empty,
+       // const ImageConfiguration(size: Size(10, 10)),
+       // "assets/images/motorbike1.png")
+        "assets/images/store-design.png")
+        .then((value) => sourceIcon = value);
+
+
   }
  @override void dispose() {
     // TODO: implement dispose
@@ -94,8 +110,11 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
         body:
        Provider.of<AuthProvider_vm>(context).currentuser.type=='user'?
        mylocation == null
-           ? Center(
-         child: Text('lo'),
+           ?  Center(
+         //Fast-deliveryscooter.png
+         child: Image.asset('assets/images/tracking.png'),
+
+         // Text('Loading....'),
        )
            :  StreamBuilder(
             stream:  tracking_firebase().getlocationTracking(widget.idorder),
@@ -115,7 +134,10 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
                 //   :
               snapshot.hasData==false?
               Center(
-                child: Text('lonn nnnn'),
+                //Fast-deliveryscooter.png
+                child: Image.asset('assets/images/tracking.png'),
+
+                // Text('Loading....'),
               ) :GoogleMap(
 
                 initialCameraPosition: CameraPosition(
@@ -172,13 +194,16 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
             }):
        currentlocation==null?
        Center(
-         child: Text('lod'),
+         //Fast-deliveryscooter.png
+         child: Image.asset('assets/images/tracking.png'),
+
+         // Text('Loading....'),
        ): GoogleMap(
          initialCameraPosition: CameraPosition(
            zoom: 13.5,
            target:  LatLng(currentlocation!.latitude!,currentlocation!.longitude!) ,
          ),
-        buildingsEnabled: true,
+        // buildingsEnabled: true,
          compassEnabled: true,
          // indoorViewEnabled: true,
          // myLocationEnabled: true,
