@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
-const Color mainColor = Color.fromRGBO(230, 120, 23, 100);
+// const Color mainColor = Color.fromRGBO(230, 120, 23, 100);
+//  const Color mainColor = Color.fromRGBO(219, 197, 137, 20);
+//  const Color mainColor    =  Color.fromRGBO(212, 175, 53, 40);//
+//  const Color mainColor    =  Color.fromRGBO(218, 187, 86, 40);//
+ const Color mainColor    =  Color.fromRGBO(75, 75, 75, 1);//
+//  const Color mainColor = Color.fromRGBO(176, 119, 50, 10);
+//const Color mainColor = Color.fromRGBO(220, 202, 136, 1);
 const Color darkGreyClr = Color(0xFF121212);
 const Color logOutSettings = Color.fromRGBO(230, 120, 23, 100);
 const Color greyColor = Colors.grey;

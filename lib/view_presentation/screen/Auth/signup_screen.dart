@@ -37,240 +37,246 @@ class SignUpScreen extends StatelessWidget {
               Colors.white,
           elevation: 0, // Get.isDarkMode ? darkGreyClr : Colors.white,
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                width: double.infinity,
-                height: size.height / 1.3,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 25, right: 25, top: 40),
-                  child: Form(
-                    key: fromKey,
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            TextUtils(
-                              fontSize: 28,
-                              fontWeight: FontWeight.w500,
-                              text: "SIGN",
-                              color: Get.isDarkMode ? Colors.grey : mainColor,
-                              underLine: TextDecoration.none,
-                            ),
-                            const SizedBox(
-                              width: 3,
-                            ),
-                            TextUtils(
-                              fontSize: 28,
-                              fontWeight: FontWeight.w500,
-                              text: "UP",
-                              color:
-                                  Get.isDarkMode ? Colors.white : Colors.black,
-                              underLine: TextDecoration.none,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        AuthTextFromField(
-                          read: false,
-                          keyboardType: TextInputType.text,
-                          controller: nameController,
-                          obscureText: false,
-                          validator: (value) {
-                            if (value.toString().length <= 2 ||
-                                !RegExp(validationName).hasMatch(value)) {
-                              return 'Enter valid name';
-                            } else {
-                              return null;
-                            }
-                          },
-                          prefixIcon:
-                              // Get.isDarkMode
-                              //     ? const Icon(
-                              //         Icons.person,
-                              //         color: Colors.grey,
-                              //         size: 30,
-                              //       )
-                              //     :
-                              Image.asset(
-                            'assets/images/user.png',
-                            color: Colors.amber,
+        body: ModalProgressHUD(
+          inAsyncCall:
+          Provider.of<AuthProvider_vm>(context, listen: true)
+              .isloading,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  height: size.height / 1.3,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 25, right: 25, top: 40),
+                    child: Form(
+                      key: fromKey,
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              TextUtils(
+                                fontSize: 28,
+                                fontWeight: FontWeight.w500,
+                                text: "SIGN",
+                                color: Get.isDarkMode ? Colors.grey : mainColor,
+                                underLine: TextDecoration.none,
+                              ),
+                              const SizedBox(
+                                width: 3,
+                              ),
+                              TextUtils(
+                                fontSize: 28,
+                                fontWeight: FontWeight.w500,
+                                text: "UP",
+                                color:
+                                    Get.isDarkMode ? Colors.white : Colors.black,
+                                underLine: TextDecoration.none,
+                              ),
+                            ],
                           ),
-                          suffixIcon: const Text(""),
-                          hintText: 'User Name',
-                        ),
-                        SizedBox(
-                          height: size.height * 0.02,
-                        ),
-                        AuthTextFromField(
-                          read: false,
-                          keyboardType: TextInputType.text,
-                          controller: emailController,
-                          obscureText: false,
-                          validator: (value) {
-                            if (!RegExp(validationEmail).hasMatch(value)) {
-                              return 'Invalid email';
-                            } else {
-                              return null;
-                            }
-                          },
-                          prefixIcon:
-                              // Get.isDarkMode
-                              //     ? const Icon(
-                              //         Icons.email,
-                              //         color: pinkClr,
-                              //         size: 30,
-                              //       )
-                              //     :
-                              Image.asset('assets/images/email.png',
-                                  color: Colors.amber),
-                          suffixIcon: const Text(""),
-                          hintText: 'Email',
-                        ),
-                        SizedBox(
-                          height: size.height * 0.02,
-                        ),
-                        AuthTextFromField(
-                          read: false,
-                          keyboardType: TextInputType.text,
-                          controller: passwordController,
-                          obscureText: authProvider.isVisibilty ? false : true,
-                          validator: (value) {
-                            if (value.toString().length < 6) {
-                              return 'Password should be longer or equal to 6 characters';
-                            } else {
-                              return null;
-                            }
-                          },
-                          prefixIcon:
-                              //  Get.isDarkMode
-                              //     ? const Icon(
-                              //         Icons.lock,
-                              //         color: pinkClr,
-                              //         size: 30,
-                              //       )
-                              //     :
-                              Image.asset('assets/images/lock.png',
-                                  color: Colors.amber),
-                          hintText: 'Password',
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              authProvider.visibility();
-                            },
-                            icon: authProvider.isVisibilty
-                                ? const Icon(
-                                    Icons.visibility_off,
-                                    color: Colors.black,
-                                  )
-                                : const Icon(
-                                    Icons.visibility,
-                                    color: Colors.black,
-                                  ),
+                          const SizedBox(
+                            height: 50,
                           ),
-                        ),
-                        // GetBuilder<AuthController>(
-                        //   builder: (_) {
-                        //     return AuthTextFromField(
-                        //       read: false,
-                        //       keyboardType: TextInputType.text,
-                        //       controller: passwordController,
-                        //       obscureText:
-                        //           controller.isVisibilty ? false : true,
-                        //       validator: (value) {
-                        //         if (value.toString().length < 6) {
-                        //           return 'Password should be longer or equal to 6 characters';
-                        //         } else {
-                        //           return null;
-                        //         }
-                        //       },
-                        //       prefixIcon:
-                        //           //  Get.isDarkMode
-                        //           //     ? const Icon(
-                        //           //         Icons.lock,
-                        //           //         color: pinkClr,
-                        //           //         size: 30,
-                        //           //       )
-                        //           //     :
-                        //           Image.asset('assets/images/lock.png',
-                        //               color: Colors.amber),
-                        //       hintText: 'Password',
-                        //       suffixIcon: IconButton(
-                        //         onPressed: () {
-                        //           controller.visibility();
-                        //         },
-                        //         icon: controller.isVisibilty
-                        //             ? const Icon(
-                        //                 Icons.visibility_off,
-                        //                 color: Colors.black,
-                        //               )
-                        //             : const Icon(
-                        //                 Icons.visibility,
-                        //                 color: Colors.black,
-                        //               ),
-                        //       ),
-                        //     );
-                        //   },
-                        // ),
-                        SizedBox(height: size.height * 0.04),
-                        const CheckWidget(),
-                        SizedBox(height: size.height * 0.04),
-
-                        AuthButton(
-                          // width: size.width * 0.15,
-                          // height: size.height * 0.19,
-                          onPressed: () async{
-                            if (authProvider.isCheckBox == false) {
-                              Get.snackbar(
-                                "Check Box",
-                                "Please, Accept terms & conditions",
-                                snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: Colors.amberAccent,
-                                colorText: Colors.white,
-                              );
-                            } else if (fromKey.currentState!.validate()) {
-                              String name = nameController.text.trim();
-                              String email = emailController.text.trim();
-                              String password = passwordController.text;
-                              await authProvider.signUp(
-                                name: name,
-                                email: email,
-                                password: password,
-                              );
-                              if(authProvider.message=='done') {
-                               await Provider.of<AuthProvider_vm>
-                                 (context,listen: false).isAuthuser();
-
-                                Get.offNamed(Routes.mainScreen);
-
+                          AuthTextFromField(
+                            read: false,
+                            keyboardType: TextInputType.text,
+                            controller: nameController,
+                            obscureText: false,
+                            validator: (value) {
+                              if (value.toString().length <= 2
+                                  //||!RegExp(validationName).hasMatch(value)
+                              ) {
+                                return 'Enter valid name';
+                              } else {
+                                return null;
                               }
-                                else Get.snackbar(
-                                'title',
-                               authProvider.message,
-                                snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: Colors.green,
-                                colorText: Colors.white,
-                              );
-                              authProvider.isCheckBox = true;
-                            }
-                          },
-                          text: "SIGN UP",
-                        )
-                      ],
+                            },
+                            prefixIcon:
+                                // Get.isDarkMode
+                                //     ? const Icon(
+                                //         Icons.person,
+                                //         color: Colors.grey,
+                                //         size: 30,
+                                //       )
+                                //     :
+                                Image.asset(
+                              'assets/images/user.png',
+                              color: Colors.amber,
+                            ),
+                            suffixIcon: const Text(""),
+                            hintText: 'User Name',
+                          ),
+                          SizedBox(
+                            height: size.height * 0.02,
+                          ),
+                          AuthTextFromField(
+                            read: false,
+                            keyboardType: TextInputType.text,
+                            controller: emailController,
+                            obscureText: false,
+                            validator: (value) {
+                              if (!RegExp(validationEmail).hasMatch(value)) {
+                                return 'Invalid email';
+                              } else {
+                                return null;
+                              }
+                            },
+                            prefixIcon:
+                                // Get.isDarkMode
+                                //     ? const Icon(
+                                //         Icons.email,
+                                //         color: pinkClr,
+                                //         size: 30,
+                                //       )
+                                //     :
+                                Image.asset('assets/images/email.png',
+                                    color: Colors.amber),
+                            suffixIcon: const Text(""),
+                            hintText: 'Email',
+                          ),
+                          SizedBox(
+                            height: size.height * 0.02,
+                          ),
+                          AuthTextFromField(
+                            read: false,
+                            keyboardType: TextInputType.text,
+                            controller: passwordController,
+                            obscureText: authProvider.isVisibilty ? false : true,
+                            validator: (value) {
+                              if (value.toString().length < 6) {
+                                return 'Password should be longer or equal to 6 characters';
+                              } else {
+                                return null;
+                              }
+                            },
+                            prefixIcon:
+                                //  Get.isDarkMode
+                                //     ? const Icon(
+                                //         Icons.lock,
+                                //         color: pinkClr,
+                                //         size: 30,
+                                //       )
+                                //     :
+                                Image.asset('assets/images/lock.png',
+                                    color: Colors.amber),
+                            hintText: 'Password',
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                authProvider.visibility();
+                              },
+                              icon: authProvider.isVisibilty
+                                  ? const Icon(
+                                      Icons.visibility_off,
+                                      color: Colors.black,
+                                    )
+                                  : const Icon(
+                                      Icons.visibility,
+                                      color: Colors.black,
+                                    ),
+                            ),
+                          ),
+                          // GetBuilder<AuthController>(
+                          //   builder: (_) {
+                          //     return AuthTextFromField(
+                          //       read: false,
+                          //       keyboardType: TextInputType.text,
+                          //       controller: passwordController,
+                          //       obscureText:
+                          //           controller.isVisibilty ? false : true,
+                          //       validator: (value) {
+                          //         if (value.toString().length < 6) {
+                          //           return 'Password should be longer or equal to 6 characters';
+                          //         } else {
+                          //           return null;
+                          //         }
+                          //       },
+                          //       prefixIcon:
+                          //           //  Get.isDarkMode
+                          //           //     ? const Icon(
+                          //           //         Icons.lock,
+                          //           //         color: pinkClr,
+                          //           //         size: 30,
+                          //           //       )
+                          //           //     :
+                          //           Image.asset('assets/images/lock.png',
+                          //               color: Colors.amber),
+                          //       hintText: 'Password',
+                          //       suffixIcon: IconButton(
+                          //         onPressed: () {
+                          //           controller.visibility();
+                          //         },
+                          //         icon: controller.isVisibilty
+                          //             ? const Icon(
+                          //                 Icons.visibility_off,
+                          //                 color: Colors.black,
+                          //               )
+                          //             : const Icon(
+                          //                 Icons.visibility,
+                          //                 color: Colors.black,
+                          //               ),
+                          //       ),
+                          //     );
+                          //   },
+                          // ),
+                          SizedBox(height: size.height * 0.04),
+                          const CheckWidget(),
+                          SizedBox(height: size.height * 0.04),
+
+                          AuthButton(
+                            // width: size.width * 0.15,
+                            // height: size.height * 0.19,
+                            onPressed: () async{
+                              if (authProvider.isCheckBox == false) {
+                                Get.snackbar(
+                                  "Check Box",
+                                  "Please, Accept terms & conditions",
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.amberAccent,
+                                  colorText: Colors.white,
+                                );
+                              } else if (fromKey.currentState!.validate()) {
+                                String name = nameController.text.trim();
+                                String email = emailController.text.trim();
+                                String password = passwordController.text;
+                                await authProvider.signUp(
+                                  name: name,
+                                  email: email,
+                                  password: password,
+                                );
+                                if(authProvider.message=='done') {
+                                 await Provider.of<AuthProvider_vm>
+                                   (context,listen: false).isAuthuser();
+
+                                  Get.offNamed(Routes.mainScreen);
+
+                                }
+                                  else Get.snackbar(
+                                  'title',
+                                 authProvider.message,
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.green,
+                                  colorText: Colors.white,
+                                );
+                                authProvider.isCheckBox = true;
+                              }
+                            },
+                            text: "SIGN UP",
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              ContainerUnder(
-                text: 'Already have an Account? ',
-                textType: "Log in",
-                onPressed: () {
-                  Get.offNamed(Routes.loginScreen);
-                },
-              ),
-            ],
+                ContainerUnder(
+                  text: 'Already have an Account? ',
+                  textType: "Log in",
+                  onPressed: () {
+                    Get.offNamed(Routes.loginScreen);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

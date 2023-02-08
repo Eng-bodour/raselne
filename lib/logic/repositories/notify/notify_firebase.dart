@@ -8,12 +8,12 @@ import 'notify_repo.dart';
 
 class notify_firebase extends NotifyRepository{
   @override
-  Future<void> addNotify(Map<String,dynamic> body) {
+  Future<void> addNotify(Map<String,dynamic> body)async {
     // TODO: implement addNotify
     FirebaseFirestore.instance.collection('notification')
         .add(body);
 
-    throw UnimplementedError();
+    //throw UnimplementedError();
   }
 
   @override

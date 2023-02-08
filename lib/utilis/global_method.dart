@@ -42,6 +42,9 @@ String getstate_order(String state){
     case 'iscancel':
 
       return 'ملغى';
+  case 'done rate':
+
+      return 'مغلق';
 
     case 'is_arrive':
       return 'قيد التوصيل';

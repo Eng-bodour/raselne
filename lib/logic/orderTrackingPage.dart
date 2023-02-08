@@ -139,7 +139,12 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
 
                 // Text('Loading....'),
               ) :GoogleMap(
-
+                compassEnabled: true,
+                // indoorViewEnabled: true,
+                // myLocationEnabled: true,
+                // myLocationButtonEnabled: true,
+                scrollGesturesEnabled: true,
+                zoomGesturesEnabled: true,
                 initialCameraPosition: CameraPosition(
                         zoom: 13.5,
                         target: sourceLocation,
@@ -212,10 +217,10 @@ class OrdertrackingPageState extends State<OrdertrackingPage> {
          zoomGesturesEnabled: true,
          mapType: MapType.normal,
          onMapCreated: (GoogleMapController controller) async {
-           // String style = await DefaultAssetBundle.of(context)
-           //     .loadString('assets/map_style.json');
-           // //customize your map style at: https://mapstyle.withgoogle.com/
-           // controller.setMapStyle(style);
+           String style = await DefaultAssetBundle.of(context)
+               .loadString('assets/map_style.json');
+           //customize your map style at: https://mapstyle.withgoogle.com/
+           controller.setMapStyle(style);
            _controller.complete(controller);
            _drawPolyline(sourceLocation, destination);
          },

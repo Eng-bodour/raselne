@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "192334408426",
-    "project_id": "raselne-301d1",
-    "storage_bucket": "raselne-301d1.appspot.com"
+    "project_number": "348478537712",
+    "project_id": "alsre-31cac",
+    "storage_bucket": "alsre-31cac.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:192334408426:android:883e0f098345b716608593",
+        "mobilesdk_app_id": "1:348478537712:android:08df2a6c0d6cdd73366735",
         "android_client_info": {
-          "package_name": "com.example.raselne"
+          "package_name": "com.mpluse.Alsarea"
         }
       },
       "oauth_client": [
         {
-          "client_id": "192334408426-n6f9t8ossv3r2k85uva50uoe0h37dqlc.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.raselne",
-            "certificate_hash": "dbcb40127119000b459ba6729f57293053990618"
-          }
-        },
-        {
-          "client_id": "192334408426-g40r27o07nm21rh52tu91rgmd04s484f.apps.googleusercontent.com",
+          "client_id": "348478537712-ouuimu3h2ifim7p2a1g4k5sqlqce660n.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAq8f4RU1a0qR-l2ybz8qkv29YjZqw04QA"
+          "current_key": "AIzaSyBmTMDNc7BbIy3oiZJcTzPaNKNuHASFPlc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "192334408426-g40r27o07nm21rh52tu91rgmd04s484f.apps.googleusercontent.com",
+              "client_id": "348478537712-ouuimu3h2ifim7p2a1g4k5sqlqce660n.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

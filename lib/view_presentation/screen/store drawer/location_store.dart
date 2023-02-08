@@ -98,10 +98,10 @@ class _map_locationState extends State<location_store> {
                           initialCameraPosition: _inialCameraPosition,
                           mapType: MapType.normal,
                           onMapCreated: (GoogleMapController controller) async {
-                            String style = await DefaultAssetBundle.of(context)
-                                .loadString('assets/map_style.json');
-                            //customize your map style at: https://mapstyle.withgoogle.com/
-                            controller.setMapStyle(style);
+                            // String style = await DefaultAssetBundle.of(context)
+                            //     .loadString('assets/map_style.json');
+                            // //customize your map style at: https://mapstyle.withgoogle.com/
+                            // controller.setMapStyle(style);
                             _controller.complete(controller);
                           },
                           onCameraMove: (CameraPosition newPos) {

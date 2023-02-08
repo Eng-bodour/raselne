@@ -71,7 +71,7 @@ class _buildCardOrdersState extends State<buildCardOrders> {
                               shape: BoxShape.circle, color: Colors.red),
 
                           child: Icon(
-                            widget.orderModel.isopen == true?Icons.check:  Icons.close,
+                            widget.orderModel.isopen == true? Icons.check: Icons.close,
                             color: Colors.white,
                             size: widget.size.width * 0.04,
                           ),
@@ -309,6 +309,12 @@ class _buildCardOrdersState extends State<buildCardOrders> {
                             builder: (context) =>
                                 ChatScreen(orderModel: widget.orderModel)));
                         break;
+                        case 'done rate':
+                        // return 'مفتوح';
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                ChatScreen(orderModel: widget.orderModel)));
+                        break;
                     }
                   },
                   style: ButtonStyle(
@@ -324,10 +330,13 @@ class _buildCardOrdersState extends State<buildCardOrders> {
                         widget.orderModel.isopen == true
                             ? Text('متابعة',
                                 style: TextStyle(
+                                  // color: Color.fromRGBO(212, 175, 53, 30),
+
                                   fontSize: widget.size.width * 0.045,
                                 ))
-                            : Text('إعادة الطلب',
+                            : Text('تم',
                                 style: TextStyle(
+                                  color: Colors.white,
                                   fontSize: widget.size.width * 0.045,
                                 )),
                         // SizedBox(

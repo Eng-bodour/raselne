@@ -194,7 +194,7 @@ class _ChatScreenState extends State<ChatScreen> {
     user = Provider.of<AuthProvider_vm>(context, listen: true).currentuser;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: Colors.amberAccent ,
       appBar: AppBar(
         backgroundColor: mainColor,
         centerTitle: true,

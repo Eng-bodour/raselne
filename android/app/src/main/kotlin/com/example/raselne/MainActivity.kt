@@ -1,4 +1,4 @@
-package com.example.raselne
+package com.mpluse.Alsarea
 
 import io.flutter.embedding.android.FlutterActivity
 

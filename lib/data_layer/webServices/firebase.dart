@@ -24,7 +24,7 @@ class FirebaseServices {
     //CollectionReference users = _firestore.collection('users');
      LocationData _myLocation=await LocationService().getLocation();
 
-    ref.add(
+   await ref.add(
     UserModel(
         name:dispalyName,
         location: LatLng(_myLocation.latitude!, _myLocation.longitude!),

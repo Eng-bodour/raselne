@@ -35,7 +35,7 @@ class WelcomeScreen extends StatelessWidget {
                 height: size.height * 0.06,
                 width: size.width * 0.9,
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.3),
+                  color: Colors.black.withOpacity(0.19),
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Padding(
@@ -57,7 +57,7 @@ class WelcomeScreen extends StatelessWidget {
                        TextUtils(
                         fontSize: f30,
                         fontWeight: FontWeight.bold,
-                        text: "RASELNE",
+                        text: "Alsarea",
                         color: mainColor,
                         underLine: TextDecoration.none,
                       ),

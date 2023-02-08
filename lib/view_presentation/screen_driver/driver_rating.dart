@@ -276,7 +276,7 @@ class _DriverRatingState extends State<DriverRating> {
       },
       decoration: InputDecoration(
         fillColor: Colors.white,
-        hintText: ' ملاحظات عن المندوب',
+        hintText:widget. typeUser=='captain'?' ملاحظات عن الزبون': ' ملاحظات عن المندوب',
         hintStyle: const TextStyle(
           color: Colors.black45,
           fontSize: f16,

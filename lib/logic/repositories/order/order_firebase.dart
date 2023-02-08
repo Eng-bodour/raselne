@@ -23,7 +23,7 @@ class order_firebase extends OrderRepository{
     // );
     FirebaseServices firestore =
     FirebaseServices("orders");//.collection(nameCollecton);
-    DocumentReference doc=await firestore.addtofirestore(body);
+    DocumentReference doc = await firestore.addtofirestore(body);
     return  doc.id;
 
   }

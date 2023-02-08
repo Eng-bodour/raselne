@@ -69,14 +69,15 @@ class _AddCategoryState extends State<AddCategory> {
         backgroundColor: mainColor,
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        controller: controller,
-        child: SizedBox(
-          width: double.infinity,
-          //  height: size.height / 1.3,
-          child: ModalProgressHUD(
-            inAsyncCall: Provider.of<StoreProvider_vm>(context,listen: true).isloading,
+      body: ModalProgressHUD(
+        inAsyncCall: Provider.of<StoreProvider_vm>(
+            context,listen: true).isloading,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          controller: controller,
+          child: SizedBox(
+            width: double.infinity,
+            //  height: size.height / 1.3,
             child: Padding(
               padding: const EdgeInsets.only(left: 25, right: 25, top: 40),
               child: Directionality(

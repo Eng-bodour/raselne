@@ -76,7 +76,7 @@ class StoreProvider_vm extends ChangeNotifier {
 
     }
     else
-      for(int i=0;i<liststore.length-1;i++){
+      for(int i=0;i<liststore.length ;i++){
           if( liststore[i].isVisible==false)
           liststore[i].isVisible=true;
     }
@@ -159,7 +159,7 @@ class StoreProvider_vm extends ChangeNotifier {
    liststore=await storeRepository.getAllStores();
 
    print('type  '+type);
-   for(int i=0;i<liststore.length-1;i++){
+   for(int i=0;i<liststore.length ;i++){
      liststore[i].rataing=StoreModel.getrate( liststore[i].rating);
      print('typeStore  '+ liststore[i].typeStore);
      if(type!='')
@@ -189,7 +189,7 @@ class StoreProvider_vm extends ChangeNotifier {
    //   if(liststore[i].typeStore==typeStore)
    //     liststore[i].isVisible=true;
    // }
-   for(int i=0;i<liststore.length-1;i++){
+   for(int i=0;i<liststore.length ;i++){
      liststore[i].rataing=StoreModel.getrate( liststore[i].rating);
 
    }
